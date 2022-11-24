@@ -3,6 +3,7 @@
     include_once './Servicios/ServiceBase.php';
     include_once './Servicios/Registro/RegistroService.php';
     include_once "./Mapping/PersonaMapping.php";
+    include_once "./Mapping/UsuarioMapping.php";
 
     class RegistroServiceImpl extends ServiceBase implements RegistroService {
 
@@ -36,13 +37,14 @@
                 $datosRegistroUsuario['usuario'] = $this->usuario->usuario;
                 $datosRegistroUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
                 $datosRegistroUsuario['borrado_usuario'] = 0;
+                
 
 
               
                 $this->clase_validacionFormatoRegistroPersona->comprobarRegistroBlank($datosRegistroPersona);
                 $this->clase_validacionFormatoRegistroUsuario->comprobarLoginBlank($datosRegistroUsuario);
              
-                //desconozco razón por la cual no funciona
+                //desconozco la razón por la cual no funciona
                 //$this->clase_validacionAccionRegistroPersona->comprobarRegistro($datosRegistroPersona, $datosRegistroUsuario);
                 
              
@@ -53,7 +55,7 @@
                 $datosBuscarUser['foraneas'] = $this->usuario->clavesForaneas;
 */
                 $personaDatos = [
-                    'dni_persona' => $this->persona->dni_persona,
+                    'dni_persona' => $datosRegistroPersona['dni_persona'],
                     'nombre_persona' => $this->persona->nombre_persona,
                     'apellidos_persona' => $this->persona->apellidos_persona,
                     'fecha_nac_persona' => $this->persona->fecha_nac_persona,
@@ -69,17 +71,17 @@
                     'borrado_usuario' => 0,
                     'usuario' => $this->usuario->usuario,
                     'passwd_usuario' => $this->usuario->passwd_usuario,
-                    'rol' => 2/*$this->usuario->getById('rol',$datosBuscarUser)['resource']['id_rol']*/
+                    'id_rol' => 2/*$this->usuario->getById('rol',$datosBuscarUser)['resource']['id_rol']*/
                 ];
               
-                
+               
 
                 include_once "./Autenticacion/GetJWToken.php";
               
                 $persona_mapping = new PersonaMapping();
-                $this->$persona_mapping->add($datosRegistroPersona);
+                $persona_mapping->add($personaDatos);
                 $usuario_mapping = new UsuarioMapping();
-                $this->$usuario_mapping->add($usuarioDatos);
+                $usuario_mapping->add($usuarioDatos);
                 $token = GetJWToken::getJWToken($usuarioDatos);
 
             }

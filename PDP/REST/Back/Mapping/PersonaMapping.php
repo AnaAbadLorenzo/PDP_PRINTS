@@ -12,11 +12,11 @@ class PersonaMapping extends MappingBase {
 
     function add($datosInsertar) {
         
-        $this->query = "INSERT INTO PERSONA ('dni_persona', 'nombre_persona', 'apellidos_persona', 'fecha_nac_persona', 'direccion_persona', 'email_persona', 'telefono_persona', 'borrado_persona') VALUES 
-                        ('".$datosInsertar->dni_persona."', '".$datosInsertar->nombre_persona."', '"
-                        .$datosInsertar->apellidos_persona."','".$datosInsertar->fecha_nac_persona."','"
-                        .$datosInsertar->direccion_persona."','".$datosInsertar->email_persona."','"
-                        .$datosInsertar->telefono_persona."','".$datosInsertar->borrado_persona. "')";
+        $this->query = "INSERT INTO PERSONA (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES 
+                        ('".$datosInsertar['dni_persona']."','".$datosInsertar['nombre_persona']."','"
+                        .$datosInsertar['apellidos_persona']."','".$datosInsertar['fecha_nac_persona']."','"
+                        .$datosInsertar['direccion_persona']."','".$datosInsertar['email_persona']."','"
+                        .$datosInsertar['telefono_persona']."','".$datosInsertar['borrado_persona']. "')";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();  
     }

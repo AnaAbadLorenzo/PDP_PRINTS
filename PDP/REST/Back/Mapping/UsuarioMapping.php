@@ -11,11 +11,13 @@ class UsuarioMapping extends MappingBase {
     }
 
     function add($datosInsertar) {
-        $this->query = "INSERT INTO USUARIO ('dni_usuario', 'usuario', 'passwd_usuario', 'borrado_usuario', 'id_rol') VALUES 
-                        ('".$datosInsertar->dni_usuario."', '".$datosInsertar->usuario."', '"
-                        .$datosInsertar->passwd_usuario. "','".$datosInsertar->borrado_usuario."','"
-                        .$datosInsertar->id_rol."')";
+        
+        //INSERT INTO `pdp_prints`.`usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES ('333333', 'jeje', '1234', '0', '2');
+        $this->query = "INSERT INTO USUARIO (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES ('".$datosInsertar['dni_usuario']."', '".$datosInsertar['usuario']."', '"
+                        .$datosInsertar['passwd_usuario']. "', '".$datosInsertar['borrado_usuario']."', '"
+                        .$datosInsertar['id_rol']."');";
         $this->stmt = $this->conexion->prepare($this->query);
+      
         $this->execute_single_query();  
     }
 
