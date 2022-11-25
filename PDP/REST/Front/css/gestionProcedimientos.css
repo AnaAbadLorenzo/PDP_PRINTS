@@ -1,0 +1,263 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.gestion { left: 5% !important;}
+
+h1 { font-size: 1.9rem !important;}
+
+.refreshIcon { margin-left: 43.5% !important;}
+
+.table {  width: 250% !important; max-width: 300% !important; }
+
+.table thead tr th { width: 17% !important;}
+
+#form-modal .modal-dialog { margin: 2rem auto !important; }
+
+#cabeceraUsuario { top: 21% !important; left: 10% !important; }
+
+.procedimientos { width: 87% !important; top: 26% !important; height: 53% !important;}
+
+#cabeceraUsuario .refreshIcon { margin-left: 60.5% !important; }
+
+.card-body-plan { height: 96px !important; }
+
+.card-title { font-size: 21px !important; }
+
+.card-text {  font-size: 16px !important; width: 82% !important; }
+
+.card-title-plan { margin-left: -85% !important; font-size: 16px !important; }
+
+.tooltip8 .tooltiptext { width: 83px !important; font-size: 10pt !important; left: 16% !important; }
+
+.tooltip9 .tooltiptext { width: 88px !important; font-size: 10pt !important; left: -12% !important; bottom: -58% !important; }
+
+.iconProcedimiento { margin-left: 88% !important; margin-top: -40% !important; width: 12% !important; }
+
+.modal-footer .iconSeguir { width: 46% !important; }
+
+.tooltip18 .tooltiptext { width: 107px !important; font-size: 10pt !important; left: 99% !important; bottom: -22% !important;}
+
+.tooltip19 .tooltiptext { width: 107px !important; font-size: 10pt !important; left: 547% !important; bottom: -22% !important;}
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+.table thead tr th { width: 17% !important;}
+
+#form-modal .modal-dialog { margin: 6rem auto !important; }
+
+#cabeceraUsuario { top: 20% !important; left: 8% !important; }
+
+#cabeceraUsuario .refreshIcon { margin-left: 76.5% !important;}
+
+.procedimientos { width: 87% !important; top: 27% !important; height: 53% !important;}
+
+.iconProcedimiento { margin-left: 209% !important; margin-top: -18% !important; width: 12% !important; }
+
+.tooltip13 .tooltiptext { width: 130px !important; left: -27% !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+.table thead tr th { width: 17% !important;}
+
+#form-modal .modal-dialog { margin: 6rem auto !important; }
+
+#cabeceraUsuario { top: 20% !important; left: 8% !important; }
+
+#cabeceraUsuario .refreshIcon { margin-left: 76.5% !important;}
+
+.procedimientos { width: 87% !important; top: 27% !important; height: 53% !important;}
+
+.iconProcedimiento { margin-left: 209% !important; margin-top: -18% !important; width: 12% !important; }
+
+.tooltip13 .tooltiptext { width: 130px !important; left: -27% !important; }
+
+}
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=date] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+select, select option{
+  width: 90% !important;
+  font-family: Roboto;
+}
+
+select option:checked{
+  background-color: #B39DDB !important;
+  font-weight: bold;
+  color:  #ffffff;
+}
+
+.preguntaCheck {
+    font-size: 14px !important;
+}
+
+
+/********* ICONOS ***********/
+
+.btn-reactivar{
+  background-color: #4527A0;
+  color:  #ffffff;
+  text-align: center;
+  border: 2px solid #4527A0 !important;
+}
+
+.cabecera {
+  position:  fixed;
+  top: 12%;
+  left: 6%;
+  width: 100%;
+}
+
+#cabeceraUsuario {
+  position:  fixed;
+  top: 14%;
+  left: 7%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 65%;
+}
+
+.iconProcedimiento {
+  margin-left: 291%;
+  margin-top: -18%;
+  width: 10%;
+  cursor: pointer;
+  display: inline;
+}
+
+.iconPlan {
+  width: 8%;
+  display: inline;
+  margin-left: 3%;
+  margin-top: -0.5%;
+  cursor: pointer;
+}
+
+.seguir {
+  width: 30%;
+  left: -18%;
+}
+
+.iconSeguir {
+    width: 30% !important;
+    left: 85%;
+}
+
+#cabeceraUsuario .refreshIcon {
+  margin-left: 76%;
+}
+
+/*********** CARDS ****************/
+
+.paddingTop {
+  padding-top: 1%;
+}
+
+.procedimientos {
+  width: 83%;
+  height: 61%;
+  position: fixed;
+  top: 18%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  bottom: 5%;
+  margin-left: 7%;
+}
+
+.procedimientos .card {
+  background-color: #4527a0d1;
+}
+
+.card-body-plan {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #e2d1fb;
+  height: 70px;
+  margin-bottom: 0.2%;
+}
+
+.card-title {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-bottom: 0rem;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-family: Roboto;
+  font-size: 18px;
+  margin-left:  2%;
+}
+
+.card-title-plan {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-left: -29%;
+  font-size: 19px;
+  display: inline;
+}
+
+.card-footer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #efe5ff;
+  height: 55px;
+}
+
+/********** TITULO *********/
+.gestion {
+  left: 37%;
+}

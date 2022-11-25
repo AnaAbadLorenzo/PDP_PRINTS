@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+	<link rel="stylesheet" type="text/css" href="css/comun.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/gestionPlanes.css" media="screen" />
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/funcionesComunes.js"></script>
+	<script type="text/javascript" src="js/configURLs.js"></script>
+	<script type="text/javascript" src="js/configPaginacion.js"></script>
+	<script type="text/javascript" src="js/paginacion.js"></script>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/validaciones.js"></script>
+	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/gestionPlanes.js"></script>
+	<script type="text/javascript" src="Locale/idioma.js"></script>
+    <script type="text/javascript" src="Locale/Lang_EN.js"></script>
+    <script type="text/javascript" src="Locale/Lang_ES.js"></script>
+    <script type="text/javascript" src="Locale/Lang_GA.js"></script>	
+    <link rel="shortcut icon" type="image/png" href="images/iconoIndex2.png">
+    <title>Sustainable Development Society</title>
+</head>
+
+<body onload="(async ()=>{
+	comprobarTokenUsuario('plan');
+  	await includeTopMenu('plan');
+    await funcionalidadesUsuario();
+    cambiarTituloGestion('plan');modalCambioPass();cargarIdioma();includeFooter();setLang('');
+	await cargarPlanes(0, tamanhoPaginaPlan, 'PaginadorNo');
+	await cargarPermisosFuncPlan();
+	await construyeSelectObjetivos();
+	ejecutaFuncion(function(){compruebaFuncionalidadesPermisos('PLAN')},30000);
+  })();">  
+	<div id="topMenu"></div>
+
+	<div class="modal modal3 fade" id="changePass-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	</div>
+
+	<h1 id="gestion" class="gestion"></h1>
+
+	<div id="cabecera" class="cabecera" style="display: none;">
+		<div id="divAddPlan" name="btnAdd" value="Añadir" data-toggle="" data-target="" onclick="javascript:showAddPlanes()" class="tooltip6 addIcon">
+        <img id="btnAddPlan" class="iconoAdd" src="images/add.png" alt="Añadir" />
+        <span class="tooltiptext iconAddObjetivo ICONO_ADD"></span>
+    	</div>      
+
+    <div id="divListarPlan" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarPlan()" class="tooltip6 searchIcon">
+        <img id="btnListarPlanes" class="iconoSearch iconSearch" src="images/search.png" alt="Buscar Plan" />
+        <span class="tooltiptext iconSearch ICONO_SEARCH"></span>
+    </div>
+
+    <div id="divSearchDelete" name="btnSearchDelete" value="Buscar Eliminados" onclick="" class="tooltip6 searchDeleteIcon">
+        <img id = "btnSearchDelete" class="iconoSearchDelete iconSearchDelete" src="images/searchDelete4.png" alt="Buscar Objetivos Eliminados" />
+        <span class="tooltiptext iconSearchDelete ICONO_SEARCH_DELETE"></span>
+    </div>
+
+    <div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaPlan)" class="tooltip6 refreshIcon">
+        <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
+        <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
+    </div>
+
+    <div name="btnHideShowColumns" value="Buscar" onclick="javascript:hideShowColumnsWindow();" class="tooltip6 hideShowIcon">
+        <img class="iconoHideShow iconHideShow" src="images/hideTable.png" alt="Ocultar/Mostrar Columnas" />
+        <span class="tooltiptext iconHideShow ICON_SHOW_HIDE_COLUMNS"></span>
+    </div>     
+	</div>
+
+	<div id="cabeceraConsultaPlanes" class="cabecera" style="display: none;">
+		<div id="divListarPlanConsulta" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarPlan()" class="tooltip6 searchIcon">
+	        <img id="btnListarPlanesConsulta" class="iconoSearch iconSearch" src="images/search.png" alt="Buscar Plan" />
+	        <span class="tooltiptext iconSearch ICONO_SEARCH"></span>
+    	</div>
+    	<div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaPlan)" class="tooltip6 refreshIcon">
+	        <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
+	        <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
+    	</div>
+    </div>
+
+
+	<div class = "cabeceraEliminados" id="cabeceraEliminados" style="display: none;">
+		<div id="divVolverAtras" name="btnVolverAtras" value="Volver" onclick="javascript:refrescarTabla(0, tamanhoPaginaPlan)" class="tooltip6 volverAtrasIcon">
+        	<img id="btnVolverAtras" class="iconoVolverAtras" src="images/back3.png" alt="Volver" />
+        	<span class="tooltiptext iconoVolverAtras ICONO_BACK"></span>
+    	</div> 
+    </div>    
+
+	<div class="table-responsive listado" id="tablaDatos" style="display:none;">
+		<table class="table table-bordered" id="tablaPlanes">
+			<thead>
+		    	<tr>
+			      <th scope="col" class="colFirst NOMBRE_PLAN_COLUMN">
+			      	<div class="NOMBRE_PLAN nombrePlanColumn"></div>
+                  <div name="btnOrdenar" value="Ordenar" onclick="sortTable(0, 'tablaPlanes')" class="tooltip7 ordenarIconNombrePlan">
+                      <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
+                      <span class="tooltiptext ORDENAR"></span>
+              		</div>
+						</th>
+			      	
+					  <th scope="col" class="DESCRIPCION_PLAN_COLUMN">
+					    <div class="DESCRIPCION_PLAN descripcionPlanColumn"></div>
+		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(1, 'tablaPlanes')" class="tooltip7 ordenarIconDescripcionPlan">
+		                    <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
+		                    <span class="tooltiptext ORDENAR"></span>
+		              </div>
+					  </th>
+
+					  <th scope="col" class="DATE_COLUMN">
+					    <div class="DATE fechaPlanColumn"></div>
+		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(2, 'tablaPlanes')" class="tooltip7 ordenarIconFechaPlan">
+		                    <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
+		                    <span class="tooltiptext ORDENAR"></span>
+		              </div>
+					  </th>
+
+					  <th scope="col" class="NOMBRE_OBJETIVO_COLUMN">
+					    <div class="NOMBRE_OBJETIVO nombreObjetivoColumn"></div>
+		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(3, 'tablaPlanes')" class="tooltip7 ordenarIconNombreObjetivo">
+		                    <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
+		                    <span class="tooltiptext ORDENAR"></span>
+		              </div>
+					  </th>
+
+					  <th scope="col" class="PLAN_ID_COLUMN" hidden>
+					    <div class="PLAN_ID idPlanColumn"></div>
+		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(4, 'tablaPlanes')" class="tooltip7 
+		              ordenarIconIdPlan">
+		                    <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
+		                    <span class="tooltiptext ORDENAR"></span>
+		              </div>
+					  </th>
+			  		
+			  		<th scope="col" class="colLast ACCIONES"></th>
+		    	
+		    	</tr>
+		  </thead>
+		  <tbody id="datosPlan" class="bodyGestionPlanes"></tbody>
+		</table>
+	</div>
+
+	<div id="listaPlanes" class="planes overflow-auto" style="display: none;">
+		<div id="planes" class="row">
+		</div>
+	</div>
+
+	<div class="filasTabla" id="filasTabla" style="display: none;">
+			<div id="paginacion"></div>
+	</div>
+
+	<div id="showHideColumns" style="display: none;">
+    	<a id="cerrar" href="#" onclick="cerrarModal('showHideColumns')" class="tooltip5">
+          <img class="iconCerrar" alt="Cerrar" src="images/close2.png"/>
+          <span class="tooltiptext5 ICONO_CERRAR"></span>
+        </a>
+    	<div id='checkboxColumnas'>
+    	</div>
+  	</div>
+
+	<div id="itemPaginacion" class="paginacion">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+		  	</ul>
+		</nav>
+	</div>
+
+	<div class="modal modal2 fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+			<div class="formmodal-container">
+				<div id="formularioAcciones">
+      			<div id="contenidoForm">
+              			<div class="formularioComun">
+              				<h1 id="tituloForms" class="datos"></h1>
+              				<p id = "subtitulo" class="SEGURO_ELIMINAR_PLAN" hidden></p>
+                    	<form name="formularioGenerico" id="formularioGenerico" action="" onsubmit="">
+                    	  <label class="labelForm NOMBRE_PLAN" id="labelNombrePlan" hidden></label>                            
+                          <input type="text" maxlength="48" size="48" placeholder="NOMBRE_PLAN" name="NOMBRE_PLAN" id="nombrePlan" class="NOMBRE_PLAN" onblur=""/>
+                           <div class="obligatorio tooltip2" id="obligatorioNombrePlan">*
+                  			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+              			  </div>
+                          <div style="display:none" id="errorFormatoNombrePlan"></div>
+                          
+                          <label class="labelForm DESCRIPCION_PLAN" id="labelDescripcionPlan" hidden></label>
+	                      <input type="text" placeholder="DESCRIPCION_PLAN" name="DESCRIPCION_PLAN" id="descripPlan" class="DESCRIPCION_PLAN" onblur=""/>
+	                       <div class="obligatorio tooltip2" id="obligatorioDescripPlan">*
+                  			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+              			  </div>
+	                      <div style="display:none" id="errorFormatoDescripPlan"></div>
+
+	                      <label class="labelForm DATE" id="labelFechaPlan" hidden></label>
+                    	  <input type="date" name="fechaPlan" id="fechaPlan" value="1900-01-01" min="1900-01-01" max="3000-01-01" onblur="">
+                    	  <div class="obligatorio tooltip2" id="obligatorioFechaPlan">*
+                      		<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+                    	  </div>
+                    	  <div style="display:none" id="errorFormatoFechaPlan"></div>
+
+                    	  <label class="labelForm NOMBRE_OBJETIVO" id="labelNombreObjetivo" hidden></label>
+                    	  <select id="selectObjetivos" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
+  						  <div class="obligatorio tooltip2" id="obligatorioObjetivos">*
+                  			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+              			  </div>
+  						  <div style="display:none" id="errorFormatoNombreObjetivoSelect"></div>
+
+  						  <label class="labelForm DESCRIPCION_OBJETIVO" id="labelDescripcionObjetivo" hidden></label>
+  						  <input type="text" placeholder="DESCRIPCION_OBJETIVO" name="DESCRIPCION_OBJETIVO" id="descripcionObjetivo" class="DESCRIPCION_OBJETIVO" hidden />
+  						   <div class="obligatorio tooltip2" id="obligatorioDescripcionObjetivo" hidden>*
+                  			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+              			  </div>
+  						  <div style="display:none" id="errorFormatoNombreDescripcionObjetivo"></div>
+
+                          <button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAcciones">
+                              <img class="" src="" alt="" id="iconoAcciones" />
+                              <span class="tooltiptext" id="spanAcciones"></span>
+                          </button>
+                      </form>
+                    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal modal2 fade" id="modalMostrarObjetivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="formmodal-container">
+        <div id="formularioMostrarObjetivo">
+          <div id="contenidoFormMostrarObjetivo">
+            <div class="formularioComun">
+              <h1 id="tituloFormsModalMostrarObjetivo" class="datos"></h1>
+              <form name="formularioModalMostrarObjetivo" id="formularioModalMostrarObjetivo" action="" onsubmit="">
+                <label class="labelForm NOMBRE_OBJETIVO" id="labelNombreObjetivoMostrarObjetivo" hidden></label>                            
+                <input type="text" maxlength="48" size="48" placeholder="NOMBRE_OBJETIVO" name="NOMBRE_OBJETIVO" id="nombreObjetivo" class="NOMBRE_OBJETIVO" onblur=""/>
+               
+                <div style="display:none" id="errorFormatoNombreObjetivo"></div>
+                          
+                <label class="labelForm DESCRIPCION_OBJETIVO" id="labelDescripcionObjetivoMostrarObjetivo" hidden></label>
+	            <input type="text" placeholder="DESCRIPCION_OBJETIVO" name="DESCRIPCION_OBJETIVO" id="descripcionObjetivoMostrarObjetivo" class="DESCRIPCION_OBJETIVO" onblur=""/>
+	            
+	            <div style="display:none" id="errorFormatoDescripcionObjetivo"></div>
+
+                <button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAccionesMostrarObjetivo">
+                    <img class="" src="" alt="" id="iconoAccionesMostrarObjetivo" />
+                    <span class="tooltiptext" id="spanAccionesMostrarObjetivo"></span>
+                </button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<div id="volver" class="volver" style="display: none;">
+		<div name="btnBack" value="Volver" onclick="javascript:volver()" class="tooltip6 backIcon">
+        <img class="iconoBack iconBack" src="images/home2.png" alt="Volver" />
+        <span class="tooltiptext iconBack ICONO_VOLVER">Volver</span>
+    </div>   
+	</div>
+
+	<div id="modal" tabindex="-1" role="dialog" style="display:none">
+		<div class="modal-dialog" role="document" id="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <img src="" name="aviso" class="imagenAviso"/>
+		      <h3 id="modal-title" class="modal-title"></h3>
+		    </div>
+			<div id='modal-mensaje' class="modal-body"></div>
+		  		<div id="modalFooter" class="modal-footer">
+	        		<a id="cerrar" href="#" onclick="cerrarModal('modal')" class="tooltip5">
+		        		<img class="iconCerrar" alt="Cerrar" src="images/close.png"/>
+		                <span class="tooltiptext5 ICONO_CERRAR"></span>
+	        		</a>
+		  		</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer"></div>
+</body>
+</html>

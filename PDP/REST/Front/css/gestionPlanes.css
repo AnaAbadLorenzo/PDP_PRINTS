@@ -1,0 +1,243 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.refreshIcon { margin-left: 43.5% !important;}
+
+.table {  width: 220% !important; max-width: 250% !important; }
+
+.table thead tr th { width: 21% !important;}
+
+#cabeceraConsultaPlanes { margin-left: 6% !important; }
+
+#cabeceraConsultaPlanes .refreshIcon { margin-left: 63.5% !important; }
+
+.planes { width: 87% !important; top: 24% !important; height: 53% !important;}
+
+.card-body-plan { height: 96px !important; }
+
+.card-title { font-size: 21px !important; }
+
+.card-text {  font-size: 16px !important; width: 82% !important; }
+
+.tooltip8 .tooltiptext { width: 83px !important; font-size: 10pt !important; left: 16% !important; }
+
+.card-title-objetivo { margin-left: -85% !important; font-size: 16px !important; }
+
+.iconProcedimiento { margin-left: 100% !important; margin-top: -40% !important; width: 15% !important; }
+
+.tooltip9 .tooltiptext { width: 88px !important; font-size: 10pt !important; left: -12% !important; bottom: -58% !important; }
+
+#form-modal .modal-dialog { margin: 2rem auto !important; }
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+.table thead tr th { width: 21% !important;}
+
+#form-modal .modal-dialog { margin: 2rem auto !important; }
+
+#cabeceraConsultaPlanes { margin-left: 1% !important; margin-top: 5% !important; }
+
+#cabeceraConsultaPlanes .refreshIcon { margin-left: 73.5% !important; }
+
+.planes { top: 27% !important; }
+
+.card-title-objetivo { margin-left: -41% !important; }
+
+.iconProcedimiento { margin-left: 369% !important; margin-top: -36% !important; }
+
+.tooltip9 .tooltiptext { left: -17% !important; bottom: -122% !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+.table thead tr th { width: 21% !important;}
+
+#form-modal .modal-dialog { margin: 2rem auto !important; }
+
+#cabeceraConsultaPlanes { margin-left: -1% !important; }
+
+#cabeceraConsultaPlanes .refreshIcon { margin-left: 73.5% !important; }
+
+.planes { top: 27% !important; }
+
+.card-title-objetivo { margin-left: -41% !important; }
+
+.iconProcedimiento { margin-left: 398% !important; margin-top: -36% !important; }
+
+.tooltip9 .tooltiptext { left: -17% !important; bottom: -122% !important; }
+
+}
+
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=date] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+select, select option{
+  width: 90% !important;
+  font-family: Roboto;
+}
+
+select option:checked{
+  background-color: #B39DDB !important;
+  font-weight: bold;
+  color:  #ffffff;
+}
+
+
+/********* ICONOS ***********/
+
+.btn-reactivar{
+  background-color: #4527A0;
+  color:  #ffffff;
+  text-align: center;
+  border: 2px solid #4527A0 !important;
+}
+
+.cabecera {
+  position:  fixed;
+  top: 12%;
+  left: 6%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 65%;
+}
+
+.iconObjetivo {
+  width: 8%;
+  display: inline;
+  margin-left: 4%;
+  margin-top: -0.5%;
+  cursor: pointer;
+}
+
+.iconProcedimiento {
+  margin-left: 570%;
+  margin-top: -36%;
+  width: 20%;
+  cursor: pointer;
+}
+
+
+/*********** CARDS ****************/
+
+.paddingTop {
+  padding-top: 1%;
+}
+
+.planes {
+  width: 83%;
+  height: 61%;
+  position: fixed;
+  top: 18%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  bottom: 5%;
+  margin-left: 7%;
+}
+
+.planes .card {
+  background-color: #4527a0d1;
+}
+
+.card-body-plan {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #e2d1fb;
+  height: 70px;
+  margin-bottom: 0.2%;
+}
+
+.card-title {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-bottom: 0rem;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-family: Roboto;
+  font-size: 18px;
+  margin-left:  2%;
+}
+
+.card-title-objetivo {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-left: -29%;
+  font-size: 19px;
+  display: inline;
+}
+
+.card-footer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #efe5ff;
+  height: 55px;
+}
+
+/************** CABECERA ****************/
+#cabeceraConsultaPlanes {
+  margin-left: 2%;
+  margin-top: 1%;
+}
+
+#cabeceraConsultaPlanes .refreshIcon {
+  margin-left:  74%;
+}
+
+/********** TITULO *********/
+.gestion {
+  left: 42%;
+}

@@ -1,0 +1,97 @@
+/* For mobile phones: */
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.refreshIcon { margin-left: 24.5% !important;}
+
+#permisos { margin-top: 47.4% !important; height: 440px !important;}
+
+.columnaAcciones { text-align: center !important; width: 75px !important;  font-size: 10px !important; padding: 0.5rem 0.1rem !important;}
+
+.permisos { width: 20px !important; margin-top: -13px !important; margin-left: 3px !important;  margin-right: -2px !important; margin-bottom: 0px !important; }
+
+.accionesPermisos { padding: 0.5rem 0.1rem !important; }
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+.refreshIcon { margin-left: 55.5% !important;}
+
+#tablaDatos { height: 51% !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+.refreshIcon { margin-left: 55.5% !important;}
+
+}
+
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+}
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+/********* ICONOS ***********/
+
+.cabecera {
+  position:  fixed;
+  top: 12%;
+  left: 6%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 60.5%;
+}
+
+
+/*********** PERMISOS *********/
+#permisos {
+  margin-top: 10.4%;
+  margin-bottom: 7%;
+  margin-left: 6.7%;
+  margin-right: 8.1%;
+  height: 610px;
+  overflow-y: scroll;
+}
+
+.permisos {
+  display: inline;
+  width: 37px;
+  margin-top: -10px;
+  margin-left: 18px;
+  margin-right: 14px;
+  margin-bottom: -5px;
+}
+
+.accionesPermisos {
+  text-align: center;
+  width: 170px;
+}
+
+.columnaAcciones {
+  width: 170px;
+}

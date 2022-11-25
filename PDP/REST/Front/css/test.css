@@ -1,0 +1,72 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+  #accordion { margin-top: 38% !important; height: 498px !important;}
+
+  .card-body tbody tr { font-size: 13px !important;}
+
+  .volver { bottom: 9% !important; }
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+#accordion { margin-top: 11% !important; height: 448px !important; }
+
+.volver { bottom: 9% !important; }
+
+.table thead tr th { width: 29% !important;}
+
+.controlTamTabla { height: 285px !important; overflow-y: scroll !important; overflow-x: scroll !important; font-size: 13.5px !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+#accordion { margin-top: 11% !important; height: 385px !important; }
+
+.volver { bottom: 9% !important; }
+
+.table thead tr th { width: 29% !important;}
+
+.controlTamTabla { height: 285px !important; overflow-y: scroll !important; overflow-x: scroll !important; font-size: 13.5px !important; }
+
+}
+
+
+.test {
+  text-align: center;
+  position: fixed;
+  top: 5%;
+  left:  25%;
+  font-size: 5em;
+  width: 50%;
+  font-family: Roboto;
+  color:  #4527A0;
+}
+
+#accordion {
+  margin-top:  8%;
+  margin-bottom: 7%;
+  margin-left: 2%;
+  margin-right: 2%;
+  height: 610px;
+  overflow-y: scroll;
+}
+
+.volver {
+  position: fixed;
+  bottom: 7%;
+  left: 1%;
+  width: 100%;
+}
+
+.iconoBack {
+  width: 4em; 
+  height: 4em; 
+  cursor: pointer;
+}
+
+.backIcon {
+  margin-left: 1.5%;
+  margin-top: 1%;
+}

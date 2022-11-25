@@ -1,0 +1,97 @@
+@media only screen and (min-width: 320px) and (max-width : 415px)  {
+
+    .footer {font-size: 15px;}
+
+  .imagenLogo { width: 32px !important;}
+
+  .bienvenida { top: 9% !important; left: 2% !important; font-size: 2.5em !important; width: 100% !important;}
+
+  .noticias { width: 90% !important; height: 70% !important; margin-left: 5% !important;}
+
+  .card-img-top { width: 12% !important;}
+
+  h4 { font-size: 1.2rem !important;}
+
+  .card-text { font-size: 0.9rem !important;}
+
+  small { font-size: 69% !important;}
+
+  .changePassmodal-container h1 { font-size: 1.3em !important;}
+
+  .changePassmodal-container input[type=text] {height: 37px !important; font-size: 14px !important;}
+
+  form button[type="submit"], form button[type="button"] { height: 39px !important;}
+
+  .changePassmodal-container input[type=email] { height: 37px !important; font-size: 14px !important; width: 51% !important;}
+
+  .changePassmodal-container input[type=password] {height: 37px !important; font-size: 14px !important;}
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+  .bienvenida { top: 9% !important; left: 2% !important; font-size: 3.5em !important; width: 100% !important;}
+
+  .noticias { width: 65% !important; height: 64% !important; top: 22% !important; margin-left: 18% !important;}
+
+  #changePass-modal .modal-dialog { margin: 10rem auto !important; }
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+  .bienvenida { top: 9% !important; left: 2% !important; font-size: 3.5em !important; width: 100% !important;}
+
+  .noticias { width: 65% !important; height: 64% !important; top: 22% !important; margin-left: 18% !important;}
+
+  #changePass-modal .modal-dialog { margin: 10rem auto !important; }
+}
+
+.bienvenida {
+  text-align: center;
+  position: fixed;
+  top: 5%;
+  left:  25%;
+  font-size: 5em;
+  width: 50%;
+  font-family: Roboto;
+  color:  #4527A0;
+}
+
+.noticias {
+  width: 50%;
+  height: 73%;
+  position: fixed;
+  top: 18%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  bottom: 5%;
+  margin-left: 25%;
+}
+
+.noticias .card {
+  background-color: #4527a0d1;
+}
+
+.card-img-top {
+  width: 15%;
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+  margin-left: 45%;
+}
+
+.card-body-news {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  background-color: #e2d1fb;
+}
+
+.card-title {
+  font-family: Roboto;
+  color:  #4527A0;
+}
+
+.card-footer {
+  background-color: #e2d1fbe8;
+}

@@ -1,0 +1,105 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.refreshIcon { margin-left: 53.5% !important;}
+
+.table {  width: 250% !important; max-width: 300% !important; }
+
+.table thead tr th { width: 21% !important;}
+
+.card-user { width: 72% !important; left: 15% !important; }
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+#infoAdmin .cabecera { top: 21% !important; }
+
+.refreshIcon { margin-left: 67.5% !important;}
+
+.card-user { width: 15% !important; top: 25% !important; left: 45% !important; }
+
+.user { font-size: 1rem !important; }
+
+.dni, .pass, .rol { font-size: 0.8rem !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+#infoAdmin .cabecera { top: 21% !important; }
+
+.refreshIcon { margin-left: 67.5% !important;}
+
+.card-user { width: 15% !important; top: 25% !important; left: 45% !important; }
+
+.user { font-size: 1rem !important; }
+
+.dni, .pass, .rol { font-size: 0.8rem !important; }
+
+}
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[id=esActivo] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+select, select option{
+  width: 90% !important;
+  font-family: Roboto;
+}
+
+select option:checked{
+  background-color: #B39DDB !important;
+  font-weight: bold;
+  color:  #ffffff;
+}
+
+/********* ICONOS ***********/
+
+.cabecera {
+  position: fixed;
+  top: 15%;
+  left:6.5%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 69.5%;
+}
+

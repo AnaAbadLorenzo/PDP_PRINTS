@@ -37,6 +37,12 @@
                 include_once "./Autenticacion/GetJWToken.php";
                 $token = GetJWToken::getJWToken($usuarioDatos);
 
+                $respuesta = array (
+                    'tokenUsuario' => $token,
+                    'usuario' => $this->usuario->usuario,
+                    'rol' => 'rol'
+                );
+
             }catch(TokenException $ex){
                 $this->rellenarExcepcion($ex->getMessage(), 'login');
             }catch(AtributoIncorrectoException $ex){
@@ -47,7 +53,7 @@
                 $this->rellenarExcepcion($ex->getMessage(), 'login');
             }
             
-            return $token;
+            return $respuesta;
     
         }
     }

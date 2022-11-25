@@ -1,0 +1,567 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+  .footer {font-size: 15px;}
+
+  #navbardrop {height: 42px !important;}
+
+   .dropdown-menu {margin: 0.1rem 0 0 !important; padding: 0; border: 1px #4527A0 solid;}
+
+  .dropdown-item {border: 0.5px #4527a0 solid;}
+
+  .loginmodal-container h1, .registromodal-container h1, .recuperarcontrasenamodal-container h1 { font-size: 1.3em !important;}
+
+  .loginmodal-container input[type=text], .loginmodal-container input[type=password], .recuperarcontrasenamodal-container input[type=text] {height: 37px !important; font-size: 14px !important;}
+
+  form button[type="submit"], form button[type="button"] { height: 39px !important;}
+
+  .recuperarcontrasenamodal-container input[type=email] { height: 37px !important; font-size: 14px !important; width: 51% !important;}
+
+ .registromodal-container input[type=email] { height: 30px !important; font-size: 14px !important; width: 41% !important;}
+
+  .nav-tabs { font-size: 10px !important;}
+
+  small { font-size: 69% !important;}
+
+  .modal-dialog { margin: 4rem auto !important; }
+
+  #modal-dialog { left: 3% !important;}
+
+  .modal-content {width: 94% !important;}
+
+  #modal-mensaje { font-size: 15px !important;}
+
+  #modal-title { left: 14% !important; font-size: 19px !important;}
+
+  .imagenAviso { margin-top: 1% !important;}
+
+  .row .tooltip2 .tooltiptext2 {  width: 130px !important; font-size: 11pt !important; left: 16% !important; }
+
+  #registro-modal .modal-dialog { margin: 2rem auto !important; }
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+  .modal-dialog { margin: 10rem auto !important; }
+
+  #registro-modal .modal-dialog { margin: 6rem auto !important; }
+}
+
+
+
+/****** LOGIN Y REGISTRO MODAL ******/
+
+.login{
+	margin-left: 50%;
+}
+
+.loginmodal-container {
+  padding: 30px;
+  max-width: 350px;
+  width: 100% !important;
+  background-color: #EDE7F6;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: roboto;
+}
+
+.registromodal-container, .recuperarcontrasenamodal-container {
+  padding: 15px;
+  max-width: 600px;
+  width: 100% !important;
+  background-color: #EDE7F6;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: roboto;
+}
+
+.loginmodal-container h1, .registromodal-container h1,
+.recuperarcontrasenamodal-container h1 {
+  text-align: center;
+  font-size: 1.8em;
+  font-family: roboto;
+  color: #311B92;
+}
+
+.rellenarPass {
+  font-family: roboto;
+  color: #311B92;
+}
+
+.loginmodal-container input[type=submit], .registromodal-container input[type=submit],
+.recuperarcontrasenamodal-container input[type=submit] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.loginmodal-container input[type=text], .loginmodal-container input[type=password],
+.recuperarcontrasenamodal-container input[type=text] {
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.registromodal-container input[type=text], .registromodal-container input[type=password] {
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.registromodal-container input[name='dni'], .registromodal-container input[name='user']{
+  margin-top: 20px;
+}
+
+.registromodal-container input[type='email'], .registromodal-container input[name='confirmarPass']{
+  margin-bottom: 20px !important;
+}
+
+.registromodal-container select {
+  height: 30px;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 10px;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.registromodal-container input[type=date], input[type=tel] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.registromodal-container input[type=email] {
+  height: 30px;
+  font-size: 14px;
+  width: 59%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.recuperarcontrasenamodal-container input[type=email] {
+  height: 44px;
+  font-size: 16px;
+  width: 59%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.loginmodal-container input[type=text]:hover, input[type=password]:hover,
+.registromodal-container input[type=text]:hover, input[type=password]:hover, 
+input[type=date]:hover, input[type=tel]:hover, input[type=email]:hover, select:hover,
+.recuperarcontrasenamodal-container input[type=text]:hover, input[type=email]:hover {
+  border: 1px solid #9575CD;
+  border-top: 2px solid #5E35B1;
+  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.registro-submit, .recuperarcontrasena-submit {
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0,0,0,0.1); 
+  background-color: #4527A0;
+  padding: 17px 0px;
+  font-family: roboto;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.registro-submit:hover, .recuperarcontrasena-submit:hover {
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #673AB7;
+}
+
+.loginmodal-container a, .registromodal-container a,
+.recuperarcontrasenamodal-container a {
+  text-decoration: none;
+  color: #673AB7;
+  font-weight: 400;
+  text-align: center;
+  display: inline-block;
+  opacity: 0.6;
+  transition: opacity ease 0.5s;
+} 
+
+.login-help {
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal-dialog{
+  pointer-events: visible !important;
+}
+
+form fieldset {
+  width: 100%;
+  border: 2px solid #311B92;
+  color: #311B92;
+  font-family: roboto;
+  display: inline;
+  padding: 0.5em;
+}
+
+form legend {
+  width: 165px;
+  margin-left: 10px;
+  font-size: 15pt;
+  font-family: roboto;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.dni, .cif {
+  width: 36% !important;
+}
+
+.form-check-label {
+    font-size: 14px !important;
+}
+
+.preguntasEmpresa {
+    font-size: 14px !important;
+}
+
+.asociarteEmpresa{
+  margin-top: 20px !important;
+}
+
+#imagenEnterLogin{
+  width: 50px;
+}
+
+form button[type="submit"],
+form button[type="button"] {
+  background: #4527A0; 
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+form button[type="submit"]:hover,
+form button[type="button"]:hover {
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #673AB7;
+}
+
+.iconoEntrar, .iconoResetPass, .iconoRegistrar{
+  position: relative;
+  width: 30px;
+}
+
+/********* TABS REGISTRO ***********/
+.nav-tabs .nav-link.active {
+    color: #4527A0 !important;
+}
+
+#datosPersonales, #datosUsuario, #datosEmpresa {
+  color: #4527A0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/********* DESPLEGABLE IDIOMAS *********/
+#imagenIdioma {
+  display: inline;
+  width: 50px;
+  margin-top: -12px;
+  margin-left: 5px;
+}
+
+.navbar-nav {
+  margin-top: 1px;
+  border-radius: 5px;
+  border: 2px solid #4527A0;
+  height: 46px;
+}
+
+.navbar-nav .nav-link {
+  padding-right: 1rem; 
+  padding-left: 1rem;
+}
+
+#navbardrop, #navbardrop2 {
+  background-color: #4527A0 !important;
+  height: 42px;
+}
+
+.dropdown-menu {
+  top: 71% !important;
+  left: 94% !important;
+  text-align: center !important;
+  background-color: #D1C4E9 !important;
+  min-width: 5rem !important;
+}
+
+.dropdown-item {
+  height: 30px !important;
+}
+
+.dropdown-item:hover {
+  background-color: #EDE7F6 !important;
+  cursor: pointer !important;
+}
+
+#btnEspanol {
+  background-color: transparent;
+  background-image:url(../images/Spain2.png);
+  height:27px;
+  width:33px;
+  background-position:center;
+  background-repeat: no-repeat;
+  border: 1px solid transparent;
+  margin-top: -1px;
+  cursor: pointer;
+}
+
+#btnEspanol:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#btnIngles {
+  background-color: transparent;
+  background-image:url(../images/United-Kingdom2.png);
+  height:27px;
+  width:33px;
+  background-position:center;
+  background-repeat: no-repeat;
+  border: 1px solid transparent;
+  margin-top: -1px;
+  cursor: pointer;
+}
+
+#btnIngles:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#btnGallego {
+  background-color: transparent;
+  background-image:url(../images/Galicia2.png);
+  height:27px;
+  width:33px;
+  background-position:center;
+  background-repeat: no-repeat;
+  border: 1px solid transparent;
+  margin-top: -1px;
+  cursor: pointer;
+}
+
+#btnGallego:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.menuIdioma {
+  background-color: #4527A0;
+  height: 60px;
+}
+
+/********** FOOTER ************/
+.footer {
+  background-color: #4527A0;
+  height: 60px;
+}
+
+.footer div {
+  color: #EDE7F6;
+}
+
+.footer a {
+  color: #EDE7F6;
+}
+
+/*********** TOOLTIPS ICONOS ***************/
+.tooltip, .tooltip22, .tooltip3, .tooltip4, .tooltip5 {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    z-index: 1;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 130px;
+  font-size: 11pt;
+  font-family: 'Times New Roman'; 
+  background-color: #4527A0;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #4527A0;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 94%;
+  margin-left: -90px !important;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip22 .tooltiptext2 {
+  visibility: hidden;
+  width: 130px;
+  font-size: 11pt;
+  font-family: 'Times New Roman'; 
+  background-color: #4527A0;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #4527A0;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1 !important;
+  bottom: 125%;
+  left: 5%;
+  margin-left: -51px !important;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip3 .tooltiptext3 {
+  visibility: hidden;
+  width: 130px;
+  font-size: 11pt;
+  font-family: 'Times New Roman'; 
+  background-color: #4527A0;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #4527A0;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 52%;
+  margin-left: -66px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip4 .tooltiptext4 {
+  visibility: hidden;
+  width: 130px;
+  font-size: 11pt;
+  font-family: 'Times New Roman'; 
+  background-color: #4527A0;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #4527A0;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 52%;
+  margin-left: -66px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip5 .tooltiptext5 {
+  visibility: hidden;
+  width: 130px;
+  font-size: 11pt;
+  font-family: 'Times New Roman'; 
+  background-color: #4527A0;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #4527A0;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  right: 83%;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after, .tooltip2 .tooltiptext2::after,
+.tooltip3 .tooltiptext3::after, .tooltip4 .tooltiptext4::after,
+.tooltip5 .tooltiptext5::after  {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #4527A0 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext, .tooltip2:hover .tooltiptext2,
+.tooltip3:hover .tooltiptext3, .tooltip4:hover .tooltiptext4,
+.tooltip5:hover .tooltiptext5 {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/************ ICONOS **************/
+.iconoLogin {
+  width: 53%;
+  margin-top: -2px;
+}
+
+.iconoRegistro {
+  width: 45%;
+}

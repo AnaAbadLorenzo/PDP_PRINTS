@@ -1,0 +1,93 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.refreshIcon { margin-left: 53.5% !important;}
+
+.table {  width: 158% !important; max-width: 150% !important; }
+
+.table thead tr th { width: 25% !important;}
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+.refreshIcon { margin-left: 66.5% !important;}
+
+.table thead tr th { width: 28% !important;}
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+.refreshIcon { margin-left: 66.5% !important;}
+
+.table thead tr th { width: 28% !important;}
+
+}
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container textarea {
+  height: 60px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=date] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+/********** TITULO *********/
+.gestion {
+  left: 42%;
+}
+
+
+/********* ICONOS ***********/
+
+.cabecera {
+  position:  fixed;
+  top: 12%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 68.5%;
+}
+

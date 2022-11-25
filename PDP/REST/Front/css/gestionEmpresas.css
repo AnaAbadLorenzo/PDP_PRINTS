@@ -1,0 +1,402 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.refreshIcon { margin-left: 43.5% !important;}
+
+.table {  width: 158% !important; max-width: 150% !important; }
+
+.table thead tr th { width: 19% !important;}
+
+.card-enterprise { width: 78% !important; left: 11% !important; margin-top: -2% !important;}
+
+#tituloFormsModal3 { font-size: 1.4rem !important; margin-left: 16% !important;}
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+.card-enterprise { top: 26% !important; left: 44% !important; }
+
+.volver { width: 33% !important; }
+
+.editarCard { margin-left: 141px !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+.card-enterprise { top: 26% !important; left: 44% !important; }
+
+.volver { width: 33% !important; }
+
+.editarCard { margin-left: 141px !important; }
+
+}
+
+
+.formmodal-container {
+  padding: 15px;
+  max-width: 600px;
+  width: 100% !important;
+  background-color: #EDE7F6;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: Roboto;
+}
+
+.formmodal-container h1 {
+  text-align: center;
+  font-size: 1.8em;
+  font-family: Roboto;
+  color: #311B92;
+}
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+.formmodal-container input[type=submit] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+
+.formmodal-container input[type=text], .formmodal-container input[type=password], .formmodal-container input[type=email]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container select {
+  height: 30px;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 10px;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[name=cifEmpresa], input[type=tel] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=email] {
+  height: 30px;
+  font-size: 14px;
+  width: 59%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=text]:hover, input[type=password]:hover, 
+input[type=date]:hover, input[type=tel]:hover, input[type=email]:hover, select:hover{
+  border: 1px solid #9575CD;
+  border-top: 2px solid #5E35B1;
+  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
+.dni, .cif {
+  width: 36% !important;
+}
+
+.formmodal-container-submit {
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0,0,0,0.1); 
+  background-color: #4527A0;
+  padding: 17px 0px;
+  font-family: Roboto;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.formmodal-container-submit:hover {
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #673AB7;
+}
+
+.formmodal-container a {
+  text-decoration: none;
+  color: #673AB7;
+  font-weight: 400;
+  text-align: center;
+  display: inline-block;
+  opacity: 0.6;
+  transition: opacity ease 0.5s;
+} 
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+
+.modal-dialog{
+  pointer-events: visible !important;
+}
+
+.form-check-label {
+    font-size: 14px !important;
+}
+
+.preguntasEmpresa {
+    font-size: 14px !important;
+}
+
+.quitarEmpresa {
+  margin-top: 20px !important;
+  color:  #4527A0;
+  font-family: Roboto;
+}
+
+#form-modal {
+    color: #4527A0;
+}
+
+form fieldset {
+  width: 100%;
+  border: 2px solid #311B92;
+  color: #311B92;
+  font-family: Roboto;
+  display: inline;
+  padding: 0.5em;
+}
+
+form legend {
+  width: 165px;
+  margin-left: 10px;
+  font-size: 15pt;
+  font-family: Roboto;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+
+form button[type="submit"],
+form button[type="button"] {
+  background: #4527A0; 
+  cursor: pointer;
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+form button[type="submit"]:hover,
+form button[type="button"]:hover {
+  border: 0px;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  background-color: #673AB7;
+}
+
+
+/********* ICONOS ***********/
+
+.iconoAddEmpresa, .iconoSearchEmpresa, .iconoReactivar, .iconoCerrar, .iconoEditarEmpresa, .iconoEliminar {
+  position: relative;
+  width: 30px;
+  display:block;
+  margin:auto;
+}
+
+.cabecera {
+  position:  fixed;
+  top: 12%;
+  left: 6%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 65%;
+}
+
+.volver {
+  position: fixed;
+  bottom: 10%;
+  left: 1%;
+  width: 100%;
+}
+
+.iconoAdd, .iconoBack {
+  width: 4em; 
+  height: 4em; 
+  cursor: pointer;
+}
+
+.iconoVolverAtras {
+  width: 3em; 
+  height: 3em; 
+  cursor: pointer;
+}
+
+.iconoSearch, .iconoRefresh, .iconoSearchDelete {
+  width: 3em; 
+  height: 3em; 
+  cursor: pointer;
+}
+
+.iconoHideShow {
+  width: 2.5em; 
+  height: 2.5em; 
+  cursor: pointer;
+}
+
+.addIcon, .volverAtrasIcon {
+  margin-left: 1.5%;
+  margin-top: 1%;
+}
+
+.searchIcon {
+  margin-left: 1%;
+}
+
+.searchDeleteIcon {
+  margin-left: 1%;
+}
+
+.hideShowIcon {
+  margin-left: 1%;
+}
+
+.backIcon {
+  margin-left: 1.5%;
+  margin-top: 1%;
+}
+
+.volver {
+  position: fixed;
+  bottom: 10%;
+  left: 1%;
+  width: 100%;
+}
+
+.backIcon {
+  margin-left: 1.5%;
+  margin-top: 1%;
+}
+
+.iconoBack {
+  width: 4em;
+  height: 4em;
+  cursor: pointer;
+}
+
+.card-enterprise {
+  width: 16%;
+  position: fixed;
+  top: 21%;
+  left: 42%;
+  border: 1px solid #4527A0;
+}
+
+.card-enterprise .card-img-top{
+  width: 75%;
+  margin-left: 14%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.card-enterprise .card-body {
+  border: 1px solid #4527A0;
+  background-color: #e2d1fb;
+}
+
+.userImg, .nombreApellidosImg, .nombreEImg {
+  width: 10%;
+  margin-right: 5%;
+}
+
+.dniImg, .rolImg, .dniPImg, .fechaNacimientoImg,
+.direccionImg, .telefonoImg, .emailImg,
+.cifImg, .direccionEImg, .telefonoEImg{
+  width: 9%;
+  margin-right: 5%;
+}
+
+.passImg {
+  width: 8%;
+  display: inline;
+  margin-right: 5%;
+}
+
+.user, .dni, .pass, .rol,
+.nombreApellidos, .dniP, .fechaNacimiento, 
+.direccion, .telefono, .email,
+.nombreE, .cif, .direccionE, .telefonoE {
+  display: inline;
+}
+
+.userInfo, .dniInfo, .passInfo, .rolInfo,
+.nombreApellidosInfo, .dniPInfo, .fechaNacimientoInfo,
+.direccionInfo, .telefonoInfo, .emailInfo,
+.nombreEInfo, .cifInfo, .direccionEInfo,
+.telefonoEInfo {
+  margin-bottom: 5%;
+}
+
+.editarCard {
+  display: inline;
+  width: 37px;
+  margin-top: -10px;
+  margin-left: 230px;
+}
+
+/********* CURSORES **********/
+.editarPermiso {
+  cursor : not-allowed;
+}
+

@@ -1,0 +1,77 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+.refreshIcon { margin-left: 43.5% !important;}
+
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+.refreshIcon { margin-left: 61.5% !important;}
+
+}
+
+
+#subtitulo {
+  font-family: roboto;
+  color: #311B92;
+}
+
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+}
+
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+/********* ICONOS ***********/
+
+.btn-reactivar{
+  background-color: #4527A0;
+  color:  #ffffff;
+  text-align: center;
+  border: 2px solid #4527A0 !important;
+}
+
+.cabecera{
+  position:  fixed;
+  top: 12%;
+  left: 6%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 65%;
+}
+
+/********** TITULO *********/
+.gestion {
+  left: 42%;
+}

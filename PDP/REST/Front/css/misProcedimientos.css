@@ -1,0 +1,328 @@
+@media only screen and (min-width: 320px) and (max-width : 415px) {
+
+  .procedimientos { width: 87% !important; top: 26% !important; height: 53% !important;}
+
+  .card-body-plan { height: 133px !important; }
+
+  .card-title { font-size: 21px !important; }
+
+  .card-text, .procesos, .puntuacion, .fecha {  font-size: 16px !important; width: 82% !important; }
+
+  .procesos, .puntuacion, .fecha { margin-left: 2% !important; margin-top: 0% !important; }
+
+  .card-title-plan { margin-left: -85% !important; font-size: 16px !important; }
+
+  .tooltip8 .tooltiptext { width: 83px !important; font-size: 10pt !important; left: 16% !important; }
+
+  .tooltip9 .tooltiptext { width: 88px !important; font-size: 10pt !important; left: -12% !important; bottom: -58% !important; }
+
+  .paddingTop { padding-bottom: 1% !important; }
+
+  .iconEliminarProcedimiento, .iconVerProcedimiento { width: 252% !important; }
+
+  #eliminarProcedimiento { margin-left: 84% !important; margin-top: -26% !important; }
+
+  #verProcedimiento { margin-left: 84% !important; margin-top: -39% !important; }
+
+  .iconProcedimiento { width: 255% !important; }
+
+  #iniciarProcedimiento { margin-top: -13% !important;}
+
+  .iconContinuar { width: 250% !important; }
+
+  #continuarProcedimiento { margin-left: 84% !important; margin-top: -1% !important; z-index: 2500 !important;}
+
+  .iconFinalizado { width: 296% !important; }
+
+  #finalizadoProcedimiento { margin-left: 83% !important; margin-top: 9% !important; }
+
+  .tooltip14 .tooltiptext { width: 80px !important; font-size: 10pt !important; bottom: -8% !important; left: -332.2% !important; margin-left: -52px !important; }
+
+  .tooltip14 .tooltiptext::after { border-color: transparent transparent transparent #4527A0 !important; margin-left: 40px !important; bottom: 39% !important; }
+
+  .tooltip10 .tooltiptext { font-size: 10pt !important; bottom: -6% !important; left: -480.5% !important; }
+
+  .tooltip10 .tooltiptext::after { border-color: transparent transparent transparent #4527A0 !important; margin-left: 55px !important; bottom: 33% !important; }
+
+  .tooltip11 .tooltiptext { font-size: 10pt !important; bottom: -26% !important; left: -474% !important; }
+
+  .tooltip11 .tooltiptext::after { border-color: transparent transparent transparent #4527A0 !important; margin-left: 55px !important; bottom: 33% !important; }
+
+  .tooltip12 .tooltiptext { width: 133px !important; font-size: 10pt !important; bottom: -33% !important; left: -653.5% !important; }
+
+  .tooltip12 .tooltiptext::after { border-color: transparent transparent transparent #4527A0 !important; margin-left: 65px !important; bottom: 33% !important; }
+}
+
+@media (min-width: 1200px) and (max-width:  1299px){
+
+  #cabecera{ top: 20% !important; left: 8% !important; }
+
+  .procedimientos { width: 87% !important; top: 27% !important; height: 53% !important;}
+
+  .procesos { margin-top: -6% !important; }
+
+  .puntuacion, .fecha { margin-top: -3% !important; }
+
+  #verProcedimiento, #eliminarProcedimiento, #iniciarProcedimiento, #finalizadoProcedimiento, #continuarProcedimiento { margin-top: -1% !important; }
+
+  .tooltip14 .tooltiptext { bottom: -127% !important; left: -1.2% !important; }
+
+  .tooltip10 .tooltiptext { bottom: -181% !important; }
+
+  .tooltip11 .tooltiptext { bottom: -191% !important; }
+
+  .tooltip12 .tooltiptext { bottom: -231% !important; }
+
+}
+
+@media (min-width: 1300px) and (max-width:  1900px){
+
+  #cabecera{ top: 20% !important; left: 8% !important; }
+
+  .procedimientos { width: 87% !important; top: 27% !important; height: 53% !important;}
+
+  .procesos { margin-top: -6% !important; }
+
+  .puntuacion, .fecha { margin-top: -3% !important; }
+
+  #verProcedimiento, #eliminarProcedimiento, #iniciarProcedimiento, #finalizadoProcedimiento, #continuarProcedimiento { margin-top: -1% !important; }
+
+  .tooltip14 .tooltiptext { bottom: -127% !important; left: -1.2% !important; }
+
+  .tooltip10 .tooltiptext { bottom: -181% !important; }
+
+  .tooltip11 .tooltiptext { bottom: -191% !important; }
+
+  .tooltip12 .tooltiptext { bottom: -231% !important; }
+
+}
+
+.formmodal-container p, .labelForm {
+  font-family: Roboto;
+  color: #311B92;
+  display:  block;
+}
+
+
+.formmodal-container input[type=text]{
+  height: 30px;
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=date] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+select, select option{
+  width: 90% !important;
+  font-family: Roboto;
+}
+
+select option:checked{
+  background-color: #B39DDB !important;
+  font-weight: bold;
+  color:  #ffffff;
+}
+
+
+/********* ICONOS ***********/
+
+#iniciarProcedimiento, #continuarProcedimiento, #finalizadoProcedimiento,
+#eliminarProcedimiento, #verProcedimiento {
+  width: 4%;
+  position: absolute;
+}
+
+#iniciarProcedimiento {
+  margin-left: 83.5%;
+  margin-top: -2%;
+}
+
+#continuarProcedimiento {
+  margin-left: 88%;
+  margin-top: -2%;
+
+}
+
+#finalizadoProcedimiento {
+  margin-left: 93%;
+  margin-top: -2%;
+
+}
+
+#eliminarProcedimiento {
+  margin-left: 79%;
+  margin-top: -2%;
+
+}
+
+#verProcedimiento {
+  margin-left: 74.5%;
+  margin-top: -2%;
+
+}
+
+.btn-reactivar{
+  background-color: #4527A0;
+  color:  #ffffff;
+  text-align: center;
+  border: 2px solid #4527A0 !important;
+}
+
+.cabecera {
+  position:  fixed;
+  top: 13%;
+  left: 7%;
+  width: 100%;
+}
+
+.cabeceraEliminados {
+  position:  fixed;
+  top: 13%;
+  left: 6%;
+  width: 100%;
+}
+
+.refreshIcon {
+  margin-left: 75%;
+}
+
+.iconProcedimiento {
+  width: 85%;
+  cursor: pointer;
+  display: inline;
+}
+
+.iconContinuar {
+  width: 103%;
+  cursor: pointer;
+  display: inline;
+}
+
+.iconFinalizado {
+  width: 145%;
+  cursor: pointer;
+  display: inline;
+}
+
+.iconEliminarProcedimiento {
+  width: 85%;
+  cursor: pointer;
+  display: inline;
+}
+
+.iconVerProcedimiento {
+  width: 85%;
+  cursor: pointer;
+  display: inline;
+  
+}
+
+.iconPlan {
+  width: 8%;
+  display: inline;
+  margin-left: 3%;
+  margin-top: -0.5%;
+}
+
+/*********** CARDS ****************/
+
+.paddingTop {
+  padding-top: 1%;
+}
+
+.procedimientos {
+  width: 83%;
+  height: 61%;
+  position: fixed;
+  top: 18%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  bottom: 5%;
+  margin-left: 7%;
+}
+
+.procedimientos .card {
+  background-color: #4527a0d1;
+}
+
+.card-body-plan {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #e2d1fb;
+  height: 70px;
+  margin-bottom: 0.2%;
+}
+
+.card-title {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-bottom: 0rem;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-family: Roboto;
+  font-size: 18px;
+  margin-left:  2%;
+}
+
+.card-title-plan {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-left: -29%;
+  font-size: 19px;
+  display: inline;
+}
+
+.card-footer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #efe5ff;
+  height: 55px;
+}
+
+.procesos {
+  font-family: Roboto;
+  font-size: 21px;
+  margin-left: 26%;
+  margin-top: -4%;
+}
+
+.puntuacion {
+  font-family: Roboto;
+  font-size: 21px;
+  margin-left: 43%;
+  margin-top: -2%;
+}
+
+.fecha {
+  font-family: Roboto;
+  font-size: 21px;
+  margin-left: 65%;
+  margin-top: -2%;
+}
