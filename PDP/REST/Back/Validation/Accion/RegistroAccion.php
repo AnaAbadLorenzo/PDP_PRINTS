@@ -3,6 +3,8 @@
 include_once './Validation/ValidacionesBase.php';
 include_once './Validation/Excepciones/UsuarioNoEncontradoException.php';
 include_once './Validation/Excepciones/PasswdUsuarioNoCoincideException.php';
+include_once './Validation/Excepciones/UsuarioYaExisteException.php';
+include_once './Validation/Excepciones/DNIYaExisteException.php';
 include_once './Comun/funcionesComunes.php';
 
 class RegistroAccion extends ValidacionesBase{
@@ -19,44 +21,35 @@ class RegistroAccion extends ValidacionesBase{
 
 		$this->existeUsuario($datosRegistroUsuario);
 		$this->existeDNI($datosRegistroPersona);
-
-	}
-
-	function existeUsuario($datosRegistroUsuario){
-		$datoBuscar = array();
-		$datoBuscar['usuario'] = $datosRegistroUsuario['usuario'];
 		
+	}
+ 
+	function existeUsuario($datosUsuario){
+		
+		$datoBuscar = array();
+		$datoBuscar['usuario'] = $datosUsuario['usuario'];
 		$resultado = $this->usuario->getByLogin('usuario', $datoBuscar)['resource'];
 		if(sizeof($resultado) == 0) {
-			throw new UsuarioNoEncontradoException('USUARIO_NO_ENCONTRADO');
-		}else if($resultado['borrado_usuario'] == 1){
-			throw new UsuarioNoEncontradoException('USUARIO_NO_ENCONTRADO');
+			return true;
 		}else{
-			if($datosRegistroUsuario['passwd_usuario'] == $resultado['passwd_usuario']){
-				return true;
-			}else{
-				throw new PasswdUsuarioNoCoincideException('PASSWD_USUARIO_NO_COINCIDE');
-			}
+			throw new UsuarioYaExisteException('USUARIO_YA_EXISTE');
 		}
+		
 	}
 
 function existeDNI($datosRegistroPersona){
+
 		$datoBuscar = array();
 		$datoBuscar['dni_persona'] = $datosRegistroPersona['dni_persona'];
 		$resultado = $this->persona->getByDNI('persona', $datoBuscar)['resource'];
 		
-		/*if(sizeof($resultado) == 0) {
-			throw new UsuarioNoEncontradoException('USUARIO_NO_ENCONTRADO');
-		}else if($resultado['borrado_usuario'] == 1){
-			throw new UsuarioNoEncontradoException('USUARIO_NO_ENCONTRADO');
+		if(sizeof($resultado) == 0) {
+			return true;
 		}else{
-			if($datosUsuario['passwd_usuario'] == $resultado['passwd_usuario']){
-				return true;
-			}else{
-				throw new PasswdUsuarioNoCoincideException('PASSWD_USUARIO_NO_COINCIDE');
-			}
-		}*/
-	}
+			throw new DNIYaExisteException('DNI_YA_EXISTE');
+		}}
+		
+	
 		
 
 }

@@ -4,7 +4,7 @@ include_once './Validation/Excepciones/AtributoIncorrectoException.php';
 class RegistroAtributos extends ValidacionesFormato{
 	
 	function validarAtributosRegistro($atributos){
-
+	
 
 		$this->validar_dni_persona($atributos[0]);
 		$this->validar_nombre_persona($atributos[1]);

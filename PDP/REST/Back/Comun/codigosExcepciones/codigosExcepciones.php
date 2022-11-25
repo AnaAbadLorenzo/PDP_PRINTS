@@ -23,4 +23,6 @@ define('PASSWD_USUARIO_ALFANUMERICO_INCORRECTO', 'La contraseña sólo puede con
 define('USUARIO_NO_ENCONTRADO', 'El usuario no existe');
 define('PASSWD_USUARIO_NO_COINCIDE', 'La contraseña introducida no coincide con la del usuario');
 
+define('USUARIO_YA_EXISTE', 'El usuario ya existe');
+define('DNI_YA_EXISTE', 'El DNI ya existe');
 ?>

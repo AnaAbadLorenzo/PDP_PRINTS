@@ -2,7 +2,7 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Registro/impl/RegistroServiceImpl.php';
-include_once './Validation/Atributo/Controlador/AutenticacionValidation.php';
+include_once './Validation/Atributo/Controlador/RegistroValidation.php';
 
 class RegistroController extends ControllerBase{
 
@@ -11,14 +11,14 @@ class RegistroController extends ControllerBase{
 
 	public function __construct(){
 		$this->registroService = new RegistroServiceImpl();
-		//$this->autenticacionValidation = new AutenticacionValidation();
+		$this->registroValidation = new RegistroValidation();
 	}
 
 	function registro(){	
 		try{
 
 
-			//$this->autenticacionValidation->validarLogin();	
+			$this->registroValidation->validarRegistro();	
 			$this->registroService->inicializarParametros('registro');
 		
 			$respuesta = $this->registroService->registro('REGISTRO_PERSONA_COMPLETO');
@@ -27,6 +27,12 @@ class RegistroController extends ControllerBase{
 
 		}catch(AtributoIncorrectoException $exc){
 			//$this->rellenarRespuesta($exc, true, '');
+		}catch(UsuarioYaExisteException $exc){
+			echo("usuario");
+			$this->rellenarRespuesta($exc, true, '');
+		}catch(DNIYaExisteException $exc){
+			echo("dni");
+			$this->rellenarRespuesta($exc, true, '');
 		}
 	}	
 }
