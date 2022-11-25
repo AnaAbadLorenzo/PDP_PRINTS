@@ -4,9 +4,8 @@ var urlComun = "http://localhost/PDP_PRINTS/PDP/REST/Back/index.php";
 
 /**Urls Login*/
 var urlPeticionAjaxLogin = urlComun;
-var urlPeticionAjaxRegistro = urlComun + urlRegistrar;
-var urlPeticionAjaxRecuperarPass = urlComun + urlLogin + urlRecuperarPass;
-var urlPeticionAjaxListadoEmpresas = urlComun + urlEmpresa + "/listarEmpresasSinP";
+var urlPeticionAjaxRegistro = urlComun;
+var urlPeticionAjaxRecuperarPass = urlComun;
 
 /**Urls Menu*/
 var urlPeticionAjaxFuncionalidadesUsuario = urlComun + urlMenu + "/funcionalidadesUsuario?";

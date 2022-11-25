@@ -81,7 +81,6 @@
                 $persona_mapping->add($personaDatos);
                 $usuario_mapping = new UsuarioMapping();
                 $usuario_mapping->add($usuarioDatos);
-                $token = GetJWToken::getJWToken($usuarioDatos);
 
              /*}
             

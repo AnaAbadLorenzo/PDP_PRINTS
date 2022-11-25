@@ -1,10 +1,3 @@
-/**
- * Ana Abad Lorenzo
- * 
- * Funciones para login.html
- * 
- */
-
 /**Función login ajax con promesas*/
 function loginAjaxPromesa(){
   return new Promise(function(resolve, reject) {
@@ -35,6 +28,8 @@ function loginAjaxPromesa(){
 function recuperarPassAjaxPromesa(){
   return new Promise(function(resolve, reject) {
     var data = {
+      controlador = 'Autenticacion',
+      action = 'recuperarPass',
       usuario : $('#userRecuperarPass').val(),
       emailUsuario : $('#emailUser').val(),
       idioma: getCookie('lang')
@@ -51,9 +46,9 @@ function recuperarPassAjaxPromesa(){
     $.ajax({
       method: "POST",
       url: urlPeticionAjaxRecuperarPass,
-      contentType : "application/json",
-      data: JSON.stringify(data),  
-      dataType : 'json',
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data
+
       }).done(res => {
         if (res.code != 'RECUPERAR_PASS_OK') {
           reject(res);

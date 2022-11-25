@@ -13,7 +13,7 @@
       $rest = controlador;
       $action = action;
          
-      if ($rest != 'Autenticacion'){
+      if ($rest != 'Autenticacion' || $rest != 'Registro'){
             include_once './Controladores/AutenticacionController.php';
             $auth = new AutenticacionController();
             //$auth->comprobarToken();
