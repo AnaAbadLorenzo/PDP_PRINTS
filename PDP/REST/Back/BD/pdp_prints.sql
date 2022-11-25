@@ -20,13 +20,14 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pdp_prints`
 --
+
 CREATE DATABASE IF NOT EXISTS `pdp_prints` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `pdp_prints`;
-
+/*
 CREATE USER 'pdpPrints'@'%' IDENTIFIED VIA mysql_native_password USING 'admin';
 GRANT ALL PRIVILEGES ON *.* TO 'pdpPrints'@'%' REQUIRE NONE WITH 
 GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;GRANT ALL PRIVILEGES ON `pdp_prints`.* TO 'pdpPrints'@'%';
-
+*/
 -- --------------------------------------------------------
 
 --

@@ -1,9 +1,9 @@
 <?php
 
 include_once './Mapping/MappingBase.php';
-include_once './Modelos/UsuarioModel.php';
+include_once './Modelos/PersonaModel.php';
 
-class UsuarioMapping extends MappingBase {
+class PersonaMapping extends MappingBase {
     public $conexion;
 
     public function __construct(){
@@ -12,17 +12,17 @@ class UsuarioMapping extends MappingBase {
 
     function add($datosInsertar) {
         
-        //INSERT INTO `pdp_prints`.`usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES ('333333', 'jeje', '1234', '0', '2');
-        $this->query = "INSERT INTO USUARIO (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES ('".$datosInsertar['dni_usuario']."', '".$datosInsertar['usuario']."', '"
-                        .$datosInsertar['passwd_usuario']. "', '".$datosInsertar['borrado_usuario']."', '"
-                        .$datosInsertar['id_rol']."');";
+        $this->query = "INSERT INTO PERSONA (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES 
+                        ('".$datosInsertar['dni_persona']."','".$datosInsertar['nombre_persona']."','"
+                        .$datosInsertar['apellidos_persona']."','".$datosInsertar['fecha_nac_persona']."','"
+                        .$datosInsertar['direccion_persona']."','".$datosInsertar['email_persona']."','"
+                        .$datosInsertar['telefono_persona']."','".$datosInsertar['borrado_persona']. "')";
         $this->stmt = $this->conexion->prepare($this->query);
-      
         $this->execute_single_query();  
     }
-
+/*
     function edit($datosModificar) {
-        $this->query = "UPDATE USUARIO SET 'passwd_usuario='". $datosModificar->passwd_usuario."'WHERE 'dni_usuario ='". $datosModificar->dni_usuario."'";
+        $this->query = "UPDATE PERSONA SET 'passwd_usuario='". $datosModificar->passwd_usuario."'WHERE 'dni_usuario ='". $datosModificar->dni_usuario."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
@@ -56,21 +56,22 @@ class UsuarioMapping extends MappingBase {
             array_push($respuesta['resource'], $result);
         } 
     }
-
-    function searchByLogin($datosSearch) {
+ */
+    function searchByDNI($datosSearch) {
         try{
 
-            $this->query = "SELECT * FROM USUARIO WHERE `usuario`='".$datosSearch['usuario']."'";
-            $foraneas = $datosSearch['foraneas'];
+            $this->query = "SELECT * FROM PERSONA WHERE `dni_persona`='".$datosSearch['dni_persona']."'";
+            //$foraneas = $datosSearch['foraneas'];
             $this->stmt = $this->conexion->prepare($this->query);
             $this->get_one_result_from_query();
             $respuesta = $this->feedback;
 
             if($respuesta['code'] != 'RECORDSET_VACIO'){
-                foreach($foraneas as $fk){
+               
+               /* foreach($foraneas as $fk){
                     $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
                     array_push($respuesta['resource'], $result);
-                } 
+                } */
                 
                 return $respuesta;
             }else{
@@ -80,6 +81,6 @@ class UsuarioMapping extends MappingBase {
             $this->rellenarExcepcion($exc);
         }
     }
-    
+   
 }
 ?>
