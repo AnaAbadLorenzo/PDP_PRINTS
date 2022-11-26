@@ -14,7 +14,7 @@
                     $this->usuario = $this->crearModelo('Usuario');
 				    $this->clase_validacionAccionRegistroPersona = $this->crearValidacionAccion('Registro');
                     $this->clase_validacionFormatoRegistroPersona = $this->crearValidacionFormato('Registro');
-                    $this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
+                    //$this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
                     $this->clase_validacionFormatoRegistroUsuario = $this->crearValidacionFormato('Autenticacion');
                 break;
             }
