@@ -6,13 +6,13 @@ class RegistroAtributos extends ValidacionesFormato{
 	function validarAtributosRegistro($atributos){
 	
 
-		$this->validar_dni_persona($atributos[0]);
-		$this->validar_nombre_persona($atributos[1]);
-        $this->validar_apellidos_persona($atributos[2]);
-		$this->validar_fecha_nac_persona($atributos[3]);		
-        $this->validar_direccion_persona($atributos[4]);
-		$this->validar_email_persona($atributos[5]);		
-        $this->validar_telefono_persona($atributos[6]);		
+		$this->validar_dni_persona($atributos['dni_persona']);
+		$this->validar_nombre_persona($atributos['nombre_persona']);
+        $this->validar_apellidos_persona($atributos['apellidos_persona']);
+		$this->validar_fecha_nac_persona($atributos['fecha_nac_persona']);		
+        $this->validar_direccion_persona($atributos['direccion_persona']);
+		$this->validar_email_persona($atributos['email_persona']);		
+        $this->validar_telefono_persona($atributos['telefono_persona']);		
 
 	}
 

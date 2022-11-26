@@ -38,21 +38,10 @@
                 $datosRegistroUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
                 $datosRegistroUsuario['borrado_usuario'] = 0;
                 
-
-
-              
-                $this->clase_validacionFormatoRegistroPersona->comprobarRegistroBlank($datosRegistroPersona);
-                $this->clase_validacionFormatoRegistroUsuario->comprobarLoginBlank($datosRegistroUsuario);
+                $this->clase_validacionFormatoRegistroPersona->validarAtributosRegistro($datosRegistroPersona);
+                $this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
                 $this->clase_validacionAccionRegistroPersona->comprobarRegistro($datosRegistroPersona, $datosRegistroUsuario);
                
-                
-             
-                
-                /*
-                $datosBuscarUser = array();
-                $datosBuscarUser['dni_usuario'] = $this->usuario->usuario;
-                $datosBuscarUser['foraneas'] = $this->usuario->clavesForaneas;
-*/
                 $personaDatos = [
                     'dni_persona' => $datosRegistroPersona['dni_persona'],
                     'nombre_persona' => $this->persona->nombre_persona,
@@ -73,8 +62,6 @@
                     'id_rol' => 2/*$this->usuario->getById('rol',$datosBuscarUser)['resource']['id_rol']*/
                 ];
               
-               
-
                 include_once "./Autenticacion/GetJWToken.php";
               
                 $persona_mapping = new PersonaMapping();

@@ -11,7 +11,7 @@ class AutenticacionController extends ControllerBase{
 
 	public function __construct(){
 		$this->autenticacionService = new AutenticacionServiceImpl();
-		$this->autenticacionValidation = new AUtenticacionValidation();
+		$this->autenticacionValidation = new AutenticacionValidation();
 	}
 
 	function login(){	

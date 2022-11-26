@@ -16,13 +16,14 @@
 
         function login($mensaje) {
             try{
-                
-                $datosUsuario = array();
-                $datosUsuario['usuario'] = $this->usuario->usuario;
-                $datosUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
-                $datosUsuario['borrado_usuario'] = $this->usuario->borrado_usuario;
+                $datosUsuario = array(
+                    'usuario' =>  $this->usuario->usuario,
+                    'passwd_usuario' =>  $this->usuario->passwd_usuario,
+                    'borrado_usuario' => $this->usuario->borrado_usuario
+                );
 
-                $this->clase_validacionFormato->comprobarLoginBlank($datosUsuario);
+
+                $this->clase_validacionFormato->validarAtributosLogin($datosUsuario);
                 $this->clase_validacionAccion->comprobarLogin($datosUsuario);
 
                 $datosBuscarUser = array();

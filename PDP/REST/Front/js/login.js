@@ -28,8 +28,8 @@ function loginAjaxPromesa(){
 function recuperarPassAjaxPromesa(){
   return new Promise(function(resolve, reject) {
     var data = {
-      controlador = 'Autenticacion',
-      action = 'recuperarPass',
+      controlador : 'Autenticacion',
+      action: 'recuperarPass',
       usuario : $('#userRecuperarPass').val(),
       emailUsuario : $('#emailUser').val(),
       idioma: getCookie('lang')

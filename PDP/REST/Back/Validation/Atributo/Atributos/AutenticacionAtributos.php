@@ -4,8 +4,8 @@ include_once './Validation/Excepciones/AtributoIncorrectoException.php';
 class AutenticacionAtributos extends ValidacionesFormato{
 	
 	function validarAtributosLogin($atributos){
-		$this->validar_usuario($atributos[0]);
-		$this->validar_contrasena($atributos[1]);		
+		$this->validar_usuario($atributos['usuario']);
+		$this->validar_contrasena($atributos['passwd_usuario']);		
 	}
 
 	
@@ -23,7 +23,7 @@ class AutenticacionAtributos extends ValidacionesFormato{
 		}
 		if($this->comprobarFormatoLoginContrasena($atributo)===false){
 			throw new AtributoIncorrectoException('LOGIN_USUARIO_ALFANUMERICO_INCORRECTO');
-		}		
+		}	
 	}
 
 	
@@ -32,7 +32,7 @@ class AutenticacionAtributos extends ValidacionesFormato{
 			throw new AtributoIncorrectoException('PASSWD_USUARIO_VACIO');
 		}
 
-		if($this->Longitud_minima($atributo,3)===false){
+		/*if($this->Longitud_minima($atributo,3)===false){
 			throw new AtributoIncorrectoException('PASSWD_USUARIO_MENOR_QUE_3');
 		}
 
@@ -41,7 +41,7 @@ class AutenticacionAtributos extends ValidacionesFormato{
 		}
 		if($this->comprobarFormatoLoginContrasena($atributo)===false){
 			throw new AtributoIncorrectoException('PASSWD_USUARIO_ALFANUMERICO_INCORRECTO');
-		}		
+		}*/		
 	}
 }
 ?>

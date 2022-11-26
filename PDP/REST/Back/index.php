@@ -18,6 +18,22 @@
             $auth = new AutenticacionController();
             //$auth->comprobarToken();
       }
+
+      if($rest == 'Test') {
+            $metodo = '';
+            include_once './Controladores/Test/LoginTestController.php';
+            $nombreTest = ucfirst($action).'TestController';
+            $test = new $nombreTest();
+            if(isset($_POST['tipoTest'])){
+                  if($_POST['tipoTest'] === 'Atributos'){
+                        $metodo = 'testAtributos'.ucfirst($action);
+                  }else{
+                        $metodo = 'testAcciones'.ucfirst($action);
+                  }
+            }
+
+            $test->$metodo();
+      }
       
       if(file_exists('./Controladores/'.$rest.'Controller.php')){
             include_once './Controladores/'.$rest.'Controller.php';

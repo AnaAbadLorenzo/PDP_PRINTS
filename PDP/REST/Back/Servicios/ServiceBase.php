@@ -39,8 +39,8 @@ class ServiceBase{
 
 	function crearValidacionFormato($entidad){
 		$entidadCrear = $entidad;
-		include_once './Validation/Formato/'.$entidadCrear.'Formato.php';
-		$entidadCrear = $entidadCrear.'Formato';
+		include_once './Validation/Atributo/Atributos/'.$entidadCrear.'Atributos.php';
+		$entidadCrear = $entidadCrear.'Atributos';
 		$validacion = new $entidadCrear;
 		return $validacion;
 	}

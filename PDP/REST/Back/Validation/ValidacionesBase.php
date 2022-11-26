@@ -6,9 +6,9 @@ class ValidacionesBase {
         $arrayValores = array();
         foreach($arrayAtributos as $atributo){
             if(!isset($_POST[$atributo])){
-                array_push($arrayValores, null);
+                $arrayValores[$atributo] = null;
             }else{
-                array_push($arrayValores, $_POST[$atributo]);
+                $arrayValores[$atributo] = $_POST[$atributo];
             }
         }
 

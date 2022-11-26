@@ -1,5 +1,9 @@
 <?php
 
+define('AVANZAR_SIGUIENTE_CAMPO', 'Campo correcto');
+define('TEST_ATRIBUTOS_LOGIN_OK', 'Los test de atributos para el login se han ejecutado correctamente');
+
+
 define('TOKEN_CLAVE_VACIA', 'La clave del token no puede ser vacía');
 define('TOKEN_INCORRECTO', 'El token es incorrecto');
 define('TOKEN_HEADER_NO_VALIDO', 'La cabecera del token no es válida');
@@ -9,6 +13,7 @@ define('TOKEN_CADUCADO', 'El token se encuentra caducado');
 define('TOKEN_FALLO_VERIFICACION_SIGN', 'No se ha podido verificar la firma del token');
 define('CONEXION_BD_KO', 'No se ha podido establecer conexión con la BD');
 define('SQL_KO', 'La sentencia SQL ha fallado');
+define('TEST_FALLIDOS', 'Los test han fallado');
 
 define('LOGIN_USUARIO_VACIO', 'El login del usuario no puede ser vacío');
 define('LOGIN_USUARIO_MENOR_QUE_3', 'El login del usuario no puede tener menos de 3 caracteres');
