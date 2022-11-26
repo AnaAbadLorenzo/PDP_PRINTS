@@ -77,10 +77,8 @@
                 $this->rellenarExcepcion($ex->getMessage(), 'registro');
             }catch(DNIYaExisteException $ex){
                 $this->rellenarExcepcion($ex->getMessage(), 'registro');*/
-            }catch(UsuarioNoEncontradoException $ex){
-               // $this->rellenarExcepcion($ex->getMessage(), 'login');
-            }catch(PasswdUsuarioNoCoincideException $ex){
-                //$this->rellenarExcepcion($ex->getMessage(), 'login');
+            }catch(AtributoIncorrectoException $ex){
+               //$this->rellenarExcepcion($ex->getMessage(), 'registro');
             }
             
             return $personaDatos;

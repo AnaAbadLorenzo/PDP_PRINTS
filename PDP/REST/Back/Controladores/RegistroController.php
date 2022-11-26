@@ -26,7 +26,7 @@ class RegistroController extends ControllerBase{
 			$this->getRespuesta($respuesta);
 
 		}catch(AtributoIncorrectoException $exc){
-			//$this->rellenarRespuesta($exc, true, '');
+			$this->rellenarRespuesta($exc, true, '');
 		}catch(UsuarioYaExisteException $exc){
 			echo("usuario");
 			$this->rellenarRespuesta($exc, true, '');
