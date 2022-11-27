@@ -12,6 +12,7 @@
                 case 'registro':
                     $this->persona = $this->crearModelo('Persona');
                     $this->usuario = $this->crearModelo('Usuario');
+                    
 				    $this->clase_validacionAccionRegistroPersona = $this->crearValidacionAccion('Registro');
                     $this->clase_validacionFormatoRegistroPersona = $this->crearValidacionFormato('Registro');
                     //$this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
@@ -69,16 +70,18 @@
                 $usuario_mapping = new UsuarioMapping();
                 $usuario_mapping->add($usuarioDatos);
 
-             /*}
+                
+
+             }
             
              //averiguar porque no funciona estos dos catch
              
            catch(UsuarioYaExisteException $ex){
                 $this->rellenarExcepcion($ex->getMessage(), 'registro');
             }catch(DNIYaExisteException $ex){
-                $this->rellenarExcepcion($ex->getMessage(), 'registro');*/
+                $this->rellenarExcepcion($ex->getMessage(), 'registro');
             }catch(AtributoIncorrectoException $ex){
-               //$this->rellenarExcepcion($ex->getMessage(), 'registro');
+               $this->rellenarExcepcion($ex->getMessage(), 'registro');
             }
             
             return $personaDatos;

@@ -4,6 +4,9 @@ include_once './Validation/Excepciones/AtributoIncorrectoException.php';
 class AutenticacionAtributos extends ValidacionesFormato{
 	
 	function validarAtributosLogin($atributos){
+		header('Content-type: application/json');
+		echo(json_encode($atributos)); 
+		echo("------------");
 		$this->validar_usuario($atributos['usuario']);
 		$this->validar_contrasena($atributos['passwd_usuario']);		
 	}

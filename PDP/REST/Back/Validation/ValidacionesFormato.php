@@ -39,7 +39,15 @@ class ValidacionesFormato{
 	//devuelve true si es corrrecto false en caso contrario
 	function comprobarLetrasEspacios($string){
 
-		if (preg_match('/^[a-zA-ZÀ-ÿ \u00f1\u00d1]+$/s',$string)){
+		if (preg_match('/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/s',$string)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function comprobarLetras($string){
+
+		if (preg_match('/^[a-zA-ZÀ-ÿ]/s',$string)){
 			return true;
 		}else{
 			return false;
@@ -182,9 +190,9 @@ class ValidacionesFormato{
 	//devuelve true si es corrrecto false en caso contrario
 	function Es_string_espacios($string){
 		if (preg_match('/[^a-zA-Z0-9\s]/',$string)){
-			return false;
-		}else{
 			return true;
+		}else{
+			return false;
 		}
 	}
 
