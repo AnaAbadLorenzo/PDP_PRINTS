@@ -22,7 +22,7 @@ class UsuarioMapping extends MappingBase {
     }
 
     function edit($datosModificar) {
-        $this->query = "UPDATE USUARIO SET 'passwd_usuario='". $datosModificar->passwd_usuario."'WHERE 'dni_usuario ='". $datosModificar->dni_usuario."'";
+        $this->query = "UPDATE `usuario` SET `passwd_usuario`='". $datosModificar['passwd_usuario'] . "' WHERE `dni_usuario`='". $datosModificar['dni_usuario'] . "'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
@@ -60,7 +60,7 @@ class UsuarioMapping extends MappingBase {
     function searchByLogin($datosSearch) {
         try{
 
-            $this->query = "SELECT * FROM USUARIO WHERE `usuario`='".$datosSearch['usuario']."'";
+            $this->query = "SELECT * FROM `usuario` WHERE `usuario`='" . $datosSearch['usuario'] . "'";
             $foraneas = $datosSearch['foraneas'];
             $this->stmt = $this->conexion->prepare($this->query);
             $this->get_one_result_from_query();
