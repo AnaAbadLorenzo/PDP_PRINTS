@@ -39,7 +39,15 @@ class ValidacionesFormato{
 	//devuelve true si es corrrecto false en caso contrario
 	function comprobarLetrasEspacios($string){
 
-		if (preg_match('/^[a-zA-ZÀ-ÿ \u00f1\u00d1]+$/s',$string)){
+		if (preg_match('/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/s',$string)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function comprobarLetras($string){
+
+		if (preg_match('/^[a-zA-ZÀ-ÿ]/s',$string)){
 			return true;
 		}else{
 			return false;
@@ -121,9 +129,9 @@ class ValidacionesFormato{
 	//devuelve true si es corrrecto false en caso contrario
 	function Es_string($string){
 		if (preg_match('/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/s',$string)){
-			return false;
-		}else{
 			return true;
+		}else{
+			return false;
 		}
 	}
 	//comprueba si un string tiene solo letras y números
@@ -139,9 +147,9 @@ class ValidacionesFormato{
 	//devuelve true si es corrrecto false en caso contrario
 	function Es_numerico($string){
 		if (preg_match('/[^0-9]/',$string)){
-			return false;
-		}else{
 			return true;
+		}else{
+			return false;
 		}
 	}
 
@@ -182,18 +190,18 @@ class ValidacionesFormato{
 	//devuelve true si es corrrecto false en caso contrario
 	function Es_string_espacios($string){
 		if (preg_match('/[^a-zA-Z0-9\s]/',$string)){
-			return false;
-		}else{
 			return true;
+		}else{
+			return false;
 		}
 	}
 
 	function FormatoCalle($string){
 		//if (preg_match('/^[a-zA-Z0-9À-ÿ\u00f1\u00d1\u00AA\u00BA///,/-\s]+$/',$string)){
 		if (preg_match('/[^a-zA-Z0-9À-ÿºª,.\/\\s]/',$string)){
-			return false;
-		}else{
 			return true;
+		}else{
+			return false;
 		}
 	}
 
@@ -283,9 +291,9 @@ class ValidacionesFormato{
 
 	function Formato_fecha($fecha){
 		if(!preg_match('/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/', $fecha)){
-				return false;
+				return true;
 		}else{
-			return true;
+			return false;
 		}
 	}
 

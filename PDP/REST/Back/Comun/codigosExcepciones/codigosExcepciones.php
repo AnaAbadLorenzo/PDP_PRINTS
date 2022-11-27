@@ -37,6 +37,7 @@ define('DNI_PERSONA_VACIO', 'El DNI de la persona no puede ser vacío');
 define('DNI_PERSONA_MENOR_QUE_9', 'El DNI de la persona no puede tener menos de 9 caracteres');
 define('DNI_PERSONA_MAYOR_QUE_9', 'El DNI de la persona no puede tener más de 9 caracteres');
 define('DNI_PERSONA_ALFANUMERICO_INCORRECTO', 'El DNI de la persona solo puede tener números y una letra');
+DEFINE('DNI_PERSONA_LETRA_INCORRECTO', 'La letra del DNI es incorrecta');
 
 define('APELLIDOS_PERSONA_VACIO', 'Los apellidos de la persona no pueden ser vacíos');
 define('APELLIDOS_PERSONA_MENOR_QUE_3', 'Los apellidos de la persona no puedeN tener menos de 3 caracteres');

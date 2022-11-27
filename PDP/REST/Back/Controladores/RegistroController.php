@@ -24,13 +24,15 @@ class RegistroController extends ControllerBase{
 			$this->getRespuesta($respuesta);
 
 		}catch(AtributoIncorrectoException $exc){
-			//$this->rellenarRespuesta($exc, true, '');
+			//$respuesta = $this->getRespuesta($exc->getMessage(), 'registro');
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
+			
 		}catch(UsuarioYaExisteException $exc){
-			echo("usuario");
-			$this->rellenarRespuesta($exc, true, '');
+			//$respuesta = $this->getRespuesta($exc->getMessage(), 'registro');
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
 		}catch(DNIYaExisteException $exc){
-			echo("dni");
-			$this->rellenarRespuesta($exc, true, '');
+			//$respuesta = $this->getRespuesta($exc->getMessage(), 'registro');
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
 		}
 	}	
 }

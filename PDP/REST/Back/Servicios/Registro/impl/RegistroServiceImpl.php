@@ -12,9 +12,10 @@
                 case 'registro':
                     $this->persona = $this->crearModelo('Persona');
                     $this->usuario = $this->crearModelo('Usuario');
+                    
 				    $this->clase_validacionAccionRegistroPersona = $this->crearValidacionAccion('Registro');
                     $this->clase_validacionFormatoRegistroPersona = $this->crearValidacionFormato('Registro');
-                    $this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
+                    //$this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
                     $this->clase_validacionFormatoRegistroUsuario = $this->crearValidacionFormato('Autenticacion');
                 break;
             }
@@ -69,18 +70,18 @@
                 $usuario_mapping = new UsuarioMapping();
                 $usuario_mapping->add($usuarioDatos);
 
-             /*}
+                
+
+             }
             
              //averiguar porque no funciona estos dos catch
              
            catch(UsuarioYaExisteException $ex){
                 $this->rellenarExcepcion($ex->getMessage(), 'registro');
             }catch(DNIYaExisteException $ex){
-                $this->rellenarExcepcion($ex->getMessage(), 'registro');*/
-            }catch(UsuarioNoEncontradoException $ex){
-               // $this->rellenarExcepcion($ex->getMessage(), 'login');
-            }catch(PasswdUsuarioNoCoincideException $ex){
-                //$this->rellenarExcepcion($ex->getMessage(), 'login');
+                $this->rellenarExcepcion($ex->getMessage(), 'registro');
+            }catch(AtributoIncorrectoException $ex){
+               $this->rellenarExcepcion($ex->getMessage(), 'registro');
             }
             
             return $personaDatos;
