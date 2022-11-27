@@ -23,7 +23,7 @@
 
         function registro($mensaje) {
             try{
-                
+                $respuesta = '';
                 $datosRegistroPersona = array();
                 $datosRegistroPersona['dni_persona'] = $this->persona->dni_persona;
                 $datosRegistroPersona['nombre_persona'] = $this->persona->nombre_persona;
@@ -38,7 +38,7 @@
                 $datosRegistroUsuario['usuario'] = $this->usuario->usuario;
                 $datosRegistroUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
                 $datosRegistroUsuario['borrado_usuario'] = 0;
-                
+
                 $this->clase_validacionFormatoRegistroPersona->validarAtributosRegistro($datosRegistroPersona);
                 $this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
                 $this->clase_validacionAccionRegistroPersona->comprobarRegistro($datosRegistroPersona, $datosRegistroUsuario);
@@ -69,22 +69,19 @@
                 $persona_mapping->add($personaDatos);
                 $usuario_mapping = new UsuarioMapping();
                 $usuario_mapping->add($usuarioDatos);
-
-                
-
-             }
             
-             //averiguar porque no funciona estos dos catch
-             
-           catch(UsuarioYaExisteException $ex){
+            }catch(UsuarioYaExisteException $ex){
                 $this->rellenarExcepcion($ex->getMessage(), 'registro');
+                throw new UsuarioYaExisteException($ex->getMessage());
             }catch(DNIYaExisteException $ex){
                 $this->rellenarExcepcion($ex->getMessage(), 'registro');
+                throw new DNIYaExisteException($ex->getMessage());
             }catch(AtributoIncorrectoException $ex){
                $this->rellenarExcepcion($ex->getMessage(), 'registro');
+               throw new AtributoIncorrectoException($ex->getMessage());
             }
             
-            return $personaDatos;
+            return $respuesta;
     
         }
     }

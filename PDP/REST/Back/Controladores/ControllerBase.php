@@ -3,7 +3,7 @@
 abstract class ControllerBase{
 
 	function rellenarRespuesta($mensaje, $esExcepcion, $recursosDevolver){
-		if($esExcepcion === 'true') {
+		if($esExcepcion === true) {
 			$respuesta['ok'] = false;
 		}else{
 			$respuesta['ok'] = true;

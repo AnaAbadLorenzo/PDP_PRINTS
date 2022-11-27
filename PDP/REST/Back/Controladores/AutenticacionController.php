@@ -15,6 +15,7 @@ class AutenticacionController extends ControllerBase {
 	}
 
 	function login(){	
+		$respuesta ='';
 		try {
 			$this->autenticacionValidation->validarLogin();	
 			$this->autenticacionService->inicializarParametros('login');

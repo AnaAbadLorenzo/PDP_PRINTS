@@ -14,12 +14,10 @@ class ServiceBase{
 		$feedback['ok'] = false;
 		$feedback['code'] = $mensaje;
 		$feedback['resource']='';
+		
 		$log_excepciones = new LogExcepcionesServiceImpl();
 		$log_excepciones->inicializarParametros();
 		$log_excepciones->insertarLogExcepciones($this->construirExcepcion($mensaje, $clase));
-		header('Content-type: application/json');
-		echo(json_encode($feedback));
-		exit();
 	}
 
 	function crearModelo($entidad){
@@ -33,7 +31,7 @@ class ServiceBase{
 		$entidadCrear = $entidad;
 		include_once './Validation/Accion/'.$entidadCrear.'Accion.php';
 		$entidadCrear = $entidadCrear.'Accion';
-		$validacion = new $entidadCrear;
+		$validacion = new $entidadCrear();
 		return $validacion;
 	}
 
@@ -41,14 +39,14 @@ class ServiceBase{
 		$entidadCrear = $entidad;
 		include_once './Validation/Atributo/Atributos/'.$entidadCrear.'Atributos.php';
 		$entidadCrear = $entidadCrear.'Atributos';
-		$validacion = new $entidadCrear;
+		$validacion = new $entidadCrear();
 		return $validacion;
 	}
 
 	function construirExcepcion($mensaje, $clase){
 		$datosExcepcion = array();
 
-		if($clase == 'login'){
+		if($clase == 'login' || $clase == 'registro'){
 			$datosExcepcion['usuario'] = 'GENERICO';
 		}
 		$datosExcepcion['tipo_excepcion'] = $mensaje;

@@ -19,11 +19,12 @@
                     $this->usuario = $this->crearModelo('Usuario');
 				    $this->clase_validacionAccion = $this->crearValidacionAccion('Autenticacion');
                     $this->clase_validacionFormato = $this->crearValidacionFormato('Autenticacion');
-                    break;
+                break;
                 case 'recuperarPass':
                     $this->usuario = $this->crearModelo('Usuario');
-                    break;
                 break;
+                default:
+                break;   
             }
         }
 
@@ -59,12 +60,16 @@
 
             } catch (TokenException $ex) {
                 $this->rellenarExcepcion($ex->getMessage(), 'login');
+                throw new TokenException(($ex->getMessage()));
             } catch (AtributoIncorrectoException $ex) {
                 $this->rellenarExcepcion($ex->getMessage(), 'login');
+                throw new AtributoIncorrectoException(($ex->getMessage()));
             } catch (UsuarioNoEncontradoException $ex) {
                 $this->rellenarExcepcion($ex->getMessage(), 'login');
+                throw new UsuarioNoEncontradoException(($ex->getMessage()));
             } catch (PasswdUsuarioNoCoincideException $ex) {
                 $this->rellenarExcepcion($ex->getMessage(), 'login');
+                throw new PasswdUsuarioNoCoincideException(($ex->getMessage()));
             }
             
             return $respuesta;
