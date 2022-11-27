@@ -16,8 +16,6 @@ class RegistroController extends ControllerBase{
 
 	function registro(){	
 		try{
-
-
 			$this->registroValidation->validarRegistro();	
 			$this->registroService->inicializarParametros('registro');
 		

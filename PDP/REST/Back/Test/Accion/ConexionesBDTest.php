@@ -1,0 +1,76 @@
+<?php
+
+include_once './Comun/config.php';
+
+class ConexionesBDTest {
+
+    private $conexion;
+
+    private $token;
+
+    function __construct()
+    {
+        $this->conexion = $this->conectar();
+        $this->token = array();
+    }
+
+    function conectar() {
+        $this->conexion = curl_init();
+        return $this->conexion;
+    }
+
+    function desconectar($conex) {
+        curl_close($conex);
+    }
+
+    function HTTPResponse($cliente, $parametrosPeticion) {
+    
+        curl_setopt($cliente, CURLOPT_URL, urlRest);
+        curl_setopt($cliente, CURLOPT_HEADER, false);
+        curl_setopt($cliente, CURLOPT_HTTPHEADER, $this->token);
+        curl_setopt($cliente, CURLOPT_POST, true);
+        curl_setopt($cliente, CURLOPT_POSTFIELDS, $parametrosPeticion);
+        curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+            
+        $resultado = curl_exec($cliente);
+        $codigoHTTP = curl_getinfo($cliente, CURLINFO_HTTP_CODE);
+
+        if(!$resultado){
+            return false;
+        }else{
+            if($codigoHTTP == 200){
+                $resp = json_decode($resultado, true); // convierto en un stdClass
+			    $resp = (array)$resp; //convierto en array
+               return  $resp;
+            }
+        }
+    }
+
+    function obtenerTokenTest($peticion){
+        $peticion['test'] = 'testing';
+        $respuesta =  $this->HTTPResponse($this->conexion, $peticion);
+        
+        if(!empty($respuesta)){
+            $cabeceraAutorizacion = 'Authorization: '.$respuesta['resource']['tokenUsuario'];
+            $this->token[0] = $cabeceraAutorizacion;
+            return $this->token[0];
+        }
+    }
+
+    function pruebaTesting($accion,$peticion){
+        $peticion['test'] = 'testing';
+        $respuesta = '';
+
+
+        switch($accion){
+            case 'login':
+               $respuesta = $this->obtenerTokenTest($peticion);
+            break;
+            default:
+                $respuesta = $this->HTTPResponse($this->conexion, $peticion);
+            break;
+        }
+
+        return $respuesta;
+    }
+}

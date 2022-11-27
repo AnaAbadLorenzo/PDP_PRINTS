@@ -5,4 +5,5 @@
 	define ('directorioLog','/log');
 	define ('log_name','log.txt');
 	define ('BD', 'pdp_prints');
+	define ('BDTEST', 'pdp_prints_test');
 	define ('urlRest', 'http://localhost/PDP_PRINTS/PDP/REST/Back/index.php');

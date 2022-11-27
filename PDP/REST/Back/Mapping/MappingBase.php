@@ -9,6 +9,7 @@ abstract class MappingBase{
 	private static $db_user = user;
 	private static $db_pass = pass;
 	private static $bd = BD;
+	private static $bdTesting = BDTEST;
 	protected $query;
 	protected $rows = array();
 	private $conn;
@@ -23,9 +24,9 @@ abstract class MappingBase{
 	public $mapping;
 
 	function connection(){
-		if (isset($_POST['test']) && $_POST['test'] == 'concetardbTest'){
+		if (isset($_POST['test']) && $_POST['test'] == 'testing'){
 			try{
-				$this->conn = new PDO('mysql:host='.self::$db_host.';dbname='.self::$bd,self::$db_user,self::$db_pass);
+				$this->conn = new PDO('mysql:host='.self::$db_host.';dbname='.self::$bdTesting,self::$db_user,self::$db_pass);
 			}catch(Exception $e){
 				die('Error: '.$e->GetMessage());
 			}finally{

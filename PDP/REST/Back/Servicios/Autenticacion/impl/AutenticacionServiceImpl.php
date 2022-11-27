@@ -2,6 +2,7 @@
 
     include_once './Servicios/ServiceBase.php';
     include_once './Servicios/Autenticacion/AutenticacionService.php';
+    include_once './Autenticacion/GetJWToken.php';
 
     class AutenticacionServiceImpl extends ServiceBase implements AutenticacionService {
         function inicializarParametros($accion){
@@ -57,5 +58,25 @@
             return $respuesta;
     
         }
+
+        function verificarToken($mensaje){
+            $tokenUsuario = '';	
+            $resultado = '';
+            $requestHeaders = apache_request_headers();
+		    for($i = 0; $i<sizeof( $requestHeaders); $i++){
+                if($requestHeaders[$i] == 'Authorization'){
+                    $tokenUsuario = $requestHeaders[$i]->value;
+                    $resultado = GetJWToken::obtenerToken($tokenUsuario);
+                }
+            }
+            if(!empty($resultado)){
+                return true;
+            }else{
+               throw new TokenUsuarioIncorrectoException('TOKEN_USUARIO_INCORRECTO');
+            }
+
+
+		}	
+	 
     }
 ?>

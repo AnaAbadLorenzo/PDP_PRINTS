@@ -16,12 +16,12 @@
       if ($rest != 'Autenticacion' || $rest != 'Registro'){
             include_once './Controladores/AutenticacionController.php';
             $auth = new AutenticacionController();
-            //$auth->comprobarToken();
+           // $auth->verificarTokenUsuario();
       }
 
       if($rest == 'Test') {
             $metodo = '';
-            include_once './Controladores/Test/LoginTestController.php';
+            include_once './Controladores/Test/'.$action.'TestController.php';
             $nombreTest = ucfirst($action).'TestController';
             $test = new $nombreTest();
             if(isset($_POST['tipoTest'])){

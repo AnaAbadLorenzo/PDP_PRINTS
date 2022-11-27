@@ -16,7 +16,6 @@ class AutenticacionController extends ControllerBase{
 
 	function login(){	
 		try{
-
 			$this->autenticacionValidation->validarLogin();	
 			$this->autenticacionService->inicializarParametros('login');
 		
@@ -25,8 +24,18 @@ class AutenticacionController extends ControllerBase{
 			$this->getRespuesta($respuesta);
 
 		}catch(AtributoIncorrectoException $exc){
-			$this->rellenarRespuesta($exc, true, '');
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
 		}
-	}	
+	}
+	
+	function verificarTokenUsuario(){
+		try{
+			$respuesta = $this->autenticacionService->verificarToken('TOKEN_USUARIO_CORRECTO');
+			$this->rellenarRespuesta('TOKEN_USUARIO_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
+		}catch(TokenUsuarioIncorrectoException $exec){
+			$this->rellenarRespuesta($exec->getMessage(), true, '');
+		}
+	}
 }
 ?>

@@ -14,14 +14,31 @@ class LoginTestController extends ControllerBase{
 	}
 
 	function testAtributosLogin(){	
+		$respuesta = array();
+		
 		try{
-			$respuesta = $this->testLoginService->testAtributoUsuario();
+
+			$resultado = $this->testLoginService->testAtributoUsuario();
+			array_push($respuesta, $resultado);
+			$resultado = $this->testLoginService->testAtributoPasswdUsuario();
+			array_push($respuesta, $resultado);
 			$this->rellenarRespuesta('TEST_ATRIBUTOS_LOGIN_OK', false, $respuesta);
 			$this->getRespuesta($respuesta);
 
 		}catch(TestsFallidosException $exc){
 			$this->rellenarRespuesta($exc, true, '');
 		}
-	}	
+	}
+	
+	function testAccionesLogin() {
+		try{
+			$respuesta = $this->testLoginService->testAccionLogin();
+			$this->rellenarRespuesta('TEST_ACCIONES_LOGIN_OK', false, $respuesta);
+			$this->getRespuesta($respuesta);
+
+		}catch(TestsFallidosException $exc){
+			$this->rellenarRespuesta($exc, true, '');
+		}
+	}
 }
 ?>
