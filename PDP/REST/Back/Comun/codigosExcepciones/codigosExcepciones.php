@@ -69,5 +69,6 @@ define('PASSWD_USUARIO_NO_COINCIDE', 'La contraseña introducida no coincide con
 
 define('USUARIO_YA_EXISTE', 'El usuario ya existe');
 define('DNI_YA_EXISTE', 'El DNI ya existe');
+define('DNI_NO_EXISTE', 'El DNI no existe');
 
 ?>
