@@ -6,6 +6,7 @@
     include_once "./Mapping/UsuarioMapping.php";
 
     class RegistroServiceImpl extends ServiceBase implements RegistroService {
+        public $recursos;
 
         function inicializarParametros($accion){
             switch($accion){
@@ -37,16 +38,22 @@
                 $datosRegistroUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
                 $datosRegistroUsuario['borrado_usuario'] = 0;
 
-                $this->clase_validacionFormatoRegistroPersona->validarAtributosRegistro($datosRegistroPersona);
-                $this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
-                $this->clase_validacionAccionRegistroPersona->comprobarRegistro($datosRegistroPersona, $datosRegistroUsuario);
+                if ($this->clase_validacionFormatoRegistroPersona != null) {
+                    $this->clase_validacionFormatoRegistroPersona->validarAtributosRegistro($datosRegistroPersona);
+                }
+                if ($this->clase_validacionFormatoRegistroUsuario != null){
+                    $this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
+                }
+                if ( $this->clase_validacionAccionRegistroPersona != null) {
+                    $this->clase_validacionAccionRegistroPersona->comprobarRegistro($datosRegistroPersona, $datosRegistroUsuario);
+                }
                
                 if($this->clase_validacionFormatoRegistroPersona->respuesta != null){
-                    return $this->clase_validacionFormatoRegistroPersona->respuesta;
+                    $respuesta = $this->clase_validacionFormatoRegistroPersona->respuesta;
                 }else if($this->clase_validacionFormatoRegistroUsuario->respuesta != null){
-                    return $this->clase_validacionFormatoRegistroUsuario->respuesta;
+                    $respuesta = $this->clase_validacionFormatoRegistroUsuario->respuesta;
                 }else if($this->clase_validacionAccionRegistroPersona->respuesta != null){
-                    return $this->clase_validacionAccionRegistroPersona->respuesta;
+                    $respuesta = $this->clase_validacionAccionRegistroPersona->respuesta;
                 }else{
                     $personaDatos = [
                         'dni_persona' => $datosRegistroPersona['dni_persona'],
@@ -72,6 +79,9 @@
                     $persona_mapping->add($personaDatos);
                     $usuario_mapping = new UsuarioMapping();
                     $usuario_mapping->add($usuarioDatos);
+
+                    $respuesta = $mensaje;
+                    $recursos = '';
                 }
             return $respuesta;
         }

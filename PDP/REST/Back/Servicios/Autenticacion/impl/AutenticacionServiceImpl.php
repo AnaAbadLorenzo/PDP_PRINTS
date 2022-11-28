@@ -30,7 +30,6 @@
 
         function login($mensaje) {
             $respuesta = '';
-
             $datosUsuario = array(
                 'usuario' =>  $this->usuario->usuario,
                 'passwd_usuario' =>  $this->usuario->passwd_usuario,

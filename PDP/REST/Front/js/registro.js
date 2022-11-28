@@ -26,7 +26,7 @@ function registroAjaxPromesa() {
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				data: registro,
 			}).done(res => {
-				if (res.code != 'REGISTRO_CORRECTO') {
+				if (res.code != 'REGISTRO_OK') {
 					reject(res);
 				}
 				resolve(res);
@@ -41,9 +41,7 @@ async function registro() {
 	await registroAjaxPromesa()
 	.then((res) => {
 		$("#registro-modal").modal('toggle');
-
 		respuestaAjaxOK("REGISTRO_CORRECTO", res.code);
-	  	
     	setLang(getCookie('lang'));
 		document.getElementById("modal").style.display = "block";
 	})

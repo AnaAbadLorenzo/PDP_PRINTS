@@ -16,10 +16,10 @@ class RegistroAccion extends ValidacionesBase{
 		$this->persona = new PersonaModel();
 	}
 	function comprobarRegistro($datosRegistroPersona, $datosRegistroUsuario){
-
-		$this->existeUsuario($datosRegistroUsuario);
 		$this->existeDNI($datosRegistroPersona);
-		
+		if($this->respuesta == null || $this->respuesta != 'PERSONA_YA_EXISTE') {
+			$this->existeUsuario($datosRegistroUsuario);
+		}
 	}
  
 	function existeUsuario($datosUsuario){
@@ -44,7 +44,7 @@ function existeDNI($datosRegistroPersona){
 		if(sizeof($resultado) == 0) {
 			return true;
 		}else{
-			$this->respuesta = 'USUARIO_YA_EXISTE';
+			$this->respuesta = 'PERSONA_YA_EXISTE';
 		}}
 		
 	

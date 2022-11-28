@@ -23,7 +23,7 @@ class RegistroController extends ControllerBase{
 		if($respuesta != 'REGISTRO_PERSONA_COMPLETO') {
 			$this->rellenarRespuesta($respuesta, true, '');
 		}else{
-			$this->rellenarRespuesta('REGISTRO_CORRECTO', false, $respuesta);
+			$this->rellenarRespuesta('REGISTRO_OK', false, $this->registroService->recursos);
 		}
 		$this->getRespuesta($respuesta);
 	}	
