@@ -12,38 +12,44 @@ class PersonaMapping extends MappingBase {
 
     function add($datosInsertar) {
         
-        $this->query = "INSERT INTO PERSONA (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES 
-                        ('".$datosInsertar['dni_persona']."','".$datosInsertar['nombre_persona']."','"
+        $this->query = "INSERT INTO PERSONA (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES ('".$datosInsertar['dni_persona']."','".$datosInsertar['nombre_persona']."','"
                         .$datosInsertar['apellidos_persona']."','".$datosInsertar['fecha_nac_persona']."','"
                         .$datosInsertar['direccion_persona']."','".$datosInsertar['email_persona']."','"
                         .$datosInsertar['telefono_persona']."','".$datosInsertar['borrado_persona']. "')";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();  
     }
-/*
+
     function edit($datosModificar) {
-        $this->query = "UPDATE PERSONA SET 'passwd_usuario='". $datosModificar->passwd_usuario."'WHERE 'dni_usuario ='". $datosModificar->dni_usuario."'";
+        $this->query = "UPDATE PERSONA SET `nombre_persona` = '"
+        .$datosModificar['nombre_persona']."', `fecha_nac_persona` = '"
+        .$datosModificar['fecha_nac_persona']."', `direccion_persona` = '"
+        .$datosModificar['direccion_persona']."', `email_persona` = '"
+        .$datosModificar['email_persona']."', `telefono_persona` = '"
+        .$datosModificar['telefono_persona']."',`borrado_persona`='"
+        .$datosModificar['borrado_persona']."'WHERE `dni_persona` ='"
+        .$datosModificar['dni_persona']."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
 
     function delete($datosEliminar) {
-        $this->query = "DELETE FROM USUARIO WHERE 'dni_usuario ='". $datosEliminar->dni_usuario."'";
+        $this->query = "DELETE FROM PERSONA WHERE `dni_persona` ='". $datosEliminar['dni_persona']."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
-
+/*
     function searchBy() {
         $this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
                         "'AND borrado_usuario='". $this->usuario->borrado_usuario."' AND id_rol='". $this->usuario->id_rol."'";
         $this->get_results_from_query();
     }
-
+*/
     function search() {
-        $this->query = "SELECT * FROM USUARIO ";
+        $this->query = "SELECT * FROM PERSONA";
         $this->get_results_from_query();
     }
-
+/*
     function searchById($datosSearch) {
         $this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='".$datosSearch['dni_usuario']."'";
         $foraneas = $datosSearch->foraneas;

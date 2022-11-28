@@ -188,9 +188,9 @@ abstract class MappingBase{
 		$respuesta['code'] = $mensaje;
 		$respuesta['resource'] = '';
 		
-		header('Content-type: application/json');
+		/*header('Content-type: application/json');
 		echo(json_encode($respuesta)); 
-		exit();
+		exit();*/
 	}
 }
 

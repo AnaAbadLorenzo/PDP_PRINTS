@@ -28,7 +28,8 @@ class UsuarioMapping extends MappingBase {
     }
 
     function delete($datosEliminar) {
-        $this->query = "DELETE FROM USUARIO WHERE 'dni_usuario ='". $datosEliminar->dni_usuario."'";
+       
+        $this->query = "DELETE FROM USUARIO WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }

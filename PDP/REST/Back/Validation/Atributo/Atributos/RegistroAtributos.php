@@ -65,6 +65,14 @@ class RegistroAtributos extends ValidacionesFormato{
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'FECHA_NAC_PERSONA_VACIO';
 		}
+
+		if($this->Longitud_minima($atributo,10)===false){
+			$this->respuesta = 'FECHA_NAC_PERSONA_MENOR_QUE_10';
+		}
+
+		if($this->Longitud_maxima($atributo,10)===false){
+			$this->respuesta = 'FECHA_NAC_PERSONA_MAYOR_QUE_10';
+		}	
 		
 		if($this->Formato_fecha($atributo)===false){
 			$this->respuesta = 'FECHA_NAC_PERSONA_FECHA_INCORRECTO';
