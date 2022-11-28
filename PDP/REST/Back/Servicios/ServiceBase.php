@@ -29,17 +29,26 @@ class ServiceBase{
 
 	function crearValidacionAccion($entidad){
 		$entidadCrear = $entidad;
-		include_once './Validation/Accion/'.$entidadCrear.'Accion.php';
-		$entidadCrear = $entidadCrear.'Accion';
-		$validacion = new $entidadCrear();
+		if(file_exists('./Validation/Accion/'.$entidadCrear.'Accion.php')){
+			include_once './Validation/Accion/'.$entidadCrear.'Accion.php';
+			$entidadCrear = $entidadCrear.'Accion';
+			$validacion = new $entidadCrear();
+		}else{
+			$validacion = null;
+		}
 		return $validacion;
 	}
 
 	function crearValidacionFormato($entidad){
 		$entidadCrear = $entidad;
-		include_once './Validation/Atributo/Atributos/'.$entidadCrear.'Atributos.php';
-		$entidadCrear = $entidadCrear.'Atributos';
-		$validacion = new $entidadCrear();
+		if(file_exists('./Validation/Atributo/Atributos/'.$entidadCrear.'Atributos.php')) {
+			include_once './Validation/Atributo/Atributos/'.$entidadCrear.'Atributos.php';
+			$entidadCrear = $entidadCrear.'Atributos';
+			$validacion = new $entidadCrear();
+		}else{
+			$validacin = null;
+		}
+		
 		return $validacion;
 	}
 

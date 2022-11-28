@@ -58,8 +58,6 @@ class PersonaMapping extends MappingBase {
     }
  */
     function searchByDNI($datosSearch) {
-        try{
-
             $this->query = "SELECT * FROM PERSONA WHERE `dni_persona`='".$datosSearch['dni_persona']."'";
             //$foraneas = $datosSearch['foraneas'];
             $this->stmt = $this->conexion->prepare($this->query);
@@ -77,9 +75,6 @@ class PersonaMapping extends MappingBase {
             }else{
                 return $respuesta;
             }
-        }catch(QueryKOExcepcion $exc){
-            $this->rellenarExcepcion($exc);
-        }
     }
    
 }

@@ -102,8 +102,8 @@ arrayGA={
 
 	//Mensajes error
 	'ERROR': 'ERRO',
-	'USUARIO_NO_EXISTE' : 'O usuario non existe',
-	'PASSWORD_INCORRECTO' : 'O contrasinal é incorrecto. Por favor, inténteo de novo',
+	'USUARIO_NO_ENCONTRADO' : 'O usuario non existe',
+	'PASSWD_USUARIO_NO_COINCIDE' : 'O contrasinal é incorrecto. Por favor, inténteo de novo',
 	'EMAIL_NO_ENCONTRADO' : 'O email non existe',
 	'PERSONA_NO_EXISTE' : 'A persoa non existe',
 	'ERROR_LISTAR_EMPRESAS' : 'Ocurriu un erro ao listar as empresas dispoñibles',
@@ -314,7 +314,7 @@ arrayGA={
 	'RELLENAR_FORM_PASS' : 'Enche o formulario para recuperala',
 	'RECUPERAR_PASS' : 'Recuperar contrasinal',
 	'ACCEDER_CUENTA' : 'Accede coa túa conta',
-	'MENSAJE_BIENVENIDA' : 'Benvido a SDS',
+	'MENSAJE_BIENVENIDA' : 'Benvido a Carboon Footprint',
 	'DATOS_PERSONALES' : 'Datos Persoales',
 	'DATOS_USUARIO' : 'Datos Usuario',
 	'DATOS_EMPRESA' : 'Datos Empresa',

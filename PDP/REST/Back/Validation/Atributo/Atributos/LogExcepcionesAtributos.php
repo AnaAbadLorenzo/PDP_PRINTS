@@ -1,6 +1,4 @@
 <?php
-
-include_once './Validation/Excepciones/AtributoIncorrectoException.php';
 class LogExcepcionesAtributos extends ValidacionesFormato{
 	
 	function validarAtributosLogExcepciones($atributos){

@@ -16,26 +16,21 @@ class AutenticacionController extends ControllerBase {
 
 	function login(){	
 		$respuesta ='';
-		try {
-			$this->autenticacionValidation->validarLogin();	
-			$this->autenticacionService->inicializarParametros('login');
 		
-			$respuesta = $this->autenticacionService->login('LOGIN_USUARIO_CORRECTO');
-			$this->rellenarRespuesta('LOGIN_USUARIO_CORRECTO', false, $respuesta);
-			$this->getRespuesta($respuesta);
+		$this->autenticacionValidation->validarLogin();	
+		$this->autenticacionService->inicializarParametros('login');
+		
+		$respuesta = $this->autenticacionService->login('LOGIN_USUARIO_CORRECTO');
 
-		}catch(AtributoIncorrectoException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}catch(UsuarioNoEncontradoException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}catch(TokenException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}catch(PasswdUsuarioNoCoincideException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
+		if($respuesta != 'LOGIN_USUARIO_CORRECTO') {
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
+			$this->rellenarRespuesta('LOGIN_USUARIO_CORRECTO', false, $this->autenticacionService->token);
 		}
+		$this->getRespuesta($respuesta);
 	}
 	
-	function verificarTokenUsuario(){
+	/*function verificarTokenUsuario(){
 		try{
 			$respuesta = $this->autenticacionService->verificarToken('TOKEN_USUARIO_CORRECTO');
 			$this->rellenarRespuesta('TOKEN_USUARIO_CORRECTO', false, $respuesta);
@@ -43,10 +38,10 @@ class AutenticacionController extends ControllerBase {
 		}catch(TokenUsuarioIncorrectoException $exec){
 			$this->rellenarRespuesta($exec->getMessage(), true, '');
 		}
-	}
+	}*/
 		
 
-	function recuperarPass() {
+	/*function recuperarPass() {
 
 		$this -> autenticacionService -> inicializarParametros('recuperarPass');
 		
@@ -63,7 +58,7 @@ class AutenticacionController extends ControllerBase {
 			$this -> getRespuesta($respuesta);
 		}
 
-	}
+	}*/
 }
 
 ?>

@@ -1,16 +1,14 @@
 <?php
 
 include_once './Validation/ValidacionesBase.php';
-include_once './Validation/Excepciones/UsuarioNoEncontradoException.php';
-include_once './Validation/Excepciones/PasswdUsuarioNoCoincideException.php';
-include_once './Validation/Excepciones/UsuarioYaExisteException.php';
-include_once './Validation/Excepciones/DNIYaExisteException.php';
 include_once './Comun/funcionesComunes.php';
 
 class RegistroAccion extends ValidacionesBase{
 
 	private $usuario;
 	private $persona;
+
+	public $respuesta;
 
 	function __construct()
 	{
@@ -32,7 +30,7 @@ class RegistroAccion extends ValidacionesBase{
 		if(sizeof($resultado) == 0) {
 			return true;
 		}else{
-			throw new UsuarioYaExisteException('USUARIO_YA_EXISTE');
+			$this->respuesta = 'USUARIO_YA_EXISTE';
 		}
 		
 	}
@@ -46,7 +44,7 @@ function existeDNI($datosRegistroPersona){
 		if(sizeof($resultado) == 0) {
 			return true;
 		}else{
-			throw new DNIYaExisteException('DNI_YA_EXISTE');
+			$this->respuesta = 'USUARIO_YA_EXISTE';
 		}}
 		
 	

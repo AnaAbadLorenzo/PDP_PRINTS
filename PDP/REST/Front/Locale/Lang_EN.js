@@ -102,8 +102,8 @@ arrayEN={
 
 	//Mensajes error
 	'ERROR': 'WARNING',
-	'USUARIO_NO_EXISTE' : 'User doesn`t exist',
-	'PASSWORD_INCORRECTO' : 'The password is incorrect. Please try again',
+	'USUARIO_NO_ENCONTRADO' : 'User doesn`t exist',
+	'PASSWD_USUARIO_NO_COINCIDE' : 'The password is incorrect. Please try again',
 	'EMAIL_NO_ENCONTRADO' : 'The email doesn`t exist',
 	'PERSONA_NO_EXISTE' : 'The person doesn`t exist',
 	'ERROR_LISTAR_EMPRESAS' : "An error occurred while listing the available enterprises",
@@ -316,7 +316,7 @@ arrayEN={
 	'RELLENAR_FORM_PASS' : 'Fill the form to recover it',
 	'RECUPERAR_PASS' : 'Recovery password',
 	'ACCEDER_CUENTA' : 'Access with you account',
-	'MENSAJE_BIENVENIDA' : 'Welcome to SDS',
+	'MENSAJE_BIENVENIDA' : 'Welcome to Carboon Footprint',
 	'DATOS_PERSONALES' : 'Personal information',
 	'DATOS_USUARIO' : 'User information',
 	'DATOS_EMPRESA' : 'Enterprise information',

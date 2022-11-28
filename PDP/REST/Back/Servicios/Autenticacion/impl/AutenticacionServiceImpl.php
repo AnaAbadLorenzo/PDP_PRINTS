@@ -12,7 +12,7 @@
     require_once './Comun/PHPMailer/src/Exception.php';
 
     class AutenticacionServiceImpl extends ServiceBase implements AutenticacionService {
-
+        public $token;
         function inicializarParametros($accion){
             switch($accion) {
                 case 'login':
@@ -29,55 +29,50 @@
         }
 
         function login($mensaje) {
+            $respuesta = '';
 
-            try{
-                $datosUsuario = array(
-                    'usuario' =>  $this->usuario->usuario,
-                    'passwd_usuario' =>  $this->usuario->passwd_usuario,
-                    'borrado_usuario' => $this->usuario->borrado_usuario
-                );
-
+            $datosUsuario = array(
+                'usuario' =>  $this->usuario->usuario,
+                'passwd_usuario' =>  $this->usuario->passwd_usuario,
+                'borrado_usuario' => $this->usuario->borrado_usuario
+            );
+            if( $this->clase_validacionFormato !=null){
                 $this->clase_validacionFormato->validarAtributosLogin($datosUsuario);
+            }
+            if($this->clase_validacionAccion != null) {
                 $this->clase_validacionAccion->comprobarLogin($datosUsuario);
+            }
+            if($this->clase_validacionFormato->respuesta != null){
+                $respuesta =  $this->clase_validacionFormato->respuesta;
+            }else if($this->clase_validacionAccion->respuesta != null){
+                $respuesta = $this->clase_validacionAccion->respuesta;
 
-                $datosBuscarUser = array();
-                $datosBuscarUser['dni_usuario'] = $this->usuario->usuario;
-                $datosBuscarUser['foraneas'] = $this->usuario->clavesForaneas;
-
+            }else{
                 $usuarioDatos = [
                     'usuario' => $this->usuario->usuario,
                     'passwd_usuario' => $this->usuario->passwd_usuario,
-                    'rol' => ''/*$this->usuario->getById('rol',$datosBuscarUser)['resource']['id_rol']*/
+                    'rol' => 2
                 ];
                 include_once "./Autenticacion/GetJWToken.php";
                 $token = GetJWToken::getJWToken($usuarioDatos);
-
+    
                 $respuesta = array (
                     'tokenUsuario' => $token,
                     'usuario' => $this->usuario->usuario,
                     'rol' => 'rol'
                 );
-
-            } catch (TokenException $ex) {
-                $this->rellenarExcepcion($ex->getMessage(), 'login');
-                throw new TokenException(($ex->getMessage()));
-            } catch (AtributoIncorrectoException $ex) {
-                $this->rellenarExcepcion($ex->getMessage(), 'login');
-                throw new AtributoIncorrectoException(($ex->getMessage()));
-            } catch (UsuarioNoEncontradoException $ex) {
-                $this->rellenarExcepcion($ex->getMessage(), 'login');
-                throw new UsuarioNoEncontradoException(($ex->getMessage()));
-            } catch (PasswdUsuarioNoCoincideException $ex) {
-                $this->rellenarExcepcion($ex->getMessage(), 'login');
-                throw new PasswdUsuarioNoCoincideException(($ex->getMessage()));
-            }
             
-            return $respuesta;
-    
+            $datosBuscarUser = array();
+            $datosBuscarUser['dni_usuario'] = $this->usuario->usuario;
+            $datosBuscarUser['foraneas'] = $this->usuario->clavesForaneas;
+            $respuesta = $mensaje;
+            $this->token = $token;
         }
+        return $respuesta;
+    }
 
 
-        function verificarToken($mensaje){
+        /*function verificarToken($mensaje){
             $tokenUsuario = '';	
             $resultado = '';
             $requestHeaders = apache_request_headers();
@@ -90,11 +85,11 @@
             if(!empty($resultado)){
                 return true;
             }else{
-               throw new TokenUsuarioIncorrectoException('TOKEN_USUARIO_INCORRECTO');
+               return 'TOKEN_USUARIO_INCORRECTO';
             }
 
 
-		}	
+		}
 	 
         function recuperarPass() {
 
@@ -180,7 +175,7 @@
 
             return $usuario;
 
-        }
+        }*/
 
     }
 ?>

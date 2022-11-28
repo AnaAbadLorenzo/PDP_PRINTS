@@ -39,8 +39,8 @@ class ConexionesBDTest {
             return false;
         }else{
             if($codigoHTTP == 200){
-                $resp = json_decode($resultado, true); // convierto en un stdClass
-			    $resp = (array)$resp; //convierto en array
+                $resp = json_decode($resultado, true); 
+			    $resp = (array)$resp;
                return  $resp;
             }
         }

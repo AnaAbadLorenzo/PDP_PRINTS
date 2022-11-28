@@ -44,7 +44,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testNombrePersona->testAtributoNombrePersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $this->respuesta = 'KO';
         }
         return $respuesta;
     }
@@ -54,7 +54,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testApellidosPersona->testAtributoApellidosPersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $this->respuesta = 'KO';
         }
         return $respuesta;
     }
@@ -64,7 +64,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testFechaNacimientoPersona->testAtributoFechaNacPersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $this->respuesta = 'KO';
         }
         return $respuesta;
     }

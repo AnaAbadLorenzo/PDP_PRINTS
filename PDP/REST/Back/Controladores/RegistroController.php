@@ -15,21 +15,18 @@ class RegistroController extends ControllerBase{
 	}
 
 	function registro(){	
-		try{
-			$this->registroValidation->validarRegistro();	
-			$this->registroService->inicializarParametros('registro');
 		
-			$respuesta = $this->registroService->registro('REGISTRO_PERSONA_COMPLETO');
+		$this->registroValidation->validarRegistro();	
+		$this->registroService->inicializarParametros('registro');
+		
+		$respuesta = $this->registroService->registro('REGISTRO_PERSONA_COMPLETO');
+		if($respuesta != 'REGISTRO_PERSONA_COMPLETO') {
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
 			$this->rellenarRespuesta('REGISTRO_CORRECTO', false, $respuesta);
-			$this->getRespuesta($respuesta);
-
-		}catch(AtributoIncorrectoException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}catch(UsuarioYaExisteException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}catch(DNIYaExisteException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
 		}
+		$this->getRespuesta($respuesta);
 	}	
 }
+
 ?>

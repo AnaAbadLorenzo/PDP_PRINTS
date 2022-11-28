@@ -1,13 +1,13 @@
 <?php
 
 include_once './Validation/ValidacionesBase.php';
-include_once './Validation/Excepciones/UsuarioNoEncontradoException.php';
-include_once './Validation/Excepciones/PasswdUsuarioNoCoincideException.php';
 include_once './Comun/funcionesComunes.php';
 
 class AutenticacionAccion extends ValidacionesBase{
 
 	private $usuario;
+
+	public $respuesta;
 
 	function __construct()
 	{
@@ -22,19 +22,16 @@ class AutenticacionAccion extends ValidacionesBase{
 		$datoBuscar['usuario'] = $datosUsuario['usuario'];
 		$resultado = $this->usuario->getByLogin('usuario', $datoBuscar)['resource'];
 		if(sizeof($resultado) == 0) {
-			throw new UsuarioNoEncontradoException('USUARIO_NO_ENCONTRADO');
+			$this->respuesta = 'USUARIO_NO_ENCONTRADO';
 		}else if($resultado['borrado_usuario'] == 1){
-			throw new UsuarioNoEncontradoException('USUARIO_NO_ENCONTRADO');
+			$this->respuesta = 'USUARIO_NO_ENCONTRADO';
 		}else{
 			if($datosUsuario['passwd_usuario'] == $resultado['passwd_usuario']){
-				return true;
+				true;
 			}else{
-				throw new PasswdUsuarioNoCoincideException('PASSWD_USUARIO_NO_COINCIDE');
+				$this->respuesta = 'PASSWD_USUARIO_NO_COINCIDE';
 			}
 		}
 	}
-
-		
-
 }
 ?>

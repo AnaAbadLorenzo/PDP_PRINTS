@@ -1,7 +1,6 @@
 <?php
 
 include_once './Comun/config.php';
-include_Once './Validation/Excepciones/QueryKOExcepcion.php';
 
 abstract class MappingBase{
 
@@ -22,6 +21,8 @@ abstract class MappingBase{
 	public $erroresdatos = [];
 	public $listaAtributosBD = array();
 	public $mapping;
+
+	public $respuesta;
 
 	function connection(){
 		if (isset($_POST['test']) && $_POST['test'] == 'testing'){
@@ -48,13 +49,11 @@ abstract class MappingBase{
 	protected function execute_single_query() {
 		
 		if (!($this->connection())){
-			throw new BDKOExcepcion('CONEXION_BD_KO');
+			$this->respuesta = 'CONEXION_BD_KO';
 		}
 		else{
 			if(!($this->stmt->execute())){
-				header('Content-type: application/json');
-				echo(json_encode($this->stmt));
-				throw new QueryKOExcepcion('SQL_KO');
+				$this->respuesta = 'SQL_KO';
 			}else{
 				return true;
 			}
@@ -64,12 +63,12 @@ abstract class MappingBase{
 	protected function get_results_from_query() {
 		$this->resource = array();
 		if (!($this->connection())){
-			throw new BDKOExcepcion('CONEXION_BD_KO');
+			$this->respuesta = 'CONEXION_BD_KO';
 		}
 		else{
 			if(!empty($valores)){
 				if (!$this->stmt->execute($valores)){
-					throw new QueryKOExcepcion('SQL_KO');
+					$this->respuesta = 'SQL_KO';
 				}else{
 	
 					if ($this->stmt->rowCount() == 0){
@@ -88,7 +87,7 @@ abstract class MappingBase{
 			}
 			else{
 				if (!$this->stmt->execute()){
-					throw new QueryKOExcepcion('SQL_KO');
+					$this->respuesta = 'SQL_KO';
 				}else{
 	
 					if ($this->stmt->rowCount() == 0){
@@ -113,12 +112,12 @@ abstract class MappingBase{
 	protected function get_one_result_from_query() {
 		$this->resource = array();
 		if (!($this->connection())){
-			throw new BDKOExcepcion('CONEXION_BD_KO');
+			$this->respuesta = 'CONEXION_BD_KO';
 		}
 		else{
 			if(!empty($valores)){
 				if (!$this->stmt->execute()){
-					throw new QueryKOExcepcion('SQL_KO');
+					$this->respuesta = 'SQL_KO';
 				}else{
 					if ($this->stmt->rowCount() == 0){
 						$this->ok = true;
@@ -135,7 +134,7 @@ abstract class MappingBase{
 			}
 			else{
 				if (!$this->stmt->execute()){
-					throw new QueryKOExcepcion('SQL_KO');
+					$this->respuesta = 'SQL_KO';
 				}else{
 					
 					if ($this->stmt->rowCount() == 0){
