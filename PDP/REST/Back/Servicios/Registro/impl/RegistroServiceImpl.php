@@ -63,8 +63,6 @@
                     'id_rol' => 2/*$this->usuario->getById('rol',$datosBuscarUser)['resource']['id_rol']*/
                 ];
               
-                include_once "./Autenticacion/GetJWToken.php";
-              
                 $persona_mapping = new PersonaMapping();
                 $persona_mapping->add($personaDatos);
                 $usuario_mapping = new UsuarioMapping();

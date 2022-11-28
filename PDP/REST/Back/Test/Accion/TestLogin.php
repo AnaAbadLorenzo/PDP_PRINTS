@@ -39,8 +39,8 @@ class TestLogin{
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['usuario'] = 'fatima';
-         $_POST['passwd_usuario'] = '98cd48d44fffa390eb2302b4953d1953';
+         $_POST['usuario'] = 'anita1312';
+         $_POST['passwd_usuario'] = 'fatima';
          $resultadoTest = $this->hacerPruebaLoginUsuarioPasswdIncorrecta($_POST);
          array_push($pruebas, $resultadoTest);
 
@@ -52,7 +52,6 @@ class TestLogin{
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'LOGIN_USUARIO_OK'." - ". LOGIN_USUARIO_OK;
         $resultadoObtenido = '';
-
         if(!empty($resultado) && $resultado['code'] == 'LOGIN_USUARIO_CORRECTO'){
             $resultadoObtenido = 'LOGIN_USUARIO_OK'." - ". LOGIN_USUARIO_OK;
         }

@@ -26,6 +26,12 @@ class AutenticacionController extends ControllerBase {
 
 		}catch(AtributoIncorrectoException $exc){
 			$this->rellenarRespuesta($exc->getMessage(), true, '');
+		}catch(UsuarioNoEncontradoException $exc){
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
+		}catch(TokenException $exc){
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
+		}catch(PasswdUsuarioNoCoincideException $exc){
+			$this->rellenarRespuesta($exc->getMessage(), true, '');
 		}
 	}
 	

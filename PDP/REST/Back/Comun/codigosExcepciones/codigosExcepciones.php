@@ -5,7 +5,7 @@ define('TEST_ATRIBUTOS_LOGIN_OK', 'Los test de atributos para el login se han ej
 define('TEST_ACCIONES_LOGIN_OK', 'Los test de acciones para el login se han ejecutado correctamente');
 define('LOGIN_USUARIO_OK', 'El login de usuario se ha realizado correctamente');
 define('TEST_ATRIBUTOS_REGISTRO_OK', 'Los test de atributos para el registro se han ejecutado correctamente');
-
+define('REGISTRO_USUARIO_OK', 'El registro del usuario se ha realizado correctamente');
 
 define('TOKEN_CLAVE_VACIA', 'La clave del token no puede ser vacía');
 define('TOKEN_INCORRECTO', 'El token es incorrecto');

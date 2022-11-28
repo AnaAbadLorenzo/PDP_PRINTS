@@ -38,8 +38,11 @@ class ValidacionesFormato{
 	//comprueba si un string tiene solo letras incluida la ñ y espacios
 	//devuelve true si es corrrecto false en caso contrario
 	function comprobarLetrasEspacios($string){
+		$patronAlfabetico = '/^[a-zA-ZáéíóúÁÉÍÓÚ]\s+$/';
 
-		if (preg_match('/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/s',$string)){
+        preg_match_all($patronAlfabetico, $string, $matches, PREG_UNMATCHED_AS_NULL);
+
+		if (!empty($matches)){
 			return true;
 		}else{
 			return false;
@@ -146,7 +149,11 @@ class ValidacionesFormato{
 	//comprueba si un string tiene solo numeros
 	//devuelve true si es corrrecto false en caso contrario
 	function Es_numerico($string){
-		if (preg_match('/[^0-9]/',$string)){
+		$patronAlfanumerico = '/^[0-9]+$/';
+
+        preg_match_all($patronAlfanumerico, $string, $matches, PREG_UNMATCHED_AS_NULL);
+		
+		if (!empty($matches)){
 			return true;
 		}else{
 			return false;
@@ -197,8 +204,11 @@ class ValidacionesFormato{
 	}
 
 	function FormatoCalle($string){
-		//if (preg_match('/^[a-zA-Z0-9À-ÿ\u00f1\u00d1\u00AA\u00BA///,/-\s]+$/',$string)){
-		if (preg_match('/[^a-zA-Z0-9À-ÿºª,.\/\\s]/',$string)){
+		$patronAlfanumericoEspacios = '/^[a-zA-Z0-9]\s+$/';
+
+        preg_match_all($patronAlfanumericoEspacios, $string, $matches, PREG_UNMATCHED_AS_NULL);
+		
+		if (!empty($matches)){
 			return true;
 		}else{
 			return false;
@@ -290,7 +300,10 @@ class ValidacionesFormato{
 	}
 
 	function Formato_fecha($fecha){
-		if(!preg_match('/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/', $fecha)){
+		$patronFecha = '/^[0-9]{4}(-)[0-9]{2}(-)[0-9]{2}/';
+        preg_match_all($patronFecha, $fecha, $matches, PREG_UNMATCHED_AS_NULL);
+
+		if(!empty($matches)){
 				return true;
 		}else{
 			return false;

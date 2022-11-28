@@ -3,7 +3,6 @@
 class Test {
     function createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, $prueba, $tipoPrueba, $valor, $campo){
         $datosPruebaAtributos = null;
-        
         if(!empty($resultadoObtenido && $resultadoEsperado === $resultadoObtenido)){
             $datosPruebaAtributos = array (
                 'campo' => $campo,
