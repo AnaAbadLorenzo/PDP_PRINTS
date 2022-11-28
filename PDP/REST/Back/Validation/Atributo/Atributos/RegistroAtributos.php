@@ -91,11 +91,11 @@ class RegistroAtributos extends ValidacionesFormato{
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			throw new AtributoIncorrectoException('FECHA_NAC_PERSONA_VACIO');
 		}
-		if($this->Longitud_minima($atributo,3)===false){
+		if($this->Longitud_minima($atributo,10)===false){
 			throw new AtributoIncorrectoException('FECHA_NAC_PERSONA_MENOR_QUE_10');
 		}
 
-		if($this->Longitud_maxima($atributo,128)===false){
+		if($this->Longitud_maxima($atributo,10)===false){
 			throw new AtributoIncorrectoException('FECHA_NAC_PERSONA_MAYOR_QUE_10');
 		}	
 		

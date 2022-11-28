@@ -1,7 +1,7 @@
 <?php
 
 include_once './Comun/config.php';
-include_Once './Validation/Excepciones/QueryKOExcepcion.php';
+include_once './Validation/Excepciones/QueryKOExcepcion.php';
 
 abstract class MappingBase{
 
@@ -189,9 +189,9 @@ abstract class MappingBase{
 		$respuesta['code'] = $mensaje;
 		$respuesta['resource'] = '';
 		
-		header('Content-type: application/json');
+		/*header('Content-type: application/json');
 		echo(json_encode($respuesta)); 
-		exit();
+		exit();*/
 	}
 }
 
