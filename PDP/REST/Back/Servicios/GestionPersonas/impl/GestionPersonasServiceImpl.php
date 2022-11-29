@@ -27,7 +27,7 @@
         }
 
         function edit($mensaje) {
-            try{
+            
                 $respuesta = '';
                 $datosEditPersona = array();
                 $datosEditPersona['dni_persona'] = $this->persona->dni_persona;
@@ -43,11 +43,25 @@
                 $datosRegistroUsuario['usuario'] = $this->usuario->usuario;
                 $datosRegistroUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
                 $datosRegistroUsuario['borrado_usuario'] = 0;*/
+                if($this->clase_validacionFormatoEditPersona != null) {
 
-                $this->clase_validacionFormatoEditPersona->validarAtributosRegistro($datosEditPersona);
+                    $this->clase_validacionFormatoEditPersona->validarAtributosRegistro($datosEditPersona);
+                }
                 //$this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
-                $this->clase_validacionAccionEditPersona->comprobarEditPersona($datosEditPersona);
-               
+                if($this->clase_validacionAccionEditPersona != null) {
+
+                    $this->clase_validacionAccionEditPersona->comprobarEditPersona($datosEditPersona);
+                }
+                if($this->clase_validacionFormatoEditPersona->respuesta != null){
+
+                    $respuesta =  $this->clase_validacionFormatoEditPersona->respuesta;
+
+                }else if($this->clase_validacionAccionEditPersona->respuesta != null){
+
+                    $respuesta = $this->clase_validacionAccionEditPersona->respuesta;
+    
+                }else{
+
                 $personaDatos = [
                     'dni_persona' => $datosEditPersona['dni_persona'],
                     'nombre_persona' => $this->persona->nombre_persona,
@@ -62,14 +76,9 @@
               
                 $persona_mapping = new PersonaMapping();
                 $persona_mapping->edit($personaDatos);
-            
-            }catch(AtributoIncorrectoException $ex){
-               $this->rellenarExcepcion($ex->getMessage(), 'edit');
-               throw new AtributoIncorrectoException($ex->getMessage());
-            }catch(DNINoExisteException $ex){
-                $this->rellenarExcepcion($ex->getMessage(), 'edit');
-                throw new DNINoExisteException($ex->getMessage());
-             }
+                $respuesta= $mensaje;
+            }
+           
             
             return $respuesta;
     

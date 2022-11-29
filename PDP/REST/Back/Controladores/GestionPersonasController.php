@@ -15,20 +15,21 @@ class GestionPersonasController extends ControllerBase{
 	}
 
 	function edit(){	
-		try{
+	
 
 			$this->editPersonaValidation->validarEditPersona();
 			$this->gestionPersonasService->inicializarParametros('edit');
            
 			$respuesta = $this->gestionPersonasService->edit('EDIT_PERSONA_COMPLETO');
-			$this->rellenarRespuesta('EDIT_PERSONA_CORRECTO', false, $respuesta);
-			$this->getRespuesta($respuesta);
+			
 
-		}catch(AtributoIncorrectoException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}catch(DNINoExisteException $exc){
-			$this->rellenarRespuesta($exc->getMessage(), true, '');
-		}
+			if($respuesta != 'EDIT_PERSONA_COMPLETO') {
+				$this->rellenarRespuesta($respuesta, true, '');
+			}else{
+				$this->rellenarRespuesta('EDIT_PERSONA_COMPLETO', false, $this->autenticacionService->token);
+			}
+			$this->getRespuesta($respuesta);
+		
 	}
     
     function delete(){

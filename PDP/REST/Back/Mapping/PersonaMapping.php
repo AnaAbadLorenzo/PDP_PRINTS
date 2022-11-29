@@ -39,7 +39,17 @@ class PersonaMapping extends MappingBase {
         $this->execute_single_query();
     }
 /*
-    function searchBy() {
+@NamedQuery(name = "PersonaEntity.findPersona", query = "SELECT p FROM PersonaEntity p WHERE
+ LOWER(p.dniP) LIKE LOWER(CONCAT('%', :dniP, '%')) AND
+  LOWER(p.nombreP) LIKE LOWER(CONCAT('%', :nombreP, '%')) AND
+   LOWER(p.apellidosP) LIKE LOWER(CONCAT('%', :apellidosP, '%')) AND
+    p.fechaNacP LIKE CONCAT('%', :fechaNacP, '%') AND
+     LOWER(p.direccionP) LIKE LOWER(CONCAT('%', :direccionP, '%')) AND
+      p.telefonoP LIKE CONCAT('%', :telefonoP, '%') AND 
+      LOWER(p.emailP) LIKE LOWER(CONCAT('%', :emailP, '%')) AND
+       p.borradoP=0"),
+		
+    function searchByParameters($datosSearchParameters) {
         $this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
                         "'AND borrado_usuario='". $this->usuario->borrado_usuario."' AND id_rol='". $this->usuario->id_rol."'";
         $this->get_results_from_query();
