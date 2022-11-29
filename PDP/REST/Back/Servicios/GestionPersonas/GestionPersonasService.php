@@ -7,7 +7,7 @@ interface GestionPersonasService {
 	function edit($mensaje);
     function delete($mensaje);
     function search($mensaje);
-    function searchBy($mensaje);
+    function searchByParameters($mensaje);
    // function searchByDNI($mensaje);
 	
 }

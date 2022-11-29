@@ -26,24 +26,26 @@ class GestionPersonasController extends ControllerBase{
 			if($respuesta != 'EDIT_PERSONA_COMPLETO') {
 				$this->rellenarRespuesta($respuesta, true, '');
 			}else{
-				$this->rellenarRespuesta('EDIT_PERSONA_COMPLETO', false, $this->autenticacionService->token);
+				$this->rellenarRespuesta('EDIT_PERSONA_COMPLETO', false, '');
 			}
 			$this->getRespuesta($respuesta);
 		
 	}
     
     function delete(){
-        try{
+   
 
         $this->gestionPersonasService->inicializarParametros('delete');
         $respuesta = $this->gestionPersonasService->delete('DELETE_PERSONA_COMPLETO');
-        $this->rellenarRespuesta('DELETE_PERSONA_CORRECTO', false, $respuesta);
-        $this->getRespuesta($respuesta);
 
-    }catch(DNINoExisteException $exc){
-        $this->rellenarRespuesta($exc->getMessage(), true, '');
-    }
-    
+        if($respuesta != 'DELETE_PERSONA_COMPLETO') {
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
+			$this->rellenarRespuesta('DELETE_PERSONA_COMPLETO', false, '');
+		}
+		$this->getRespuesta($respuesta);
+
+   
     }
     function search(){
        
@@ -51,8 +53,11 @@ class GestionPersonasController extends ControllerBase{
 			$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
     }
-    function searchBy(){
-
+    function searchByParameters(){
+		$this->gestionPersonasService->inicializarParametros('searchByParameters');
+		$respuesta = $this->gestionPersonasService->searchByParameters('BUSQUEDA_PERSONA_CORRECTO');
+		$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
     }
 }
 ?>

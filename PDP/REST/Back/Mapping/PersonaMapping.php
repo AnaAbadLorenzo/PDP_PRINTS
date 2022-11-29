@@ -48,13 +48,17 @@ class PersonaMapping extends MappingBase {
       p.telefonoP LIKE CONCAT('%', :telefonoP, '%') AND 
       LOWER(p.emailP) LIKE LOWER(CONCAT('%', :emailP, '%')) AND
        p.borradoP=0"),
-		
+	*/	
     function searchByParameters($datosSearchParameters) {
-        $this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
+        //averiguar como realizar la query 
+        header('Content-type: application/json');
+		echo(json_encode($datosSearchParameters)); 
+		exit();
+        /*$this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
                         "'AND borrado_usuario='". $this->usuario->borrado_usuario."' AND id_rol='". $this->usuario->id_rol."'";
-        $this->get_results_from_query();
+        $this->get_results_from_query();*/
     }
-*/
+
     function search() {
         $this->query = "SELECT * FROM `persona`";
         $this->stmt = $this->conexion->prepare($this->query);

@@ -1,16 +1,13 @@
 <?php
 
 include_once './Validation/ValidacionesBase.php';
-include_once './Validation/Excepciones/UsuarioNoEncontradoException.php';
-include_once './Validation/Excepciones/PasswdUsuarioNoCoincideException.php';
-include_once './Validation/Excepciones/UsuarioYaExisteException.php';
-include_once './Validation/Excepciones/DNINoExisteException.php';
 include_once './Comun/funcionesComunes.php';
 
 class DeletePersonaAccion extends ValidacionesBase{
 
 	
 	private $persona;
+	public $respuesta;
 
 	function __construct()
 	{
@@ -32,7 +29,8 @@ function existeDNI($datosDeletePersona){
 		if(!sizeof($resultado) == 0) {
 			return true;
 		}else{
-			throw new DNINoExisteException('DNI_NO_EXISTE');
+			$this->respuesta = 'DNI_NO_EXISTE';
+			//throw new DNINoExisteException('DNI_NO_EXISTE');
 		}}
 		
 	
