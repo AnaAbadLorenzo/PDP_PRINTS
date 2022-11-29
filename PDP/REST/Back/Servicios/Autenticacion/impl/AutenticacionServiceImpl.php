@@ -31,8 +31,7 @@
         function login($mensaje) {
             $respuesta = '';
             if($this->usuario->usuario != null &&
-                $this->usuario->passwd_usuario != null &&
-                $this->usuario->borrado_usuario != null){
+                $this->usuario->passwd_usuario != null){
                     $datosUsuario = array(
                         'usuario' =>  $this->usuario->usuario,
                         'passwd_usuario' =>  $this->usuario->passwd_usuario,
