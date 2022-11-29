@@ -12,7 +12,7 @@ class PersonaMapping extends MappingBase {
 
     function add($datosInsertar) {
         
-        $this->query = "INSERT INTO PERSONA (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES ('".$datosInsertar['dni_persona']."','".$datosInsertar['nombre_persona']."','"
+        $this->query = "INSERT INTO `persona` (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES ('".$datosInsertar['dni_persona']."','".$datosInsertar['nombre_persona']."','"
                         .$datosInsertar['apellidos_persona']."','".$datosInsertar['fecha_nac_persona']."','"
                         .$datosInsertar['direccion_persona']."','".$datosInsertar['email_persona']."','"
                         .$datosInsertar['telefono_persona']."','".$datosInsertar['borrado_persona']. "')";
@@ -21,7 +21,7 @@ class PersonaMapping extends MappingBase {
     }
 
     function edit($datosModificar) {
-        $this->query = "UPDATE PERSONA SET `nombre_persona` = '"
+        $this->query = "UPDATE `persona` SET `nombre_persona` = '"
         .$datosModificar['nombre_persona']."', `fecha_nac_persona` = '"
         .$datosModificar['fecha_nac_persona']."', `direccion_persona` = '"
         .$datosModificar['direccion_persona']."', `email_persona` = '"
@@ -34,7 +34,7 @@ class PersonaMapping extends MappingBase {
     }
 
     function delete($datosEliminar) {
-        $this->query = "DELETE FROM PERSONA WHERE `dni_persona` ='". $datosEliminar['dni_persona']."'";
+        $this->query = "DELETE FROM `persona` WHERE `dni_persona` ='". $datosEliminar['dni_persona']."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
@@ -46,7 +46,7 @@ class PersonaMapping extends MappingBase {
     }
 */
     function search() {
-        $this->query = "SELECT * FROM PERSONA";
+        $this->query = "SELECT * FROM `persona`";
         $this->get_results_from_query();
     }
 /*
@@ -64,7 +64,7 @@ class PersonaMapping extends MappingBase {
     }
  */
     function searchByDNI($datosSearch) {
-            $this->query = "SELECT * FROM PERSONA WHERE `dni_persona`='".$datosSearch['dni_persona']."'";
+            $this->query = "SELECT * FROM `persona` WHERE `dni_persona`='".$datosSearch['dni_persona']."'";
             //$foraneas = $datosSearch['foraneas'];
             $this->stmt = $this->conexion->prepare($this->query);
             $this->get_one_result_from_query();
