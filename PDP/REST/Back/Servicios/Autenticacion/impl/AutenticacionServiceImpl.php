@@ -30,43 +30,47 @@
 
         function login($mensaje) {
             $respuesta = '';
-            $datosUsuario = array(
-                'usuario' =>  $this->usuario->usuario,
-                'passwd_usuario' =>  $this->usuario->passwd_usuario,
-                'borrado_usuario' => $this->usuario->borrado_usuario
-            );
-            if( $this->clase_validacionFormato !=null){
-                $this->clase_validacionFormato->validarAtributosLogin($datosUsuario);
-            }
-            if($this->clase_validacionAccion != null) {
-                $this->clase_validacionAccion->comprobarLogin($datosUsuario);
-            }
-            if($this->clase_validacionFormato->respuesta != null){
-                $respuesta =  $this->clase_validacionFormato->respuesta;
-            }else if($this->clase_validacionAccion->respuesta != null){
-                $respuesta = $this->clase_validacionAccion->respuesta;
-
-            }else{
-                $usuarioDatos = [
-                    'usuario' => $this->usuario->usuario,
-                    'passwd_usuario' => $this->usuario->passwd_usuario,
-                    'rol' => 2
-                ];
-                include_once "./Autenticacion/GetJWToken.php";
-                $token = GetJWToken::getJWToken($usuarioDatos);
-    
-                $respuesta = array (
-                    'tokenUsuario' => $token,
-                    'usuario' => $this->usuario->usuario,
-                    'rol' => 'rol'
-                );
+            if($this->usuario->usuario != null &&
+                $this->usuario->passwd_usuario != null &&
+                $this->usuario->borrado_usuario != null){
+                    $datosUsuario = array(
+                        'usuario' =>  $this->usuario->usuario,
+                        'passwd_usuario' =>  $this->usuario->passwd_usuario,
+                        'borrado_usuario' => $this->usuario->borrado_usuario
+                    );
+                    if( $this->clase_validacionFormato !=null){
+                        $this->clase_validacionFormato->validarAtributosLogin($datosUsuario);
+                    }
+                    if($this->clase_validacionAccion != null) {
+                        $this->clase_validacionAccion->comprobarLogin($datosUsuario);
+                    }
+                    if($this->clase_validacionFormato->respuesta != null){
+                        $respuesta =  $this->clase_validacionFormato->respuesta;
+                    }else if($this->clase_validacionAccion->respuesta != null){
+                        $respuesta = $this->clase_validacionAccion->respuesta;
+        
+                    }else{
+                        $usuarioDatos = [
+                            'usuario' => $this->usuario->usuario,
+                            'passwd_usuario' => $this->usuario->passwd_usuario,
+                            'rol' => 2
+                        ];
+                        include_once "./Autenticacion/GetJWToken.php";
+                        $token = GetJWToken::getJWToken($usuarioDatos);
             
-            $datosBuscarUser = array();
-            $datosBuscarUser['dni_usuario'] = $this->usuario->usuario;
-            $datosBuscarUser['foraneas'] = $this->usuario->clavesForaneas;
-            $respuesta = $mensaje;
-            $this->token = $token;
-        }
+                        $respuesta = array (
+                            'tokenUsuario' => $token,
+                            'usuario' => $this->usuario->usuario,
+                            'rol' => 'rol'
+                        );
+                    
+                    $datosBuscarUser = array();
+                    $datosBuscarUser['dni_usuario'] = $this->usuario->usuario;
+                    $datosBuscarUser['foraneas'] = $this->usuario->clavesForaneas;
+                    $respuesta = $mensaje;
+                    $this->token = $token;
+                }
+            }
         return $respuesta;
     }
 
