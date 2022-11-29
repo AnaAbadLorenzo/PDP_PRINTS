@@ -47,6 +47,7 @@ class PersonaMapping extends MappingBase {
 */
     function search() {
         $this->query = "SELECT * FROM `persona`";
+        $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
 /*

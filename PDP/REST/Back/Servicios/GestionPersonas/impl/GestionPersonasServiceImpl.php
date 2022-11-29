@@ -118,6 +118,7 @@
         function search($mensaje){
             $persona_mapping = new PersonaMapping();
             $persona_mapping->search();
+            return $persona_mapping->feedback['resource'];
         }
         function searchBy($mensaje){
 
