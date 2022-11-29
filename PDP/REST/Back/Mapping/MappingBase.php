@@ -44,8 +44,6 @@ abstract class MappingBase{
 			}
 		}
 	}
-
-	//Ejecutar un query simple del tipo INSERT, DELETE, UPDATE
 	protected function execute_single_query() {
 		
 		if (!($this->connection())){

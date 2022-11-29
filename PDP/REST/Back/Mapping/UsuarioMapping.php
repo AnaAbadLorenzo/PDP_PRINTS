@@ -59,8 +59,6 @@ class UsuarioMapping extends MappingBase {
     }
 
     function searchByLogin($datosSearch) {
-        try{
-
             $this->query = "SELECT * FROM `usuario` WHERE `usuario`='" . $datosSearch['usuario'] . "'";
             $foraneas = $datosSearch['foraneas'];
             $this->stmt = $this->conexion->prepare($this->query);
@@ -77,9 +75,6 @@ class UsuarioMapping extends MappingBase {
             }else{
                 return $respuesta;
             }
-        }catch(QueryKOExcepcion $exc){
-            $this->rellenarExcepcion($exc);
-        }
     }
     
 }
