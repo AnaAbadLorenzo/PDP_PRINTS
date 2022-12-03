@@ -17,18 +17,17 @@
                     $this->clase_validacionFormatoEditPersona = $this->crearValidacionFormato('Registro');
                     //$this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
                     //$this->clase_validacionFormatoRegistroUsuario = $this->crearValidacionFormato('Autenticacion');
-
-                    case 'delete':
-                        $this->persona = $this->crearModelo('Persona');
-                        $this->usuario = $this->crearModelo('Usuario');
-                        $this->clase_validacionAccionDeletePersona = $this->crearValidacionAccion('DeletePersona');
-                    
-                    case 'searchByParameters':
-                        $this->persona = $this->crearModelo('Persona');
-                       
-
-                    
-                break;
+                    break;
+                case 'delete':
+                    $this->persona = $this->crearModelo('Persona');
+                    $this->usuario = $this->crearModelo('Usuario');
+                    $this->clase_validacionAccionDeletePersona = $this->crearValidacionAccion('DeletePersona');
+                    break;
+                case 'searchByParameters':
+                    $this->persona = $this->crearModelo('Persona');
+                    break;
+                default:
+                    break;
             }
         }
 

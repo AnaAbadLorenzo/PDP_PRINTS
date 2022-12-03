@@ -1,14 +1,13 @@
 <?php
 
-interface GestionPersonasService {
+interface RolService {
 
 	public function inicializarParametros($accion);
 
+    function add($mensaje);
 	function edit($mensaje);
     function delete($mensaje);
     function search($mensaje);
-    function searchByParameters($mensaje);
-    //function searchByDNI($mensaje);
 	
 }
 
