@@ -40,25 +40,27 @@ class AutenticacionController extends ControllerBase {
 		}
 	}*/
 		
-
-	/*function recuperarPass() {
+	function recuperarPass() {
 
 		$this -> autenticacionService -> inicializarParametros('recuperarPass');
 		
 		$respuesta = $this -> autenticacionService -> recuperarPass();
 
+		$this -> rellenarRespuesta('prueba', false, $respuesta);
+
 		if ($respuesta != true) {
 			if ($respuesta == 'email_incorrecto') {
 				$this -> rellenarRespuesta('EMAIL_INCORRECTO', false, $respuesta);
 			} else {
-				$this -> rellenarRespuesta('PROBELMA', false, $respuesta);
+				$this -> rellenarRespuesta('PROBLEMA', false, $respuesta);
 			}
 		} else {
 			$this -> rellenarRespuesta('RECUPERAR_PASS_OK', false, $respuesta);
 			$this -> getRespuesta($respuesta);
 		}
 
-	}*/
+	}
+
 }
 
 ?>
