@@ -102,34 +102,10 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
         $direccion_email = $_POST['email'];
 
         $respuesta = $this -> enviarEmailGmail($direccion_email);
-        //$respuesta = $this -> ponerPassPorDefecto($nombre_usuario);
-        //tratar excepcion si nombre de usuario no coincide
+        $respuesta = $this -> ponerPassPorDefecto($nombre_usuario);
+        //tratar error si nombre de usuario no coincide
         
         return $respuesta;
-
-    }
-
-    function enviarEmail($direccion_email) {
-
-        $email = new PHPMailer;
-
-        $email -> isHTML(true);
-        $email -> setFrom('ejemplo@ejemplo.com');
-        $email -> Subject = 'PDP_PRINTS: Recuperación de contraseña';
-        $email -> Body = '
-            Has solicitado el reinicio de tu contraseña.
-
-            ';
-
-        if (!$email -> addAddress($direccion_email)) {
-            return 'email_incorrecto';
-        }
-
-        if (!$email -> send()) {
-            return $email -> ErrorInfo;
-        } else {
-            return true;
-        }
 
     }
 
@@ -137,7 +113,16 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
 
         $asunto = 'Recuperación de contraseña';
         $cuerpo = '
-            Has solicitado el reinicio de tu contraseña.
+            Acabas de solicitar la opción de recuperación de tu contraseña.
+
+            Se ha establecido la siguiente contraseña para tu cuenta:
+
+            ayyciruela
+
+            Utilízala para iniciar sesión de nuevo y cambiar tu contraseña lo antes posible.
+
+            Un saludo,
+            El equipo de Carbon Footprint.
         ';
 
         $email = new PHPMailer;
@@ -179,7 +164,6 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
         ];
 
         $usuario_mapping = new UsuarioMapping;
-        //checkear si existe usuario?
         $respuesta = $usuario_mapping -> searchByLogin($usuario);
         $usuario = $respuesta['resource'];
         $usuario['passwd_usuario'] = 'ayyciruela';

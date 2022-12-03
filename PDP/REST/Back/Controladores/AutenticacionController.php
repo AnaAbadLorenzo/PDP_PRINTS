@@ -46,13 +46,11 @@ class AutenticacionController extends ControllerBase {
 		
 		$respuesta = $this -> autenticacionService -> recuperarPass();
 
-		$this -> rellenarRespuesta('prueba', false, $respuesta);
-
 		if ($respuesta != true) {
 			if ($respuesta == 'email_incorrecto') {
 				$this -> rellenarRespuesta('EMAIL_INCORRECTO', false, $respuesta);
 			} else {
-				$this -> rellenarRespuesta('PROBLEMA', false, $respuesta);
+				$this -> rellenarRespuesta('EMAIL_ERROR', false, $respuesta);
 			}
 		} else {
 			$this -> rellenarRespuesta('RECUPERAR_PASS_OK', false, $respuesta);
