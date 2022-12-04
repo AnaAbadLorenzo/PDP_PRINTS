@@ -18,6 +18,11 @@ class AutenticacionController extends ControllerBase {
 		$respuesta ='';
 		
 		$this->autenticacionValidation->validarLogin();	
+
+		if($this->autenticacionValidation->respuesta != ''){
+			$this->rellenarRespuesta($this->autenticacionValidation->respuesta, true, '');
+		}
+
 		$this->autenticacionService->inicializarParametros('login');
 		
 		$respuesta = $this->autenticacionService->login('LOGIN_USUARIO_CORRECTO');

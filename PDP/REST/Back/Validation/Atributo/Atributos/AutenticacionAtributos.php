@@ -1,13 +1,18 @@
 <?php
 class AutenticacionAtributos extends ValidacionesFormato{
 	public $respuesta;
+	
 	function validarAtributosLogin($atributos){
 		$this->validar_usuario($atributos['usuario']);
-		$this->validar_contrasena($atributos['passwd_usuario']);	
+		if($this->respuesta == ''){
+			$this->validar_contrasena($atributos['passwd_usuario']);
+		}
+			
 	}
 
-	
 	function validar_usuario($atributo){
+		$this->respuesta = '';
+
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'LOGIN_USUARIO_VACIO';
 		}
@@ -23,7 +28,10 @@ class AutenticacionAtributos extends ValidacionesFormato{
 			$this->respuesta = 'LOGIN_USUARIO_ALFANUMERICO_INCORRECTO';
 		}	
 	}
+
 	function validar_contrasena($atributo){
+		$this->respuesta = '';
+
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'PASSWD_USUARIO_VACIO';
 		}

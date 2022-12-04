@@ -15,9 +15,13 @@ class GestionPersonasController extends ControllerBase{
 	}
 
 	function edit(){	
-	
 
 			$this->editPersonaValidation->validarEditPersona();
+
+			if($this->editPersonaValidation->respuesta){
+				$this->rellenarRespuesta($this->editPersonaValidation->respuesta, true, '');
+			}
+			
 			$this->gestionPersonasService->inicializarParametros('edit');
            
 			$respuesta = $this->gestionPersonasService->edit('EDIT_PERSONA_COMPLETO');

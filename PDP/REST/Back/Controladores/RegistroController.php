@@ -17,6 +17,11 @@ class RegistroController extends ControllerBase{
 	function registro(){	
 		
 		$this->registroValidation->validarRegistro();	
+
+		if($this->registroValidation->respuesta != ''){
+			$this->rellenarRespuesta($this->registroValidation->respuesta, true, '');
+		}
+		
 		$this->registroService->inicializarParametros('registro');
 		
 		$respuesta = $this->registroService->registro('REGISTRO_PERSONA_COMPLETO');

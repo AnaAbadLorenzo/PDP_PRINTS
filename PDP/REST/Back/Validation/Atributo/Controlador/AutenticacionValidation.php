@@ -6,11 +6,14 @@
 
 class AutenticacionValidation extends ValidacionesBase {
 
+    public $respuesta;
+
     function validarLogin()  {
         $validacionAutenticacion = new AutenticacionAtributos();
         $atributosValidacion = array('usuario', 'passwd_usuario');
         $atributos = $this ->recogerValoresAtributosPeticion($atributosValidacion);
         $validacionAutenticacion->validarAtributosLogin($atributos);
+        $this->respuesta = $validacionAutenticacion->respuesta;
     }
 }
 
