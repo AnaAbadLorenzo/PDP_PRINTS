@@ -14,7 +14,7 @@ class RolController extends ControllerBase {
 		$this -> editRolValidation = new editRolValidation();
 	}
 
-	function edit(){	
+	function edit() {	
 	
 		$this -> editRolValidation -> validarEditRol();
 		$this -> RolesService -> inicializarParametros('edit');
@@ -31,7 +31,7 @@ class RolController extends ControllerBase {
 		
 	}
     
-    function delete(){
+    function delete() {
 
         $this -> RolesService -> inicializarParametros('delete');
         $respuesta = $this -> RolesService -> delete('DELETE_PERSONA_COMPLETO');
@@ -44,8 +44,8 @@ class RolController extends ControllerBase {
 		$this->getRespuesta($respuesta);
 
     }
-    function search(){
-       
+	
+    function search() {
         $respuesta = $this->RolesService->search('BUSQUEDA_PERSONA_CORRECTO');
 			$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
