@@ -11,10 +11,19 @@ class AutenticacionValidation extends ValidacionesBase {
     function validarLogin()  {
         $validacionAutenticacion = new AutenticacionAtributos();
         $atributosValidacion = array('usuario', 'passwd_usuario');
-        $atributos = $this ->recogerValoresAtributosPeticion($atributosValidacion);
+        $atributos = $this -> recogerValoresAtributosPeticion($atributosValidacion);
         $validacionAutenticacion->validarAtributosLogin($atributos);
         $this->respuesta = $validacionAutenticacion->respuesta;
     }
+
+    function validarRecuperarPass() {
+        $validacionAutenticacion = new AutenticacionAtributos();
+        $atributosValidacion = array('usuario', 'email');
+        $atributos = $this -> recogerValoresAtributosPeticion($atributosValidacion);
+        $this -> respuesta = $validacionAutenticacion -> validarAtributosRecuperarPass($atributos);
+        return $this -> respuesta;
+    }
+
 }
 
 ?>

@@ -101,15 +101,29 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
         $nombre_usuario = $this -> usuario -> usuario;
         $direccion_email = $_POST['email'];
 
-        $respuesta = $this -> enviarEmailGmail($direccion_email);
-        $respuesta = $this -> ponerPassPorDefecto($nombre_usuario);
+        $nueva_password = $this -> randomPassword();
+        $nueva_password_encriptada = md5($nueva_password);
+
+        $respuesta = $this -> enviarEmailGmail($direccion_email, $nueva_password);
+        $respuesta = $this -> ponerNuevaPass($nombre_usuario, $nueva_password_encriptada);
         //tratar error si nombre de usuario no coincide
         
         return $respuesta;
 
     }
+    
+    function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
 
-    function enviarEmailGmail($direccion_email) {
+    function enviarEmailGmail($direccion_email, $nueva_password) {
 
         $asunto = 'Recuperación de contraseña';
         $cuerpo = '
@@ -117,7 +131,7 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
 
             Se ha establecido la siguiente contraseña para tu cuenta:
 
-            ayyciruela
+            ' . $nueva_password . '
 
             Utilízala para iniciar sesión de nuevo y cambiar tu contraseña lo antes posible.
 
@@ -157,7 +171,7 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
 
     }
 
-    function ponerPassPorDefecto($nombre_usuario) {
+    function ponerNuevaPass($nombre_usuario, $nueva_password_encriptada) {
         // Esto seguramente se pueda hacer mejor haciendo los cambios sobre un objeto Usuario
         $usuario = [
             'usuario' => $nombre_usuario
@@ -166,7 +180,8 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
         $usuario_mapping = new UsuarioMapping;
         $respuesta = $usuario_mapping -> searchByLogin($usuario);
         $usuario = $respuesta['resource'];
-        $usuario['passwd_usuario'] = 'ayyciruela';
+        $usuario['passwd_usuario'] = $nueva_password_encriptada;
+        //generar password 
         $respuesta = $usuario_mapping -> edit($usuario);
 
         return $usuario;
