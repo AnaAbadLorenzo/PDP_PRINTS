@@ -7,6 +7,7 @@ interface TestRegistroService {
     function testAtributoFechaNacPersona();
     function testAtributoDireccionPersona();
     function testAtributoEmailPersona();
+    function testAccionRegistro();
 }
 
 ?>

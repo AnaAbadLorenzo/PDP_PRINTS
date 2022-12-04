@@ -14,7 +14,7 @@ class TestLoginServiceImpl implements TestLoginService {
     function __construct()
     {
         $this->testUsuario = new TestUsuario();
-        $this->testPasswdUsuario = NEW TestPasswdUsuario();
+        $this->testPasswdUsuario = new TestPasswdUsuario();
         $this->testLogin = new TestLogin();
     }
     function testAtributoUsuario() {
@@ -22,7 +22,7 @@ class TestLoginServiceImpl implements TestLoginService {
         $respuesta = $this->testUsuario->testAtributoUsuario();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+           $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -32,7 +32,7 @@ class TestLoginServiceImpl implements TestLoginService {
         $respuesta = $this->testPasswdUsuario->testAtributoPasswdUsuario();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -42,7 +42,7 @@ class TestLoginServiceImpl implements TestLoginService {
         $respuesta = $this->testLogin->testAccionesLogin();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+           $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }

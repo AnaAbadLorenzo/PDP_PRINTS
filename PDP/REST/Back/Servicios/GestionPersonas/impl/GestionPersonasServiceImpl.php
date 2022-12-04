@@ -2,10 +2,12 @@
 
     include_once './Servicios/ServiceBase.php';
     include_once './Servicios/GestionPersonas/GestionPersonasService.php';
-    include_once "./Mapping/PersonaMapping.php";
-    include_once "./Mapping/UsuarioMapping.php";
+    include_once './Mapping/PersonaMapping.php';
+    include_once './Mapping/UsuarioMapping.php';
 
     class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasService {
+
+        private $persona_mapping;
 
         function inicializarParametros($accion){
             switch($accion){
@@ -44,15 +46,11 @@
                 $datosEditPersona['telefono_persona'] = $this->persona->telefono_persona;
                 $datosEditPersona['borrado_persona'] = 0;
 
-                /*$datosRegistroUsuario = array();
-                $datosRegistroUsuario['usuario'] = $this->usuario->usuario;
-                $datosRegistroUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
-                $datosRegistroUsuario['borrado_usuario'] = 0;*/
                 if($this->clase_validacionFormatoEditPersona != null) {
 
                     $this->clase_validacionFormatoEditPersona->validarAtributosRegistro($datosEditPersona);
                 }
-                //$this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
+            
                 if($this->clase_validacionAccionEditPersona != null) {
 
                     $this->clase_validacionAccionEditPersona->comprobarEditPersona($datosEditPersona);
@@ -78,9 +76,8 @@
                     'borrado_persona' => 0
 
                 ];
-              
-                $persona_mapping = new PersonaMapping();
-                $persona_mapping->edit($personaDatos);
+
+                $this->persona_mapping->edit($personaDatos);
                 $respuesta= $mensaje;
             }
            
@@ -101,8 +98,6 @@
                 $datosDeleteUsuario = array();
                 $datosDeleteUsuario['dni_usuario'] = $this->persona->dni_persona;
                 
-                //$this->clase_validacionFormatoEditPersona->validarAtributosRegistro($datosEditPersona);
-                //$this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
                 if($this->clase_validacionAccionDeletePersona != null) {
                 $this->clase_validacionAccionDeletePersona->comprobarDeletePersona($datosDeletePersona);
                 }
@@ -123,8 +118,7 @@
                 ];
                 $usuario_mapping = new UsuarioMapping();
                 $usuario_mapping->delete($usuarioDatos);
-                $persona_mapping = new PersonaMapping();
-                $persona_mapping->delete($personaDatos);
+                $this->persona_mapping->delete($personaDatos);
                 $respuesta= $mensaje;
             }
 
@@ -133,9 +127,8 @@
         }
     
         function search($mensaje){
-            $persona_mapping = new PersonaMapping();
-            $persona_mapping->search();
-            return $persona_mapping->feedback['resource'];
+            $this->persona_mapping->search();
+            return $this->persona_mapping->feedback['resource'];
         }
 
         function searchByParameters($mensaje){
@@ -179,20 +172,10 @@
                     $datosSearchParameters['telefono_persona'] = $this->persona->telefono_persona;
                 }
 
-                //$datosSearchParameters['dni_persona'] = $this->persona->dni_persona;
-                /*$datosSearchParameters['nombre_persona'] = $this->persona->nombre_persona;
-                $datosSearchParameters['apellidos_persona'] = $this->persona->apellidos_persona;
-                $datosSearchParameters['fecha_nac_persona'] = $this->persona->fecha_nac_persona;
-                $datosSearchParameters['direccion_persona'] = $this->persona->direccion_persona;
-                $datosSearchParameters['email_persona'] = $this->persona->email_persona;
-                $datosSearchParameters['telefono_persona'] = $this->persona->telefono_persona;
-                */
                 $datosSearchParameters['borrado_persona'] = 0;
             	
-		
-            $persona_mapping = new PersonaMapping();
-            $persona_mapping->searchByParameters($datosSearchParameters);
-            return $persona_mapping->feedback['resource'];
+            $this->persona_mapping->searchByParameters($datosSearchParameters);
+            return $this->persona_mapping->feedback['resource'];
         }
     }
 ?>
