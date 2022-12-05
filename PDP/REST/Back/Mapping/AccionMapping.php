@@ -47,6 +47,9 @@ class AccionMapping extends MappingBase {
        p.borradoP=0"),
 	*/	
     function searchByParameters($datosSearchParameters) {
+        header('Content-type: application/json');
+		echo(json_encode($datosSearchParameters)); 
+		exit();
         //averiguar como realizar la query 
         /*$this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
                         "'AND borrado_usuario='". $this->usuario->borrado_usuario."' AND id_rol='". $this->usuario->id_rol."'";

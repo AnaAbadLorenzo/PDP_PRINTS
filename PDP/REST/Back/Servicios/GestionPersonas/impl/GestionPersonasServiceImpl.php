@@ -216,7 +216,7 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
         function search($mensaje){
             $persona_mapping = new PersonaMapping();
             $persona_mapping->search();
-            return $this->persona_mapping->feedback['resource'];
+            return $persona_mapping->feedback['resource'];
         }
 
         function searchByParameters($mensaje){
@@ -261,9 +261,10 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
                 }
 
                 $datosSearchParameters['borrado_persona'] = 0;
-            	
-            $this->persona_mapping->searchByParameters($datosSearchParameters);
-            return $this->persona_mapping->feedback['resource'];
+            
+                $persona_mapping= new PersonaMapping();
+            $persona_mapping->searchByParameters($datosSearchParameters);
+            return $persona_mapping->feedback['resource'];
         }
     }
 ?>

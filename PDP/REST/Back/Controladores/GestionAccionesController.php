@@ -81,11 +81,13 @@ class GestionAccionesController extends ControllerBase{
 			$this->rellenarRespuesta('BUSQUEDA_ACCION_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
     }
+
     function searchByParameters(){
-		/*$this->gestionPersonasService->inicializarParametros('searchByParameters');
-		$respuesta = $this->gestionPersonasService->searchByParameters('BUSQUEDA_PERSONA_CORRECTO');
-		$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
-		$this->getRespuesta($respuesta);*/
+        echo("entro");
+		$this->gestionAccionService->inicializarParametros('searchByParameters');
+		$respuesta = $this->gestionAccionService->searchByParameters('BUSQUEDA_ACCION_CORRECTO');
+		$this->rellenarRespuesta('BUSQUEDA_ACCION_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
     }
 }
 ?>

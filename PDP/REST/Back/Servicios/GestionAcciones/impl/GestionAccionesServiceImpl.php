@@ -33,7 +33,7 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                     $this->clase_validacionAccionDeleteAccion = $this->crearValidacionAccion('DeleteAccion');
                     break;
                 case 'searchByParameters':
-                   // $this->persona = $this->crearModelo('Persona');
+                    $this->accion = $this->crearModelo('Accion');
                     break;
                 default:
                     break;
@@ -163,54 +163,29 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
         function search($mensaje){
             $accion_mapping = new AccionMapping();
             $accion_mapping->search();
-            return $this->accion_mapping->feedback['resource'];
+            return $accion_mapping->feedback['resource'];
         }
 
         function searchByParameters($mensaje){
-/*
+
             $respuesta = '';
             
                 $datosSearchParameters = array();
-                if($this->persona->dni_persona===null){
-                    $datosSearchParameters['dni_persona'] = '';
+                if($this->accion->nombre_accion===null){
+                    $datosSearchParameters['nombre_accion'] = '';
                 }else{
-                    $datosSearchParameters['dni_persona'] = $this->persona->dni_persona;
+                    $datosSearchParameters['nombre_accion'] = $this->accion->nombre_accion;
                 }
-                if($this->persona->nombre_persona===null){
-                    $datosSearchParameters['nombre_persona'] = '';
+                if($this->accion->descripcion_accion===null){
+                    $datosSearchParameters['descripcion_accion'] = '';
                 }else{
-                    $datosSearchParameters['nombre_persona'] = $this->persona->nombre_persona;
+                    $datosSearchParameters['descripcion_accion'] = $this->accion->descripcion_accion;
                 }
-                if($this->persona->apellidos_persona===null){
-                    $datosSearchParameters['apellidos_persona'] = '';
-                }else{
-                    $datosSearchParameters['apellidos_persona'] = $this->persona->apellidos_persona;
-                }
-                if($this->persona->fecha_nac_persona===null){
-                    $datosSearchParameters['fecha_nac_persona'] = '';
-                }else{
-                    $datosSearchParameters['fecha_nac_persona'] = $this->persona->fecha_nac_persona;
-                }
-                if($this->persona->direccion_persona===null){
-                    $datosSearchParameters['direccion_persona'] = '';
-                }else{
-                    $datosSearchParameters['direccion_persona'] = $this->persona->direccion_persona;
-                }
-                if($this->persona->email_persona===null){
-                    $datosSearchParameters['email_persona'] = '';
-                }else{
-                    $datosSearchParameters['email_persona'] = $this->persona->email_persona;
-                }
-                if($this->persona->telefono_persona===null){
-                    $datosSearchParameters['telefono_persona'] = '';
-                }else{
-                    $datosSearchParameters['telefono_persona'] = $this->persona->telefono_persona;
-                }
-
-                $datosSearchParameters['borrado_persona'] = 0;
-            	
-            $this->persona_mapping->searchByParameters($datosSearchParameters);
-            return $this->persona_mapping->feedback['resource']; */
+                
+                //$datosSearchParameters['borrado_persona'] = 0;
+            $accion_mapping = new AccionMapping();
+            $accion_mapping->searchByParameters($datosSearchParameters);
+            return $this->accion_mapping->feedback['resource']; 
         }
        
     }
