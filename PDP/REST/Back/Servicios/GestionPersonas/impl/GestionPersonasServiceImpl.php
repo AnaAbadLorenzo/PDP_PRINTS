@@ -214,7 +214,8 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
         }
     
         function search($mensaje){
-            $this->persona_mapping->search();
+            $persona_mapping = new PersonaMapping();
+            $persona_mapping->search();
             return $this->persona_mapping->feedback['resource'];
         }
 
