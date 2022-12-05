@@ -6,35 +6,42 @@ class RegistroAtributos extends ValidacionesFormato{
 			$this->respuesta = '';
 			
 			$this->validar_dni_persona($atributos['dni_persona']);
-			if($this->respuesta = ''){
+			
+
+			if($this->respuesta == ''){
+				
 				$this->validar_nombre_persona($atributos['nombre_persona']);
 			}
-
-			if($this->respuesta = ''){
+			
+			
+			if($this->respuesta == ''){
 				$this->validar_apellidos_persona($atributos['apellidos_persona']);
 			}
 
-			if($this->respuesta = ''){
+			if($this->respuesta == ''){
 				$this->validar_fecha_nac_persona($atributos['fecha_nac_persona']);		
 			}
 
-			if($this->respuesta = ''){
+			if($this->respuesta == ''){
 				$this->validar_direccion_persona($atributos['direccion_persona']);
 			}
 
-			if($this->respuesta = ''){
+			if($this->respuesta == ''){
 				$this->validar_email_persona($atributos['email_persona']);		
 			}
 
-			if($this->respuesta = ''){
+			if($this->respuesta == ''){
 				$this->validar_telefono_persona($atributos['telefono_persona']);
 			}
+			
+			
 	}
 
 	
 	function validar_dni_persona($atributo){
 		$this->respuesta = '';
-
+		
+		
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'DNI_PERSONA_VACIO';
 		}
@@ -43,7 +50,10 @@ class RegistroAtributos extends ValidacionesFormato{
 		}
 		if($this->LetraNIF($atributo)===false){
 			$this->respuesta = 'DNI_PERSONA_LETRA_INCORRECTO';
+			
+		
 		}	
+
 	}
 
 	

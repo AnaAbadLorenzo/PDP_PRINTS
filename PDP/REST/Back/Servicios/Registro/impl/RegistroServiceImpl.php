@@ -93,8 +93,12 @@
                         ];
                         $this->persona_mapping->add($personaDatos);
                         $this->usuario_mapping->add($usuarioDatos);
+                    
+                   
+                            $respuesta = $mensaje;
+                       
+                       
 
-                        $respuesta = $mensaje;
                         $this->recursos = '';
                     }
 
