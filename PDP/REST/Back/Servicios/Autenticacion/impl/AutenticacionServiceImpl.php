@@ -101,7 +101,7 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
     function recuperarPass() {
 
         $nombre_usuario = $this -> usuario -> usuario;
-        $direccion_email = $_POST['email'];
+        $direccion_email = $_POST['emailUsuario'];
 
         $respuesta = $this -> autenticacion_validation -> validarRecuperarPass();
         if (!empty($respuesta)) {
