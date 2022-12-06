@@ -59,22 +59,22 @@ class UsuarioMapping extends MappingBase {
     }
 
     function searchByLogin($datosSearch) {
-            $this->query = "SELECT * FROM `usuario` WHERE `usuario`='" . $datosSearch['usuario'] . "'";
-            $foraneas = $datosSearch['foraneas'];
-            $this->stmt = $this->conexion->prepare($this->query);
-            $this->get_one_result_from_query();
-            $respuesta = $this->feedback;
+        $this->query = "SELECT * FROM `usuario` WHERE `usuario`='" . $datosSearch['usuario'] . "'";
+        $foraneas = $datosSearch['foraneas'];
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
 
-            if($respuesta['code'] != 'RECORDSET_VACIO'){
-                foreach($foraneas as $fk){
-                    $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
-                    array_push($respuesta['resource'], $result);
-                } 
-                
-                return $respuesta;
-            }else{
-                return $respuesta;
-            }
+        if($respuesta['code'] != 'RECORDSET_VACIO'){
+            foreach($foraneas as $fk){
+                $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
+                array_push($respuesta['resource'], $result);
+            } 
+            
+            return $respuesta;
+        }else{
+            return $respuesta;
+        }
     }
     
 }
