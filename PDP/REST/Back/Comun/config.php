@@ -6,7 +6,7 @@
 	define ('directorioLog','/log');
 	define ('log_name','log.txt');
 	define ('BDTEST', 'pdp_prints_test');
-	define ('urlRest', 'http://localhost/PDP_PRINTS/PDP/REST/Back/index.php');
+	define ('urlRest', 'http://localhost/PDP_PRINTS/PDP_PRINTS/PDP/REST/Back/index.php');
 	define ('gmail_correo', 'pdp.prints@gmail.com');
 	define ('gmail_password', 'cwdattxojokncybk');
 ?>
