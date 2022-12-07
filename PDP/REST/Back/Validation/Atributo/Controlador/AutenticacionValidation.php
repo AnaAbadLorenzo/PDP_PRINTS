@@ -18,7 +18,7 @@ class AutenticacionValidation extends ValidacionesBase {
 
     function validarRecuperarPass() {
         $validacionAutenticacion = new AutenticacionAtributos();
-        $atributosValidacion = array('usuario', 'email');
+        $atributosValidacion = array('usuario', 'emailUsuario');
         $atributos = $this -> recogerValoresAtributosPeticion($atributosValidacion);
         $this -> respuesta = $validacionAutenticacion -> validarAtributosRecuperarPass($atributos);
         return $this -> respuesta;

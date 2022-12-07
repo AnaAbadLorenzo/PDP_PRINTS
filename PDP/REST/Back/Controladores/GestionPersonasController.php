@@ -3,15 +3,39 @@
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/GestionPersonas/impl/GestionPersonasServiceImpl.php';
 include_once './Validation/Atributo/Controlador/EditPersonaValidation.php';
+include_once './Validation/Atributo/Controlador/RegistroValidation.php';
 
 class GestionPersonasController extends ControllerBase{
 
 	private $gestionPersonasService;
 	private $editPersonaValidation;
+	private $registroValidation;
 
 	public function __construct(){
 		$this->gestionPersonasService = new GestionPersonasServiceImpl();
 		$this->editPersonaValidation = new EditPersonaValidation();
+		$this->registroValidation = new RegistroValidation();
+
+	}
+	function add(){
+
+		$this->registroValidation->validarRegistro();	
+
+		if($this->registroValidation->respuesta != ''){
+			$this->rellenarRespuesta($this->registroValidation->respuesta, true, '');
+		}
+		
+		$this->gestionPersonasService->inicializarParametros('add');
+		
+		$respuesta = $this->gestionPersonasService->add('ADD_PERSONA_COMPLETO');
+
+		if($respuesta != 'ADD_PERSONA_COMPLETO') {
+				$this->rellenarRespuesta($respuesta, true, '');
+			}else{
+				$this->rellenarRespuesta('ADD_PERSONA_COMPLETO', false, '');
+			}
+		$this->getRespuesta($respuesta);
+
 	}
 
 	function edit(){	

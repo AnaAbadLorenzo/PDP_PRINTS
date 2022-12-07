@@ -16,7 +16,7 @@ class AutenticacionAtributos extends ValidacionesFormato {
 		if ($this -> respuesta != ''){
 			return $this -> respuesta;
 		}
-		$this->validar_email($atributos['email']);
+		$this->validar_email($atributos['emailUsuario']);
 		if ($this -> respuesta != ''){
 			return $this -> respuesta;
 		}

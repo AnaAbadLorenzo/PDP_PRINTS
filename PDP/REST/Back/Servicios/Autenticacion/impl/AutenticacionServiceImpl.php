@@ -4,6 +4,7 @@ include_once './Servicios/ServiceBase.php';
 include_once './Servicios/Autenticacion/AutenticacionService.php';
 include_once './Autenticacion/GetJWToken.php';
 include_once "./Mapping/UsuarioMapping.php";
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 require_once './Comun/PHPMailer/src/PHPMailer.php';
@@ -22,7 +23,8 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
                 $this->clase_validacionFormato = $this->crearValidacionFormato('Autenticacion');
                 break;
             case 'recuperarPass':
-                $this->usuario = $this->crearModelo('Usuario');
+                $this -> usuario = $this -> crearModelo('Usuario');
+                $this -> autenticacion_validation = new AutenticacionValidation;
                 break;
             default:
                 break;   
@@ -99,8 +101,17 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
     function recuperarPass() {
 
         $nombre_usuario = $this -> usuario -> usuario;
-        $direccion_email = $_POST['email'];
+        $direccion_email = $_POST['emailUsuario'];
 
+        $respuesta = $this -> autenticacion_validation -> validarRecuperarPass();
+        if (!empty($respuesta)) {
+            return ['validacion_error' => $respuesta];
+        }
+
+        if (!$this -> existeUsuario($nombre_usuario)) {
+            return 'usuario_no_existe';
+        }
+        
         $nueva_password = $this -> randomPassword();
         $nueva_password_encriptada = md5($nueva_password);
 
@@ -110,6 +121,17 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
         
         return $respuesta;
 
+    }
+
+    function existeUsuario($nombre_usuario) {
+        $usuario_mapping = new UsuarioMapping;
+        $datosSearch = ['usuario' => $nombre_usuario];
+        $respuesta = $usuario_mapping -> searchByLogin($datosSearch);
+        if (empty($respuesta['resource'])) {
+            return false;
+        } else {
+            return true;
+        }
     }
     
     function randomPassword() {

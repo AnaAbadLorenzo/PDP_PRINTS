@@ -16,7 +16,8 @@ class RegistroValidation extends ValidacionesBase {
 
         $this->respuesta = $validacionRegistro->respuesta;
 
-        if($this->respuesta = ''){
+        if($this->respuesta == ''){
+
             $validacionAutenticacion = new AutenticacionAtributos();
             $atributosValidacion = array('usuario', 'passwd_usuario');
             $atributos = $this ->recogerValoresAtributosPeticion($atributosValidacion);

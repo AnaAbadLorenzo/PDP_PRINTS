@@ -1,6 +1,6 @@
 <?php
 
-interface GestionPersonasService {
+interface GestionAccionesService {
 
 	public function inicializarParametros($accion);
 
