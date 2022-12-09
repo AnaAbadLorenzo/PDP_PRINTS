@@ -82,7 +82,6 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
 
     }
 
-
     function verificarToken($mensaje){
         $tokenUsuario = '';	
         $resultado = '';
