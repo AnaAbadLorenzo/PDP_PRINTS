@@ -7,5 +7,6 @@
 	define ('log_name','log.txt');
 	define ('BDTEST', 'pdp_prints_test');
 	define ('urlRest', 'http://localhost/PDP_PRINTS/PDP/REST/Back/index.php');
-	define ('gmail_correo', 'segundaoportunidadjuegos@gmail.com');
-	define ('gmail_password', 'miguelitoVR13');
+	define ('gmail_correo', 'pdp.prints@gmail.com');
+	define ('gmail_password', 'cwdattxojokncybk');
+?>

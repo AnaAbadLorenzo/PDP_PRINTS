@@ -7,7 +7,14 @@
 
     class RegistroServiceImpl extends ServiceBase implements RegistroService {
         public $recursos;
+        private $persona_mapping;
+        private $usuario_mapping;
 
+        function __construct()
+        {
+            $this->persona_mapping = new PersonaMapping();
+            $this->usuario_mapping = new UsuarioMapping();
+        }
         function inicializarParametros($accion){
             switch($accion){
                 case 'registro':
@@ -84,13 +91,13 @@
                             'passwd_usuario' => $this->usuario->passwd_usuario,
                             'id_rol' => 2
                         ];
+                        $this->persona_mapping->add($personaDatos);
+                        $this->usuario_mapping->add($usuarioDatos);
                     
-                        $persona_mapping = new PersonaMapping();
-                        $persona_mapping->add($personaDatos);
-                        $usuario_mapping = new UsuarioMapping();
-                        $usuario_mapping->add($usuarioDatos);
-
                         $respuesta = $mensaje;
+                       
+                       
+
                         $this->recursos = '';
                     }
 

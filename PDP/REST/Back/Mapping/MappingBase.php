@@ -152,6 +152,14 @@ abstract class MappingBase{
 
 	}
 
+	function deleteFromTest($peticion) {
+		$this->connection();
+		$this->query = "DELETE FROM `".$peticion['tabla']. "` WHERE `". $peticion['clave']. "` = '". $peticion['valor'] ."'";
+		echo($this->query);
+		$this->stmt = $this->conn->prepare($this->query);
+        $this->execute_single_query();
+	}
+
 	function obtenerDatosClaveForanea($tabla){
 		$this->query = "SELECT * FROM ".$tabla;
 		$this->stmt = $this->conexion->prepare($this->query);
@@ -185,10 +193,6 @@ abstract class MappingBase{
 		$respuesta['ok'] = false;
 		$respuesta['code'] = $mensaje;
 		$respuesta['resource'] = '';
-		
-		/*header('Content-type: application/json');
-		echo(json_encode($respuesta)); 
-		exit();*/
 	}
 }
 

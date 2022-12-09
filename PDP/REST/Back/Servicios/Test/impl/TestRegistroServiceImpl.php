@@ -8,6 +8,7 @@ include_once './Test/Atributos/TestFechaNacimientoPersona.php';
 include_once './Test/Atributos/TestEmailPersona.php';
 include_once './Test/Atributos/TestTelefonoPersona.php';
 include_once './Servicios/Test/TestRegistroService.php';
+include_once './Test/Accion/TestRegistro.php';
 
 class TestRegistroServiceImpl implements TestRegistroService {
 
@@ -18,6 +19,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
     private $testDireccionPersona;
     private $testEmailPersona;
     private $testTelefonoPersona;
+    private $testRegistro;
 
     function __construct()
     {
@@ -28,13 +30,14 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $this->testDireccionPersona = new TestDireccionPersona();
         $this->testEmailPersona = new TestEmailPersona();
         $this->testTelefonoPersona = new TestTelefonoPersona();
+        $this->testRegistro = new TestRegistro();
     }
     function testAtributoDNIPersona() {
         $respuesta = '';
         $respuesta = $this->testDNIPersona->testAtributoDNIPersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+           $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -44,7 +47,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testNombrePersona->testAtributoNombrePersona();
 
         if(empty($respuesta)){
-            $this->respuesta = 'KO';
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -54,7 +57,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testApellidosPersona->testAtributoApellidosPersona();
 
         if(empty($respuesta)){
-            $this->respuesta = 'KO';
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -64,7 +67,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testFechaNacimientoPersona->testAtributoFechaNacPersona();
 
         if(empty($respuesta)){
-            $this->respuesta = 'KO';
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -74,7 +77,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testDireccionPersona->testAtributoDireccionPersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -84,7 +87,7 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testEmailPersona->testAtributoEmailPersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
@@ -94,7 +97,17 @@ class TestRegistroServiceImpl implements TestRegistroService {
         $respuesta = $this->testTelefonoPersona->testAtributoTelefonoPersona();
 
         if(empty($respuesta)){
-            throw new TestsFallidosException('TEST_FALLIDOS');
+            $respuesta = 'TEST_FALLIDOS';
+        }
+        return $respuesta;
+    }
+
+    function testAccionRegistro(){
+        $respuesta = '';
+        $respuesta = $this->testRegistro->testAccionesRegistro();
+
+        if(empty($respuesta)){
+           $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }

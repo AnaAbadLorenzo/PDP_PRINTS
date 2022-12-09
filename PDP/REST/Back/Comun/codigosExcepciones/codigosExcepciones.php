@@ -5,7 +5,10 @@ define('TEST_ATRIBUTOS_LOGIN_OK', 'Los test de atributos para el login se han ej
 define('TEST_ACCIONES_LOGIN_OK', 'Los test de acciones para el login se han ejecutado correctamente');
 define('LOGIN_USUARIO_OK', 'El login de usuario se ha realizado correctamente');
 define('TEST_ATRIBUTOS_REGISTRO_OK', 'Los test de atributos para el registro se han ejecutado correctamente');
+define('TEST_ACCIONES_REGISTRO_OK', 'Los test de acciones para el registro se han ejecutado correctamente');
 define('REGISTRO_USUARIO_OK', 'El registro del usuario se ha realizado correctamente');
+define('TEST_ATRIBUTOS_RECUPERAR_PASS_OK', 'Los test de atributos para la recuperación de contraseña se han ejecutado correctamente');
+define('TEST_ACCIONES_RECUPERAR_PASS_OK', 'Los test de acciones para para la recuperación de contraseña se han ejecutado correctamente');
 
 define('TOKEN_CLAVE_VACIA', 'La clave del token no puede ser vacía');
 define('TOKEN_INCORRECTO', 'El token es incorrecto');
@@ -68,7 +71,7 @@ define('USUARIO_NO_ENCONTRADO', 'El usuario no existe');
 define('PASSWD_USUARIO_NO_COINCIDE', 'La contraseña introducida no coincide con la del usuario');
 
 define('USUARIO_YA_EXISTE', 'El usuario ya existe');
-define('DNI_YA_EXISTE', 'El DNI ya existe');
+define('PERSONA_YA_EXISTE', 'La persona ya existe');
 define('DNI_NO_EXISTE', 'El DNI no existe');
 
 ?>

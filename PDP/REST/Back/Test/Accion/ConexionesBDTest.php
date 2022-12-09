@@ -1,12 +1,15 @@
 <?php
 
 include_once './Comun/config.php';
+include_once './Mapping/MappingBase.php';
 
-class ConexionesBDTest {
+class ConexionesBDTest extends MappingBase {
 
     private $conexion;
 
     private $token;
+
+    private $mappingBase;
 
     function __construct()
     {
@@ -35,6 +38,7 @@ class ConexionesBDTest {
         $resultado = curl_exec($cliente);
         $codigoHTTP = curl_getinfo($cliente, CURLINFO_HTTP_CODE);
 
+
         if(!$resultado){
             return false;
         }else{
@@ -45,6 +49,7 @@ class ConexionesBDTest {
             }
         }
     }
+
 
     function obtenerTokenTest($peticion){
         $peticion['test'] = 'testing';
@@ -60,11 +65,13 @@ class ConexionesBDTest {
     function pruebaTesting($accion,$peticion){
         $peticion['test'] = 'testing';
         $respuesta = '';
-
-
+       
         switch($accion){
             case 'login':
                $respuesta = $this->obtenerTokenTest($peticion);
+            break;
+            case 'delete':
+                $respuesta = $this->deleteFromTest($peticion);
             break;
             default:
                 $respuesta = $this->HTTPResponse($this->conexion, $peticion);

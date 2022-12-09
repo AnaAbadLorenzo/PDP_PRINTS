@@ -1,0 +1,3 @@
+-- Usuario para acceder a la aplicación --
+usuario: anita1312
+passwd_usuario: anita1312

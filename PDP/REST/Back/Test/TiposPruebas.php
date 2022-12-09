@@ -12,6 +12,8 @@ define('FECHA_NAC_PERSONA_OK', 'Atributo fecha nacimiento persona correcto');
 define('DIRECCION_PERSONA_OK', 'Atributo dirección persona correcto');
 define('EMAIL_PERSONA_OK', 'Atributo email persona correcto');
 define('TELEFONO_PERSONA_OK', 'Atributo télefono persona correcto');
+define('REGISTRO_OK', 'La persona se ha registrado correctamente');
+define('RECUPERAR_PASS_OK', 'La recuperación de contraseña se ha realizado correctamente');
 
 
 define('VACIO', 'Vacío');
@@ -24,7 +26,5 @@ define('ESPACIOS', 'Atributo contiene espacios');
 define('ALFANUMERICO_INCORRECTO', 'Atributo sólo puede contener números y letras');
 define('ALFABETICO_INCORRECTO', 'Atributo sólo puede contener letras');
 define('FECHA_INCORRECTA', 'Atributo sólo puede ser de la forma dd/mm/YYYY');
-
-
 
 ?>

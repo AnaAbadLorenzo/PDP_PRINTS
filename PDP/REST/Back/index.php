@@ -21,7 +21,7 @@
 
       if($rest == 'Test') {
             $metodo = '';
-            include_once './Controladores/Test/'.$action.'TestController.php';
+            include_once './Controladores/Test/'.ucfirst($action).'TestController.php';
             $nombreTest = ucfirst($action).'TestController';
             $test = new $nombreTest();
             if(isset($_POST['tipoTest'])){

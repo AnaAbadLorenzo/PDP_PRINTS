@@ -1,20 +1,47 @@
 <?php
 class RegistroAtributos extends ValidacionesFormato{
 	public $respuesta;
+
 	function validarAtributosRegistro($atributos){
-			$this->validar_dni_persona($atributos['dni_persona']);
-		
-			$this->validar_nombre_persona($atributos['nombre_persona']);
+			$this->respuesta = '';
 			
-			$this->validar_apellidos_persona($atributos['apellidos_persona']);
-			$this->validar_fecha_nac_persona($atributos['fecha_nac_persona']);		
-			$this->validar_direccion_persona($atributos['direccion_persona']);
-			$this->validar_email_persona($atributos['email_persona']);		
-			$this->validar_telefono_persona($atributos['telefono_persona']);
+			$this->validar_dni_persona($atributos['dni_persona']);
+			
+
+			if($this->respuesta == ''){
+				
+				$this->validar_nombre_persona($atributos['nombre_persona']);
+			}
+			
+			
+			if($this->respuesta == ''){
+				$this->validar_apellidos_persona($atributos['apellidos_persona']);
+			}
+
+			if($this->respuesta == ''){
+				$this->validar_fecha_nac_persona($atributos['fecha_nac_persona']);		
+			}
+
+			if($this->respuesta == ''){
+				$this->validar_direccion_persona($atributos['direccion_persona']);
+			}
+
+			if($this->respuesta == ''){
+				$this->validar_email_persona($atributos['email_persona']);		
+			}
+
+			if($this->respuesta == ''){
+				$this->validar_telefono_persona($atributos['telefono_persona']);
+			}
+			
+			
 	}
 
 	
 	function validar_dni_persona($atributo){
+		$this->respuesta = '';
+		
+		
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'DNI_PERSONA_VACIO';
 		}
@@ -23,11 +50,16 @@ class RegistroAtributos extends ValidacionesFormato{
 		}
 		if($this->LetraNIF($atributo)===false){
 			$this->respuesta = 'DNI_PERSONA_LETRA_INCORRECTO';
+			
+		
 		}	
+
 	}
 
 	
 	function validar_nombre_persona($atributo){
+
+		$this->respuesta = '';
 
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'NOMBRE_PERSONA_VACIO';
@@ -44,6 +76,8 @@ class RegistroAtributos extends ValidacionesFormato{
 	}
 
     function validar_apellidos_persona($atributo){
+		$this->respuesta = '';
+
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'APELLIDOS_PERSONA_VACIO';
 		}
@@ -62,6 +96,8 @@ class RegistroAtributos extends ValidacionesFormato{
 	}
 
     function validar_fecha_nac_persona($atributo){
+		$this->respuesta = '';
+
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'FECHA_NAC_PERSONA_VACIO';
 		}
@@ -81,6 +117,8 @@ class RegistroAtributos extends ValidacionesFormato{
 
     function validar_direccion_persona($atributo){
 
+		$this->respuesta = '';
+
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'DIRECCION_PERSONA_VACIO';
 		}	
@@ -98,6 +136,8 @@ class RegistroAtributos extends ValidacionesFormato{
 	}
 
     function validar_email_persona($atributo){
+		$this->respuesta = '';
+
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'EMAIL_PERSONA_VACIO';
 		}
@@ -115,6 +155,7 @@ class RegistroAtributos extends ValidacionesFormato{
 	}
 
     function validar_telefono_persona($atributo){
+		$this->respuesta = '';
 
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
 			$this->respuesta = 'TELEFONO_PERSONA_VACIO';

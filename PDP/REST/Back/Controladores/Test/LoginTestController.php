@@ -3,7 +3,6 @@
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Test/impl/TestLoginServiceImpl.php';
 include_once './Test/Atributos/TestUsuario.php';
-include_once './Validation/Excepciones/TestsFallidosException.php';
 
 class LoginTestController extends ControllerBase{
 
@@ -16,29 +15,33 @@ class LoginTestController extends ControllerBase{
 	function testAtributosLogin(){	
 		$respuesta = array();
 		
-		try{
-
-			$resultado = $this->testLoginService->testAtributoUsuario();
-			array_push($respuesta, $resultado);
-			$resultado = $this->testLoginService->testAtributoPasswdUsuario();
-			array_push($respuesta, $resultado);
-			$this->rellenarRespuesta('TEST_ATRIBUTOS_LOGIN_OK', false, $respuesta);
-			$this->getRespuesta($respuesta);
-
-		}catch(TestsFallidosException $exc){
-			$this->rellenarRespuesta($exc, true, '');
+		$resultado = $this->testLoginService->testAtributoUsuario();
+			
+		if($resultado == 'TEST_FALLIDOS'){
+			$this->rellenarRespuesta($resultado, true, '');
 		}
+			
+		array_push($respuesta, $resultado);
+		$resultado = $this->testLoginService->testAtributoPasswdUsuario();
+			
+		if($resultado == 'TEST_FALLIDOS'){
+			$this->rellenarRespuesta($resultado, true, '');
+		}
+
+		array_push($respuesta, $resultado);
+		$this->rellenarRespuesta('TEST_ATRIBUTOS_LOGIN_OK', false, $respuesta);
+		$this->getRespuesta($respuesta);
 	}
 	
 	function testAccionesLogin() {
-		try{
-			$respuesta = $this->testLoginService->testAccionLogin();
-			$this->rellenarRespuesta('TEST_ACCIONES_LOGIN_OK', false, $respuesta);
-			$this->getRespuesta($respuesta);
-
-		}catch(TestsFallidosException $exc){
-			$this->rellenarRespuesta($exc, true, '');
+		
+		$respuesta = $this->testLoginService->testAccionLogin();
+		if($respuesta == 'TEST_FALLIDOS'){
+			$this->rellenarRespuesta($respuesta, true, '');
 		}
+
+		$this->rellenarRespuesta('TEST_ACCIONES_LOGIN_OK', false, $respuesta);
+		$this->getRespuesta($respuesta);
 	}
 }
 ?>
