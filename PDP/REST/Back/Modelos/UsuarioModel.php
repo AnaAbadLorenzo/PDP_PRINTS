@@ -41,6 +41,14 @@ class UsuarioModel extends ModelBase{
 		return $this->mapping->searchByLogin($datosSearch);
 	}
 
+	function getByDNI($tabla, $datosSearch){
+        include_once './Mapping/'.$tabla.'Mapping.php';
+        $map = $tabla.'Mapping';
+        $this->mapping = new $map();
+		$datosSearch['foraneas'] = $this->clavesForaneas;
+		return $this->mapping->searchByDNI($datosSearch);
+	}
+
 }
 
 ?>

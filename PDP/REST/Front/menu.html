@@ -29,14 +29,14 @@
 
 <body onload="
   (async ()=>{
+  	comprobarTokenUsuario('menu');
   	await includeTopMenu('menu');
+    await funcionalidadesUsuario();
     modalCambioPass();cargarIdioma();includeFooter();setLang('');
+		await cargarNoticias();
   })();">
-	
 	<div id="topMenu"></div>
-
 	<div id="bienvenida" class="bienvenida MENSAJE_BIENVENIDA" style="display: block;">Bienvenido a Carboon Footprint</div>
-
 	<div id="footer"></div>
 </body>
 </html>
