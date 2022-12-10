@@ -38,6 +38,12 @@ class PersonaMapping extends MappingBase {
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
+
+    function numberFindAll() {
+        $this->query = "SELECT COUNT(*) FROM `persona`";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+    }
 /*
 @NamedQuery(name = "PersonaEntity.findPersona", query = "SELECT p FROM PersonaEntity p WHERE
  LOWER(p.dniP) LIKE LOWER(CONCAT('%', :dniP, '%')) AND
@@ -49,35 +55,39 @@ class PersonaMapping extends MappingBase {
       LOWER(p.emailP) LIKE LOWER(CONCAT('%', :emailP, '%')) AND
        p.borradoP=0"),
 	*/	
-    function searchByParameters($datosSearchParameters) {
-        //averiguar como realizar la query 
-        header('Content-type: application/json');
-		echo(json_encode($datosSearchParameters)); 
-		exit();
-        /*$this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
-                        "'AND borrado_usuario='". $this->usuario->borrado_usuario."' AND id_rol='". $this->usuario->id_rol."'";
-        $this->get_results_from_query();*/
-    }
+    function searchByParameters($datosSearchParameters, $paginacion) {
+        $this->query = "SELECT * FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
+                        LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
+                        LOWER(`apellidos_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['apellidos_persona']."', '%')) AND
+                        LOWER(`fecha_nac_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_nac_persona']."', '%')) AND
+                        LOWER(`direccion_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['direccion_persona']."', '%')) AND
+                        LOWER(`email_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['email_persona']."', '%')) AND
+                        LOWER(`telefono_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['telefono_persona']."', '%')) AND
+                        `borrado_persona` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
 
-    function search() {
-        $this->query = "SELECT * FROM `persona`";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
-/*
-    function searchById($datosSearch) {
-        $this->query = "SELECT * FROM USUARIO WHERE 'dni_usuario='".$datosSearch['dni_usuario']."'";
-        $foraneas = $datosSearch->foraneas;
-        $this->stmt = $this->conexion->prepare($this->query);
-        $this->get_one_result_from_query();
-        $respuesta = $this->feedback;
 
-        foreach($foraneas as $fk){
-            $result = $this->incluirDatosForaneas($this->feedback['resource'],$fk, 'dni_usuario');
-            array_push($respuesta['resource'], $result);
-        } 
+    function numberFindParameters($datosSearchParameters) {
+        $this->query = "SELECT COUNT(*) FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
+                        LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
+                        LOWER(`apellidos_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['apellidos_persona']."', '%')) AND
+                        LOWER(`fecha_nac_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_nac_persona']."', '%')) AND
+                        LOWER(`direccion_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['direccion_persona']."', '%')) AND
+                        LOWER(`email_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['email_persona']."', '%')) AND
+                        LOWER(`telefono_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['telefono_persona']."', '%')) AND
+                        `borrado_persona` = 0"; 
+        $this->stmt = $this->conexion->prepare($this->query); 
+        $this->get_one_result_from_query();
     }
- */
+
+    function search($paginacion) {
+        $this->query = "SELECT * FROM `persona` LIMIT " .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
     function searchByDNI($datosSearch) {
             $this->query = "SELECT * FROM `persona` WHERE `dni_persona`='".$datosSearch['dni_persona']."'";
             //$foraneas = $datosSearch['foraneas'];

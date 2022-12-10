@@ -1,6 +1,7 @@
 <?php
 
     include_once './Servicios/ServiceBase.php';
+    include_once './Servicios/Comun/ReturnBusquedas.php';
     include_once './Servicios/GestionPersonas/GestionPersonasService.php';
     include_once './Mapping/PersonaMapping.php';
     include_once './Mapping/UsuarioMapping.php';
@@ -19,25 +20,22 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
                     $this->clase_validacionFormatoRegistroPersona = $this->crearValidacionFormato('Registro');
                     $this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
                     $this->clase_validacionFormatoRegistroUsuario = $this->crearValidacionFormato('Autenticacion');
+                break;
                 case 'edit':
                     $this->persona = $this->crearModelo('Persona');
-                    //$this->usuario = $this->crearModelo('Usuario');
-                    
 				    $this->clase_validacionAccionEditPersona = $this->crearValidacionAccion('EditPersona');
                     $this->clase_validacionFormatoEditPersona = $this->crearValidacionFormato('Registro');
-                    //$this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
-                    //$this->clase_validacionFormatoRegistroUsuario = $this->crearValidacionFormato('Autenticacion');
-                    break;
+                break;
                 case 'delete':
                     $this->persona = $this->crearModelo('Persona');
                     $this->usuario = $this->crearModelo('Usuario');
                     $this->clase_validacionAccionDeletePersona = $this->crearValidacionAccion('DeletePersona');
-                    break;
+                break;
                 case 'searchByParameters':
                     $this->persona = $this->crearModelo('Persona');
-                    break;
+                break;
                 default:
-                    break;
+                break;
             }
         }
 
@@ -213,18 +211,19 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
             return $respuesta;
         }
     
-        function search($mensaje){
+        function search($mensaje, $paginacion){
             $persona_mapping = new PersonaMapping();
-            $persona_mapping->search();
-            return $persona_mapping->feedback['resource'];
+            $persona_mapping->search($paginacion);
+            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], '', $this->numberFindAll()["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
         }
 
-        function searchByParameters($mensaje){
+        function searchByParameters($mensaje, $paginacion){
 
             $respuesta = '';
             
                 $datosSearchParameters = array();
-                if($this->persona->dni_persona===null){
+                if($this->persona->dni_persona===null || $this->persona->dni_persona === ""){
                     $datosSearchParameters['dni_persona'] = '';
                 }else{
                     $datosSearchParameters['dni_persona'] = $this->persona->dni_persona;
@@ -262,9 +261,192 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
 
                 $datosSearchParameters['borrado_persona'] = 0;
             
-                $persona_mapping= new PersonaMapping();
-            $persona_mapping->searchByParameters($datosSearchParameters);
+            $persona_mapping= new PersonaMapping();
+            $persona_mapping->searchByParameters($datosSearchParameters, $paginacion);
+            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
+        }
+
+        function numberFindAll(){
+            $persona_mapping = new PersonaMapping();
+            $persona_mapping->numberFindAll();
+            return $persona_mapping->feedback['resource'];
+        }
+
+        function numberFindParameters($datosSearchParameters){
+            $persona_mapping = new PersonaMapping();
+            $persona_mapping->numberFindParameters($datosSearchParameters);
             return $persona_mapping->feedback['resource'];
         }
     }
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
