@@ -3,40 +3,45 @@
 include_once './Mapping/MappingBase.php';
 include_once './Modelos/PersonaModel.php';
 
-class AccionMapping extends MappingBase {
+class FuncionalidadMapping extends MappingBase {
+
+
     public $conexion;
 
     public function __construct(){
         $this->conexion = $this->connection();
     }
 
-    function add($datosInsertar) {
+   function add($datosInsertar) {
         
-        $this->query = "INSERT INTO `accion` (`id_accion`, `nombre_accion`, `descripcion_accion`, `borrado_accion`) VALUES (1,'".$datosInsertar['nombre_accion']."','".$datosInsertar['descripcion_accion']."','"
-                        .$datosInsertar['borrado_accion']. "')";
+        $this->query = "INSERT INTO `funcionalidad` (`id_funcionalidad`, `nombre_funcionalidad`, `descripcion_funcionalidad`, `borrado_funcionalidad`) VALUES (1,'".$datosInsertar['nombre_funcionalidad']."','".$datosInsertar['descripcion_funcionalidad']."','"
+                        .$datosInsertar['borrado_funcionalidad']. "')";
         $this->stmt = $this->conexion->prepare($this->query);
        
         $this->execute_single_query();  
     }
 
+
     function edit($datosModificar) {
       
-        $this->query = "UPDATE `accion` SET `nombre_accion` = '"
-        .$datosModificar['nombre_accion']."', `descripcion_accion` = '"
-        .$datosModificar['descripcion_accion']."', `borrado_accion`='"
-        .$datosModificar['borrado_accion']." 'WHERE `id_accion` ='"
-        .$datosModificar['id_accion']."'";
+        $this->query = "UPDATE `funcionalidad` SET `nombre_funcionalidad` = '"
+        .$datosModificar['nombre_funcionalidad']."', `descripcion_funcionalidad` = '"
+        .$datosModificar['descripcion_funcionalidad']."', `borrado_funcionalidad`='"
+        .$datosModificar['borrado_funcionalidad']." 'WHERE `id_funcionalidad` ='"
+        .$datosModificar['id_funcionalidad']."'";
         $this->stmt = $this->conexion->prepare($this->query);
+
         $this->execute_single_query();
     }
 
     function delete($datosEliminar) {
-        $this->query = "UPDATE `accion` SET `borrado_accion` = 1 WHERE `id_accion` ='"
-        .$datosEliminar['id_accion']."'";
+        $this->query = "UPDATE `funcionalidad` SET `borrado_funcionalidad` = 1 WHERE `id_funcionalidad` ='"
+        .$datosEliminar['id_funcionalidad']."'";
         $this->stmt = $this->conexion->prepare($this->query);
 
         $this->execute_single_query();
     }
+    
 /*
 @NamedQuery(name = "PersonaEntity.findPersona", query = "SELECT p FROM PersonaEntity p WHERE
  LOWER(p.dniP) LIKE LOWER(CONCAT('%', :dniP, '%')) AND
@@ -49,6 +54,7 @@ class AccionMapping extends MappingBase {
        p.borradoP=0"),
 	*/	
     function searchByParameters($datosSearchParameters) {
+        
         header('Content-type: application/json');
 		echo(json_encode($datosSearchParameters)); 
 		exit();
@@ -59,14 +65,14 @@ class AccionMapping extends MappingBase {
     }
 
     function search() {
-        $this->query = "SELECT * FROM `accion`";
+        $this->query = "SELECT * FROM `funcionalidad`";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
 
     function searchById($datosSearch) {
         
-        $this->query = "SELECT * FROM `accion` WHERE `id_accion`='".$datosSearch['id_accion']."'";
+        $this->query = "SELECT * FROM `funcionalidad` WHERE `id_funcionalidad`='".$datosSearch['id_funcionalidad']."'";
         //$foraneas = $datosSearch->foraneas;
         $this->stmt = $this->conexion->prepare($this->query);
     

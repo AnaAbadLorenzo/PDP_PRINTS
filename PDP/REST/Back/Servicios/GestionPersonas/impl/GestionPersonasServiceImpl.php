@@ -128,7 +128,7 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
                 $datosEditPersona['direccion_persona'] = $this->persona->direccion_persona;
                 $datosEditPersona['email_persona'] = $this->persona->email_persona;
                 $datosEditPersona['telefono_persona'] = $this->persona->telefono_persona;
-                $datosEditPersona['borrado_persona'] = 0;
+                $datosEditPersona['borrado_persona'] = $this->persona->borrado_persona;
 
                 if($this->clase_validacionFormatoEditPersona != null) {
 
@@ -157,7 +157,7 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
                     'direccion_persona' => $this->persona->direccion_persona,
                     'email_persona' => $this->persona->email_persona,
                     'telefono_persona' => $this->persona->telefono_persona,
-                    'borrado_persona' => 0
+                    'borrado_persona' => $this->persona->borrado_persona
 
                 ];
                 $persona_mapping = new PersonaMapping();

@@ -92,7 +92,7 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                 $datosEditAccion['id_accion'] = $this->accion->id_accion;
                 $datosEditAccion['nombre_accion'] = $this->accion->nombre_accion;
                 $datosEditAccion['descripcion_accion'] = $this->accion->descripcion_accion;
-                $datosEditAccion['borrado_accion'] = 0;
+                $datosEditAccion['borrado_accion'] = $this->accion->borrado_accion;
 
                 
                 if ($this->clase_validacionFormatoAccion != null) {
@@ -113,7 +113,7 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                         'id_accion' => $this->accion->id_accion,
                         'nombre_accion' => $this->accion->nombre_accion,
                         'descripcion_accion' => $this->accion->descripcion_accion,
-                        'borrado_accion' => 0
+                        'borrado_accion' => $this->accion->borrado_accion
                     ];
              
                     $accion_mapping = new AccionMapping();

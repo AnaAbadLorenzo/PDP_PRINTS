@@ -20,8 +20,8 @@ class EditAccionAccion extends ValidacionesBase{
 		
 	}
 
-    //aquí irían las funciones de las premisas a cumplir para la inserción/edición o borrado
-    
+    //aquí irían las funciones de las premisas a cumplir para la inserción/edición 
+	
 function existeIdAccion($datosEditAccion){
 
 		$datoBuscar = array();

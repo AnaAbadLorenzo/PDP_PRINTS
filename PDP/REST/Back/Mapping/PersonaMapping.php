@@ -34,8 +34,12 @@ class PersonaMapping extends MappingBase {
     }
 
     function delete($datosEliminar) {
-        $this->query = "DELETE FROM `persona` WHERE `dni_persona` ='". $datosEliminar['dni_persona']."'";
+
+
+        $this->query = "UPDATE `persona` SET `borrado_persona` = 1 WHERE `dni_persona` ='"
+        .$datosEliminar['dni_persona']."'";
         $this->stmt = $this->conexion->prepare($this->query);
+
         $this->execute_single_query();
     }
 
