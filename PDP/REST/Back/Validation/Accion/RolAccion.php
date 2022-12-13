@@ -2,6 +2,7 @@
 
 include_once './Validation/ValidacionesBase.php';
 include_once './Comun/funcionesComunes.php';
+include_once './Modelos/RolModel.php';
 
 class RolAccion extends ValidacionesBase {
 
@@ -13,21 +14,43 @@ class RolAccion extends ValidacionesBase {
 		$this -> rol = new RolModel();
 	}
 
-	function comprobarRegistro($datosRegistroRol){
-		$this -> existeRol($datosRegistroRol);
+	function comprobarAddRol($rol_datos){
+		$this -> existeRol($rol_datos);
+		return $this -> respuesta;
+	}
+
+	function comprobarEditRol($rol_datos){
+		$this -> noExisteRol($rol_datos);
+		return $this -> respuesta;
+	}
+
+	function comprobarDeleteRol($rol_datos){
+		$this -> noExisteRol($rol_datos);
 		return $this -> respuesta;
 	}
  
-	function existeRol($datosRol) {
+	function existeRol($rol_datos) {
 
-		$datoBuscar = array();
-		$datoBuscar['id_rol'] = $datosRol['id_rol'];
-		$resultado = $this -> rol -> getById('rol', $datoBuscar['resource']);
+		$this -> rol -> getByName('Rol', $rol_datos);
+		$resultado = $this -> rol -> mapping -> resource;
 
 		if (sizeof($resultado) == 0) {
 			return true;
 		} else {
 			$this -> respuesta = 'ROL_YA_EXISTE';
+		}
+		
+	}
+ 
+	function noExisteRol($rol_datos) {
+
+		$this -> rol -> getById('Rol', $rol_datos);
+		$resultado = $this -> rol -> mapping -> resource;
+
+		if (sizeof($resultado) != 0) {
+			return true;
+		} else {
+			$this -> respuesta = 'ROL_NO_EXISTE';
 		}
 		
 	}

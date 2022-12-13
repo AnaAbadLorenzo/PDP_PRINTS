@@ -18,8 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 CREATE USER IF NOT EXISTS 'pdpPrints'@'%' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON *.* TO 'pdpPrints'@'%' REQUIRE NONE WITH 
-GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;GRANT ALL PRIVILEGES ON `pdp_prints`.* TO 'pdpPrints'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'pdpPrints'@'%';
+-- GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT ALL PRIVILEGES ON `pdp_prints`.* TO 'pdpPrints'@'%';
 
 --
 -- Base de datos: `pdp_prints`
@@ -361,6 +362,12 @@ ALTER TABLE `log_excepciones`
 --
 ALTER TABLE `noticia`
   MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

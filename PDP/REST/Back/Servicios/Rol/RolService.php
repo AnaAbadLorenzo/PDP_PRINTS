@@ -2,12 +2,13 @@
 
 interface RolService {
 
-	public function inicializarParametros($accion);
+	public function inicializarParametros();
 
     function add($mensaje);
 	function edit($mensaje);
     function delete($mensaje);
-    function search($mensaje);
+    function search($paginacion);
+    function searchByParameters($paginacion);
 	
 }
 

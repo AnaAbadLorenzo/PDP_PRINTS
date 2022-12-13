@@ -1,6 +1,7 @@
 <?php
 
 class Paginacion {
+	
     public $inicio;
     public $tamanhoPagina;
 

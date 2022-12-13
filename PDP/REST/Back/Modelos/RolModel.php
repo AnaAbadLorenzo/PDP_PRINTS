@@ -38,6 +38,14 @@ class RolModel extends ModelBase {
 		return $this -> mapping -> searchById($datosSearch);
 	}
 
+	function getByName($tabla, $datosSearch) {
+        include_once './Mapping/' . $tabla . 'Mapping.php';
+        $map = $tabla . 'Mapping';
+        $this -> mapping = new $map();
+		$datosSearch['foraneas'] = $this -> clavesForaneas;
+		return $this -> mapping -> searchByName($datosSearch);
+	}
+
 }
 
 ?>
