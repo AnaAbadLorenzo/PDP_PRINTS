@@ -25,23 +25,17 @@ class NoticiaMapping extends MappingBase {
         .$datosModificar['titulo_noticia']."', `contenido_noticia` = '"
         .$datosModificar['contenido_noticia']."', `fecha_noticia` = '"
         .$datosModificar['fecha_noticia']."' WHERE `id_noticia`='". $datosModificar['id_noticia'] . "'";
+
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
 
     function delete($datosEliminar) {
 
-        $this->query = "DELETE FROM `noticia` WHERE `        header('Content-type: application/json');
-		echo(json_encode($datosSearchParameters));
-		exit();` = '". $datosEliminar['id_noticia']."'";
+        $this->query = "DELETE FROM `noticia` WHERE `titulo_noticia` = '". $datosEliminar['titulo_noticia']."'";
         $this->stmt = $this->conexion->prepare($this->query);
-        $this->execute_single_query();
-    }
 
-    function searchBy() {
-        header('Content-type: application/json');
-		echo(json_encode($datosSearchParameters));
-		exit();
+        $this->execute_single_query();
     }
 
     function search() {
@@ -54,12 +48,6 @@ class NoticiaMapping extends MappingBase {
             $this->stmt = $this->conexion->prepare($this->query);
             $this->get_one_result_from_query();
             $respuesta = $this->feedback;
-
-            if($respuesta['code'] != 'RECORDSET_VACIO'){
-                return $respuesta;
-            }else{
-                return $respuesta;
-            }
     }
 
     function searchByTitulo($datosSearch) {
@@ -68,11 +56,6 @@ class NoticiaMapping extends MappingBase {
             $this->get_one_result_from_query();
             $respuesta = $this->feedback;
 
-            if($respuesta['code'] != 'RECORDSET_VACIO'){
-                return $respuesta;
-            }else{
-                return $respuesta;
-            }
     }
 
     function searchByContenido($datosSearch) {
@@ -81,11 +64,6 @@ class NoticiaMapping extends MappingBase {
             $this->get_one_result_from_query();
             $respuesta = $this->feedback;
 
-            if($respuesta['code'] != 'RECORDSET_VACIO'){
-                return $respuesta;
-            }else{
-                return $respuesta;
-            }
     }
     function searchByFecha($datosSearch) {
             $this->query = "SELECT * FROM `noticia` WHERE `fecha_noticia`='" . $datosSearch['fecha_noticia'] . "'";
@@ -93,11 +71,6 @@ class NoticiaMapping extends MappingBase {
             $this->get_one_result_from_query();
             $respuesta = $this->feedback;
 
-            if($respuesta['code'] != 'RECORDSET_VACIO'){
-                return $respuesta;
-            }else{
-                return $respuesta;
-            }
     }
 }
 ?>

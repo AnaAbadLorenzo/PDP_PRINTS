@@ -56,7 +56,7 @@
 
                 $usuarioDatos = [
 
-                    'dni_usuario' => $datosEditPersona['dni_usuario'],
+                    'dni_usuario' => $datosEditUsuario['dni_usuario'],
                     'usuario' => $this->usuario->usuario,
                     'passwd_usuario' => $this->usuario->passwd_usuario,
                     'borrado_usuario' => 0
