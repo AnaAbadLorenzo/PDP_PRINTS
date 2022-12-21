@@ -46,7 +46,7 @@ class UsuarioModel extends ModelBase{
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
 		$datosSearch['foraneas'] = $this->clavesForaneas;
-		return $this->mapping->searchByDNI($datosSearch);
+		return $this->mapping->searchById($datosSearch);
 	}
 
 }
