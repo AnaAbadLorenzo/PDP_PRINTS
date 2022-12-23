@@ -21,10 +21,8 @@ class FuncionalidadModel extends ModelBase{
 		$this->nombre_funcionalidad = '';
 		$this->descripcion_funcionalidad = '';
 	 	$this->borrado_funcionalidad = '';
-	  	
-
+	
 		if ($_POST){
-
             if(isset($_POST['id_funcionalidad'])) $this->id_funcionalidad = $_POST['id_funcionalidad'];
 			if(isset($_POST['nombre_funcionalidad'])) $this->nombre_funcionalidad = $_POST['nombre_funcionalidad'];
 			if(isset($_POST['descripcion_funcionalidad'])) $this->descripcion_funcionalidad = $_POST['descripcion_funcionalidad'];
@@ -33,12 +31,17 @@ class FuncionalidadModel extends ModelBase{
 	}
 
 	function getById($tabla, $datosSearch){
-
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
-		//$datosSearch['foraneas'] = $this->clavesForaneas;
 		return $this->mapping->searchById($datosSearch);
+	}
+
+	function getByName($tabla, $datosSearch){
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
+        $map = $tabla.'Mapping';
+        $this->mapping = new $map();
+		return $this->mapping->searchByName($datosSearch);
 	}
 
 }

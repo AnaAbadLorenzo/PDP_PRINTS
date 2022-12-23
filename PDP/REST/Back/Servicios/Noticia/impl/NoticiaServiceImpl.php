@@ -26,7 +26,6 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
         $noticia_datos['contenido_noticia'] = $this -> noticia -> contenido_noticia;
         $noticia_datos['fecha_noticia'] = $this -> noticia -> fecha_noticia;
 
-
         $this -> validacion_formato -> validarAtributosAdd($noticia_datos);
         $respuesta = $this -> validacion_formato -> respuesta;
         if ($respuesta != null) {
@@ -80,7 +79,7 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
             $noticia_a_editar = [
                 'id_noticia' => $noticia_datos['id_noticia'],
                 'titulo_noticia' => $noticia_datos['titulo_noticia'],
-                'contenido_noticia' => $noticia_datos['contenido_noticia']
+                'contenido_noticia' => $noticia_datos['contenido_noticia'],
                 'fecha_noticia' => $noticia_datos['fecha_noticia']
             ];
 

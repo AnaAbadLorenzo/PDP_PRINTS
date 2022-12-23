@@ -5,7 +5,7 @@ include_once './Servicios/Rol/impl/RolServiceImpl.php';
 include_once './Validation/Atributo/Controlador/RolValidation.php';
 include_once './Servicios/Comun/Paginacion.php';
 
-class RolController extends ControllerBase {
+class GestionRolesController extends ControllerBase {
 
 	private $rol_service;
 	private $rol_validation;
@@ -16,7 +16,6 @@ class RolController extends ControllerBase {
 	}
 
 	function add() {
-
 		$this -> rol_validation -> validarAdd();
 		if (!empty($this -> rol_validation -> respuesta_formato)) {
 			$this -> rellenarRespuesta($this -> rol_validation -> respuesta_formato, true, '');
@@ -31,14 +30,14 @@ class RolController extends ControllerBase {
 			$respuesta = $this -> rol_service -> add('ADD_ROL_COMPLETO');
 
 			if ($respuesta != 'ADD_ROL_COMPLETO') {
+				$this -> rellenarRespuesta($respuesta, true, '');
+			
 			} else {
 				$this -> rellenarRespuesta($respuesta, false, '');
 			}
 
 			$this -> getRespuesta($respuesta);
-
 		}
-
 	}
 
 	function edit() {
@@ -115,6 +114,17 @@ class RolController extends ControllerBase {
 		$respuesta = $this -> rol_service -> searchByParameters($paginacion);
 
 		$this -> rellenarRespuesta('BUSQUEDA_PERSONALIZADA_ROL_CORRECTO', false, $respuesta);
+		$this -> getRespuesta($respuesta);
+    }
+
+	function searchDelete() {
+
+		$this -> rol_service -> inicializarParametros();
+
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+		$respuesta = $this -> rol_service -> searchDelete($paginacion);
+
+		$this -> rellenarRespuesta('BUSQUEDA_ROL_ELIMINADO_CORRECTO', false, $respuesta);
 		$this -> getRespuesta($respuesta);
 
     }

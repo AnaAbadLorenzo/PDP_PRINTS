@@ -39,7 +39,6 @@ class RolAccion extends ValidacionesBase {
 		} else {
 			$this -> respuesta = 'ROL_YA_EXISTE';
 		}
-		
 	}
  
 	function noExisteRol($rol_datos) {

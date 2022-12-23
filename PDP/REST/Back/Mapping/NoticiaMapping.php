@@ -12,9 +12,9 @@ class NoticiaMapping extends MappingBase {
 
     function add($datosInsertar) {
 
-        $this->query = "INSERT INTO `noticia` (`id_noticia`, `titulo_noticia`, `contenido_noticia`, `fecha_noticia`) VALUES ('".$datosInsertar['id_noticia']."', '".$datosInsertar['titulo_noticia']."', '"
-                        .$datosInsertar['contenido_noticia']. "', '".$datosInsertar['fecha_noticia']."', '"
-                        .$datosInsertar['id_rol']."');";
+        $this->query = "INSERT INTO `noticia` (`titulo_noticia`, `contenido_noticia`, `fecha_noticia`) 
+                        VALUES ('".$datosInsertar['titulo_noticia']."', '"
+                        .$datosInsertar['contenido_noticia']. "', '".$datosInsertar['fecha_noticia']."');";
         $this->stmt = $this->conexion->prepare($this->query);
 
         $this->execute_single_query();

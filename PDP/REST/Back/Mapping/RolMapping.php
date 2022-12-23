@@ -71,6 +71,18 @@ class RolMapping extends MappingBase {
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this -> get_results_from_query();
+    }
+
+    function searchDelete($paginacion) {
+
+        $this -> query = 
+            "SELECT * FROM `rol`
+            WHERE `borrado_rol`=1
+            LIMIT " . $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . ";"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
 
     }
 
@@ -122,6 +134,12 @@ class RolMapping extends MappingBase {
 
     function numberFindAll() {
         $this -> query = "SELECT COUNT(*) FROM `rol` WHERE `borrado_rol`=0";
+        $this -> stmt = $this -> conexion -> prepare($this -> query);
+        $this -> get_one_result_from_query();
+    }
+
+    function numberFindAllDelete() {
+        $this -> query = "SELECT COUNT(*) FROM `rol` WHERE `borrado_rol`=1";
         $this -> stmt = $this -> conexion -> prepare($this -> query);
         $this -> get_one_result_from_query();
     }

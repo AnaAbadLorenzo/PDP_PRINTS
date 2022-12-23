@@ -214,7 +214,16 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
         function search($mensaje, $paginacion){
             $persona_mapping = new PersonaMapping();
             $persona_mapping->search($paginacion);
-            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], '', $this->numberFindAll()["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
+            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], '',
+                        $this->numberFindAll()["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
+        }
+
+        function searchDelete($mensaje, $paginacion){
+            $persona_mapping = new PersonaMapping();
+            $persona_mapping->searchDelete($paginacion);
+            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], '',
+                        $this->numberFindAllDelete()["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
             return $returnBusquedas;
         }
 
@@ -263,13 +272,20 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
             
             $persona_mapping= new PersonaMapping();
             $persona_mapping->searchByParameters($datosSearchParameters, $paginacion);
-            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
+            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+                            sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
             return $returnBusquedas;
         }
 
         function numberFindAll(){
             $persona_mapping = new PersonaMapping();
             $persona_mapping->numberFindAll();
+            return $persona_mapping->feedback['resource'];
+        }
+
+        function numberFindAllDelete(){
+            $persona_mapping = new PersonaMapping();
+            $persona_mapping->numberFindAllDelete();
             return $persona_mapping->feedback['resource'];
         }
 

@@ -4,6 +4,7 @@
     include_once './Servicios/GestionFuncionalidades/GestionFuncionalidadesService.php';
     include_once './Mapping/FuncionalidadMapping.php';
     include_once './Mapping/UsuarioMapping.php';
+    include_once './Servicios/Comun/ReturnBusquedas.php';
 
 class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFuncionalidadesService {
 
@@ -14,8 +15,9 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
             switch($accion){
                 case 'add' :
                     $this->funcionalidad = $this->crearModelo('Funcionalidad');
-				    //$this->clase_validacionAccionAccion = $this->crearValidacionAccion('EditAccion'); en caso de haber alguna premisa creae otro fichero (AddAccionAccion.php)
+				    $this->clase_validacionFuncionalidadAccion = $this->crearValidacionAccion('AddFuncionalidad');
                     $this->clase_validacionFormatoFuncionalidad = $this->crearValidacionFormato('Funcionalidad');
+                break;
                 case 'edit':
                     $this->funcionalidad = $this->crearModelo('Funcionalidad');
                     $this->clase_validacionFuncionalidadAccion = $this->crearValidacionAccion('EditFuncionalidad');
@@ -50,15 +52,19 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                 if ($this->clase_validacionFormatoFuncionalidad != null) {
                     $this->clase_validacionFormatoFuncionalidad->validarAtributosFuncionalidad($datosFuncionalidad);
                 }
-                //no hay que realizar ninguna premisa para insertar...
-                /*if ($this->clase_validacionAccionAccion != null){
-                    $this->clase_validacionAccionAccion->comprobarAccion($datosAccion);
-                }*/
+                if ($this->clase_validacionFuncionalidadAccion != null){
+                    $this->clase_validacionFuncionalidadAccion->comprobarAddFuncionalidad($datosFuncionalidad);
+                }
                 
-            
                 if($this->clase_validacionFormatoFuncionalidad->respuesta != null){
                     $respuesta = $this->clase_validacionFormatoFuncionalidad->respuesta;
-                }else{
+                }
+                
+                else if($this->clase_validacionFuncionalidadAccion->respuesta != null){
+                    $respuesta = $this->clase_validacionFuncionalidadAccion->respuesta;
+                }
+                
+                else{
                     $FuncionalidadDatos = [
                         'nombre_funcionalidad' => $this->funcionalidad->nombre_funcionalidad,
                         'descripcion_funcionalidad' => $this->funcionalidad->descripcion_funcionalidad,
@@ -93,8 +99,6 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                 if ($this->clase_validacionFuncionalidadAccion != null){
                     $this->clase_validacionFuncionalidadAccion->comprobarEditFuncionalidad($datosEditFuncionalidad);
                 }
-
-                
                 if($this->clase_validacionFormatoFuncionalidad->respuesta != null){
                     $respuesta = $this->clase_validacionFormatoFuncionalidad->respuesta;
                 }else if($this->clase_validacionFuncionalidadAccion->respuesta != null){
@@ -125,8 +129,6 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
 
 
         function delete($mensaje){
-            
-            
                 $respuesta = '';
                 $datosDeleteFuncionalidad = array();
                 $datosDeleteFuncionalidad['id_funcionalidad'] = $this->funcionalidad->id_funcionalidad;
@@ -142,8 +144,7 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                 }else{
                
                 $funcionalidadDatos = [
-                    'id_funcionalidad' => $datosDeleteFuncionalidad['id_funcionalidad'],
-                    
+                    'id_funcionalidad' => $datosDeleteFuncionalidad['id_funcionalidad'],  
                 ];
 
                 $funcionalidad_mapping = new FuncionalidadMapping();
@@ -156,36 +157,64 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
             
         }
     
-        function search($mensaje){
-            
+        function search($mensaje, $paginacion){
             $funcionalidad_mapping = new FuncionalidadMapping();
-            $funcionalidad_mapping->search();
-            return $funcionalidad_mapping->feedback['resource'];
+            $funcionalidad_mapping->search($paginacion);
+            $returnBusquedas = new ReturnBusquedas($funcionalidad_mapping->feedback['resource'], '',
+            $this->numberFindAll()["COUNT(*)"],sizeof($funcionalidad_mapping->feedback['resource']), $paginacion->inicio);
+            
+            return $returnBusquedas;
+        }
+
+        function searchDelete($mensaje, $paginacion){
+            $funcionalidad_mapping = new FuncionalidadMapping();
+            $funcionalidad_mapping->searchDelete($paginacion);
+            
+            $returnBusquedas = new ReturnBusquedas($funcionalidad_mapping->feedback['resource'], '',
+            $this->numberFindAllDelete()["COUNT(*)"],sizeof($funcionalidad_mapping->feedback['resource']), $paginacion->inicio);
+            
+            return $returnBusquedas;
             
         }
 
-        function searchByParameters($mensaje){
-
-            /*
-            $respuesta = '';
-            
-                $datosSearchParameters = array();
-                if($this->accion->nombre_accion===null){
-                    $datosSearchParameters['nombre_accion'] = '';
-                }else{
-                    $datosSearchParameters['nombre_accion'] = $this->accion->nombre_accion;
-                }
-                if($this->accion->descripcion_accion===null){
-                    $datosSearchParameters['descripcion_accion'] = '';
-                }else{
-                    $datosSearchParameters['descripcion_accion'] = $this->accion->descripcion_accion;
-                }
+        function searchByParameters($mensaje, $paginacion){
+            $datosSearchParameters = array();
                 
-                //$datosSearchParameters['borrado_persona'] = 0;
-            $accion_mapping = new AccionMapping();
-            $accion_mapping->searchByParameters($datosSearchParameters);
-            return $this->accion_mapping->feedback['resource']; 
-             */
+            if($this->funcionalidad->nombre_funcionalidad===null){
+                $datosSearchParameters['nombre_funcionalidad'] = '';
+            }else{
+                $datosSearchParameters['nombre_funcionalidad'] = $this->funcionalidad->nombre_funcionalidad;
+            }
+
+            if($this->funcionalidad->descripcion_funcionalidad===null){
+                $datosSearchParameters['descripcion_funcionalidad'] = '';
+            }else{
+                $datosSearchParameters['descripcion_funcionalidad'] = $this->funcionalidad->descripcion_funcionalidad;
+            }
+                
+            $funcionalidad_mapping = new FuncionalidadMapping();
+            $funcionalidad_mapping->searchByParameters($datosSearchParameters,$paginacion);
+            $returnBusquedas = new ReturnBusquedas($funcionalidad_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+            sizeof($funcionalidad_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
+        }
+
+        function numberFindAll(){
+            $funcionalidad_mapping = new FuncionalidadMapping();
+            $funcionalidad_mapping->numberFindAll();
+            return $funcionalidad_mapping->feedback['resource'];
+        }
+
+        function numberFindAllDelete(){
+            $funcionalidad_mapping = new FuncionalidadMapping();
+            $funcionalidad_mapping->numberFindAllDelete();
+            return $funcionalidad_mapping->feedback['resource'];
+        }
+
+        function numberFindParameters($datosSearchParameters){
+            $funcionalidad_mapping = new FuncionalidadMapping();
+            $funcionalidad_mapping->numberFindParameters($datosSearchParameters);
+            return $funcionalidad_mapping->feedback['resource'];
         }
       
     }

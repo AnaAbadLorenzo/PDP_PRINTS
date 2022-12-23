@@ -34,11 +34,17 @@ class AccionModel extends ModelBase{
 
 	function getById($tabla, $datosSearch){
 
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
-		//$datosSearch['foraneas'] = $this->clavesForaneas;
 		return $this->mapping->searchById($datosSearch);
+	}
+
+	function getByName($tabla, $datosBuscar) {
+		include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
+        $map = $tabla.'Mapping';
+        $this->mapping = new $map();
+		return $this->mapping->searchByName($datosBuscar);
 	}
 
 }

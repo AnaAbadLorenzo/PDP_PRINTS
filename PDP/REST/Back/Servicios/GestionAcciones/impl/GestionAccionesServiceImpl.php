@@ -4,30 +4,25 @@
     include_once './Servicios/GestionAcciones/GestionAccionesService.php';
     include_once './Mapping/AccionMapping.php';
     include_once './Mapping/UsuarioMapping.php';
+    include_once './Servicios/Comun/ReturnBusquedas.php';
 
 class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesService {
 
         private $accion_mapping;
-        private $usuario_mapping;
 
         function inicializarParametros($accion){
             switch($accion){
                 case 'add' :
                     $this->accion = $this->crearModelo('Accion');
-				    //$this->clase_validacionAccionAccion = $this->crearValidacionAccion('EditAccion'); en caso de haber alguna premisa creae otro fichero (AddAccionAccion.php)
+                    $this->clase_validacionAccionAccion = $this->crearValidacionAccion('AddAccion');
                     $this->clase_validacionFormatoAccion = $this->crearValidacionFormato('Accion');
+                break;
                 case 'edit':
                     $this->accion = $this->crearModelo('Accion');
                     $this->clase_validacionAccionAccion = $this->crearValidacionAccion('EditAccion');
                     $this->clase_validacionFormatoAccion = $this->crearValidacionFormato('Accion');
-                    /*$this->persona = $this->crearModelo('Persona');
-                    //$this->usuario = $this->crearModelo('Usuario');
-                    
-				    $this->clase_validacionAccionEditPersona = $this->crearValidacionAccion('EditPersona');
-                    $this->clase_validacionFormatoEditPersona = $this->crearValidacionFormato('Registro');
-                    //$this->clase_validacionAccionRegistroUsuario = $this->crearValidacionAccion('Autenticacion');
-                    //$this->clase_validacionFormatoRegistroUsuario = $this->crearValidacionFormato('Autenticacion');*/
-                    break;
+            
+                break;
                 case 'delete':
                     $this->accion = $this->crearModelo('Accion');
                     $this->clase_validacionAccionDeleteAccion = $this->crearValidacionAccion('DeleteAccion');
@@ -56,12 +51,11 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                 if ($this->clase_validacionFormatoAccion != null) {
                     $this->clase_validacionFormatoAccion->validarAtributosAccion($datosAccion);
                 }
-                //no hay que realizar ninguna premisa para insertar...
-                /*if ($this->clase_validacionAccionAccion != null){
-                    $this->clase_validacionAccionAccion->comprobarAccion($datosAccion);
-                }*/
-                
             
+                if ($this->clase_validacionAccionAccion != null){
+                    $this->clase_validacionAccionAccion->comprobarAccionAdd($datosAccion);
+                }
+                
                 if($this->clase_validacionFormatoAccion->respuesta != null){
                     $respuesta = $this->clase_validacionFormatoAccion->respuesta;
                 }else if($this->clase_validacionAccionAccion->respuesta != null){
@@ -99,7 +93,7 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                     $this->clase_validacionFormatoAccion->validarAtributosAccion($datosEditAccion);
                 }
                 if ($this->clase_validacionAccionAccion != null){
-                    $this->clase_validacionAccionAccion->comprobarAccion($datosEditAccion);
+                    $this->clase_validacionAccionAccion->comprobarAccionEdit($datosEditAccion);
                 }
 
                 
@@ -160,16 +154,28 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
             return $respuesta;
         }
     
-        function search($mensaje){
+        function search($mensaje, $paginacion){
+            $paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
             $accion_mapping = new AccionMapping();
-            $accion_mapping->search();
-            return $accion_mapping->feedback['resource'];
+            $accion_mapping->search($paginacion);
+            $returnBusquedas = new ReturnBusquedas($accion_mapping->feedback['resource'], '',
+                $this->numberFindAll()["COUNT(*)"],sizeof($accion_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
+        }
+
+        function searchDelete($mensaje, $paginacion){
+            $paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+            $accion_mapping = new AccionMapping();
+            $accion_mapping->searchDelete($paginacion);
+            $returnBusquedas = new ReturnBusquedas($accion_mapping->feedback['resource'], '',
+                $this->numberFindAllDelete()["COUNT(*)"],sizeof($accion_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
         }
 
         function searchByParameters($mensaje){
-
             $respuesta = '';
             
+            $paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
                 $datosSearchParameters = array();
                 if($this->accion->nombre_accion===null){
                     $datosSearchParameters['nombre_accion'] = '';
@@ -181,11 +187,30 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                 }else{
                     $datosSearchParameters['descripcion_accion'] = $this->accion->descripcion_accion;
                 }
-                
-                //$datosSearchParameters['borrado_persona'] = 0;
+
             $accion_mapping = new AccionMapping();
-            $accion_mapping->searchByParameters($datosSearchParameters);
-            return $this->accion_mapping->feedback['resource']; 
+            $accion_mapping->searchByParameters($datosSearchParameters, $paginacion);
+            $returnBusquedas = new ReturnBusquedas($accion_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+                            sizeof($accion_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
+        }
+
+        function numberFindAll(){
+            $accion_mapping = new AccionMapping();
+            $accion_mapping->numberFindAll();
+            return $accion_mapping->feedback['resource'];
+        }
+
+        function numberFindAllDelete(){
+            $accion_mapping = new AccionMapping();
+            $accion_mapping->numberFindAllDelete();
+            return $accion_mapping->feedback['resource'];
+        }
+
+        function numberFindParameters($datosSearchParameters){
+            $accion_mapping = new AccionMapping();
+            $accion_mapping->numberFindParameters($datosSearchParameters);
+            return $accion_mapping->feedback['resource'];
         }
        
     }

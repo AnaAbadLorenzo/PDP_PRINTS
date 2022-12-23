@@ -4,18 +4,16 @@ include_once './Controladores/ControllerBase.php';
 include_once './Servicios/GestionFuncionalidades/impl/GestionFuncionalidadesServiceImpl.php';
 include_once './Validation/Atributo/Controlador/EditFuncionalidadValidation.php';
 include_once './Validation/Atributo/Controlador/RegistroValidation.php';
+include_once './Servicios/Comun/Paginacion.php';
 
 class GestionFuncionalidadesController extends ControllerBase{
 
 	private $gestionFuncionalidadService;
 	private $editFuncionalidadValidation;
-	private $registroValidation;
 
 	public function __construct(){
 		$this->gestionFuncionalidadService = new GestionFuncionalidadesServiceImpl();
 		$this->editFuncionalidadValidation = new EditFuncionalidadValidation();
-		//$this->registroValidation = new RegistroValidation();
-
 	}
     
 	function add(){
@@ -41,28 +39,26 @@ class GestionFuncionalidadesController extends ControllerBase{
 
 	function edit(){	
 
-			$this->editFuncionalidadValidation->validarEditFuncionalidad();
+		$this->editFuncionalidadValidation->validarEditFuncionalidad();
 
-			if($this->editFuncionalidadValidation->respuesta != ''){
-                $this->rellenarRespuesta($this->editFuncionalidadValidation->respuesta, true, '');
-            }
+		if($this->editFuncionalidadValidation->respuesta != ''){
+            $this->rellenarRespuesta($this->editFuncionalidadValidation->respuesta, true, '');
+        }
 			
-			$this->gestionFuncionalidadService->inicializarParametros('edit');
+		$this->gestionFuncionalidadService->inicializarParametros('edit');
            
-			$respuesta = $this->gestionFuncionalidadService->edit('EDIT_FUNCIONALIDAD_COMPLETO');
+		$respuesta = $this->gestionFuncionalidadService->edit('EDIT_FUNCIONALIDAD_COMPLETO');
 			
 
-			if($respuesta != 'EDIT_FUNCIONALIDAD_COMPLETO') {
-				$this->rellenarRespuesta($respuesta, true, '');
-			}else{
-				$this->rellenarRespuesta('EDIT_FUNCIONALIDAD_COMPLETO', false, '');
-			}
-			$this->getRespuesta($respuesta);
-		
+		if($respuesta != 'EDIT_FUNCIONALIDAD_COMPLETO') {
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
+			$this->rellenarRespuesta('EDIT_FUNCIONALIDAD_COMPLETO', false, '');
+		}
+		$this->getRespuesta($respuesta);
 	}
    
     function delete(){
-   
 
         $this->gestionFuncionalidadService->inicializarParametros('delete');
         $respuesta = $this->gestionFuncionalidadService->delete('DELETE_FUNCIONALIDAD_COMPLETO');
@@ -77,18 +73,24 @@ class GestionFuncionalidadesController extends ControllerBase{
    
     }
 
-
     function search(){
-       
-        $respuesta = $this->gestionFuncionalidadService->search('BUSQUEDA_FUNCIONALIDAD_CORRECTO');
-			$this->rellenarRespuesta('BUSQUEDA_FUNCIONALIDAD_CORRECTO', false, $respuesta);
-			$this->getRespuesta($respuesta);
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionFuncionalidadService->search('BUSQUEDA_FUNCIONALIDAD_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_FUNCIONALIDAD_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
+	function searchDelete(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionFuncionalidadService->searchDelete('BUSQUEDA_FUNCIONALIDAD_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_FUNCIONALIDAD_ELIMINADA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
     }
 
     function searchByParameters(){
-        echo("entroooooo");
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$this->gestionFuncionalidadService->inicializarParametros('searchByParameters');
-		$respuesta = $this->gestionFuncionalidadService->searchByParameters('BUSQUEDA_FUNCIONALIDAD_CORRECTO');
+		$respuesta = $this->gestionFuncionalidadService->searchByParameters('BUSQUEDA_FUNCIONALIDAD_CORRECTO', $paginacion);
 		$this->rellenarRespuesta('BUSQUEDA_FUNCIONALIDAD_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }

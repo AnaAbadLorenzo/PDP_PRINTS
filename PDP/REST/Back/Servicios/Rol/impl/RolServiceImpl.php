@@ -27,6 +27,7 @@ class RolServiceImpl extends ServiceBase implements RolService {
         
         $this -> validacion_formato -> validarAtributosAdd($rol_datos);
         $respuesta = $this -> validacion_formato -> respuesta;
+        
         if ($respuesta != null) {
             return $respuesta;
         }
@@ -146,17 +147,19 @@ class RolServiceImpl extends ServiceBase implements RolService {
     }
 
     function searchByParameters($paginacion) {
-
-        // $datos_search = array();
-        // foreach ($this -> rol as $columna => $valor) {
-        //     if (empty($columna)) {
-        //         $datos_search[$columna] = '';
-        //     } else {
-        //         $datos_search[$columna] = $valor;
-        //     }
-        // }
-
-        $datos_search = (array) $this -> rol;
+        $datos_search = array();
+        
+        if($this->rol->nombre_rol == null){
+            $datos_search['nombre_rol'] = '';
+        }else{
+            $datos_search['nombre_rol'] = $this->rol->nombre_rol;
+        }
+       
+        if($this->rol->descripcion_rol == null){
+            $datos_search['descripcion_rol'] = '';
+        }else{
+            $datos_search['descripcion_rol'] = $this->rol->descripcion_rol;
+        }
         
         $rol_mapping= new RolMapping();
         $rol_mapping -> searchByParameters($datos_search, $paginacion);
@@ -177,7 +180,32 @@ class RolServiceImpl extends ServiceBase implements RolService {
     function numberFindParameters($datos_search){
         $rol_mapping = new RolMapping();
         $rol_mapping->numberFindParameters($datos_search);
+        
         return $rol_mapping->feedback['resource'];
+    }
+
+    function searchDelete($paginacion) {
+
+        $rol_mapping = new RolMapping();
+        $rol_mapping -> searchDelete($paginacion);
+
+        $returnBusquedas = new ReturnBusquedas
+        (
+            $rol_mapping -> feedback['resource'],
+            '',
+            $this -> numberFindAllDelete()["COUNT(*)"],
+            sizeof($rol_mapping -> feedback['resource']),
+            $paginacion -> inicio
+        );
+
+        return $returnBusquedas;
+
+    }
+
+    function numberFindAllDelete(){
+        $rol_mapping = new RolMapping();
+        $rol_mapping -> numberFindAllDelete();
+        return $rol_mapping -> feedback['resource'];
     }
 
 }

@@ -4,21 +4,19 @@ include_once './Controladores/ControllerBase.php';
 include_once './Servicios/GestionAcciones/impl/GestionAccionesServiceImpl.php';
 include_once './Validation/Atributo/Controlador/EditAccionValidation.php';
 include_once './Validation/Atributo/Controlador/RegistroValidation.php';
+include_once './Servicios/Comun/Paginacion.php';
 
 class GestionAccionesController extends ControllerBase{
 
 	private $gestionAccionService;
 	private $editAccionValidation;
-	private $registroValidation;
-
+	
 	public function __construct(){
 		$this->gestionAccionService = new GestionAccionesServiceImpl();
 		$this->editAccionValidation = new EditAccionValidation();
-		//$this->registroValidation = new RegistroValidation();
-
 	}
-	function add(){
 
+	function add(){
 		$this->editAccionValidation->validarEditAccion();	
 
 		if($this->editAccionValidation->respuesta != ''){
@@ -34,8 +32,8 @@ class GestionAccionesController extends ControllerBase{
 			}else{
 				$this->rellenarRespuesta('ADD_ACCION_COMPLETO', false, '');
 			}
+		
 		$this->getRespuesta($respuesta);
-
 	}
 
 	function edit(){	
@@ -75,19 +73,26 @@ class GestionAccionesController extends ControllerBase{
 
    
     }
-    function search(){
-       
-        $respuesta = $this->gestionAccionService->search('BUSQUEDA_ACCION_CORRECTO');
+    
+	function search(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionAccionService->search('BUSQUEDA_ACCION_CORRECTO', $paginacion);
 			$this->rellenarRespuesta('BUSQUEDA_ACCION_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
     }
 
     function searchByParameters(){
-        echo("entro");
 		$this->gestionAccionService->inicializarParametros('searchByParameters');
 		$respuesta = $this->gestionAccionService->searchByParameters('BUSQUEDA_ACCION_CORRECTO');
 		$this->rellenarRespuesta('BUSQUEDA_ACCION_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
+    }
+
+	function searchDelete(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionAccionService->searchDelete('BUSQUEDA_ACCION_CORRECTO', $paginacion);
+			$this->rellenarRespuesta('BUSQUEDA_ACCION_ELIMINADAS_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
     }
 }
 ?>

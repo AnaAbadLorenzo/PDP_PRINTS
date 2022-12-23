@@ -5,7 +5,7 @@ include_once './Servicios/Noticia/impl/NoticiaServiceImpl.php';
 include_once './Validation/Atributo/Controlador/NoticiaValidation.php';
 include_once './Servicios/Comun/Paginacion.php';
 
-class NoticiaController extends ControllerBase {
+class GestionNoticiasController extends ControllerBase {
 
 	private $noticia_service;
 	private $noticia_validation;
@@ -16,7 +16,6 @@ class NoticiaController extends ControllerBase {
 	}
 
 	function add() {
-
 		$this -> noticia_validation -> validarAdd();
 		if (!empty($this -> noticia_validation -> respuesta_formato)) {
 			$this -> rellenarRespuesta($this -> noticia_validation -> respuesta_formato, true, '');
@@ -31,14 +30,12 @@ class NoticiaController extends ControllerBase {
 			$respuesta = $this -> noticia_service -> add('ADD_NOTICIA_COMPLETO');
 
 			if ($respuesta != 'ADD_NOTICIA_COMPLETO') {
+				$this -> rellenarRespuesta($respuesta, true, '');
 			} else {
 				$this -> rellenarRespuesta($respuesta, false, '');
 			}
-
 			$this -> getRespuesta($respuesta);
-
 		}
-
 	}
 
 	function edit() {

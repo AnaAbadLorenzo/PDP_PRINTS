@@ -40,7 +40,8 @@ CREATE TABLE `accion` (
   `id_accion` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_accion` varchar(32) NOT NULL,
   `descripcion_accion` text NOT NULL,
-  `borrado_accion` int(11) NOT NULL
+  `borrado_accion` int(11) NOT NULL,
+  PRIMARY KEY (`id_accion`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -57,7 +58,8 @@ CREATE TABLE `categoria` (
   `borrado_categoria` int(11) NOT NULL,
   `dni_responsable` varchar(9) NOT NULL,
   `id_padre_categoria` int(11) NULL,
-  `dni_usuario` varchar(9) NOT NULL
+  `dni_usuario` varchar(9) NOT NULL,
+  PRIMARY KEY (`id_categoria`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -71,7 +73,8 @@ CREATE TABLE `funcionalidad` (
   `id_funcionalidad` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_funcionalidad` varchar(128) NOT NULL,
   `descripcion_funcionalidad` text NOT NULL,
-  `borrado_funcionalidad` int(11) NOT NULL
+  `borrado_funcionalidad` int(11) NOT NULL,
+  PRIMARY KEY (`id_funcionalidad`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -86,7 +89,8 @@ CREATE TABLE `log_excepciones` (
   `usuario` varchar(48) NOT NULL,
   `tipo_excepcion` varchar(255) NOT NULL,
   `descripcion_excepcion` text NOT NULL,
-  `fecha` date NOT NULL
+  `fecha` date NOT NULL,
+   PRIMARY KEY (`id_logExcepciones`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -101,6 +105,7 @@ CREATE TABLE `noticia` (
   `titulo_noticia` varchar(255) NOT NULL,
   `contenido_noticia` text NOT NULL,
   `fecha_noticia` date NOT NULL
+   PRIMARY KEY (`id_noticia`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -114,7 +119,8 @@ CREATE TABLE `parametro` (
   `id_parametro` int(11) NOT NULL AUTO_INCREMENT,
   `parametro_formula` varchar(56) NOT NULL,
   `descripcion_parametro` text NOT NULL,
-  `id_proceso` int(11) NOT NULL
+  `id_proceso` int(11) NOT NULL,
+   PRIMARY KEY (`id_parametro`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -159,7 +165,8 @@ CREATE TABLE `proceso` (
   `check_aprobacion` int(11) NOT NULL,
   `formula_proceso` varchar(255) NOT NULL,
   `id_categoria` int(11) NOT NULL,
-  `dni_usuario` varchar(9) NOT NULL
+  `dni_usuario` varchar(9) NOT NULL,
+   PRIMARY KEY (`id_proceso`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -170,12 +177,13 @@ CREATE TABLE `proceso` (
 
 DROP TABLE IF EXISTS `proceso_usuario`;
 CREATE TABLE `proceso_usuario` (
-  `id_proceso_usuario` int(11) NOT NULL,
+  `id_proceso_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `fecha_proceso_usuario` date NOT NULL,
   `calculo_huella_carbono` int(11) NOT NULL,
   `borrado_proceso_usuario` int(11) NOT NULL,
   `dni_usuario` varchar(9) NOT NULL,
-  `id_proceso` int(11) NOT NULL
+  `id_proceso` int(11) NOT NULL,
+  PRIMARY KEY (`id_proceso_usuario`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -202,7 +210,8 @@ CREATE TABLE `rol` (
   `id_rol` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_rol` varchar(32) NOT NULL,
   `descripcion_rol` text NOT NULL,
-  `borrado_rol` int(11) NOT NULL
+  `borrado_rol` int(11) NOT NULL,
+  PRIMARY KEY (`id_rol`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -256,14 +265,12 @@ INSERT INTO `usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usua
 -- Indices de la tabla `accion`
 --
 ALTER TABLE `accion`
-  ADD PRIMARY KEY (`id_accion`),
   ADD UNIQUE KEY `nombre_accion` (`nombre_accion`);
 
 --
 -- Indices de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id_categoria`),
   ADD UNIQUE KEY `nombre_categoria` (`nombre_categoria`),
   ADD KEY `dni_responsable_fk` (`dni_responsable`),
   ADD KEY `id_padre_categoria_fk` (`id_padre_categoria`);
@@ -272,26 +279,12 @@ ALTER TABLE `categoria`
 -- Indices de la tabla `funcionalidad`
 --
 ALTER TABLE `funcionalidad`
-  ADD PRIMARY KEY (`id_funcionalidad`),
   ADD UNIQUE KEY `nombre_funcionalidad` (`nombre_funcionalidad`);
-
---
--- Indices de la tabla `log_excepciones`
---
-ALTER TABLE `log_excepciones`
-  ADD PRIMARY KEY (`id_logExcepciones`);
-
---
--- Indices de la tabla `noticia`
---
-ALTER TABLE `noticia`
-  ADD PRIMARY KEY (`id_noticia`);
 
 --
 -- Indices de la tabla `parametro`
 --
 ALTER TABLE `parametro`
-  ADD PRIMARY KEY (`id_parametro`),
   ADD KEY `id_proceso_fk` (`id_proceso`);
 
 --
@@ -304,7 +297,6 @@ ALTER TABLE `persona`
 -- Indices de la tabla `proceso`
 --
 ALTER TABLE `proceso`
-  ADD PRIMARY KEY (`id_proceso`),
   ADD UNIQUE KEY `nombre_proceso` (`nombre_proceso`),
   ADD KEY `id_categoria_fk` (`id_categoria`),
   ADD KEY `dni_usuario_fk_proceso` (`dni_usuario`);
@@ -313,7 +305,6 @@ ALTER TABLE `proceso`
 -- Indices de la tabla `proceso_usuario`
 --
 ALTER TABLE `proceso_usuario`
-  ADD PRIMARY KEY (`id_proceso_usuario`),
   ADD KEY `dni_usuario_fk_procesousuario` (`dni_usuario`),
   ADD KEY `id_proceso_fk_procesousuario` (`id_proceso`);
 
@@ -328,7 +319,6 @@ ALTER TABLE `proceso_usuario_parametro`
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
-  ADD PRIMARY KEY (`id_rol`),
   ADD UNIQUE KEY `nombre_rol` (`nombre_rol`);
 
 --

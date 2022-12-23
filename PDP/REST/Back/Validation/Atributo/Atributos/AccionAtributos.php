@@ -12,10 +12,6 @@ class AccionAtributos extends ValidacionesFormato{
 			if($this->respuesta == ''){
 				$this->validar_descripcion_accion($atributos['descripcion_accion']);
 			}
-
-			
-			
-			
 	}
 
 	

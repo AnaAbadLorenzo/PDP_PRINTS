@@ -68,7 +68,6 @@ abstract class MappingBase{
 				if (!$this->stmt->execute($valores)){
 					$this->respuesta = 'SQL_KO';
 				}else{
-	
 					if ($this->stmt->rowCount() == 0){
 						$this->ok = true;
 						$this->code  = 'RECORDSET_VACIO'; 
@@ -94,7 +93,7 @@ abstract class MappingBase{
 						$this->construirRespuesta();
 					}
 					else{
-						$result = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+						 $result = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
 						 $this->resource = $result;
 						 $this->ok = true;
 						 $this->code  = 'RECORDSET_DATOS'; // el recordset vuelve con datos

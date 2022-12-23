@@ -15,12 +15,10 @@ class GestionUsuariossController extends ControllerBase{
 	}
 
 	function edit(){
+		$this->editUsuarioValidation->validarEditUsuario();
+		$this->gestionUsuariosService->inicializarParametros('edit');
 
-
-			$this->editUsuarioValidation->validarEditUsuario();
-			$this->gestionUsuariosService->inicializarParametros('edit');
-
-			$respuesta = $this->gestionUsuariosService->edit('EDIT_USUARIO_COMPLETO');
+		$respuesta = $this->gestionUsuariosService->edit('EDIT_USUARIO_COMPLETO');
 
 
 			if($respuesta != 'EDIT_USUARIO_COMPLETO') {

@@ -44,21 +44,17 @@ class PersonaMapping extends MappingBase {
     }
 
     function numberFindAll() {
-        $this->query = "SELECT COUNT(*) FROM `persona`";
+        $this->query = "SELECT COUNT(*) FROM `persona` WHERE `borrado_persona`= 0";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
     }
-/*
-@NamedQuery(name = "PersonaEntity.findPersona", query = "SELECT p FROM PersonaEntity p WHERE
- LOWER(p.dniP) LIKE LOWER(CONCAT('%', :dniP, '%')) AND
-  LOWER(p.nombreP) LIKE LOWER(CONCAT('%', :nombreP, '%')) AND
-   LOWER(p.apellidosP) LIKE LOWER(CONCAT('%', :apellidosP, '%')) AND
-    p.fechaNacP LIKE CONCAT('%', :fechaNacP, '%') AND
-     LOWER(p.direccionP) LIKE LOWER(CONCAT('%', :direccionP, '%')) AND
-      p.telefonoP LIKE CONCAT('%', :telefonoP, '%') AND 
-      LOWER(p.emailP) LIKE LOWER(CONCAT('%', :emailP, '%')) AND
-       p.borradoP=0"),
-	*/	
+
+    function numberFindAllDelete() {
+        $this->query = "SELECT COUNT(*) FROM `persona` WHERE `borrado_persona`= 1";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+    }
+
     function searchByParameters($datosSearchParameters, $paginacion) {
         $this->query = "SELECT * FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
                         LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
@@ -87,7 +83,13 @@ class PersonaMapping extends MappingBase {
     }
 
     function search($paginacion) {
-        $this->query = "SELECT * FROM `persona` LIMIT " .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
+        $this->query = "SELECT * FROM `persona` WHERE `borrado_persona`= 0 LIMIT" .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
+    function searchDelete($paginacion) {
+        $this->query = "SELECT * FROM `persona`  WHERE `borrado_persona`= 1 LIMIT " .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
