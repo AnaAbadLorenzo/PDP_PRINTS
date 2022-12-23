@@ -37,7 +37,7 @@ USE `pdp_prints`;
 
 DROP TABLE IF EXISTS `accion`;
 CREATE TABLE `accion` (
-  `id_accion` int(11) NOT NULL,
+  `id_accion` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_accion` varchar(32) NOT NULL,
   `descripcion_accion` text NOT NULL,
   `borrado_accion` int(11) NOT NULL
@@ -51,12 +51,12 @@ CREATE TABLE `accion` (
 
 DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
-  `id_categoria` int(11) NOT NULL,
+  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_categoria` varchar(128) NOT NULL,
   `descripcion_categoria` text NOT NULL,
   `borrado_categoria` int(11) NOT NULL,
   `dni_responsable` varchar(9) NOT NULL,
-  `id_padre_categoria` int(11) NOT NULL,
+  `id_padre_categoria` int(11) NULL,
   `dni_usuario` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -68,7 +68,7 @@ CREATE TABLE `categoria` (
 
 DROP TABLE IF EXISTS `funcionalidad`;
 CREATE TABLE `funcionalidad` (
-  `id_funcionalidad` int(11) NOT NULL,
+  `id_funcionalidad` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_funcionalidad` varchar(128) NOT NULL,
   `descripcion_funcionalidad` text NOT NULL,
   `borrado_funcionalidad` int(11) NOT NULL
@@ -82,7 +82,7 @@ CREATE TABLE `funcionalidad` (
 
 DROP TABLE IF EXISTS `log_excepciones`;
 CREATE TABLE `log_excepciones` (
-  `id_logExcepciones` int(11) NOT NULL,
+  `id_logExcepciones` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(48) NOT NULL,
   `tipo_excepcion` varchar(255) NOT NULL,
   `descripcion_excepcion` text NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE `log_excepciones` (
 
 DROP TABLE IF EXISTS `noticia`;
 CREATE TABLE `noticia` (
-  `id_noticia` int(11) NOT NULL,
+  `id_noticia` int(11) NOT NULL AUTO_INCREMENT,
   `titulo_noticia` varchar(255) NOT NULL,
   `contenido_noticia` text NOT NULL,
   `fecha_noticia` date NOT NULL
@@ -111,7 +111,7 @@ CREATE TABLE `noticia` (
 
 DROP TABLE IF EXISTS `parametro`;
 CREATE TABLE `parametro` (
-  `id_parametro` int(11) NOT NULL,
+  `id_parametro` int(11) NOT NULL AUTO_INCREMENT,
   `parametro_formula` varchar(56) NOT NULL,
   `descripcion_parametro` text NOT NULL,
   `id_proceso` int(11) NOT NULL
@@ -150,7 +150,7 @@ INSERT INTO `persona` (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fe
 
 DROP TABLE IF EXISTS `proceso`;
 CREATE TABLE `proceso` (
-  `id_proceso` int(11) NOT NULL,
+  `id_proceso` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_proceso` varchar(255) NOT NULL,
   `descripcion_proceso` text NOT NULL,
   `fecha_proceso` date NOT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE `proceso_usuario_parametro` (
 
 DROP TABLE IF EXISTS `rol`;
 CREATE TABLE `rol` (
-  `id_rol` int(11) NOT NULL,
+  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_rol` varchar(32) NOT NULL,
   `descripcion_rol` text NOT NULL,
   `borrado_rol` int(11) NOT NULL
