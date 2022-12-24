@@ -2,16 +2,41 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/GestionUsuarios/impl/GestionUsuariosServiceImpl.php';
-include_once './Validation/Atributo/Controlador/EditUsuarioValidation.php';
+include_once './Validation/Atributo/Controlador/UsuarioValidation.php';
 
-class GestionUsuariossController extends ControllerBase{
+class GestionUsuariosController extends ControllerBase{
 
 	private $gestionUsuariosService;
-	private $editUsuarioValidation;
+	private $usuarioValidation;
 
 	public function __construct(){
 		$this->gestionUsuariosService = new GestionUsuariosServiceImpl();
-		$this->editUsuarioValidation = new EditUsuarioValidation();
+		$this->usuarioValidation = new UsuarioValidation();
+	}
+
+	function add() {
+		$this -> usuarioValidation -> validarUsuarioAdd();
+		if (!empty($this -> usuarioValidation -> respuesta_formato)) {
+			$this -> rellenarRespuesta($this -> usuarioValidation -> respuesta_formato, true, '');
+
+		} else if (!empty($this -> usuarioValidation -> respuesta_accion)) {
+			$this -> rellenarRespuesta($this -> usuarioValidation -> respuesta_accion, true, '');
+
+		} else {
+	
+			$this -> gestionUsuariosService -> inicializarParametros('add');
+			
+			$respuesta = $this -> gestionUsuariosService -> add('ADD_USUARIO_COMPLETO');
+
+			if ($respuesta != 'ADD_USUARIO_COMPLETO') {
+				$this -> rellenarRespuesta($respuesta, true, '');
+			
+			} else {
+				$this -> rellenarRespuesta($respuesta, false, '');
+			}
+
+			$this -> getRespuesta($respuesta);
+		}
 	}
 
 	function edit(){
@@ -31,8 +56,6 @@ class GestionUsuariossController extends ControllerBase{
 	}
 
     function delete(){
-
-
         $this->gestionUsuariosService->inicializarParametros('delete');
         $respuesta = $this->gestionUsuariosService->delete('DELETE_USUARIO_COMPLETO');
 

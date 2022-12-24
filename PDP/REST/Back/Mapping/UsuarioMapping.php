@@ -4,6 +4,7 @@ include_once './Mapping/MappingBase.php';
 include_once './Modelos/UsuarioModel.php';
 
 class UsuarioMapping extends MappingBase {
+    public $respuesta;
     public $conexion;
 
     public function __construct(){
@@ -45,17 +46,26 @@ class UsuarioMapping extends MappingBase {
         $this->get_results_from_query();
     }
 
+    function searchAll() {
+        $this->query = "SELECT * FROM `usuario`";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
     function searchById($datosSearch) {
         $this->query = "SELECT * FROM `usuario` WHERE 'dni_usuario='".$datosSearch['dni_usuario']."'";
-        $foraneas = $datosSearch->foraneas;
+        if(isset($datosSearch->foraneas)){
+            $foraneas = $datosSearch->foraneas;
+        }
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
         $respuesta = $this->feedback;
-
-        foreach($foraneas as $fk){
-            $result = $this->incluirDatosForaneas($this->feedback['resource'],$fk, 'dni_usuario');
-            array_push($respuesta['resource'], $result);
-        } 
+        if(!empty($foraneas)){
+            foreach($foraneas as $fk){
+                $result = $this->incluirDatosForaneas($this->feedback['resource'],$fk, 'dni_usuario');
+                array_push($respuesta['resource'], $result);
+            }
+        }
     }
 
     function searchByLogin($datosSearch) {
@@ -69,7 +79,7 @@ class UsuarioMapping extends MappingBase {
         $respuesta = $this->feedback;
 
         if($respuesta['code'] != 'RECORDSET_VACIO'){
-            if($foraneas != null){
+            if(!empty($foraneas)){
                 foreach($foraneas as $fk){
                     $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
                     array_push($respuesta['resource'], $result);

@@ -8,15 +8,19 @@
 
         function inicializarParametros($accion){
             switch($accion){
+                case 'add' :
+                    $this->usuario = $this->crearModelo('Usuario');
+				    $this->clase_validacionAccionAddUsuario = $this->crearValidacionAccion('Usuario');
+                    $this->clase_validacionFormatoAddUsuario = $this->crearValidacionFormato('Usuario');
+                break;
                 case 'edit':
                     $this->usuario = $this->crearModelo('Usuario');
-
-				    $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('EditUsuario');
-                    $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('GestionUsuarios');
+				    $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('Usuario');
+                    $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
                     break;
                 case 'delete':
                     $this->usuario = $this->crearModelo('Usuario');
-                    $this->clase_validacionAccionDeleteUsuario = $this->crearValidacionAccion('DeleteUsuario');
+                    $this->clase_validacionAccionDeleteUsuario = $this->crearValidacionAccion('Usuario');
                     break;
                 case 'searchByParameters':
                     $this->usuario = $this->crearModelo('Usuario');
@@ -24,6 +28,52 @@
                 default:
                     break;
             }
+        }
+
+        function add($mensaje){
+            $respuesta = '';
+
+            if($this->usuario->dni_usuario != null &&
+                $this->usuario->usuario != null &&
+                $this->usuario->passwd_usuario){
+                
+                $datosUsuario = array();
+                
+                $datosUsuario['dni_usuario'] = $this->usuario->dni_usuario;
+                $datosUsuario['usuario'] = $this->usuario->usuario;
+                $datosUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
+                $datosUsuario['borrado_usuario'] = 0;
+
+                
+                if ($this->clase_validacionFormatoAddUsuario != null) {
+                    $this->clase_validacionFormatoAddUsuario->validarAtributosAccion($datosUsuario);
+                }
+            
+                if ($this->clase_validacionAccionAddUsuario != null){
+                    $this->clase_validacionAccionAddUsuario->comprobarAccionAdd($datosUsuario);
+                }
+                
+                if($this->clase_validacionFormatoAddUsuario->respuesta != null){
+                    $respuesta = $this->clase_validacionFormatoAddUsuario->respuesta;
+                }else if($this->clase_validacionAccionAddUsuario->respuesta != null){
+                    $respuesta = $this->clase_validacionAccionAddUsuario->respuesta;
+                }else{
+                    $usuarioDatos = [
+                        'dni_usuario' => $this->usuario->dni_usuario,
+                        'usuario' => $this->usuario->usuario,
+                        'passwd_usuario' => $this->usuario->passwd_usuario,
+                        'borrado_usuario' => 0
+                    ];
+                    
+                    $usuario_mapping = new UsuarioMapping();
+                    $usuario_mapping->add($usuarioDatos);
+
+                    $respuesta = $mensaje;
+                    $this->recursos = '';
+                }
+            }
+        return $respuesta;
+    
         }
 
         function edit($mensaje) {

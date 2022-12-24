@@ -93,15 +93,11 @@ class GestionNoticiasController extends ControllerBase {
     }
 
     function search() {
-
 		$this -> noticia_service -> inicializarParametros();
-
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$respuesta = $this -> noticia_service -> search($paginacion);
-
 		$this -> rellenarRespuesta('BUSQUEDA_NOTICIA_CORRECTO', false, $respuesta);
 		$this -> getRespuesta($respuesta);
-
     }
 
     function searchByParameters() {

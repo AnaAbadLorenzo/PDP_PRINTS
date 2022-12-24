@@ -34,7 +34,7 @@ class UsuarioModel extends ModelBase{
 	}
 
 	function getByLogin($tabla, $datosSearch){
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
 		$datosSearch['foraneas'] = $this->clavesForaneas;
@@ -42,11 +42,21 @@ class UsuarioModel extends ModelBase{
 	}
 
 	function getByDNI($tabla, $datosSearch){
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
-		$datosSearch['foraneas'] = $this->clavesForaneas;
+		if(isset($datosSearch['foraneas'])){
+			$datosSearch['foraneas'] = $this->clavesForaneas;
+		}
+
 		return $this->mapping->searchById($datosSearch);
+	}
+
+	function getAllUsers($tabla) {
+		include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
+        $map = $tabla.'Mapping';
+        $this->mapping = new $map();
+		return $this->mapping->searchAll();
 	}
 
 }

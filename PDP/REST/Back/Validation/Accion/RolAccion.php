@@ -8,10 +8,13 @@ class RolAccion extends ValidacionesBase {
 
 	private $rol;
 
+	private $usuario;
+
 	public $respuesta;
 
 	function __construct() {
 		$this -> rol = new RolModel();
+		$this -> usuario = new UsuarioMapping();
 	}
 
 	function comprobarAddRol($rol_datos){
@@ -26,6 +29,7 @@ class RolAccion extends ValidacionesBase {
 
 	function comprobarDeleteRol($rol_datos){
 		$this -> noExisteRol($rol_datos);
+		$this->rolAsociadoAUsuario($rol_datos);
 		return $this -> respuesta;
 	}
  
@@ -52,6 +56,23 @@ class RolAccion extends ValidacionesBase {
 			$this -> respuesta = 'ROL_NO_EXISTE';
 		}
 		
+	}
+
+	function rolAsociadoAUsuario($rol_datos) {
+	 	$this->rol->getById('Rol', $rol_datos);
+		$rolResult = $this -> rol -> mapping -> resource;
+		$this->usuario->searchAll('Usuario');
+		$usuarioResult = $this->usuario->feedback['resource'];
+		if(!empty($usuarioResult)) {
+			foreach($usuarioResult as $user){
+				if($user['id_rol'] == $rolResult['id_rol']){
+					$this->respuesta = 'ROL_ASOCIADO_USUARIO';
+				}
+			}
+		}
+		if($this->respuesta != 'ROL_ASOCIADO_USUARIO'){
+			return true;
+		}
 	}
 
 }

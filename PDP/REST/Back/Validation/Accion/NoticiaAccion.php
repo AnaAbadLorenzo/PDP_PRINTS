@@ -31,7 +31,7 @@ class NoticiaAccion extends ValidacionesBase {
 
 	function existeNoticia ($noticia_datos) {
 
-		$this -> noticia -> getByName('Noticia', $noticia_datos);
+		$this -> noticia -> getByTitulo('Noticia', $noticia_datos);
 		$resultado = $this -> noticia -> mapping -> resource;
 
 		if (sizeof($resultado) == 0) {

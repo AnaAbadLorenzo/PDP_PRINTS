@@ -34,7 +34,6 @@ class RolModel extends ModelBase {
         include_once './Mapping/' . $tabla . 'Mapping.php';
         $map = $tabla . 'Mapping';
         $this -> mapping = new $map();
-		$datosSearch['foraneas'] = $this -> clavesForaneas;
 		return $this -> mapping -> searchById($datosSearch);
 	}
 

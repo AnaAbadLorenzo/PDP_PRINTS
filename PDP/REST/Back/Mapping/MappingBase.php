@@ -86,7 +86,6 @@ abstract class MappingBase{
 				if (!$this->stmt->execute()){
 					$this->respuesta = 'SQL_KO';
 				}else{
-	
 					if ($this->stmt->rowCount() == 0){
 						$this->ok = true;
 						$this->code  = 'RECORDSET_VACIO'; // el recordset viene vacio

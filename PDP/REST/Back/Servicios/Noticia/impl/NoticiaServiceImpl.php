@@ -61,7 +61,6 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
         $noticia_datos['contenido_noticia'] = $this -> noticia -> contenido_noticia;
         $noticia_datos['fecha_noticia'] = $this -> noticia -> fecha_noticia;
 
-
         $this -> validacion_formato -> validarAtributosEdit($noticia_datos);
         $respuesta = $this -> validacion_formato -> respuesta;
         if ($respuesta != null) {
@@ -127,7 +126,6 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
     }
 
     function search($paginacion) {
-
         $noticia_mapping = new NoticiaMapping();
         $noticia_mapping -> search($paginacion);
 
@@ -139,9 +137,7 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
             sizeof($noticia_mapping -> feedback['resource']),
             $paginacion -> inicio
         );
-
         return $returnBusquedas;
-
     }
 
     function numberFindAll(){
@@ -151,8 +147,11 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
     }
 
     function searchByParameters($paginacion) {
-        $datos_search = (array) $this -> noticia;
-
+        $datos_search = array(
+            'titulo_noticia' => $this->noticia->titulo_noticia,
+            'contenido_noticia' => $this->noticia->contenido_noticia,
+            'fecha_noticia' => $this->noticia->fecha_noticia
+        );
         $noticia_mapping= new NoticiaMapping();
         $noticia_mapping -> searchByParameters($datos_search, $paginacion);
 
@@ -171,7 +170,7 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
 
     function numberFindParameters($datos_search){
         $noticia_mapping = new NoticiaMapping();
-        $noticia_mapping->numberFindParameters($datos_search);
+        $noticia_mapping->numberFindByParameters($datos_search);
         return $noticia_mapping->feedback['resource'];
     }
 

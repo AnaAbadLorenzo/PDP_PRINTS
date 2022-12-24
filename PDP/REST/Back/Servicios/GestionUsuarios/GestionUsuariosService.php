@@ -1,12 +1,11 @@
 <?php
 
-interface GestionPersonasService {
+interface GestionUsuariosService {
 
-	public function inicializarParametros($accion);
-
+	function inicializarParametros($accion);
+    function add($mensaje);
 	function edit($mensaje);
     function delete($mensaje);
-    function add($mensaje);
     function search($mensaje);
     function searchByParameters($mensaje);
 
