@@ -38,11 +38,11 @@ class RolAtributos extends ValidacionesFormato {
 	}
 	
 	function validarAtributosSearch($atributos){
-		$this -> validarNombreRol($atributos['nombre_rol']);
+		$this -> validarNombreRolSearch($atributos['nombre_rol']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
-		$this -> validarDescripcionRol($atributos['descripcion_rol']);
+		$this -> validarDescripcionRolSearch($atributos['descripcion_rol']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
@@ -59,6 +59,19 @@ class RolAtributos extends ValidacionesFormato {
 		$this -> respuesta = '';
 		if ($atributo === null || $this -> Es_Vacio($atributo) === true) {
 			$this -> respuesta = 'NOMBRE_ROL_VACIO';
+		} else if (sizeof($atributo) > 50) {
+			$this -> respuesta = 'NOMBRE_ROL_DEMASIADO_LARGO';
+		} else if (!ctype_alnum($atributo)) {
+			$this -> respuesta = 'NOMBRE_ROL_CARACTERES_INCORRECTOS';
+		}
+	}
+
+	function validarNombreRolSearch($atributo) {
+		$this -> respuesta = '';
+		if (sizeof($atributo) > 50) {
+			$this -> respuesta = 'NOMBRE_ROL_DEMASIADO_LARGO';
+		} else if (!ctype_alnum($atributo)) {
+			$this -> respuesta = 'NOMBRE_ROL_CARACTERES_INCORRECTOS';
 		}
 	}
 
@@ -66,6 +79,15 @@ class RolAtributos extends ValidacionesFormato {
 		$this -> respuesta = '';
 		if ($atributo === null || $this -> Es_Vacio($atributo) === true) {
 			$this -> respuesta = 'DESCRIPCION_ROL_VACIO';
+		}
+	}
+
+	function validarDescripcionRolSearch($atributo) {
+		$this -> respuesta = '';
+		if (sizeof($atributo) > 80) {
+			$this -> respuesta = 'DESCRIPCION_ROL_DEMASIADO_LARGO';
+		} else if (!ctype_alnum($atributo)) {
+			$this -> respuesta = 'DESCRIPCION_ROL_CARACTERES_INCORRECTOS';
 		}
 	}
 

@@ -29,7 +29,7 @@ class RolAccion extends ValidacionesBase {
 
 	function comprobarDeleteRol($rol_datos){
 		$this -> noExisteRol($rol_datos);
-		$this->rolAsociadoAUsuario($rol_datos);
+		$this -> rolAsociadoAUsuario($rol_datos);
 		return $this -> respuesta;
 	}
  

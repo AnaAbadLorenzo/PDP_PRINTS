@@ -1,8 +1,14 @@
 <?php
 
 interface ACLService {
-    function inicializarParametros($accion);
-    function funcionesUsuario($usuario);
-    function accionesUsuarioFuncionalidad($usuario, funcionalidad);
+
+    public function inicializarParametros();
+
+    function add();
+    function delete();
+    function searchFuncionalidadesUsuario($usuario);
+    function searchAccionesPorFuncionalidadUsuario($datos);
+    function searchPermisosUsuario($datos);
+
 }
 ?>

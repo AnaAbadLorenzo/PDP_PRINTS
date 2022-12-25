@@ -80,9 +80,9 @@ class GestionRolesController extends ControllerBase {
 
 			$this -> rol_service -> inicializarParametros();
 
-			$respuesta = $this -> rol_service -> delete('DELETE_PERSONA_COMPLETO');
+			$respuesta = $this -> rol_service -> delete('DELETE_ROL_COMPLETO');
 
-			if ($respuesta != 'DELETE_PERSONA_COMPLETO') {
+			if ($respuesta != 'DELETE_ROL_COMPLETO') {
 				$this -> rellenarRespuesta($respuesta, true, '');
 			} else {
 				$this -> rellenarRespuesta($respuesta, false, '');
