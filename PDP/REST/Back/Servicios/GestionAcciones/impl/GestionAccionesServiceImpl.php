@@ -31,8 +31,8 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
                 $this->accion = $this->crearModelo('Accion');
                 break;
             case 'reactivar':
-                $this -> accion = $this->crearModelo('Accion');
-                $this -> validacion_reactivar = $this->crearValidacionAccion('DeleteAccion'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
+                $this -> accion = $this -> crearModelo('Accion');
+                $this -> validacion_reactivar = $this -> crearValidacionAccion('DeleteAccion'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
                 break;
             default:
                 break;

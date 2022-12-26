@@ -2,6 +2,7 @@
 
 include_once './Validation/ValidacionesBase.php';
 include_once './Comun/funcionesComunes.php';
+include_once './Mapping/FuncionalidadMapping.php';
 
 class DeleteFuncionalidadAccion extends ValidacionesBase{
 
@@ -18,6 +19,20 @@ class DeleteFuncionalidadAccion extends ValidacionesBase{
 		
 		$this->existeIdFuncionalidad($datosDeleteFuncionalidad);
 		
+	}
+
+	function comprobarReactivar($datos) {
+		$this -> existeIdFuncionalidad($datos);
+		$this -> estaBorradoAUno($datos); //aqui salta un warning si no existe el id a revisar
+	}
+
+	function estaBorradoAUno($datos) {
+		$resultado = $this -> funcionalidad -> getById('funcionalidad', $datos)['resource'];
+		if ($resultado['borrado_funcionalidad'] === 0) {
+			$this -> respuesta = 'FUNCIONALIDAD_YA_ESTABA_ACTIVADA';
+		} else {
+			return true;
+		}
 	}
 
 function existeIdFuncionalidad($datosDeleteFuncionalidad){

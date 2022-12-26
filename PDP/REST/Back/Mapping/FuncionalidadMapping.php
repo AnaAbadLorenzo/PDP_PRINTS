@@ -20,7 +20,6 @@ class FuncionalidadMapping extends MappingBase {
         $this->execute_single_query();  
     }
 
-
     function edit($datosModificar) {
         $this->query = "UPDATE `funcionalidad` SET `descripcion_funcionalidad` = '"
         .$datosModificar['descripcion_funcionalidad']."', `borrado_funcionalidad`='"
@@ -94,5 +93,21 @@ class FuncionalidadMapping extends MappingBase {
     
         $this->get_one_result_from_query();
     }
+ 
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `funcionalidad`
+            SET `borrado_funcionalidad`=0
+            WHERE `id_funcionalidad`='" . $datos['id_funcionalidad'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
+    }
+
 }
 ?>
