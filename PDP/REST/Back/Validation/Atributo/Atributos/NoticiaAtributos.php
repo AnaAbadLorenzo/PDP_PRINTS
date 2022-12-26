@@ -13,10 +13,6 @@ class NoticiaAtributos extends ValidacionesFormato {
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
-		$this -> validarFechaNoticia($atributos['fecha_noticia']);
-		if ($this -> respuesta != '') {
-			return $this -> respuesta;
-		}
 	}
 
 	function validarAtributosEdit($atributos){
@@ -29,10 +25,6 @@ class NoticiaAtributos extends ValidacionesFormato {
 			return $this -> respuesta;
 		}
 		$this -> validarContenidoNoticia($atributos['contenido_noticia']);
-		if ($this -> respuesta != '') {
-			return $this -> respuesta;
-		}
-		$this -> validarFechaNoticia($atributos['fecha_noticia']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}

@@ -7,6 +7,7 @@ include_once './Modelos/RolModel.php';
 class UsuarioAccion extends ValidacionesBase {
 
 	private $usuario;
+
 	public $respuesta;
 
 	function __construct() {
@@ -16,8 +17,6 @@ class UsuarioAccion extends ValidacionesBase {
 	function comprobarAddUsuario($datosUsuario){
         $this->respuesta = null;
 		$this -> noExisteUsuario($datosUsuario);
-        echo($this->respuesta);
-        exit();
 		return $this -> respuesta;
 	}
 
@@ -42,10 +41,8 @@ class UsuarioAccion extends ValidacionesBase {
     function noExisteUsuario($datosEditUsuario){
 		$datoBuscar = array();
 		$datoBuscar['dni_usuario'] = $datosEditUsuario['dni_usuario'];
-		$this->usuario->getByDNI('usuario', $datoBuscar);
-
-
-		if($resultado != null && sizeof($resultado) == 0) {
+		$resultado = $this->usuario->getByDNI('usuario', $datoBuscar);
+		if($resultado == null || sizeof($resultado) == 0) {
 			return true;
 		}else{
 			$this->respuesta = 'USUARIO_YA_EXISTE';

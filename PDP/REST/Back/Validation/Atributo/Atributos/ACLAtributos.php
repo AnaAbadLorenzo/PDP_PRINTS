@@ -39,7 +39,7 @@ class ACLAtributos extends ValidacionesFormato {
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
-		$this -> validarIdFuncionalidad($acl_datos['id_funcionalidad']);
+		$this -> validarNombreFuncionalidad($acl_datos['nombre_funcionalidad']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
@@ -54,13 +54,20 @@ class ACLAtributos extends ValidacionesFormato {
 
 	function validarNombreUsuario($atributo) {
 		$this -> respuesta = '';
-		if ($atributo === null || $this -> Es_Vacio($atributo) === true) {
-			$this -> respuesta = 'NOMBRE_USUARIO_VACIO';
-		} else if (sizeof($atributo) > 50) {
-			$this -> respuesta = 'NOMBRE_USUARIO_DEMASIADO_LARGO';
-		} else if (!ctype_alnum($atributo)) {
-			$this -> respuesta = 'NOMBRE_USUARIO_CARACTERES_INCORRECTOS';
+		
+		if ($atributo === null || $this->Es_Vacio($atributo)===true) {
+			$this->respuesta = 'LOGIN_USUARIO_VACIO';
 		}
+		if ($this->Longitud_minima($atributo,3)===false) {
+			$this->respuesta = 'LOGIN_USUARIO_MENOR_QUE_3';
+		}
+	
+		if($this->Longitud_maxima($atributo,48)===false){
+			$this->respuesta = 'LOGIN_USUARIO_MAYOR_QUE_48';
+		}
+		if($this->comprobarFormatoLoginContrasena($atributo)===false){
+			$this->respuesta = 'LOGIN_USUARIO_ALFANUMERICO_INCORRECTO';
+		}	
 	}
 
 	function validarIdRol($atributo) {
@@ -82,6 +89,13 @@ class ACLAtributos extends ValidacionesFormato {
 			$this -> respuesta = 'ID_FUNCIONALIDAD_DEMASIADO_LARGO';
 		} else if (!ctype_digit($atributo)) {
 			$this -> respuesta = 'ID_FUNCIONALIDAD_CARACTERES_INCORRECTOS';
+		}
+	}
+
+	function validarNombreFuncionalidad($atributo) {
+		$this -> respuesta = '';
+		if ($atributo === null || $this -> Es_Vacio($atributo) === true) {
+			$this -> respuesta = 'FUNCIONALIDAD_VACIA';
 		}
 	}
 

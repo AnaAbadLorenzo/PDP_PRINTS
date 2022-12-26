@@ -72,9 +72,7 @@ async function login() {
   .catch((res) => {
     $("#login-modal").modal('toggle'); 
     respuestaAjaxKO(res.code);
-
-    let idElementoList = ["userLogin", "passLogin"];
-    resetearFormulario("formularioLogin", idElementoList);
+    
     setLang(getCookie('lang'));
     document.getElementById("modal").style.display = "block";
 });

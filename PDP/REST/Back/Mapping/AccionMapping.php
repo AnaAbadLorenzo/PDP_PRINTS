@@ -78,7 +78,6 @@ class AccionMapping extends MappingBase {
     }
 
     function searchById($datosSearch) {
-        
         $this->query = "SELECT * FROM `accion` WHERE `id_accion`='".$datosSearch['id_accion']."'";
         $this->stmt = $this->conexion->prepare($this->query);
     

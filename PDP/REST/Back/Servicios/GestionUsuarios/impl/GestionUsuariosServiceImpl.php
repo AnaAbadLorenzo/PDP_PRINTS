@@ -3,6 +3,7 @@
     include_once './Servicios/ServiceBase.php';
     include_once './Servicios/GestionUsuarios/GestionUsuariosService.php';
     include_once "./Mapping/UsuarioMapping.php";
+    include_once "./Mapping/RolMapping.php";
 
     class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosService {
 
@@ -46,11 +47,11 @@
 
                 
                 if ($this->clase_validacionFormatoAddUsuario != null) {
-                    $this->clase_validacionFormatoAddUsuario->validarAtributosAccion($datosUsuario);
+                    $this->clase_validacionFormatoAddUsuario->validarAtributosUsuario($datosUsuario);
                 }
             
                 if ($this->clase_validacionAccionAddUsuario != null){
-                    $this->clase_validacionAccionAddUsuario->comprobarAccionAdd($datosUsuario);
+                    $this->clase_validacionAccionAddUsuario->comprobarAddUsuario($datosUsuario);
                 }
                 
                 if($this->clase_validacionFormatoAddUsuario->respuesta != null){
@@ -58,13 +59,19 @@
                 }else if($this->clase_validacionAccionAddUsuario->respuesta != null){
                     $respuesta = $this->clase_validacionAccionAddUsuario->respuesta;
                 }else{
+                    $rolMapping = new RolMapping();
+                    $datosSearchRol = array(
+                        'nombre_rol' => 'Usuario'
+                    );
+                    $rolMapping->searchByName($datosSearchRol);
+                    $idRolDefecto =$rolMapping->feedback['resource'];
                     $usuarioDatos = [
                         'dni_usuario' => $this->usuario->dni_usuario,
                         'usuario' => $this->usuario->usuario,
                         'passwd_usuario' => $this->usuario->passwd_usuario,
-                        'borrado_usuario' => 0
+                        'borrado_usuario' => 0,
+                        'id_rol' => $idRolDefecto['id_rol']
                     ];
-                    
                     $usuario_mapping = new UsuarioMapping();
                     $usuario_mapping->add($usuarioDatos);
 
@@ -72,6 +79,7 @@
                     $this->recursos = '';
                 }
             }
+        
         return $respuesta;
     
         }

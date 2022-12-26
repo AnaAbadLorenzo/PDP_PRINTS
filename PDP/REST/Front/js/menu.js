@@ -29,15 +29,11 @@ async function changePass() {
 async function cargarNoticias(){
   await cargarNoticiasAjaxPromesa()
   .then((res) => {
-      
       $('#noticias').html('');
-
-      for(var i = 0; i<res.data.listaBusquedas.length; i++){
-        var noticia = construyeNoticia(res.data.listaBusquedas[i]);
+      for(var i = 0; i<res.resource.listaBusquedas.length; i++){
+        var noticia = construyeNoticia(res.resource.listaBusquedas[i]);
         $('#noticias').append(noticia);
       }
-    
-      
       }).catch((res) => {
     
         respuestaAjaxKO(res.code);
@@ -104,7 +100,7 @@ function verificarPasswd() {
 async function funcionalidadesUsuario() {
   await funcionalidadesUsuarioAjaxPromesa()
     .then((res) => {
-        cargarFuncionalidadesUsuario(res.data);
+        cargarFuncionalidadesUsuario(res.resource);
     })
     .catch((res) => {
        if($('#login-modal').is(':visible')) {
@@ -121,17 +117,20 @@ function funcionalidadesUsuarioAjaxPromesa(){
     var nombreUsuario = getCookie('usuario');
     var token = getCookie('tokenUsuario');
     
-    var usuario = nombreUsuario;
+    var data = {
+      controlador : 'GestionACL',
+      action : 'searchFuncionalidadesUsuario',
+      usuario : nombreUsuario
+    };
   
     $.ajax({
-      method: "GET",
+      method: "POST",
       url: urlPeticionAjaxFuncionalidadesUsuario,
-      contentType : "application/json",
-      data: { usuario : usuario},  
-      dataType : 'json',
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'MENU_USUARIO_OK') {
+        if (res.code != 'BUSQUEDA_ACL_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -146,15 +145,19 @@ function cargarNoticiasAjaxPromesa(){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
     
-  
+    var data = {
+      controlador : 'GestionNoticias',
+      action : 'searchAll'
+    }
+
     $.ajax({
-      method: "GET",
+      method: "POST",
       url: urlPeticionAjaxListarTodasNoticias,
-      contentType : "application/json", 
-      dataType : 'json',
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8", 
+      data : data,
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'NOTICIAS_LISTADAS') {
+        if (res.code != 'BUSQUEDA_NOTICIA_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -165,7 +168,8 @@ function cargarNoticiasAjaxPromesa(){
 }
 
 /**Función que carga las funcionalidades asociadas al usuario**/
-function cargarFuncionalidadesUsuario(datos){
+
+/*function cargarFuncionalidadesUsuario(datos){
   var i;
   var rolUsuario = getCookie('rolUsuario');
 
@@ -246,12 +250,12 @@ function cargarFuncionalidadesUsuario(datos){
                  '<a class="dropdown-item ' + cargarClass('Gestión de personas', rolUsuario) + '" href="' + cargarHref('Gestión de personas') + '">Gestión de personas</a>';
     }
 
-  } else if (rolUsuario === 'usuario') {
+  } else if (rolUsuario === 'Usuario') {
 
     var funcionalidadEncontrada = 0;
     var totalFuncionalidades = 5;
 
-    if (datos.funcionalidades.includes('Gestión de empresas')) {
+    if (datos.funcionalidades.includes('Gestión de ')) {
       funcionalidadEncontrada ++;
     }
 
@@ -289,20 +293,43 @@ function cargarFuncionalidadesUsuario(datos){
 
   setLang(getCookie('lang'));
 
+}*/
+
+function cargarFuncionalidadesUsuario(datos){
+  var i;
+  var rolUsuario = getCookie('rolUsuario');
+
+  $("#listadoFuncionalidades").html("");
+
+  var htmlMenu = '';
+
+  for(i = 0; i<(datos.length) - 1; i++) {
+      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a> <div class="dropdown-divider"></div>';
+  }
+
+    htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a>';
+
+    document.getElementById('listadoFuncionalidades').style.height = "236px";    
+    document.getElementById('listadoFuncionalidades').style.overflowY =  "hidden";
+
+  $("#listadoFuncionalidades").append(htmlMenu);
+
+  setLang(getCookie('lang'));
+
 }
 
 /** Funcion para construir las noticias **/
 function construyeNoticia(noticia){
     var noticiaHTML = "";
 
-    var fechaNoticia = new Date(noticia.fechaNoticia);
+    var fechaNoticia = new Date(noticia.fecha_noticia);
 
     noticiaHTML = '<div class="col-md-4 col-lg-6 col-xl-6 mb-4">' + 
                     '<div class="card">' + 
                       '<img src="images/news.png" class="card-img-top" alt="Noticias">' + 
                         '<div class="card-body-news">' + 
-                          '<h4 class="card-title">' + noticia.tituloNoticia + '</h4>' + 
-                          '<p class="card-text">' + noticia.textoNoticia + '</p>' + 
+                          '<h4 class="card-title">' + noticia.titulo_noticia + '</h4>' + 
+                          '<p class="card-text">' + noticia.contenido_noticia + '</p>' + 
                         '</div>' + 
                         '<div class="card-footer">' + 
                           '<small class="text-muted">' + convertirFecha(fechaNoticia.toString()) + '</small>' + 

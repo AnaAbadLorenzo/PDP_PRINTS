@@ -100,6 +100,13 @@ class GestionNoticiasController extends ControllerBase {
 		$this -> getRespuesta($respuesta);
     }
 
+	function searchAll() {
+		$this -> noticia_service -> inicializarParametros();
+		$respuesta = $this -> noticia_service -> searchAll();
+		$this -> rellenarRespuesta('BUSQUEDA_NOTICIA_CORRECTO', false, $respuesta);
+		$this -> getRespuesta($respuesta);
+    }
+
     function searchByParameters() {
 
 		$this -> noticia_service -> inicializarParametros();

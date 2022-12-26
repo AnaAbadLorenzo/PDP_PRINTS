@@ -516,7 +516,7 @@ arrayGA={
 	'NOTICIA_GUARDADA_OK' : 'NOTICIA GARDADA CORRECTAMENTE',
 	'NOTICIA_ENCONTRADA' : 'A noticia encontrouse correctamente',
 	'NOTICIA_BORRADA' : 'A noticia borrouse correctamente',
-	'NOTICIA_MODIFICADA' : 'A noticia editouse correctamente',
+	'EDIT_NOTICIA_COMPLETO' : 'A noticia editouse correctamente',
 	'NOTICIA_GUARDADA' : 'A noticia gardouse correctamente',
 	'ACCION_ASIGNADA_OK' : 'PERMISO ASIGNADO CORRECTAMENTE',
 	'ACCION_ASIGNADA' : 'O permiso asignouse correctamente',

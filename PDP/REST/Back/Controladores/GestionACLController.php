@@ -94,7 +94,7 @@ class GestionACLController extends ControllerBase {
 	
     function searchAccionesPorFuncionalidadUsuario() {
 
-		$this -> acl_validation -> validarSearchFuncionalidades();
+		$this -> acl_validation -> validarSearchAccionesporFuncionalidadesUsuario();
 		if (!empty($this -> acl_validation -> respuesta_formato)) {
 			$this -> rellenarRespuesta($this -> acl_validation -> respuesta_formato, true, '');
 
@@ -102,7 +102,6 @@ class GestionACLController extends ControllerBase {
 			$this -> rellenarRespuesta($this -> acl_validation -> respuesta_accion, true, '');
 
 		} else {
-
 			$this -> acl_service -> inicializarParametros();
 
 			$respuesta = $this -> acl_service -> searchAccionesPorFuncionalidadUsuario($_POST);

@@ -1,23 +1,24 @@
 <?php
       //include_once './Comun/codigos.php';
-      header('Access-Control-Allow-Origin: *');
-
       if (  ( !isset($_POST['controlador']) and !isset($_POST['action']) ) or
             !isset($_POST['controlador']) or !isset($_POST['action'])){
             rellenarExcepcion('PETICION_INVALIDA');
       }
-
       define('controlador', $_POST['controlador']);
       define('action', $_POST['action']);
 
       $rest = controlador;
       $action = action;
-         
-      if ($rest != 'Autenticacion' || $rest != 'Registro'){
+      if ($rest != 'Autenticacion' && $rest != 'Registro'){
             include_once './Controladores/AutenticacionController.php';
             $auth = new AutenticacionController();
-           // $auth->verificarTokenUsuario();
+            $resultado = $auth->verificarTokenUsuario();
+
+            if($resultado === 'TOKEN_USUARIO_INCORRECTO') {
+                  rellenarExcepcion('TOKEN_USUARIO_INCORRECTO');
+            }
       }
+
 
       if($rest == 'Test') {
             $metodo = '';

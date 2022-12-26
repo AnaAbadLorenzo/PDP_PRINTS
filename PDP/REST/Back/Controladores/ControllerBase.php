@@ -2,6 +2,8 @@
 
 abstract class ControllerBase{
 
+	public $serviceBase;
+
 	function rellenarRespuesta($mensaje, $esExcepcion, $recursosDevolver){
 		if($esExcepcion === true) {
 			$respuesta['ok'] = false;

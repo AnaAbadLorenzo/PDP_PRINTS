@@ -42,7 +42,7 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
             'id_noticia' => $noticia_datos['id_noticia'],
             'titulo_noticia' => $noticia_datos['titulo_noticia'],
             'contenido_noticia' => $noticia_datos['contenido_noticia'],
-            'fecha_noticia' => $noticia_datos['fecha_noticia']
+            'fecha_noticia' => date('Y-m-d')
         ];
 
         $noticia_mapping = new NoticiaMapping();
@@ -74,12 +74,11 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
         }
 
         if ($respuesta == null) {
-
             $noticia_a_editar = [
                 'id_noticia' => $noticia_datos['id_noticia'],
                 'titulo_noticia' => $noticia_datos['titulo_noticia'],
                 'contenido_noticia' => $noticia_datos['contenido_noticia'],
-                'fecha_noticia' => $noticia_datos['fecha_noticia']
+                'fecha_noticia' => date('Y-m-d')
             ];
 
             $noticia_mapping = new NoticiaMapping();
@@ -136,6 +135,21 @@ class NoticiaServiceImpl extends ServiceBase implements NoticiaService {
             $this -> numberFindAll()["COUNT(*)"],
             sizeof($noticia_mapping -> feedback['resource']),
             $paginacion -> inicio
+        );
+        return $returnBusquedas;
+    }
+
+    function searchAll() {
+        $noticia_mapping = new NoticiaMapping();
+        $noticia_mapping -> searchAllWithoutPagination();
+
+        $returnBusquedas = new ReturnBusquedas
+        (
+            $noticia_mapping -> feedback['resource'],
+            '',
+            '',
+            '',
+            ''
         );
         return $returnBusquedas;
     }

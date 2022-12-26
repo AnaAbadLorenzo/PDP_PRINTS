@@ -75,7 +75,7 @@ class ACLMapping extends MappingBase {
     function searchFuncionalidadesByRol($datos_search) {
 
         $this -> query = 
-            "SELECT DISTINCT `id_funcionalidad` 
+            "SELECT DISTINCT `id_funcionalidad`
             FROM `rol_accion_funcionalidad`
             WHERE
                 `id_rol`='" . $datos_search['id_rol'] . "';"

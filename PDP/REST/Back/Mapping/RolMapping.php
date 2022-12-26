@@ -112,8 +112,6 @@ class RolMapping extends MappingBase {
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
-        $respuesta = $this->feedback;
-
     }
 
     function searchByParameters($datos_search, $paginacion) {

@@ -33,10 +33,35 @@
   	await includeTopMenu('menu');
     await funcionalidadesUsuario();
     modalCambioPass();cargarIdioma();includeFooter();setLang('');
-		await cargarNoticias();
+	await cargarNoticias();
   })();">
 	<div id="topMenu"></div>
 	<div id="bienvenida" class="bienvenida MENSAJE_BIENVENIDA" style="display: block;">Bienvenido a Carboon Footprint</div>
+	<div class="modal modal3 fade" id="changePass-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	</div>
+	
+	<div class="noticias overflow-auto">
+		<div id="noticias" class="row">
+		</div>
+	</div>
+
+	<div id="modal" tabindex="-1" role="dialog" style="display:none">
+		<div class="modal-dialog" role="document" id="modal-dialog">
+		  	<div class="modal-content">
+		    	<div class="modal-header">
+		      		<img src="" name="aviso" class="imagenAviso"/>
+		      		<h3 id="modal-title" class="modal-title"></h3>
+		    	</div>
+		    	<div id='modal-mensaje' class="modal-body"></div>
+		  		<div class="modal-footer">
+	        		<a id="cerrar" href="#"  class="tooltip5">
+	        			<img class="iconCerrar" alt="Cerrar" src="images/close.png"/>
+	                	<span class="tooltiptext5 ICONO_CERRAR"></span>
+	        		</a>
+	      		</div>
+			</div>
+		</div>
+	</div>
 	<div id="footer"></div>
 </body>
 </html>

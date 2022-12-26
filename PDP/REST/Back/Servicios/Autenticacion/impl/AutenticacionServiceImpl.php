@@ -4,6 +4,7 @@ include_once './Servicios/ServiceBase.php';
 include_once './Servicios/Autenticacion/AutenticacionService.php';
 include_once './Autenticacion/GetJWToken.php';
 include_once "./Mapping/UsuarioMapping.php";
+include_once "./Mapping/RolMapping.php";
 include_once './Servicios/Constantes.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -36,6 +37,8 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
     function login($mensaje) {
 
         $respuesta = '';
+        $usuarioMapping = new UsuarioMapping();
+        $rolMapping = new RolMapping();
 
         if ($this->usuario->usuario != null && $this->usuario->passwd_usuario != null) {
             $datosUsuario = array(
@@ -62,11 +65,18 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
                 ];
                 include_once "./Autenticacion/GetJWToken.php";
                 $token = GetJWToken::getJWToken($usuarioDatos);
+                $datosSearch = array(
+                    'usuario' => $this->usuario->usuario
+                );
+                $usuarioMapping->searchByLogin($datosSearch);
+                $resultadoUsuario = $usuarioMapping->feedback['resource'];
+                $rolMapping->searchById($resultadoUsuario);
+                $resultadoRol = $rolMapping->feedback['resource'];
     
                 $res = array (
                     'tokenUsuario' => $token,
                     'usuario' => $this->usuario->usuario,
-                    'rol' => 'rol'
+                    'rol' => $resultadoRol['nombre_rol']
                 );
             
                 $datosBuscarUser = array();
@@ -82,22 +92,6 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
 
     }
 
-    function verificarToken($mensaje){
-        $tokenUsuario = '';	
-        $resultado = '';
-        $requestHeaders = apache_request_headers();
-        for($i = 0; $i<sizeof( $requestHeaders); $i++){
-            if($requestHeaders[$i] == 'Authorization'){
-                $tokenUsuario = $requestHeaders[$i]->value;
-                $resultado = GetJWToken::obtenerToken($tokenUsuario);
-            }
-        }
-        if(!empty($resultado)){
-            return true;
-        }else{
-            return 'TOKEN_USUARIO_INCORRECTO';
-        }
-    }
     
     function recuperarPass($idioma) {
 

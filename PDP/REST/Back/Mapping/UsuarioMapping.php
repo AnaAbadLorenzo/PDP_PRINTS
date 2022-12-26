@@ -12,8 +12,7 @@ class UsuarioMapping extends MappingBase {
     }
 
     function add($datosInsertar) {
-        
-        //INSERT INTO `pdp_prints`.`usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES ('333333', 'jeje', '1234', '0', '2');
+
         $this->query = "INSERT INTO `usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES ('".$datosInsertar['dni_usuario']."', '".$datosInsertar['usuario']."', '"
                         .$datosInsertar['passwd_usuario']. "', '".$datosInsertar['borrado_usuario']."', '"
                         .$datosInsertar['id_rol']."');";
@@ -76,19 +75,18 @@ class UsuarioMapping extends MappingBase {
         }
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
-        $respuesta = $this->feedback;
+        $this->respuesta = $this->feedback;
 
-        if($respuesta['code'] != 'RECORDSET_VACIO'){
+        if($this->respuesta['code'] != 'RECORDSET_VACIO'){
             if(!empty($foraneas)){
                 foreach($foraneas as $fk){
-                    $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
-                    array_push($respuesta['resource'], $result);
+                    $result = $this->incluirDatosForaneas($this->respuesta['resource'],$fk, 'id_rol');
+                    array_push($this->respuesta['resource'], $result);
                 } 
             }
-            
-            return $respuesta;
+            return $this->respuesta;
         }else{
-            return $respuesta;
+            return $this->respuesta;
         }
     }
     

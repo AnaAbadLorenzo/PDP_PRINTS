@@ -35,14 +35,10 @@ class AutenticacionController extends ControllerBase {
 		$this->getRespuesta($respuesta);
 	}
 	
-	function verificarTokenUsuario(){
-		$respuesta = $this->autenticacionService->verificarToken('TOKEN_USUARIO_CORRECTO');
+	function verificarTokenUsuario() {
+		$resultado = $this->autenticacionService->verificarToken();
 
-		if($respuesta != 'TOKEN_USUARIO_CORRECTO'){
-			$this->rellenarRespuesta($respuesta, true, '');
-		}
-		$this->rellenarRespuesta('TOKEN_USUARIO_CORRECTO', false, $respuesta);
-		$this->getRespuesta($respuesta);
+		return $resultado;
 	}
 		
 	function recuperarPass() {

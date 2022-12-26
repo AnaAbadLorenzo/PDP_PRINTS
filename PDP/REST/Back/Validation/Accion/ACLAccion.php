@@ -68,10 +68,8 @@ class ACLAccion extends ValidacionesBase {
 	}
  
 	function existeFuncionalidad($acl_datos) {
-
-		$this -> funcionalidad_mapping -> searchById($acl_datos);
-		$resultado = $this -> funcionalidad_mapping -> mapping -> resource;
-
+		$this->funcionalidad_mapping->searchByName($acl_datos);
+		$resultado = $this -> funcionalidad_mapping -> feedback['resource'];
 		if (sizeof($resultado) != 0) {
 			return true;
 		} else {
@@ -94,9 +92,8 @@ class ACLAccion extends ValidacionesBase {
 	}
  
 	function existeUsuario($usuario) {
-
 		$this -> usuario_mapping -> searchByLogin($usuario);
-		$resultado = $this -> usuario_mapping -> mapping -> resource;
+		$resultado = $this -> usuario_mapping -> respuesta;
 
 		if (sizeof($resultado) != 0) {
 			return true;

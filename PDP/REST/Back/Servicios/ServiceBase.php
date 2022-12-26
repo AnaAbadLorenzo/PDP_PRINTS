@@ -66,6 +66,18 @@ class ServiceBase{
 
 		return $datosExcepcion;
 	}
+
+	function verificarToken(){
+        $tokenUsuario = '';	
+        $requestHeaders = apache_request_headers();
+        $tokenUsuario = $requestHeaders['Authorization'];
+       
+        if(!empty($tokenUsuario)){
+            return true;
+        }else{
+            return 'TOKEN_USUARIO_INCORRECTO';
+        }
+    }
 	
 }
 ?>

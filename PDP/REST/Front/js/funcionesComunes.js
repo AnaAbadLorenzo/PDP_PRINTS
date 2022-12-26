@@ -532,11 +532,11 @@ function construyeFila(entidad, fila) {
         break;
 
         case 'NOTICIA':
-        var fechaNoticia = new Date(fila.fechaNoticia);
+        var fechaNoticia = new Date(fila.fecha_noticia);
 
-		atributosFunciones = ["'" + fila.tituloNoticia + "'", "'" + fila.textoNoticia + "'", "'" + convertirFecha(fechaNoticia.toString()) + "'", "'" + fila.idNoticia + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.tituloNoticia + 
-                '</td> <td>' + fila.textoNoticia +
+		atributosFunciones = ["'" + fila.titulo_noticia + "'", "'" + fila.contenido_noticia + "'", "'" + convertirFecha(fechaNoticia.toString()) + "'", "'" + fila.id_noticia + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.titulo_noticia + 
+                '</td> <td>' + fila.contenido_noticia +
                 '</td> <td>' + convertirFecha(fechaNoticia.toString());
         break;
 
@@ -1083,7 +1083,7 @@ function cargarHref(dato){
 	var rol = getCookie('rolUsuario');
 	var href=""
 
-	switch(dato){
+	switch(dato['nombre_funcionalidad']){
 		case 'Gestión de roles':
 			href="GestionDeRoles.html";
 		break;
@@ -1165,7 +1165,7 @@ function cargarHref(dato){
 function cargarClass(dato, rol){
 	var clase=""
 
-	switch(dato){
+	switch(dato['nombre_funcionalidad']){
 		case 'Gestión de roles':
 			clase="GESTION_ROLES";
 		break;
@@ -1452,10 +1452,10 @@ function eliminarReadonly(idElementoList) {
 
 /** Función para guardar los parámetros de las búsquedas **/
 function guardarParametrosBusqueda(idElementoList){
-	idElementoList.forEach( function (idElemento) {
-		var datosBusqueda = idElemento.split(': ');
+	for(var i = 0; i<idElementoList.length; i++){
+		var datosBusqueda = idElementoList[i].split(': ');
 		setCookie(datosBusqueda[0], datosBusqueda[1]);
-	});	
+	}
 }
 /**Función para mostrar mensaje de error cuando fallan las peticiones ajax*/
 function errorFailAjax(status){

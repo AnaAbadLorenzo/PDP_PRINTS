@@ -32,6 +32,7 @@ class AutenticacionAccion extends ValidacionesBase{
 				$this->respuesta = 'PASSWD_USUARIO_NO_COINCIDE';
 			}
 		}
+
 	}
 }
 ?>

@@ -60,7 +60,7 @@ class ACLValidation extends ValidacionesBase {
         $acl_validation_formato = new ACLAtributos;
         $acl_validation_accion = new ACLAccion;
 
-        $atributos_validacion = array('usuario', 'id_funcionalidad');
+        $atributos_validacion = array('usuario', 'nombre_funcionalidad');
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
 
         $acl_validation_formato -> validarAtributos($atributos);

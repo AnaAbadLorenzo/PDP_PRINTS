@@ -106,7 +106,16 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
         $acl_mapping = new ACLMapping;
         $acl_mapping -> searchFuncionalidadesByRol($rol_usuario);
 
-        return $acl_mapping -> feedback['resource'];
+        //Devolver la respuesta con todos los datos de la funcionalidad
+        $funcionalidades = array();
+        $funcionalidadMapping = new FuncionalidadMapping();
+        foreach($acl_mapping -> feedback['resource'] as $func) {
+            $funcionalidadMapping->searchById($func);
+            array_push($funcionalidades, $funcionalidadMapping->feedback['resource']);
+
+        }
+
+        return $funcionalidades;
 
     }
 
@@ -126,18 +135,30 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
         if ($respuesta != null) {
             return $respuesta;
         }
+        //conseguir datos de la funcionalidad
+        $funcionalidad_mapping = new FuncionalidadMapping();
+        $funcionalidad_mapping->searchByName($datos);
+        $resultadoFuncionalidad = $funcionalidad_mapping->feedback['resource'];
+        $datos['id_funcionalidad'] = $resultadoFuncionalidad['id_funcionalidad'];
 
         //conseguir rol del usuario
-        $usuario_mapping = new UsuarioMapping;
+        $usuario_mapping = new UsuarioMapping();
         $usuario_mapping -> searchByLogin($datos);
         $respuesta = $usuario_mapping -> resource;
-        array_push($datos, ['id_rol' => $respuesta['id_rol']]);
-
+        $datos['id_rol'] = $respuesta['id_rol'];
+        
         //conseguir acciones
-        $acl_mapping = new ACLMapping;
+        $acl_mapping = new ACLMapping();
         $acl_mapping -> searchAccionesByFuncionalidadRol($datos);
 
-        return $acl_mapping -> feedback['resource'];
+        //conseguir los datos de la accion
+        $acciones = array();
+        $accion_mapping = new AccionMapping();
+        foreach($acl_mapping -> feedback['resource'] as $ac){
+            $accion_mapping->searchById($ac);
+            array_push($acciones, $accion_mapping -> feedback['resource']);
+        }
+        return $acciones;
         
     }
 

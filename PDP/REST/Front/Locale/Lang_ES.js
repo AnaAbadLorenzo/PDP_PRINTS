@@ -522,7 +522,7 @@ arrayES={
 	'NOTICIA_GUARDADA_OK' : 'NOTICIA GUARDADA CORRECTAMENTE',
 	'NOTICIA_ENCONTRADA' : 'La noticia se ha encontrado correctamente',
 	'NOTICIA_BORRADA' : 'La noticia se ha borrado correctamente',
-	'NOTICIA_MODIFICADA' : 'La noticia se ha editado correctamente',
+	'EDIT_NOTICIA_COMPLETO' : 'La noticia se ha editado correctamente',
 	'NOTICIA_GUARDADA' : 'La noticia se ha guardado correctamente',
 	'ACCION_ASIGNADA_OK' : 'PERMISO ASIGNADO CORRECTAMENTE',
 	'ACCION_ASIGNADA' : 'El permiso se ha asignado correctamente',

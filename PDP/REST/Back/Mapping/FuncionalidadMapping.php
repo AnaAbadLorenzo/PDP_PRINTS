@@ -93,8 +93,6 @@ class FuncionalidadMapping extends MappingBase {
         $this->stmt = $this->conexion->prepare($this->query);
     
         $this->get_one_result_from_query();
-        $respuesta = $this->feedback;
-        return $respuesta;
     }
 }
 ?>

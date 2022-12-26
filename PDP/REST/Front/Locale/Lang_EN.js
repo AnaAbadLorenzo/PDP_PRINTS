@@ -517,7 +517,7 @@ arrayEN={
 	'NOTICIA_GUARDADA_OK' : 'NEW SAVED CORRECTLY',
 	'NOTICIA_ENCONTRADA' : 'The new has been found correctly',
 	'NOTICIA_BORRADA' : 'The new has been deleted correctly',
-	'NOTICIA_MODIFICADA' : 'The new has been modified correctly',
+	'EDIT_NOTICIA_COMPLETO' : 'The new has been modified correctly',
 	'NOTICIA_GUARDADA' : 'The new has been saved correctly',
 	'ACCION_ASIGNADA_OK' : 'PERMISSION ASSIGNED CORRECTLY',
 	'ACCION_ASIGNADA' : 'The permission has been assigned correctly',
