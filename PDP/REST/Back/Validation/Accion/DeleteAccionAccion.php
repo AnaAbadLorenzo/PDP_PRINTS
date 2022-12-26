@@ -3,8 +3,9 @@
 include_once './Validation/ValidacionesBase.php';
 include_once './Comun/funcionesComunes.php';
 
-class DeleteAccionAccion extends ValidacionesBase{
+include_once './Mapping/AccionMapping.php';
 
+class DeleteAccionAccion extends ValidacionesBase {
 	
 	private $accion;
 	public $respuesta;
@@ -13,11 +14,26 @@ class DeleteAccionAccion extends ValidacionesBase{
 	{
 		$this->accion = new AccionModel();
 	}
+
 	function comprobarDeleteAccion($datosDeleteAccion){
 
 		
 		$this->existeIdAccion($datosDeleteAccion);
 		
+	}
+
+	function comprobarReactivar($datos) {
+		$this -> existeIdAccion($datos);
+		$this -> estaBorradoACero($datos); //aqui salta un warning si no existe el id a revisar
+	}
+
+	function estaBorradoACero($datos) {
+		$resultado = $this -> accion -> getById('accion', $datos)['resource'];
+		if ($resultado['borrado_accion'] == 0) {
+			$this -> respuesta = 'ACCION_YA_ESTABA_ACTIVADA';
+		} else {
+			return true;
+		}
 	}
 
 function existeIdAccion($datosDeleteAccion){

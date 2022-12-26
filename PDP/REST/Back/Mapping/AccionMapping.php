@@ -96,6 +96,21 @@ class AccionMapping extends MappingBase {
 
         return $respuesta;
     }
+ 
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `accion`
+            SET `borrado_accion`=0
+            WHERE `id_accion`='" . $datos['id_accion'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
+    }
    
 }
 ?>

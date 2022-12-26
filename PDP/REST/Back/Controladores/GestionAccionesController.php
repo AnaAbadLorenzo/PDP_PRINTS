@@ -94,5 +94,24 @@ class GestionAccionesController extends ControllerBase{
 			$this->rellenarRespuesta('BUSQUEDA_ACCION_ELIMINADAS_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
     }
+
+	function reactivar() {
+
+		$this -> gestionAccionService -> inicializarParametros('reactivar');
+		$respuesta = $this -> gestionAccionService -> reactivar();
+
+		if (!is_array($respuesta)) { //cuando ocurre un error de validacion
+			$this->rellenarRespuesta($respuesta, false, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else if (!$respuesta['ok']) { //error sql
+			$this->rellenarRespuesta('REACTIVAR_ACCION_FALLIDO', true, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else {
+			$this->rellenarRespuesta('REACTIVAR_ACCION_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
+		}
+
+	}
+
 }
 ?>
