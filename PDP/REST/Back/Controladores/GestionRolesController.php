@@ -129,6 +129,25 @@ class GestionRolesController extends ControllerBase {
 
     }
 
+	function reactivar() {
+
+		$this -> rol_service -> inicializarParametros();
+		
+		$respuesta = $this -> rol_service -> reactivar();
+
+		if (!is_array($respuesta)) { //cuando ocurre un error de validacion
+			$this->rellenarRespuesta($respuesta, false, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else if (!$respuesta['ok']) { //error sql
+			$this->rellenarRespuesta('REACTIVAR_ROL_FALLIDO', true, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else {
+			$this->rellenarRespuesta('REACTIVAR_ROL_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
+		}
+
+	}
+
 }
 
 ?>

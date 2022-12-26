@@ -208,6 +208,20 @@ class RolServiceImpl extends ServiceBase implements RolService {
         return $rol_mapping -> feedback['resource'];
     }
 
+    function reactivar() {
+
+        $this -> validacion_accion -> comprobarReactivar($_POST);
+        if (!empty($this -> validacion_accion -> respuesta)) {
+            return $this -> validacion_accion -> respuesta;
+        }
+        
+        $rol_mapping = new RolMapping;
+        $respuesta = $rol_mapping -> reactivar($_POST);
+
+        return $respuesta;
+
+    }
+
 }
 
 ?>
