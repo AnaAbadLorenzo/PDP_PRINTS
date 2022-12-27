@@ -686,7 +686,7 @@ function cargarPosicion(posicionArray, boton, entidad){
                     $('#' + idsAnteriores[i]).attr('id', idsSiguientes[i]);
                 } 
             }else if(idsSiguientes.length == 3 && idsAnteriores.length == 1){
-                    
+                for(var i = 0; i<idsSiguientes.length; i++){
                     var onclick =  $(('#' + idsAnteriores[0]) + ' a').attr('onclick');
                     var nombreFuncion = onclick.split('(');
                     $('#' + idsAnteriores[0]).removeClass('active');
@@ -703,7 +703,7 @@ function cargarPosicion(posicionArray, boton, entidad){
                        
                        $(('#' + idsAnteriores[i]) + ' a').attr('onclick', nombreFuncion[0] + '(' + idsSiguientes[i] + ',' + tamanhosPaginasSiguientes[i] + ',\'PaginadorCreado\'); activarElemento(' + idsSiguientes[i] +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()');
                     }
-
+                }
                     $(('#' + idsAnteriores[0]) + ' a').text(idsSiguientes[0]);
                     $('#' + idsAnteriores[0]).attr('id', idsSiguientes[0]);
             

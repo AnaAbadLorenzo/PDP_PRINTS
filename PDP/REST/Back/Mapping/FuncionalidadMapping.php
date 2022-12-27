@@ -44,6 +44,12 @@ class FuncionalidadMapping extends MappingBase {
         $this->get_results_from_query();
     }
 
+    function searchAllSinP() {
+        $this->query = "SELECT * FROM `funcionalidad` WHERE `borrado_funcionalidad`= 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
     function searchDelete($paginacion) {
         $this->query = "SELECT * FROM `funcionalidad` WHERE `borrado_funcionalidad` = 1 LIMIT " .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
         $this->stmt = $this->conexion->prepare($this->query);

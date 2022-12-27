@@ -80,5 +80,24 @@ class GestionUsuariosController extends ControllerBase{
 		$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
+
+	function reactivar() {
+
+		$this -> gestionUsuariosService -> inicializarParametros('reactivar');
+		$respuesta = $this -> gestionUsuariosService -> reactivar();
+
+		if (!is_array($respuesta)) { //cuando ocurre un error de validacion
+			$this->rellenarRespuesta($respuesta, false, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else if (!$respuesta['ok']) { //error sql
+			$this->rellenarRespuesta('REACTIVAR_USUARIO_FALLIDO', true, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else {
+			$this->rellenarRespuesta('REACTIVAR_USUARIO_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
+		}
+
+	}
+
 }
 ?>

@@ -170,6 +170,15 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
             return $returnBusquedas;
         }
 
+        function searchAllSinP($mensaje){
+            $funcionalidad_mapping = new FuncionalidadMapping();
+            $funcionalidad_mapping->searchAllSinP();
+            $returnBusquedas = new ReturnBusquedas($funcionalidad_mapping->feedback['resource'], '',
+            $this->numberFindAll()["COUNT(*)"],sizeof($funcionalidad_mapping->feedback['resource']), '');
+            
+            return $returnBusquedas;
+        }
+
         function searchDelete($mensaje, $paginacion){
             $funcionalidad_mapping = new FuncionalidadMapping();
             $funcionalidad_mapping->searchDelete($paginacion);

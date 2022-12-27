@@ -17,7 +17,6 @@ class GestionACLController extends ControllerBase {
 	}
 
 	function add() {
-
 		$this -> acl_validation -> validarAdd();
 		if (!empty($this -> acl_validation -> respuesta_formato)) {
 			$this -> rellenarRespuesta($this -> acl_validation -> respuesta_formato, true, '');
@@ -26,18 +25,15 @@ class GestionACLController extends ControllerBase {
 			$this -> rellenarRespuesta($this -> acl_validation -> respuesta_accion, true, '');
 
 		} else {
-	
 			$this -> acl_service -> inicializarParametros();
-			
-			$respuesta = $this -> acl_service -> add('ADD_ACL_COMPLETO');
+	
+			$respuesta = $this -> acl_service -> add('ACCION_ASIGNADA');
 
-			if ($respuesta != 'ADD_ACL_COMPLETO') {
+			if ($respuesta != 'ACCION_ASIGNADA') {
 				$this -> rellenarRespuesta($respuesta, true, '');
-			
 			} else {
-				$this -> rellenarRespuesta($respuesta, false, '');
+				$this -> rellenarRespuesta('ACCION_ASIGNADA', false, $respuesta);
 			}
-
 			$this -> getRespuesta($respuesta);
 		}
 
@@ -56,9 +52,9 @@ class GestionACLController extends ControllerBase {
 
 			$this -> acl_service -> inicializarParametros();
 
-			$respuesta = $this -> acl_service -> delete('DELETE_ACL_COMPLETO');
+			$respuesta = $this -> acl_service -> delete('ACCION_DESASIGNADA');
 
-			if ($respuesta != 'DELETE_PERSONA_COMPLETO') {
+			if ($respuesta != 'ACCION_DESASIGNADA') {
 				$this -> rellenarRespuesta($respuesta, true, '');
 			} else {
 				$this -> rellenarRespuesta($respuesta, false, '');
@@ -132,8 +128,29 @@ class GestionACLController extends ControllerBase {
 			$this -> getRespuesta($respuesta);
 
 		}
-
     }
+
+	function obtenerPermisos(){
+		$this->acl_validation->validarObtenerPermisos();
+
+		if (!empty($this -> acl_validation -> respuesta_formato)) {
+			$this -> rellenarRespuesta($this -> acl_validation -> respuesta_formato, true, '');
+
+		} else if (!empty($this -> acl_validation -> respuesta_accion)) {
+			$this -> rellenarRespuesta($this -> acl_validation -> respuesta_accion, true, '');
+
+		} else {
+
+			$this -> acl_service -> inicializarParametros();
+
+			$respuesta = $this -> acl_service -> obtenerPermisos($_POST);
+
+			$this -> rellenarRespuesta('PERMISOS_OBTENIDOS', false, $respuesta);
+			$this -> getRespuesta($respuesta);
+
+		}
+
+	}
 
 }
 

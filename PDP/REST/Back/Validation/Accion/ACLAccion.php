@@ -31,9 +31,9 @@ class ACLAccion extends ValidacionesBase {
 	}
 
 	function comprobarAdd($acl_datos) {
-		$this -> existeRol($acl_datos);
-		$this -> existeAccion($acl_datos);
-		$this -> existeFuncionalidad($acl_datos);
+		$this -> existeRol($acl_datos['rol']);
+		$this -> existeAccion($acl_datos['accion']);
+		$this -> existeFuncionalidad($acl_datos['funcionalidad']);
 		$this -> noExisteTupla($acl_datos);
 		return $this -> respuesta;
 	}
@@ -48,6 +48,11 @@ class ACLAccion extends ValidacionesBase {
 		return $this -> respuesta;
 	}
 
+	function comprobarFuncionalidad($acl_datos) {
+		$this -> existeFuncionalidad($acl_datos);
+		return $this -> respuesta;
+	}
+
 	function comprobarUsuarioYFuncionalidad($acl_datos) {
 		$this -> existeUsuario($acl_datos);
 		$this -> existeFuncionalidad($acl_datos);
@@ -55,9 +60,8 @@ class ACLAccion extends ValidacionesBase {
 	}
  
 	function existeAccion($acl_datos) {
-
 		$this -> accion_mapping -> searchById($acl_datos);
-		$resultado = $this -> accion_mapping -> mapping -> resource;
+		$resultado = $this -> accion_mapping -> feedback['resource'];
 
 		if (sizeof($resultado) != 0) {
 			return true;
@@ -79,9 +83,8 @@ class ACLAccion extends ValidacionesBase {
 	}
  
 	function existeRol($acl_datos) {
-
 		$this -> rol_mapping -> searchById($acl_datos);
-		$resultado = $this -> rol_mapping -> mapping -> resource;
+		$resultado = $this -> rol_mapping -> feedback['resource'];
 
 		if (sizeof($resultado) != 0) {
 			return true;
@@ -104,9 +107,8 @@ class ACLAccion extends ValidacionesBase {
 	}
  
 	function existeTupla($acl_datos) {
-
 		$this -> acl_mapping -> searchSpecific($acl_datos);
-		$resultado = $this -> acl_mapping -> mapping -> resource;
+		$resultado = $this -> acl_mapping -> feedback['resource'];
 
 		if (sizeof($resultado) != 0) {
 			return true;
@@ -117,9 +119,8 @@ class ACLAccion extends ValidacionesBase {
 	}
  
 	function noExisteTupla($acl_datos) {
-
 		$this -> acl_mapping -> searchSpecific($acl_datos);
-		$resultado = $this -> acl_mapping -> mapping -> resource;
+		$resultado = $this -> acl_mapping -> feedback['resource'];
 
 		if (sizeof($resultado) == 0) {
 			return true;
