@@ -8,7 +8,7 @@ interface GestionCategoriasService {
 	function edit($mensaje);
     function delete($mensaje);
     function search($mensaje);
-    function searchByParameters($mensaje);
+    function searchByParameters($mensaje, $paginacion);
     
     //function searchByDNI($mensaje);
 	

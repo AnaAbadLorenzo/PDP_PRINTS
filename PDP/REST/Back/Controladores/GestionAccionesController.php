@@ -82,10 +82,13 @@ class GestionAccionesController extends ControllerBase{
     }
 
     function searchByParameters(){
+
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$this->gestionAccionService->inicializarParametros('searchByParameters');
-		$respuesta = $this->gestionAccionService->searchByParameters('BUSQUEDA_ACCION_CORRECTO');
+		$respuesta = $this->gestionAccionService->searchByParameters('BUSQUEDA_ACCION_CORRECTO', $paginacion);
 		$this->rellenarRespuesta('BUSQUEDA_ACCION_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
+
     }
 
 	function searchDelete(){

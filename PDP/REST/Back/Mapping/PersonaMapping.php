@@ -56,6 +56,7 @@ class PersonaMapping extends MappingBase {
     }
 
     function searchByParameters($datosSearchParameters, $paginacion) {
+       
         $this->query = "SELECT * FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
                         LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
                         LOWER(`apellidos_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['apellidos_persona']."', '%')) AND
