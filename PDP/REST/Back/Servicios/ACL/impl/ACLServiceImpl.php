@@ -6,6 +6,8 @@ include_once './Servicios/ACL/ACLService.php';
 include_once './Mapping/ACLMapping.php';
 include_once './Mapping/UsuarioMapping.php';
 
+include_once './Modelos/PermisosFuncionalidadModel.php';
+
 include_once './Validation/Accion/ACLAccion.php';
 
 class ACLServiceImpl extends ServiceBase implements ACLService {
@@ -18,14 +20,13 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
         $this -> validacion_formato = $this -> crearValidacionFormato('ACL');
     }
 
-    function add() {
-
+    function add($mensaje) {
         $acl_datos = [
-            'id_rol' => $this -> acl -> id_rol,
-            'id_funcionalidad' => $this -> acl -> id_funcionalidad,
-            'id_accion' => $this -> acl -> id_accion,
+            'rol' => $this -> acl -> rol,
+            'funcionalidad' => $this -> acl->funcionalidad,
+            'accion' => $this -> acl->accion,
         ];
-        
+    
         //comprobacion formato ids
         $this -> validacion_formato -> validarAtributosAdd($acl_datos);
         $respuesta = $this -> validacion_formato -> respuesta;
@@ -42,18 +43,30 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
 
         //añadir a bd
         $acl_mapping = new ACLMapping;
-        $acl_mapping -> add($acl_datos);
+        $datosAnadir = array(
+            'id_rol' => $this -> acl -> rol['id_rol'],
+            'id_funcionalidad' => $this -> acl->funcionalidad['id_funcionalidad'],
+            'id_accion' => $this -> acl->accion['id_accion']
+        );
+
+        $acl_mapping -> add($datosAnadir);
+
+        if($acl_mapping->respuesta == null){
+            $respuesta = $mensaje;
+        }else{
+            $respuesta = $acl_mapping->respuesta;
+        }
+      
         
-        return $acl_mapping -> feedback['resource'];
+        return $respuesta;
 
     }
 
-    function delete() {
-
+    function delete($mensaje) {
         $acl_datos = [
-            'id_rol' => $this -> acl -> id_rol,
-            'id_funcionalidad' => $this -> acl -> id_funcionalidad,
-            'id_accion' => $this -> acl -> id_accion,
+            'rol' => $this -> acl -> rol,
+            'funcionalidad' => $this -> acl->funcionalidad,
+            'accion' => $this -> acl->accion,
         ];
         
         //comprobacion formato ids
@@ -72,9 +85,20 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
 
         //quitar de bd
         $acl_mapping = new ACLMapping;
-        $acl_mapping -> delete($acl_datos);
+        $datosDelete = array(
+            'id_rol' => $this -> acl -> rol['id_rol'],
+            'id_funcionalidad' => $this -> acl->funcionalidad['id_funcionalidad'],
+            'id_accion' => $this -> acl->accion['id_accion']
+        );
+        $acl_mapping -> delete($datosDelete);
+
+        if($acl_mapping->respuesta == null){
+            $respuesta = $mensaje;
+        }else{
+            $respuesta = $acl_mapping->respuesta;
+        }
         
-        return $acl_mapping -> feedback['resource'];
+        return $respuesta;
 
     }
 
@@ -191,6 +215,94 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
 
         return $acl_mapping -> feedback['resource'];
 
+    }
+
+    function obtenerPermisos($datos) {
+        //comprobacion de que la funcionalidad no viene vacía
+        $this -> validacion_formato -> validarAtributosNombreFuncionalidad($datos);
+        
+        //comprobacion funcionalidad existe
+        $this->validacion_accion->comprobarFuncionalidad($datos);
+
+        //Recoger todos los datos de la funcionalidad
+        $funcionalidad_mapping = new FuncionalidadMapping();
+        $funcionalidad_mapping->searchByName($datos);
+        $funcionalidad = $funcionalidad_mapping->feedback['resource'];
+
+        //Recogemos todos los datos de permisos
+        $acl_mapping = new ACLMapping();
+        $acl_mapping->searchACLByFuncionalidad($funcionalidad);
+        $acl = $acl_mapping->feedback['resource'];
+
+        if(!empty($funcionalidad)){
+            //Recogemos todos los roles
+            $rol_mapping = new RolMapping();
+            $rol_mapping->searchAll();
+            $roles = $rol_mapping->feedback['resource'];
+
+            //Recogemos todas las acciones
+            $accion_mapping = new AccionMapping();
+            $accion_mapping->searchAll();
+            $acciones = $accion_mapping->feedback['resource'];
+
+            $permisosFuncionalidad = array();
+
+            for($i = 0; $i<sizeof($roles); $i++){
+                for($j= 0; $j<sizeof($acciones); $j++){
+                    $tienePermiso = "";
+                    if(sizeof($acl) != 0){
+                        for($k=0;$k<sizeof($acl); $k++){
+                            $funcPermiso = $acl[$k]['id_funcionalidad'];
+                            $idFuncionalidad = $funcionalidad['id_funcionalidad'];
+
+                            if($funcPermiso === $idFuncionalidad &&
+                                $acl[$k]['id_accion'] === $acciones[$j]['id_accion'] &&
+                                $acl[$k]['id_rol'] === $roles[$i]['id_rol']){
+                                    $tienePermiso = "Si";
+                                    $accion = $acciones[$j];
+                                    $rol = $roles[$i];
+                                    $permisosFuncionalidadModel = new PermisosFuncionalidadModel($rol, $funcionalidad, $accion, $tienePermiso);
+                                    array_push($permisosFuncionalidad, $permisosFuncionalidadModel);
+                                    break;
+                            }else{
+                                $tienePermiso = "No";
+                            }
+                        }
+
+                        if($tienePermiso === "No"){
+                            $accion = $acciones[$j];
+                            $rol = $roles[$i];
+                            $permisosFuncionalidadModel = new PermisosFuncionalidadModel($rol, $funcionalidad, $accion, $tienePermiso);
+                            array_push($permisosFuncionalidad, $permisosFuncionalidadModel);
+                        }
+                    }else{
+                        $tienePermiso = "No";
+                        $accion = $acciones[$j];
+                        $rol = $roles[$i];
+                        $permisosFuncionalidadModel = new PermisosFuncionalidadModel($rol, $funcionalidad, $accion, $tienePermiso);
+                        array_push($permisosFuncionalidad, $permisosFuncionalidadModel);
+                    }
+                }
+            }
+        }
+        $accionesNoEliminadas = array();
+
+        switch($datos['nombre_funcionalidad']){
+            case 'Gestión de personas':
+                for($i=0; $i<sizeof($permisosFuncionalidad); $i++){
+                    if($permisosFuncionalidad[$i]['funcionalidad']['nombre_funcionalidad'] != 'Reactivar'){
+                        array_push($accionesNoEliminadas,$permisosFuncionalidad[$i]);
+                    }
+                }
+            break;
+        }
+
+        if($datos['nombre_funcionalidad'] == 'Gestión de personas'){
+            return $accionesNoEliminadas;
+        }else{
+            return $permisosFuncionalidad;
+        }
+   
     }
 
 }

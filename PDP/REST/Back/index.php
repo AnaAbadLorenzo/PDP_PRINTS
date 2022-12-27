@@ -1,6 +1,6 @@
 <?php
       //include_once './Comun/codigos.php';
-      if (  ( !isset($_POST['controlador']) and !isset($_POST['action']) ) or
+      if ((!isset($_POST['controlador']) and !isset($_POST['action']) ) or
             !isset($_POST['controlador']) or !isset($_POST['action'])){
             rellenarExcepcion('PETICION_INVALIDA');
       }

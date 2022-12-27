@@ -80,6 +80,12 @@ class GestionFuncionalidadesController extends ControllerBase{
 		$this->getRespuesta($respuesta);
     }
 
+	function searchAllSinP(){
+        $respuesta = $this->gestionFuncionalidadService->searchAllSinP('BUSQUEDA_FUNCIONALIDAD_CORRECTO');
+		$this->rellenarRespuesta('BUSQUEDA_FUNCIONALIDAD_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
 	function searchDelete(){
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
         $respuesta = $this->gestionFuncionalidadService->searchDelete('BUSQUEDA_FUNCIONALIDAD_CORRECTO', $paginacion);

@@ -19,4 +19,27 @@ var urlPeticionAjaxEditarNoticia = urlComun;
 var urlPeticionAjaxBorrarNoticia = urlComun;
 
 /** Urls permisos */
-var urlPeticionAjaxAccionesUsuario = urlComun
+var urlPeticionAjaxAccionesUsuario = urlComun;
+var urlPeticionAjaxCargarPermiso = urlComun;
+var urlPeticionAjarAsignarAccion = urlComun;
+var urlPeticionAjaxDesasignarAccion = urlComun;
+
+/** Urls acciones */
+var urlPeticionAjaxAccionGuardar = urlComun;
+var urlPeticionAjaxListarAccion = urlComun;
+var urlPeticionAjaxDeleteAccion = urlComun;
+var urlPeticionAjaxEditAccion = urlComun;
+var urlPeticionAjaxListadoAcciones = urlComun;
+var urlPeticionAjaxListadoAccionesEliminadas = urlComun;
+var urlPeticionAjaxReactivarAccion = urlComun;
+
+/** Urls de funcionalidades */
+var urlPeticionAjaxListadoFuncionalidadesSinP = urlComun;
+
+/** Urls de roles */
+var urlPeticionAjaxListadoRoles = urlComun;
+var urlPeticionAjaxListadoRolesEliminados = urlComun;
+var urlPeticionAjaxListarRol = urlComun;
+var urlPeticionAjaxAddRol = urlComun;
+var urlPeticionAjaxEditRol = urlComun;
+var urlPeticionAjaxDeleteRol = urlComun;

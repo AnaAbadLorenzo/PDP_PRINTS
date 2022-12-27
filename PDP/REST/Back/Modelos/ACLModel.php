@@ -4,9 +4,9 @@ include_once './Modelos/ModelBase.php';
 
 class ACLModel extends ModelBase {
 
-	public $id_rol;
-	public $id_funcionalidad;
-	public $id_accion;
+	public $rol;
+	public $funcionalidad;
+	public $accion;
 
 	function __construct() {
 		$this->fillfields();
@@ -15,15 +15,14 @@ class ACLModel extends ModelBase {
 
 	function fillfields() {
 
-		$this -> id_rol = '';
-		$this -> id_funcionalidad = '';
-		$this -> id_accion = '';
-		$this -> borrado_ACL = '';
+		$this -> rol = '';
+		$this -> funcionalidad = '';
+		$this -> accion = '';
 
 		if ($_POST) {
-			if (isset($_POST['id_rol'])) $this->id_rol = $_POST['id_rol'];
-			if (isset($_POST['id_funcionalidad'])) $this->id_funcionalidad = $_POST['id_funcionalidad'];
-			if (isset($_POST['id_accion'])) $this->id_accion = $_POST['id_accion'];
+			if (isset($_POST['rol'])) $this->rol = $_POST['rol'];
+			if (isset($_POST['funcionalidad'])) $this->funcionalidad = $_POST['funcionalidad'];
+			if (isset($_POST['accion'])) $this->accion = $_POST['accion'];
 		}
 
 	}

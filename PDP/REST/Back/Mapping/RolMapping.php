@@ -73,6 +73,17 @@ class RolMapping extends MappingBase {
         $this -> get_results_from_query();
     }
 
+    function searchAll() {
+
+        $this -> query = 
+            "SELECT * FROM `rol`
+            WHERE `borrado_rol`=0";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+    }
+
+
     function searchDelete($paginacion) {
 
         $this -> query = 

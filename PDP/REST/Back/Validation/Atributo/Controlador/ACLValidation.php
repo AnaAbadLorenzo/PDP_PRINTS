@@ -15,7 +15,7 @@ class ACLValidation extends ValidacionesBase {
         $acl_validation_formato = new ACLAtributos;
         $acl_validation_accion = new ACLAccion;
 
-        $atributos_validacion = array('id_rol', 'id_accion', 'id_funcionalidad');
+        $atributos_validacion = array('rol', 'accion', 'funcionalidad');
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
 
         $acl_validation_formato -> validarAtributosAdd($atributos);
@@ -30,7 +30,7 @@ class ACLValidation extends ValidacionesBase {
         $acl_validation_formato = new ACLAtributos;
         $acl_validation_accion = new ACLAccion;
 
-        $atributos_validacion = array('id_rol', 'id_accion', 'id_funcionalidad');
+        $atributos_validacion = array('rol', 'accion', 'funcionalidad');
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
 
         $acl_validation_formato -> validarAtributosDelete($atributos);
@@ -83,6 +83,21 @@ class ACLValidation extends ValidacionesBase {
         
         $this -> respuesta_accion = $acl_validation_accion -> comprobarUsuario($atributos);
 
+    }
+
+    function validarObtenerPermisos() {
+        $acl_validation_formato = new ACLAtributos;
+        $acl_validation_accion = new ACLAccion;
+
+        $atributos_validacion = array('nombre_funcionalidad');
+        $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
+
+        $acl_validation_formato -> validarAtributosNombreFuncionalidad($atributos);
+        
+        $this -> respuesta_formato = $acl_validation_formato -> respuesta;
+
+        $this -> respuesta_accion = $acl_validation_accion -> comprobarFuncionalidad($atributos);
+    
     }
 
 }

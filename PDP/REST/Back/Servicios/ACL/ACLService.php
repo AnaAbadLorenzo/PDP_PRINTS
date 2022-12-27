@@ -4,8 +4,8 @@ interface ACLService {
 
     public function inicializarParametros();
 
-    function add();
-    function delete();
+    function add($mensaje);
+    function delete($mensaje);
     function searchFuncionalidadesUsuario($usuario);
     function searchAccionesPorFuncionalidadUsuario($datos);
     function searchPermisosUsuario($datos);

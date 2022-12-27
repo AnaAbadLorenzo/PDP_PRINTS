@@ -43,6 +43,12 @@ class AccionMapping extends MappingBase {
         $this->get_results_from_query();
     }
 
+    function searchAll() {
+        $this->query = "SELECT * FROM `accion` WHERE `borrado_accion` = 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
     function searchDelete($paginacion) {
         $this->query = "SELECT * FROM `accion` WHERE `borrado_accion` = 1 LIMIT " .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
         $this->stmt = $this->conexion->prepare($this->query);

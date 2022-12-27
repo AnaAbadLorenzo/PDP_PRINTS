@@ -62,9 +62,9 @@ class ACLMapping extends MappingBase {
         $this -> query = 
             "SELECT * FROM `rol_accion_funcionalidad`
             WHERE
-                `id_accion`='" . $datos_search['id_accion'] . "' AND
-                `id_funcionalidad`='" . $datos_search['id_funcionalidad'] . "' AND
-                `id_rol`='" . $datos_search['id_rol'] . "';"
+                `id_accion`='" . $datos_search['accion']['id_accion'] . "' AND
+                `id_funcionalidad`='" . $datos_search['funcionalidad']['id_funcionalidad'] . "' AND
+                `id_rol`='" . $datos_search['rol']['id_rol'] . "';"
         ;
 
         $this->stmt = $this->conexion->prepare($this->query);
@@ -113,25 +113,17 @@ class ACLMapping extends MappingBase {
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
-        $respuesta = $this->feedback;
-
     }
 
-    // function searchByParameters($datos_search, $paginacion) {
+    function searchACLByFuncionalidad($datos_search) {
+        $this -> query = 
+        "SELECT * FROM `rol_accion_funcionalidad`
+        WHERE
+            `id_funcionalidad`='" . $datos_search['id_funcionalidad']."'";
 
-    //     $this -> query = 
-    //         "SELECT * FROM `rol_accion_funcionalidad`
-    //         WHERE
-    //             LOWER(`id_rol`) LIKE LOWER(CONCAT('%','" . $datos_search['id_rol'] . "','%')) AND
-    //             LOWER(`id_funcionalidad`) LIKE LOWER(CONCAT('%','" . $datos_search['id_funcionalidad'] . "','%')) AND
-    //             `id_accion`=0
-    //             LIMIT ". $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . ";"
-    //     ; 
-
-    //     $this->stmt = $this->conexion->prepare($this->query);
-    //     $this->get_results_from_query();
-
-    // }
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
 
     function numberFindAll() {
         $this -> query = "SELECT COUNT(*) FROM `rol_accion_funcionalidad`";

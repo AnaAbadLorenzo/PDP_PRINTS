@@ -91,7 +91,7 @@ class GestionAccionesController extends ControllerBase{
 	function searchDelete(){
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
         $respuesta = $this->gestionAccionService->searchDelete('BUSQUEDA_ACCION_CORRECTO', $paginacion);
-			$this->rellenarRespuesta('BUSQUEDA_ACCION_ELIMINADAS_CORRECTO', false, $respuesta);
+			$this->rellenarRespuesta('BUSQUEDA_ACCIONES_ELIMINADAS_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
     }
 

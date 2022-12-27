@@ -458,9 +458,9 @@ function construyeFila(entidad, fila) {
         break;
 
         case 'ACCION':
-			atributosFunciones = ["'" + fila.nombreAccion + "'", "'" + fila.descripAccion + "'", "'" + fila.idAccion + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreAccion + 
-                '</td> <td>' + fila.descripAccion;
+			atributosFunciones = ["'" + fila.nombre_accion + "'", "'" + fila.descripcion_accion + "'", "'" + fila.id_accion + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.nombre_accion + 
+                '</td> <td>' + fila.descripcion_accion;
         break;
 
         case 'LOG_EXCEPCIONES':
@@ -819,9 +819,9 @@ function construyeFilaEliminados(entidad, fila) {
         break;
 
         case 'ACCION':
-			atributosFunciones = ["'" + fila.nombreAccion + "'", "'" + fila.descripAccion + "'", "'" + fila.idAccion + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreAccion + 
-                '</td> <td>' + fila.descripAccion;
+			atributosFunciones = ["'" + fila.nombre_accion + "'", "'" + fila.descripcion_accion + "'", "'" + fila.id_accion + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.nombre_accion + 
+                '</td> <td>' + fila.descripcion_accion;
         break;
 
          case 'USUARIO':
