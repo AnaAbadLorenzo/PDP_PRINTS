@@ -113,6 +113,21 @@ class PersonaMapping extends MappingBase {
                 return $respuesta;
             }
     }
+
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `persona`
+            SET `borrado_persona`=0
+            WHERE `dni_persona`='" . $datos['dni_persona'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
+    }
    
 }
 ?>

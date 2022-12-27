@@ -57,6 +57,3 @@ class UsuarioAtributos extends ValidacionesFormato {
 
 }
 ?>
-
-}
-?>
