@@ -31,6 +31,10 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                 case 'searchByParameters':
                     $this->funcionalidad = $this->crearModelo('Funcionalidad');
                     break;
+                case 'reactivar':
+                    $this -> funcionalidad = $this -> crearModelo('Funcionalidad');
+                    $this -> validacion_reactivar = $this -> crearValidacionAccion('DeleteFuncionalidad'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
+                    break;
                 default:
                     break;
             }
@@ -224,6 +228,20 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
             $funcionalidad_mapping = new FuncionalidadMapping();
             $funcionalidad_mapping->numberFindParameters($datosSearchParameters);
             return $funcionalidad_mapping->feedback['resource'];
+        }
+
+        function reactivar() {
+    
+            $this -> validacion_reactivar -> comprobarReactivar($_POST);
+            if (!empty($this -> validacion_reactivar -> respuesta)) {
+                return $this -> validacion_reactivar -> respuesta;
+            }
+            
+            $funcionalidad_mapping = new FuncionalidadMapping;
+            $respuesta = $funcionalidad_mapping -> reactivar($_POST);
+    
+            return $respuesta;
+    
         }
       
     }

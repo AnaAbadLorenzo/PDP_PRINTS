@@ -102,13 +102,14 @@ class RolMapping extends MappingBase {
         $this -> query = 
             "SELECT * FROM `rol`
             WHERE
-                `id_rol`='" . $datos_search['id_rol'] . "' AND 
-                `borrado_rol`=0;"
+                `id_rol`='" . $datos_search['id_rol'] . "';"
         ;
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
         $respuesta = $this->feedback;
+
+        return $respuesta;
 
     }
 
@@ -164,6 +165,21 @@ class RolMapping extends MappingBase {
         ;
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
+    }
+ 
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `rol`
+            SET `borrado_rol`=0
+            WHERE `id_rol`='" . $datos['id_rol'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
     }
     
 }

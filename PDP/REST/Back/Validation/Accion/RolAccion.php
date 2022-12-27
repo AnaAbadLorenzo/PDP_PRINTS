@@ -32,6 +32,33 @@ class RolAccion extends ValidacionesBase {
 		$this -> rolAsociadoAUsuario($rol_datos);
 		return $this -> respuesta;
 	}
+
+	function comprobarReactivar($datos) {
+		$this -> existeIdRol($datos);
+		$this -> estaBorradoAUno($datos); //aqui salta un warning si no existe el id a revisar
+	}
+
+	function estaBorradoAUno($datos) {
+		$respuesta = $this -> rol -> getById('rol', $datos)['resource'];
+		if ($respuesta['borrado_rol'] === 0) {
+			$this -> respuesta = 'ROL_YA_ESTABA_ACTIVADO';
+		} else {
+			return true;
+		}
+	}
+ 
+	function existeIdRol($rol_datos) {
+
+		$this -> rol -> getById('Rol', $rol_datos);
+		$resultado = $this -> rol -> mapping -> resource;
+
+		if (sizeof($resultado) != 0) {
+			return true;
+		} else {
+			$this -> respuesta = 'ROL_NO_EXISTE';
+		}
+		
+	}
  
 	function existeRol($rol_datos) {
 
@@ -43,6 +70,7 @@ class RolAccion extends ValidacionesBase {
 		} else {
 			$this -> respuesta = 'ROL_YA_EXISTE';
 		}
+		
 	}
  
 	function noExisteRol($rol_datos) {
