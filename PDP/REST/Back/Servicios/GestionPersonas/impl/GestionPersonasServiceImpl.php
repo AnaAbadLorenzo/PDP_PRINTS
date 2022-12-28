@@ -41,7 +41,7 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
 
         function add($mensaje){
             $respuesta = '';
-
+    
             if($this->persona->dni_persona != null &&
             $this->persona->nombre_persona != null &&
             $this->persona->apellidos_persona != null &&
@@ -214,15 +214,65 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
         function search($mensaje, $paginacion){
             $persona_mapping = new PersonaMapping();
             $persona_mapping->search($paginacion);
-            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], '',
+            $datosUsuario = $this->searchForeignKeysUsuario();
+            $datosRol = $this->searchForeignKeysRol();
+     
+            $datosADevolver = array();
+            $datosPersonaUsuario = array();
+            foreach($persona_mapping->feedback['resource'] as $persona){
+                foreach($datosUsuario as $usuario){
+                    if($persona['dni_persona'] == $usuario['dni_usuario']){
+                        $datosPersonaUsuario['persona'] = $persona;
+                        $datosPersonaUsuario['usuario'] = $usuario;
+                        foreach($datosRol as $rol){
+                            if($usuario['id_rol'] == $rol['id_rol']){
+                                $datosPersonaUsuario['rol'] = $rol;
+                            }
+                        }
+                        array_push($datosADevolver, $datosPersonaUsuario );
+                    }
+                }
+            }
+            $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
                         $this->numberFindAll()["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
             return $returnBusquedas;
+        }
+
+        function searchForeignKeysUsuario() {
+            $usuario_mapping = new UsuarioMapping();
+            $usuario_mapping->searchAll();
+            return $usuario_mapping->feedback['resource'];
+        }
+
+        function searchForeignKeysRol() {
+            $rol_mapping = new RolMapping();
+            $rol_mapping->searchAll();
+            return $rol_mapping->feedback['resource'];
         }
 
         function searchDelete($mensaje, $paginacion){
             $persona_mapping = new PersonaMapping();
             $persona_mapping->searchDelete($paginacion);
-            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], '',
+            $datosUsuario = $this->searchForeignKeysUsuario();
+            $datosRol = $this->searchForeignKeysRol();
+     
+            $datosADevolver = array();
+            $datosPersonaUsuario = array();
+            foreach($persona_mapping->feedback['resource'] as $persona){
+                foreach($datosUsuario as $usuario){
+                    if($persona['dni_persona'] === $usuario['dni_usuario']){
+                        $datosPersonaUsuario['persona'] = $persona;
+                        $datosPersonaUsuario['usuario'] = $usuario;
+                        foreach($datosRol as $rol){
+                            if($usuario['id_rol'] === $rol['id_rol']){
+                                $datosPersonaUsuario['rol'] = $rol;
+                            }
+                        }
+                        array_push($datosADevolver, $datosPersonaUsuario);
+                    }
+                }
+            }
+            $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
                         $this->numberFindAllDelete()["COUNT(*)"],sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
             return $returnBusquedas;
         }
@@ -272,7 +322,27 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
             
             $persona_mapping= new PersonaMapping();
             $persona_mapping->searchByParameters($datosSearchParameters, $paginacion);
-            $returnBusquedas = new ReturnBusquedas($persona_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+            $datosUsuario = $this->searchForeignKeysUsuario();
+            $datosRol = $this->searchForeignKeysRol();
+     
+            $datosADevolver = array();
+            $datosPersonaUsuario = array();
+            foreach($persona_mapping->feedback['resource'] as $persona){
+                foreach($datosUsuario as $usuario){
+                    if($persona['dni_persona'] == $usuario['dni_usuario']){
+                        $datosPersonaUsuario['persona'] = $persona;
+                        $datosPersonaUsuario['usuario'] = $usuario;
+                        foreach($datosRol as $rol){
+                            if($usuario['id_rol'] == $rol['id_rol']){
+                                $datosPersonaUsuario['rol'] = $rol;
+                            }
+                        }
+                        array_push($datosADevolver, $datosPersonaUsuario );
+                    }
+                }
+            }
+
+            $returnBusquedas = new ReturnBusquedas($datosADevolver, $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
                             sizeof($persona_mapping->feedback['resource']), $paginacion->inicio);
             return $returnBusquedas;
         }
@@ -293,6 +363,33 @@ class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasS
             $persona_mapping = new PersonaMapping();
             $persona_mapping->numberFindParameters($datosSearchParameters);
             return $persona_mapping->feedback['resource'];
+        }
+
+        function searchByUsuario(){
+            $persona_mapping = new PersonaMapping();
+            $persona_mapping->searchAll();
+            $datosUsuario = $this->searchForeignKeysUsuario();
+            $datosRol = $this->searchForeignKeysRol();
+     
+            $datosADevolver = array();
+            $datosPersonaUsuario = array();
+            foreach($persona_mapping->feedback['resource'] as $persona){
+                foreach($datosUsuario as $usuario){
+                    if(($persona['dni_persona'] == $usuario['dni_usuario']) && $usuario['usuario']== $_POST['usuario']){
+                        $datosPersonaUsuario['persona'] = $persona;
+                        $datosPersonaUsuario['usuario'] = $usuario;
+                        foreach($datosRol as $rol){
+                            if($usuario['id_rol'] == $rol['id_rol']){
+                                $datosPersonaUsuario['rol'] = $rol;
+                            }
+                        }
+                        array_push($datosADevolver, $datosPersonaUsuario );
+                    }
+                }
+            }
+            $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                        '',sizeof($datosADevolver), '');
+            return $returnBusquedas;
         }
     }
 ?>

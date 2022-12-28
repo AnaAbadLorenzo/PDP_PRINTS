@@ -2,7 +2,7 @@
 
 include_once './Servicios/ServiceBase.php';
 include_once './Servicios/GestionUsuarios/GestionUsuariosService.php';
-
+include_once './Servicios/Comun/ReturnBusquedas.php';
 include_once "./Mapping/UsuarioMapping.php";
 include_once "./Mapping/RolMapping.php";
 include_once "./Mapping/PersonaMapping.php";
@@ -106,7 +106,7 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
             if($this->clase_validacionAccionEditUsuario != null) {
 
-                $this->clase_validacionAccionEditUsuario>comprobarEditUsuario ($datosEditUsuario);
+                $this->clase_validacionAccionEditUsuario>comprobarEditUsuario($datosEditUsuario);
             }
             if($this->clase_validacionFormatoEditUsuario->respuesta != null){
 
@@ -172,9 +172,36 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         return $respuesta;
     }
 
-    function search($mensaje){
+    function search($mensaje, $paginacion){
         $usuario_mapping = new UsuarioMapping();
-        $usuario_mapping->search();
+        $usuario_mapping->search($paginacion);
+        $datosRol = $this->searchForeignKeys();
+
+        $datosADevolver = array();
+        $datosUsuarioRol = array();
+        foreach($usuario_mapping->feedback['resource'] as $usuario){
+            foreach($datosRol as $rol){
+                if($usuario['id_rol'] == $rol['id_rol']){
+                    $datosUsuarioRol['usuario'] = $usuario;
+                    $datosUsuarioRol['rol'] = $usuario;
+                    array_push($datosADevolver, $datosUsuarioRol);
+                }
+            }
+        }
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                    $this->numberFindAll()["COUNT(*)"],sizeof($usuario_mapping->feedback['resource']), $paginacion->inicio);
+        return $returnBusquedas;
+    }
+
+    function searchForeignKeys() {
+        $rol_mapping = new RolMapping();
+        $rol_mapping->searchAll();
+        return $rol_mapping->feedback['resource'];
+    }
+    
+    function numberFindAll(){
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->numberFindAll();
         return $usuario_mapping->feedback['resource'];
     }
 

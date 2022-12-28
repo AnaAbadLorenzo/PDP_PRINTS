@@ -1,51 +1,46 @@
 /** Función para cargar los datos de persona **/
   async function cargarPersonas(numeroPagina, tamanhoPagina, paginadorCreado){
-      if(getCookie('rolUsuario') == "usuario" || getCookie('rolUsuario') == "gestor"){
+      if(getCookie('rolUsuario') == "Usuario"){
           await cargarDatosPersonaAjaxPromesa()
             .then((res) => {
-          cargarPermisosFuncPersona();
-          cargarPermisosFuncEmpresaPersona();
-                 $('#personaInfoParaAdmin').attr('hidden', true);
-                 $('#personaInfoParaUsuario').attr('hidden', false);
-               cargaDatosPersona(res.data.listaBusquedas);
-               cargaDatosUsuario(res.data.listaBusquedas);
-           cargaDatosEmpresa(res.data.listaBusquedas);
-          
-            
-            setLang(getCookie('lang'));
+              cargarPermisosFuncPersona();
+              $('#personaInfoParaAdmin').attr('hidden', true);
+              $('#personaInfoParaUsuario').attr('hidden', false);
+              cargaDatosPersona(res.resource.listaBusquedas);
+              cargaDatosUsuario(res.resource.listaBusquedas);
+              setLang(getCookie('lang'));
             }).catch((res) => {
                 respuestaAjaxKO(res.code);
-  
                 setLang(getCookie('lang'));
-  
                 document.getElementById("modal").style.display = "block";
             });
-      }else if(getCookie('rolUsuario') == "admin"){
+      
+      }else if(getCookie('rolUsuario') == "Administrador"){
           await cargarPersonasAjaxPromesa(numeroPagina, tamanhoPagina)
               .then((res) => {
                   $('#personaInfoParaAdmin').attr('hidden', false);
                   $('#personaInfoParaUsuario').attr('hidden', true);
-                        var numResults = res.data.numResultados + '';
-                  var totalResults = res.data.tamanhoTotal + '';
+                  var numResults = res.resource.numResultados + '';
+                  var totalResults = res.resource.tamanhoTotal + '';
                   var inicio = 0;
-                  if(res.data.listaBusquedas.length == 0){
+                  if(res.resource.listaBusquedas.length == 0){
                       inicio = 0;
                   }else{
-                      inicio = parseInt(res.data.inicio)+1;
+                      inicio = parseInt(res.resource.inicio)+1;
                   }
-                  var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+                  var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
           
                   $("#datosPersona").html("");
                   $("#checkboxColumnas").html("");
                   $("#paginacion").html("");
               
-                  for (var i = 0; i < res.data.listaBusquedas.length; i++){
-                      var tr = construyeFila('PERSONA', res.data.listaBusquedas[i]);
+                  for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+                      var tr = construyeFila('PERSONA', res.resource.listaBusquedas[i]);
                       $("#datosPersona").append(tr);
                   }
           
                   var div = createHideShowColumnsWindow({NOMBRE_PERSONA_COLUMN:2, APELLIDOS_PERSONA_COLUMN:3,
-                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5, NOMBRE_EMPRESA_COLUMN: 6});
+                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5});
                   $("#checkboxColumnas").append(div);
                   $("#paginacion").append(textPaginacion);
   
@@ -80,18 +75,26 @@
         if($('#form-modal').is(':visible')) {
            $("#form-modal").modal('toggle');
         };
-        guardarParametrosBusqueda(res.data.datosBusqueda);
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        var datosBusquedas = [];
+        datosBusquedas.push('dni_persona: ' +res.resource.datosBusquedas['dni_persona']);
+        datosBusquedas.push('nombre_persona: ' +res.resource.datosBusquedas['nombre_persona']);
+        datosBusquedas.push('direccion_persona: ' +res.resource.datosBusquedas['direccion_persona']);
+        datosBusquedas.push('fecha_nac_persona: ' +res.resource.datosBusquedas['fecha_nac_persona']);
+        datosBusquedas.push('telefono_persona: ' +res.resource.datosBusquedas['telefono_persona']);
+        datosBusquedas.push('email_persona: ' +res.resource.datosBusquedas['email_persona']);
+        guardarParametrosBusqueda(datosBusquedas);
+
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
@@ -102,13 +105,13 @@
         $("#datosPersona").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('PERSONA', res.data.listaBusquedas[i]);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('PERSONA', res.resource.listaBusquedas[i]);
             $("#datosPersona").append(tr);
           }
         
         var div = createHideShowColumnsWindow({NOMBRE_PERSONA_COLUMN:2, APELLIDOS_PERSONA_COLUMN:3,
-                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5, NOMBRE_EMPRESA_COLUMN: 6});
+                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         if(paginadorCreado != 'PaginadorCreado'){
@@ -129,11 +132,9 @@
         cargarPermisosFuncPersona();
   
         let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-        let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
       
         resetearFormulario("formularioGenerico", idElementoList);
-        limpiaRadioButton(idElementosRadioButtons);
   
         respuestaAjaxKO(res.code);
         setLang(getCookie('lang'));
@@ -150,27 +151,20 @@
       document.getElementById("modal").style.display = "block";
   
       let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-      "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-      let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+      "usuario", "passwdUsuario1", "passwdUsuario2"];
       
       resetearFormulario("formularioGenerico", idElementoList);
-      limpiaRadioButton(idElementosRadioButtons);
-    
       
-      $('#dniP').val(getCookie('dniP'));
-      $('#nombreP').val(getCookie('nombreP'));
-      $('#apellidosP').val(getCookie('apellidosP'));
-      $('#direccionP').val(getCookie('direccionP'));
-      $('#fechaNacP').val(getCookie('fechaNacP'));
-      $('#telefonoP').val(getCookie('telefonoP'));
-      $('#emailP').val(getCookie('emailP'));
-      $('#direccionP').val(getCookie('direccionP'));
+      $('#dniP').val(getCookie('dni_persona'));
+      $('#nombreP').val(getCookie('nombre_persona'));
+      $('#apellidosP').val(getCookie('apellidos_persona'));
+      $('#direccionP').val(getCookie('direccion_persona'));
+      $('#fechaNacP').val(getCookie('fecha_nac_persona'));
+      $('#telefonoP').val(getCookie('telefono_persona'));
+      $('#emailP').val(getCookie('email_persona'));
+      $('#direccionP').val(getCookie('direccion_persona'));
       $('#usuario').val(getCookie('usuario'));
-      $('#cifEmpresa').val(getCookie('cifEmpresa'));
-      $('#nombreEmpresa').val(getCookie('nombreEmpresa'));
-      $('#direccionEmpresa').val(getCookie('direccionEmpresa'));
-      $('#telefonoEmpresa').val(getCookie('telefonoEmpresa'));
-      
+     
       buscarPersona(getCookie('numeroPagina'), tamanhoPaginaPersona, 'buscarPaginacion', 'PaginadorNo');
       setLang(getCookie('lang'));
   
@@ -180,12 +174,9 @@
         respuestaAjaxKO(res.code);
   
         let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-        let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
       
         resetearFormulario("formularioGenerico", idElementoList);
-        limpiaRadioButton(idElementosRadioButtons);
-  
         setLang(getCookie('lang'));
   
         document.getElementById("modal").style.display = "block";
@@ -203,28 +194,22 @@
       cargarPermisosFuncPersona();
   
       let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-      let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
       
       resetearFormulario("formularioGenerico", idElementoList);
-      limpiaRadioButton(idElementosRadioButtons);
   
       document.getElementById("modal").style.display = "block";
-      $('#dniP').val(getCookie('dniP'));
-      $('#nombreP').val(getCookie('nombreP'));
-      $('#apellidosP').val(getCookie('apellidosP'));
-      $('#direccionP').val(getCookie('direccionP'));
-      $('#fechaNacP').val(getCookie('fechaNacP'));
-      $('#telefonoP').val(getCookie('telefonoP'));
-      $('#emailP').val(getCookie('emailP'));
-      $('#direccionP').val(getCookie('direccionP'));
+      $('#dniP').val(getCookie('dni_persona'));
+      $('#nombreP').val(getCookie('nombre_persona'));
+      $('#apellidosP').val(getCookie('apellidos_persona'));
+      $('#direccionP').val(getCookie('direccion_persona'));
+      $('#fechaNacP').val(getCookie('fecha_nac_persona'));
+      $('#telefonoP').val(getCookie('telefono_persona'));
+      $('#emailP').val(getCookie('email_persona'));
+      $('#direccionP').val(getCookie('direccion_persona'));
       $('#usuario').val(getCookie('usuario'));
-      $('#cifEmpresa').val(getCookie('cifEmpresa'));
-      $('#nombreEmpresa').val(getCookie('nombreEmpresa'));
-      $('#direccionEmpresa').val(getCookie('direccionEmpresa'));
-      $('#telefonoEmpresa').val(getCookie('telefonoEmpresa'));
   
-      if(getCookie('rolUsuario') == "admin"){
+      if(getCookie('rolUsuario') == "Administrador"){
         buscarPersona(getCookie('numeroPagina'), tamanhoPaginaPersona, 'buscarPaginacion', 'PaginadorCreado');
       }else{
         cargarPersonas(getCookie('numeroPagina'), tamanhoPaginaPersona, 'PaginadorCreado');
@@ -238,12 +223,10 @@
       respuestaAjaxKO(res.code);
   
       let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-      let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
       
       resetearFormulario("formularioGenerico", idElementoList);
-      limpiaRadioButton(idElementosRadioButtons);
-  
+
       setLang(getCookie('lang'));
   
       document.getElementById("modal").style.display = "block";
@@ -261,11 +244,9 @@
       respuestaAjaxOK("PERSONA_ELIMINADA_OK", res.code);
   
       let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-      let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
       
       resetearFormulario("formularioGenerico", idElementoList);
-      limpiaRadioButton(idElementosRadioButtons);
       document.getElementById("modal").style.display = "block";
      
       refrescarTabla(0, tamanhoPaginaPersona);
@@ -277,11 +258,9 @@
         respuestaAjaxKO(res.code);
   
         let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-          "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-        let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
-      
+          "usuario", "passwdUsuario1", "passwdUsuario2"];
+       
         resetearFormulario("formularioGenerico", idElementoList);
-        limpiaRadioButton(idElementosRadioButtons);
   
         setLang(getCookie('lang'));
   
@@ -298,25 +277,20 @@
       $("#form-modal").modal('toggle');
   
       let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-          "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-      let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+          "usuario", "passwdUsuario1", "passwdUsuario2"];
       
       resetearFormulario("formularioGenerico", idElementoList);
-      limpiaRadioButton(idElementosRadioButtons);
       
-      $('#dniP').val(getCookie('dniP'));
-      $('#nombreP').val(getCookie('nombreP'));
-      $('#apellidosP').val(getCookie('apellidosP'));
-      $('#direccionP').val(getCookie('direccionP'));
-      $('#fechaNacP').val(getCookie('fechaNacP'));
-      $('#telefonoP').val(getCookie('telefonoP'));
-      $('#emailP').val(getCookie('emailP'));
-      $('#direccionP').val(getCookie('direccionP'));
+      $('#dniP').val(getCookie('dni_persona'));
+      $('#nombreP').val(getCookie('nombre_persona'));
+      $('#apellidosP').val(getCookie('apellidos_persona'));
+      $('#direccionP').val(getCookie('direccion_persona'));
+      $('#fechaNacP').val(getCookie('fecha_nac_persona'));
+      $('#telefonoP').val(getCookie('telefono_persona'));
+      $('#emailP').val(getCookie('email_persona'));
+      $('#direccionP').val(getCookie('direccion_persona'));
       $('#usuario').val(getCookie('usuario'));
-      $('#cifEmpresa').val(getCookie('cifEmpresa'));
-      $('#nombreEmpresa').val(getCookie('nombreEmpresa'));
-      $('#direccionEmpresa').val(getCookie('direccionEmpresa'));
-      $('#telefonoEmpresa').val(getCookie('telefonoEmpresa'));
+     
       setLang(getCookie('lang'));
   
     }).catch((res) => {
@@ -325,11 +299,9 @@
         respuestaAjaxKO(res.code);
   
         let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-          "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-        let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+          "usuario", "passwdUsuario1", "passwdUsuario2"];
       
         resetearFormulario("formularioGenerico", idElementoList);
-        limpiaRadioButton(idElementosRadioButtons);
         
         setLang(getCookie('lang'));
   
@@ -342,37 +314,34 @@
     await cargarPersonasAjaxPromesa(numeroPagina, tamanhoPagina)
     .then((res) => {
         cargarPermisosFuncPersona();
-        setCookie('dniP', '');
-        setCookie('nombreP', '');
-        setCookie('apellidosP', '');
-        setCookie('fechaNacP', '');
-        setCookie('direccionP', '');
-        setCookie('telefonoP', '');
-        setCookie('emailP', '');
-        setCookie('cifEmpresa', '');
-        setCookie('nombreEmpresa', '');
-        setCookie('direccionEmpresa', '');
-        setCookie('telefonoEmpresa', '');
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        setCookie('dni_persona', '');
+        setCookie('nombre_persona', '');
+        setCookie('apellidos_persona', '');
+        setCookie('fecha_nac_persona', '');
+        setCookie('direccion_persona', '');
+        setCookie('telefono_persona', '');
+        setCookie('email_persona', '');
+       
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
         
         $("#datosPersona").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('PERSONA', res.data.listaBusquedas[i]);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('PERSONA', res.resource.listaBusquedas[i]);
             $("#datosPersona").append(tr);
           }
         
         var div = createHideShowColumnsWindow({NOMBRE_PERSONA_COLUMN:2, APELLIDOS_PERSONA_COLUMN:3,
-                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5, NOMBRE_EMPRESA_COLUMN: 6});
+                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
   
@@ -403,19 +372,19 @@
     await buscarEliminadosAjaxPromesa(numeroPagina, tamanhoPagina)
     .then((res) => {
         cargarPermisosFuncPersona();
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
           $('#itemPaginacion').attr('hidden', true);
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
           $('#itemPaginacion').attr('hidden', false);
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
         
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
             document.getElementById("cabecera").style.display = "none";
             document.getElementById("cabeceraEliminados").style.display = "block";
         }
@@ -425,33 +394,28 @@
         $("#datosPersona").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFilaEliminados('PERSONA', res.data.listaBusquedas[i]);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFilaEliminados('PERSONA', res.resource.listaBusquedas[i]);
             $("#datosPersona").append(tr);
           }
         
        var div = createHideShowColumnsWindow({NOMBRE_PERSONA_COLUMN:2, APELLIDOS_PERSONA_COLUMN:3,
-                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5, NOMBRE_EMPRESA_COLUMN: 6});
+                                                          EMAIL_COLUMN: 4,LOGIN_USUARIO_COLUMN:5});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
   
-        setCookie('dniP', '');
-        setCookie('nombreP', '');
-        setCookie('apellidosP', '');
-        setCookie('fechaNacP', '');
-        setCookie('direccionP', '');
-        setCookie('telefonoP', '');
-        setCookie('emailP', '');
-        setCookie('cifEmpresa', '');
-        setCookie('nombreEmpresa', '');
-        setCookie('direccionEmpresa', '');
-        setCookie('telefonoEmpresa', '');
+        setCookie('dni_persona', '');
+        setCookie('nombre_persona', '');
+        setCookie('apellidos_persona', '');
+        setCookie('fecha_nac_persona', '');
+        setCookie('direccion_persona', '');
+        setCookie('telefono_persona', '');
+        setCookie('email_persona', '');
   
         if(paginadorCreado != 'PaginadorCreado'){
            paginador(totalResults, 'buscarEliminadosPersona', 'PERSONA');
         }
        
-  
         if(numeroPagina == 0){
           $('#' + (numeroPagina+1)).addClass("active");
         }else{
@@ -475,20 +439,21 @@
       var token = getCookie('tokenUsuario');
   
       var data = {
+        controlador : 'GestionPersonas',
+        action: 'searchByUsuario',
         usuario : getCookie('usuario'),
         inicio : 0,
-        tamanhoPagina : 1
+        tamanhoPagina : tamanhoPaginaPersona
       }
       
       $.ajax({
         method: "POST",
         url: urlPeticionAjaxListarPersonaPorUsuario,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONAS_LISTADAS') {
+          if (res.code != 'BUSQUEDA_PERSONA_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -504,6 +469,8 @@
       var token = getCookie('tokenUsuario');
   
       var data = {
+        controlador : 'GestionPersonas',
+        action : 'search',
         inicio : calculaInicio(numeroPagina, tamanhoPaginaPersona),
         tamanhoPagina : tamanhoPaginaPersona
       }
@@ -511,12 +478,11 @@
       $.ajax({
         method: "POST",
         url: urlPeticionAjaxListarTodasPersonas,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONAS_LISTADAS') {
+          if (res.code != 'BUSQUEDA_PERSONA_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -535,96 +501,32 @@
   
           encriptar('passwdUsuario1');
   
-          var personaEntity = {
-            dniP : $('#dniP').val(),
-            nombreP : $('#nombreP').val(),
-            apellidosP : $('#apellidosP').val(),
-            fechaNacP : $('#fechaNacP').val(),
-            direccionP : $('#direccionP').val(),
-            telefonoP : $('#telefonoP').val(),
-            emailP : $('#emailP').val(),
-            borradoP : 0
-          }
-          
-          var usuarioEntity = {
-            dniUsuario : $('#dniP').val(),
-            usuario : $('#usuario').val(),
-            passwdUsuario : $('#passwdUsuario1').val(),
-            borradoUsuario : 0,
-            rol:{
-              idRol : 2,
-              rolName : "usuario",
-              rolDescription : "Contendrá a todos los usuarios de la aplicación",
-              borradoRol : 0
-            }
-          }
-  
-        var asociarEmpresa = $('input[name=asociarEmpresa]:checked').val();
-        var seleccionarEmpresaPregunta = $('input[name=seleccionarEmpresa]:checked').val();
-  
-        if (asociarEmpresa === 'si' && seleccionarEmpresaPregunta === 'si') {
-  
-          var empresaEntity = {
-            idEmpresa: $('#empresasDisponibles option:selected').val(),
-            cifEmpresa: "",
-            nombreEmpresa: "",
-            direccionEmpresa: "",
-            telefonoEmpresa: "",
-            borradoEmpresa: ""
-          };
-  
-          var seleccionarEmpresa = "Si";
-  
-        }
-  
-        else if(asociarEmpresa === 'si' && seleccionarEmpresaPregunta === 'si' && $('#empresasDisponibles option:selected').val() === "default"){
-          var empresaEntity = {
-            idEmpresa: "",
-            cifEmpresa: $('#cifEmpresa').val(),
-            nombreEmpresa: $('#nombreEmpresa').val(),
-            direccionEmpresa: $('#direccionEmpresa').val(),
-            telefonoEmpresa: $('#telefonoEmpresa').val(),
-            borradoEmpresa: ""
-          };
-  
-          var seleccionarEmpresa = "No";
-        
-        }else if (asociarEmpresa === 'si' && seleccionarEmpresaPregunta === 'no') {
-  
-          var empresaEntity = {
-            idEmpresa: "",
-            cifEmpresa: $('#cifEmpresa').val(),
-            nombreEmpresa: $('#nombreEmpresa').val(),
-            direccionEmpresa: $('#direccionEmpresa').val(),
-            telefonoEmpresa: $('#telefonoEmpresa').val(),
-            borradoEmpresa: ""
-          };
-  
-          var seleccionarEmpresa = "No";
-  
-        } else {
-  
-          var empresaEntity = null;
-          var seleccionarEmpresa = "";
-        }
-  
           var data = {
-            usuario : getCookie('usuario'),
-            personaEntity : personaEntity,
-            usuarioEntity : usuarioEntity,
-            empresaEntity: empresaEntity,
-            seleccionarEmpresa : seleccionarEmpresa
+            controlador: 'GestionPersonas',
+            action: 'add',
+            dni_persona : $('#dniP').val(),
+            nombre_persona : $('#nombreP').val(),
+            apellidos_persona : $('#apellidosP').val(),
+            fecha_nac_persona : $('#fechaNacP').val(),
+            direccion_persona : $('#direccionP').val(),
+            telefono_persona : $('#telefonoP').val(),
+            email_persona : $('#emailP').val(),
+            borrado_persona : 0,
+            dni_usuario : $('#dniP').val(),
+            usuario : $('#usuario').val(),
+            passwd_usuario : $('#passwdUsuario1').val(),
+            borrado_usuario : 0,
+            id_rol : 2
           }
-          
+  
           $.ajax({
             method: "POST",
             url: urlPeticionAjaxPersonaGuardar,
-            contentType : "application/json",
-            data: JSON.stringify(data),  
-            dataType : 'json',
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            data: data,
             headers: {'Authorization': token},
             }).done(res => {
-              if (res.code != 'PERSONA_GUARDADA') {
+              if (res.code != 'ADD_PERSONA_COMPLETO') {
                 reject(res);
               }
               resolve(res);
@@ -641,73 +543,27 @@
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var personaEntity = {
-          dniP : $('#dniP').val(),
-          nombreP : $('#nombreP').val(),
-          apellidosP : $('#apellidosP').val(),
-          fechaNacP : $('#fechaNacP').val(),
-          direccionP : $('#direccionP').val(),
-          telefonoP : $('#telefonoP').val(),
-          emailP : $('#emailP').val(),
-          borradoP : 0
-      }
-      
-      var select = $('#form-modal #formularioAcciones #contenidoForm #formularioGenerico #empresasDisponibles').val();
-      
-      if(getCookie('rolUsuario')== "admin"){
-        var quitarEmpresa = $("input[name=quitarEmpresa]:checked").val();
-        if(quitarEmpresa == "si"){
-          var empresa = null;
-        }else if(quitarEmpresa == "no"){
-          var empresa = {
-            idEmpresa : select,
-            cifEmpresa : "",
-            nombreEmpresa : "",
-            direccionEmpresa : "",
-            telefonoEmpresa : ""
-          }
-        }else{
-          if($('#cifEmpresa').val()==""){
-            var empresa = null;
-          }else{
-            var empresa = {
-            idEmpresa : "",
-            cifEmpresa : $('#cifEmpresa').val(),
-            nombreEmpresa : $('#nombreEmpresa').val(),
-            direccionEmpresa : $('#direccionEmpresa').val(),
-            telefonoEmpresa : $('#telefonoEmpresa').val()
-          }
-          }
-        }
-      }else{
-        if($('#cifEmpresa').val()==""){
-            var empresa = null;
-          }else{
-            var empresa = {
-            idEmpresa : '',
-            cifEmpresa : $('#cifEmpresa').val(),
-            nombreEmpresa : $('#nombreEmpresa').val(),
-            direccionEmpresa : $('#direccionEmpresa').val(),
-            telefonoEmpresa : $('#telefonoEmpresa').val()
-          }
-          }
-        }
-      
       var data = {
-        usuario : getCookie('usuario'),
-        persona : personaEntity,
-        empresa: empresa
+        controlador: 'GestionPersonas',
+        action: 'edit',
+        dni_persona : $('#dniP').val(),
+        nombre_persona : $('#nombreP').val(),
+        apellidos_persona : $('#apellidosP').val(),
+        fecha_nac_persona : $('#fechaNacP').val(),
+        direccion_persona : $('#direccionP').val(),
+        telefono_persona : $('#telefonoP').val(),
+        email_persona : $('#emailP').val(),
+        borrado_persona : 0,
       }
-  
-        $.ajax({
+      
+      $.ajax({
         method: "POST",
         url: urlPeticionAjaxEditPersona,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONA_MODIFICADA') {
+          if (res.code != 'EDIT_PERSONA_COMPLETO') {
             reject(res);
           }
           resolve(res);
@@ -722,40 +578,27 @@
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var personaEntity = {
-          dniP : $('#dniP').val(),
-          nombreP : $('#nombreP').val(),
-          apellidosP : $('#apellidosP').val(),
-          fechaNacP : $('#fechaNacP').val(),
-          direccionP : $('#direccionP').val(),
-          telefonoP : $('#telefonoP').val(),
-          emailP : $('#emailP').val(),
-          borradoP : 1
-      }
-  
-      var empresa = {
-            idEmpresa : "",
-            cifEmpresa : $('#cifEmpresa').val(),
-            nombreEmpresa : $('#nombreEmpresa').val(),
-            direccionEmpresa : $('#direccionEmpresa').val(),
-            telefonoEmpresa : $('#telefonoEmpresa').val()
-          }
-      
       var data = {
-        usuario : getCookie('usuario'),
-        persona: personaEntity,
-        empresa : empresa
+        controlador: 'GestionPersonas',
+        action: 'delete',
+        dni_persona : $('#dniP').val(),
+        nombre_persona : $('#nombreP').val(),
+        apellidos_persona : $('#apellidosP').val(),
+        fecha_nac_persona : $('#fechaNacP').val(),
+        direccion_persona : $('#direccionP').val(),
+        telefono_persona : $('#telefonoP').val(),
+        email_persona : $('#emailP').val(),
+        borrado_persona : 1,
       }
-  
-        $.ajax({
+
+      $.ajax({
         method: "POST",
         url: urlPeticionAjaxDeletePersona,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONA_ELIMINADA') {
+          if (res.code != 'DELETE_PERSONA_COMPLETO') {
             reject(res);
           }
           resolve(res);
@@ -772,13 +615,15 @@
       var token = getCookie('tokenUsuario');
       
       var data = {
-        dniP : $('#dniP').val(),
-        nombreP : $('#nombreP').val(),
-        apellidosP : $('#apellidosP').val(),
-        fechaNacP : $('#fechaNacP').val(),
-        direccionP : $('#direccionP').val(),
-        telefonoP : $('#telefonoP').val(),
-        emailP : $('#emailP').val(),
+        controlador: 'GestionPersonas',
+        action: 'searchByParameters',
+        dni_persona : $('#dniP').val(),
+        nombre_persona : $('#nombreP').val(),
+        apellidos_persona : $('#apellidosP').val(),
+        fecha_nac_persona : $('#fechaNacP').val(),
+        direccion_persona : $('#direccionP').val(),
+        telefono_persona : $('#telefonoP').val(),
+        email_persona : $('#emailP').val(),
         inicio : 0,
         tamanhoPagina : 1
       }
@@ -786,12 +631,11 @@
         $.ajax({
         method: "POST",
         url: urlPeticionAjaxListarPersona,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONAS_LISTADAS') {
+          if (res.code != 'BUSQUEDA_PERSONA_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -813,66 +657,70 @@
           fechaNacP = $('#fechaNacP').val();
         }
         var data = {
-          dniP : $('#dniP').val(),
-          nombreP : $('#nombreP').val(),
-          apellidosP : $('#apellidosP').val(),
-          fechaNacP : fechaNacP,
-          direccionP : $('#direccionP').val(),
-          telefonoP : $('#telefonoP').val(),
-          emailP : $('#emailP').val(),
+          controlador: 'GestionPersonas',
+          action: 'searchByParameters',
+          dni_persona : $('#dniP').val(),
+          nombre_persona : $('#nombreP').val(),
+          apellidos_persona : $('#apellidosP').val(),
+          fecha_nac_persona : fechaNacP,
+          direccion_persona : $('#direccionP').val(),
+          telefono_persona : $('#telefonoP').val(),
+          email_persona : $('#emailP').val(),
           inicio : calculaInicio(numeroPagina, tamanhoPaginaPersona),
           tamanhoPagina : tamanhoPaginaPersona 
         }
       }
   
       if(accion == "buscarPaginacion"){
-        if(getCookie('dniP') == null || getCookie('dniP') == ""){
+        if(getCookie('dni_persona') == null || getCookie('dni_persona') == ""){
           var dni = "";
         }else{
-          var dni = getCookie('dniP');
+          var dni = getCookie('dni_persona');
         }
   
-        if(getCookie('nombreP') == null || getCookie('nombreP') == ""){
+        if(getCookie('nombre_persona') == null || getCookie('nombre_persona') == ""){
           var nombre = "";
         }else{
-          var nombre = getCookie('nombreP');
+          var nombre = getCookie('nombre_persona');
         }
-        if(getCookie('apellidosP') == null || getCookie('apellidosP') == ""){
+        if(getCookie('apellidos_persona') == null || getCookie('apellidos_persona') == ""){
           var apellidos = "";
         }else{
-          var apellidos = getCookie('apellidosP');
+          var apellidos = getCookie('apellidos_persona');
         }
   
-        if(getCookie('fechaNacP') == null || getCookie('fechaNacP') == ""){
+        if(getCookie('fecha_nac_persona') == null || getCookie('fecha_nac_persona') == ""){
           var fecha = "";
         }else{
-          var fecha = getCookie('fechaNacP');
+          var fecha = getCookie('fecha_nac_persona');
         }
-        if(getCookie('direccionP') == null || getCookie('direccionP') == ""){
+        if(getCookie('direccion_persona') == null || getCookie('direccion_persona') == ""){
           var direccion = "";
         }else{
-          var direccion = getCookie('direccionP');
+          var direccion = getCookie('direccion_persona');
         }
   
-        if(getCookie('telefonoP') == null || getCookie('telefonoP') == ""){
+        if(getCookie('telefono_persona') == null || getCookie('telefono_persona') == ""){
           var telefono = "";
         }else{
-          var telefono = getCookie('telefonoP');
+          var telefono = getCookie('telefono_persona');
         }
-        if(getCookie('emailP') == null || getCookie('emailP') == ""){
+        if(getCookie('email_persona') == null || getCookie('email_persona') == ""){
           var email = "";
         }else{
-          var email = getCookie('emailP');
+          var email = getCookie('email_persona');
         }
   
         var data = {
-          dniP : dni,
-          nombreP : nombre,
-          apellidosP : apellidos,
-          fechaNacP : fecha,
-          direccionP : direccion,
-          telefonoP : telefono,
-          emailP : email,
+          controlador : 'GestionPersonas',
+          action: 'searchByParameters',
+          dni_persona : dni,
+          nombre_persona : nombre,
+          apellidos_persona : apellidos,
+          fecha_nac_persona : fecha,
+          direccion_persona : direccion,
+          telefono_persona : telefono,
+          email_persona : email,
           inicio : calculaInicio(numeroPagina, tamanhoPaginaPersona),
           tamanhoPagina : tamanhoPaginaPersona 
         }
@@ -881,12 +729,11 @@
       $.ajax({
         method: "POST",
         url: urlPeticionAjaxListarPersona,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONAS_LISTADAS') {
+          if (res.code != 'BUSQUEDA_PERSONA_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -902,6 +749,8 @@
       var token = getCookie('tokenUsuario');
   
       var data = {
+        controlador : 'GestionPersonas',
+        action : 'searchDelete',
         inicio : calculaInicio(numeroPagina, tamanhoPaginaPersona),
         tamanhoPagina : tamanhoPaginaPersona
       }
@@ -909,99 +758,17 @@
       $.ajax({
         method: "POST",
         url: urlPeticionAjaxListarPersonasEliminadas,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'PERSONAS_LISTADAS') {
+          if (res.code != 'BUSQUEDA_PERSONA_CORRECTO') {
             reject(res);
           }
           resolve(res);
         }).fail( function( jqXHR ) {
           errorFailAjax(jqXHR.status);
         });
-    });
-  }
-  
-  function asociarPersonaEmpresaAjaxPromesa(dniPersona){
-    return new Promise(function(resolve, reject) {
-      var token = getCookie('tokenUsuario');
-  
-      var select = $('#modalSeleccionEmpresa #formularioAccionesSelectEmpresa #contenidoFormSelectEmpresa #formularioGenericoModal3 #select').val();
-  
-      var quitarEmpresa = $("input[name=quitarEmpresa]:checked").val();
-  
-      if(quitarEmpresa == "si"){
-        var empresa = null;
-      }else{
-        var empresa = {
-          idEmpresa : select,
-          cifEmpresa : "",
-          nombreEmpresa : "",
-          direccionEmpresa : "",
-          telefonoEmpresa : ""
-        }
-      }
-  
-      var persona = {
-        dniP : dniPersona,
-        nombreP : "",
-        apellidosP : "",
-        fechaNacP : "",
-        direccionP : "",
-        telefonoP : "",
-        emailP : ""
-      }
-  
-  
-      var data = {
-        usuario : getCookie('usuario'),
-        persona : persona,
-        empresa : empresa
-      }
-      
-      $.ajax({
-        method: "POST",
-        url: urlPeticionAjaxAsociarPersonaEmpresa,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
-        headers: {'Authorization': token},
-        }).done(res => {
-          if (res.code != 'PERSONA_ASOCIADA_EMPRESA') {
-            reject(res);
-          }
-          resolve(res);
-        }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-    });
-  }
-  /** Función que asocia a una persona con una empresa **/
-  async function asociarPersonaEmpresa(dniPersona){
-    await asociarPersonaEmpresaAjaxPromesa(dniPersona)
-    .then((res) => {
-      $("#modalSeleccionEmpresa").modal('toggle');
-      setLang(getCookie('lang'));
-      location.reload();
-      
-  
-    }).catch((res) => {
-        $("#modalSeleccionEmpresa").modal('toggle');
-  
-        respuestaAjaxKO(res.code);
-  
-        let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-          "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-        let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
-      
-        resetearFormulario("formularioGenerico", idElementoList);
-        limpiaRadioButton(idElementosRadioButtons);
-        
-        setLang(getCookie('lang'));
-  
-        document.getElementById("modal").style.display = "block";
     });
   }
   
@@ -1012,32 +779,16 @@
         $('#datosUser').removeClass('active');
       }
   
-      if($('#datosEmp').hasClass('active')){
-        $('#datosEmp').removeClass('active');
-      }
-  
       if($('#datosUser').hasClass('show')){
         $('#datosUser').removeClass('show');
       }
-  
-      if($('#datosEmp').hasClass('show')){
-        $('#datosEmp').removeClass('show');
-      }
-  
+
       if($('#datosUsuario').hasClass('active')){
         $('#datosUsuario').removeClass('active');
       }
-  
-      if($('#datosEmpresa').hasClass('active')){
-        $('#datosEmpresa').removeClass('active');
-      }
-  
+
       if($('#datosUsuario').hasClass('show')){
         $('#datosUsuario').removeClass('show');
-      }
-  
-      if($('#datosEmpresa').hasClass('show')){
-        $('#datosEmpresa').removeClass('show');
       }
   
       $('#datosPer').addClass('active');
@@ -1057,10 +808,7 @@
       'return comprobarUser(\'usuario\', \'errorFormatoUserRegistro\', \'loginUsuario\');',
       'return comprobarPass(\'passwdUsuario1\', \'errorFormatoPassRegistro\', \'passwdUsuarioRegistro\');',
       'return comprobarPassRepetida(\'passwdUsuario2\', \'errorFormatoPassRegistro2\', \'passwdUsuarioRegistro\');',
-      'return comprobarCIF(\'cifEmpresa\', \'errorFormatoCifEmpresa\', \'cifEmpresaRegistro\')',
-      'return comprobarNombreEmpresa(\'nombreEmpresa\', \'errorFormatoNombreEmpresa\', \'nombreEmpresaRegistro\')',
-      'return comprobarDireccion(\'direccionEmpresa\', \'errorFormatoDireccionEmpresa\', \'direccionEmpresaRegistro\')',
-      'return comprobarTelefono(\'telefono\', \'errorFormatoTelefonoEmpresa\', \'telefonoEmpresaRegistro\')');
+      );
     cambiarIcono('images/add.png', 'ICONO_ADD', 'iconoAddPersona', 'Añadir');
   
     $('#subtitulo').attr('hidden', true);
@@ -1074,20 +822,18 @@
     $('#labelLoginUsuario').attr('hidden', true);
     $('#labelPassUsuario').attr('hidden', true);
     $('#labelPassUsuarioRepe').attr('hidden', true);
-    $('#labelCifEmpresa').attr('hidden', true);
-    $('#labelNombreEmpresa').attr('hidden', true);
-    $('#labelDireccionEmpresa').attr('hidden', true);
-    $('#labelTelefonoEmpresa').attr('hidden', true);
+    $('#labelRolUsuario').attr('hidden', true);
+    $('#labelActivo').attr('hidden', true);
+    $('#esActivo').attr('hidden', true);
     $('#datosUser').attr('hidden', false);
     $('#rolUser').attr('hidden', true);
-    $('#datosEmp').attr('hidden', false);
-    $('#asociarEmpresa').attr('hidden', false);
-    $('#quitarEmpresaId1').attr('hidden', true);
-  
+    $('#passwdUsuario1').attr('hidden', false);
+    $('#passwdUsuario2').attr('hidden', false);
+    
     let campos = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
     let obligatorios = ["obligatorioDNI", "obligatorioNombre", "obligatorioApellidos", "obligatorioFechaNac", 
-    "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2", "obligatorioCifEmpresa", "obligatorioNombreEmpresa", "obligatorioDireccionEmpresa", "obligatorioTelefonoEmp"];
+    "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2"];
     let formatos = ["formatoDNI", "formatoEmail", "formatoTelf"];
     eliminarReadonly(campos);
     mostrarObligatorios(obligatorios);
@@ -1098,38 +844,22 @@
   }
   
   /** Funcion para editar una persona **/
-  function showEditar(dniP, nombreP, apellidosP,fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa, idEmpresa) {
+  function showEditar(dniP, nombreP, apellidosP,fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo) {
   
       if($('#datosUser').hasClass('active')){
         $('#datosUser').removeClass('active');
       }
-  
-      if($('#datosEmp').hasClass('active')){
-        $('#datosEmp').removeClass('active');
-      }
-  
+
       if($('#datosUser').hasClass('show')){
         $('#datosUser').removeClass('show');
-      }
-  
-      if($('#datosEmp').hasClass('show')){
-        $('#datosEmp').removeClass('show');
       }
   
       if($('#datosUsuario').hasClass('active')){
         $('#d#datosUsuario').removeClass('active');
       }
   
-      if($('#datosEmpresa').hasClass('active')){
-        $('#datosEmpresa').removeClass('active');
-      }
-  
       if($('#datosUsuario').hasClass('show')){
         $('#datosUsuario').removeClass('show');
-      }
-  
-      if($('#datosEmpresa').hasClass('show')){
-        $('#datosEmpresa').removeClass('show');
       }
   
       $('#datosPer').addClass('active');
@@ -1144,11 +874,7 @@
       'return comprobarFechaNacimiento(\'fechaNacP\', \'errorFormatoFecha\', \'fechaPersonaRegistro\');',
       'return comprobarDireccion(\'direccionP\', \'errorFormatoDireccion\', \'direccionPersonaRegistro\');',
       'return comprobarTelefono(\'telefonoP\', \'errorFormatoTelefono\', \'telefonoPersonaRegistro\');',
-      'return comprobarEmail(\'emailP\', \'errorFormatoEmail\', \'emailPersonaRegistro\');',
-      'return comprobarCIF(\'cifEmpresa\', \'errorFormatoCifEmpresa\', \'cifEmpresaRegistro\')',
-      'return comprobarNombreEmpresa(\'nombreEmpresa\', \'errorFormatoNombreEmpresa\', \'nombreEmpresaRegistro\')',
-      'return comprobarDireccion(\'direccionEmpresa\', \'errorFormatoDireccionEmpresa\', \'direccionEmpresaRegistro\')',
-      'return comprobarTelefono(\'telefono\', \'errorFormatoTelefonoEmpresa\', \'telefonoEmpresaRegistro\')');
+      'return comprobarEmail(\'emailP\', \'errorFormatoEmail\', \'emailPersonaRegistro\');');
       cambiarIcono('images/edit.png', 'ICONO_EDIT', 'iconoEditarPersona', 'Editar');
       
       $('#subtitulo').attr('hidden', true);
@@ -1168,28 +894,14 @@
       $('#rolUser').attr('hidden', true);
       $('#datosUser').attr('hidden', true);
       $('#rolUser').attr('hidden', true);
-      $('#asociarEmpresa').attr('hidden', true);
-      $('#selectEmpresasDisponibles').attr('hidden', true);
-      $('#empresasDisponibles').attr('hidden', true);
-      $('#empresasDisponibles').attr('disabled', false);
-      $('#quitarEmpresaId1').attr('hidden', false);
       
-      if(getCookie('rolUsuario') == "usuario" || getCookie('rolUsuario') == 'gestor'){
-        $('#datosEmp').attr('hidden', true);
-      }else{
-         $('#datosEmp').attr('hidden', false);
-      }
-  
-      rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa);
-      
-      if(idEmpresa != ''){
-        insertacampo(document.formularioGenerico,'idEmpresa', idEmpresa);
-      }
+      rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo);
+    
   
       let campos = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
+        "usuario", "passwdUsuario1", "passwdUsuario2"];
       let obligatorios = ["obligatorioDNI", "obligatorioNombre", "obligatorioApellidos", "obligatorioFechaNac", 
-        "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2", "obligatorioCifEmpresa", "obligatorioNombreEmpresa", "obligatorioDireccionEmpresa", "obligatorioTelefonoEmp"];
+        "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2"];
       let formatos = ["formatoDNI", "formatoEmail", "formatoTelf"];
   
       eliminarReadonly(campos);
@@ -1203,38 +915,22 @@
   }
   
   /** Función para eliminar una persona **/
-  function showEliminar(dniP, nombreP, apellidosP,fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa) {
+  function showEliminar(dniP, nombreP, apellidosP,fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo) {
   
        if($('#datosUser').hasClass('active')){
         $('#datosUser').removeClass('active');
       }
-  
-      if($('#datosEmp').hasClass('active')){
-        $('#datosEmp').removeClass('active');
-      }
-  
+
       if($('#datosUser').hasClass('show')){
         $('#datosUser').removeClass('show');
       }
-  
-      if($('#datosEmp').hasClass('show')){
-        $('#datosEmp').removeClass('show');
-      }
-  
+
       if($('#datosUsuario').hasClass('active')){
         $('#d#datosUsuario').removeClass('active');
       }
   
-      if($('#datosEmpresa').hasClass('active')){
-        $('#datosEmpresa').removeClass('active');
-      }
-  
       if($('#datosUsuario').hasClass('show')){
         $('#datosUsuario').removeClass('show');
-      }
-  
-      if($('#datosEmpresa').hasClass('show')){
-        $('#datosEmpresa').removeClass('show');
       }
   
       $('#datosPer').addClass('active');
@@ -1258,32 +954,22 @@
       $('#labelPassUsuarioRepe').attr('hidden', true);
       $('#passwdUsuario1').attr('hidden', true);
       $('#passwdUsuario2').attr('hidden', true);
-      $('#labelCifEmpresa').attr('hidden', false);
-      $('#labelNombreEmpresa').attr('hidden', false);
-      $('#labelDireccionEmpresa').attr('hidden', false);
-      $('#labelTelefonoEmpresa').attr('hidden', false);
       $('#labelRolUsuario').attr('hidden', false);
       $('#labelActivo').attr('hidden', false);
       $('#esActivo').attr('hidden', false);
       $('#rolUser').attr('hidden', false);
       $('#datosUser').attr('hidden', false);
       $('#rolUser').attr('hidden', false);
-      $('#datosEmp').attr('hidden', false);
       $('#datosPersonales').attr('hidden', false);
-      $('#selectEmpresas').attr('hidden', true);
-      $('#asociarEmpresa').attr('hidden', true);
-      $('#selectEmpresasDisponibles').attr('hidden', true);
-      $('#formRegistroEmpresa').attr('hidden', false);
-      $('#quitarEmpresaId1').attr('hidden', true);
   
-     rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa);
+     rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo);
       
   
       let campos = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "rolUser", "esActivo", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
+        "usuario", "passwdUsuario1", "passwdUsuario2", "rolUser", "esActivo"];
       let obligatorios = ["obligatorioDNI", "obligatorioNombre", "obligatorioApellidos", "obligatorioFechaNac", 
-        "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2", "obligatorioCifEmpresa", "obligatorioNombreEmpresa", "obligatorioDireccionEmpresa", "obligatorioTelefonoEmp"];
-      let formatos = ["formatoDNI", "formatoEmail", "formatoTelf", "formatoCIF", "formatoTelfEmpresa"];
+        "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2"];
+      let formatos = ["formatoDNI", "formatoEmail", "formatoTelf"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
       deshabilitaCampos(campos);
@@ -1294,38 +980,21 @@
   }
   
   /** Funcion para visualizar una persona **/
-  function showDetalle(dniP, nombreP, apellidosP,fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa) {
+  function showDetalle(dniP, nombreP, apellidosP,fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo) {
   
       if($('#datosUser').hasClass('active')){
         $('#datosUser').removeClass('active');
       }
-  
-      if($('#datosEmp').hasClass('active')){
-        $('#datosEmp').removeClass('active');
-      }
-  
       if($('#datosUser').hasClass('show')){
         $('#datosUser').removeClass('show');
       }
-  
-      if($('#datosEmp').hasClass('show')){
-        $('#datosEmp').removeClass('show');
-      }
-  
+
       if($('#datosUsuario').hasClass('active')){
         $('#d#datosUsuario').removeClass('active');
       }
   
-      if($('#datosEmpresa').hasClass('active')){
-        $('#datosEmpresa').removeClass('active');
-      }
-  
       if($('#datosUsuario').hasClass('show')){
         $('#datosUsuario').removeClass('show');
-      }
-  
-      if($('#datosEmpresa').hasClass('show')){
-        $('#datosEmpresa').removeClass('show');
       }
   
       $('#datosPer').addClass('active');
@@ -1349,30 +1018,20 @@
       $('#labelPassUsuarioRepe').attr('hidden', true);
       $('#passwdUsuario1').attr('hidden', true);
       $('#passwdUsuario2').attr('hidden', true);
-      $('#labelCifEmpresa').attr('hidden', false);
-      $('#labelNombreEmpresa').attr('hidden', false);
-      $('#labelDireccionEmpresa').attr('hidden', false);
-      $('#labelTelefonoEmpresa').attr('hidden', false);
       $('#labelRolUsuario').attr('hidden', false);
       $('#labelActivo').attr('hidden', false);
       $('#esActivo').attr('hidden', false);
       $('#rolUser').attr('hidden', false);
       $('#datosUser').attr('hidden', false);
       $('#rolUser').attr('hidden', false);
-      $('#selectEmpresas').attr('hidden', true);
-      $('#datosPersonales').addClass('show');
-      $('#asociarEmpresa').attr('hidden', true);
-      $('#selectEmpresasDisponibles').attr('hidden', true);
-      $('#formRegistroEmpresa').attr('hidden', false);
-      $('#quitarEmpresaId1').attr('hidden', true);
-  
-      rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa);
+
+      rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo);
   
       let campos = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", 
-        "usuario", "passwdUsuario1", "passwdUsuario2", "rolUser", "esActivo", "cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
+        "usuario", "passwdUsuario1", "passwdUsuario2", "rolUser", "esActivo"];
       let obligatorios = ["obligatorioDNI", "obligatorioNombre", "obligatorioApellidos", "obligatorioFechaNac", 
-        "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2", "obligatorioCifEmpresa", "obligatorioNombreEmpresa", "obligatorioDireccionEmpresa", "obligatorioTelefonoEmp"];
-      let formatos = ["formatoDNI", "formatoEmail", "formatoTelf", "formatoCIF", "formatoTelfEmpresa"];
+        "obligatorioDireccion", "obligatorioTelefono", "obligatorioEmail", "obligatorioUsuario", "obligatorioPass1", "obligatorioPass2"];
+      let formatos = ["formatoDNI", "formatoEmail", "formatoTelf"];
   
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
@@ -1389,34 +1048,19 @@
       if($('#datosUser').hasClass('active')){
         $('#datosUser').removeClass('active');
       }
-  
-      if($('#datosEmp').hasClass('active')){
-        $('#datosEmp').removeClass('active');
-      }
-  
+
       if($('#datosUser').hasClass('show')){
         $('#datosUser').removeClass('show');
       }
-  
-      if($('#datosEmp').hasClass('show')){
-        $('#datosEmp').removeClass('show');
-      }
-  
+
       if($('#datosUsuario').hasClass('active')){
         $('#d#datosUsuario').removeClass('active');
-      }
-  
-      if($('#datosEmpresa').hasClass('active')){
-        $('#datosEmpresa').removeClass('active');
       }
   
       if($('#datosUsuario').hasClass('show')){
         $('#datosUsuario').removeClass('show');
       }
-  
-      if($('#datosEmpresa').hasClass('show')){
-        $('#datosEmpresa').removeClass('show');
-      }
+
   
       $('#datosPer').addClass('active');
       $('#datosPer').addClass('show');
@@ -1445,7 +1089,6 @@
       $('#labelPassUsuario').attr('hidden', true);
       $('#labelPassUsuarioRepe').attr('hidden', true);
       $('#datosUser').attr('hidden', true);
-      $('#datosEmp').attr('hidden', true);
   
     let campos = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP"];
       let obligatorios = ["obligatorioDNI", "obligatorioNombre", "obligatorioApellidos", "obligatorioFechaNac", 
@@ -1462,7 +1105,7 @@
   async function cargarPermisosFuncPersona(){
     await cargarPermisosFuncPersonaAjaxPromesa()
     .then((res) => {
-      gestionarPermisosPersona(res.data);
+      gestionarPermisosPersona(res.resource);
       setLang(getCookie('lang'));
       }).catch((res) => {
         respuestaAjaxKO(res.code);
@@ -1475,58 +1118,13 @@
   async function cargarPermisosFuncEmpresaPersona(){
     await cargarPermisosFuncEmpresaPersonaAjaxPromesa()
     .then((res) => {
-      gestionarPermisosEmpresaPersona(res.data);
+      gestionarPermisosEmpresaPersona(res.resource);
       setLang(getCookie('lang'));
       }).catch((res) => {
         respuestaAjaxKO(res.code);
         setLang(getCookie('lang'));
         document.getElementById("modal").style.display = "block";
     });
-  }
-  
-  async function cargarEmpresasSelect(selector){
-    await cargarEmpresasAjaxPromesa()
-    .then((res) => {
-  
-      limpiaSelect($('#' + selector));
-      
-      var lista = res.data;
-  
-     for(var i = 0; i<lista.length; i++){
-        if(lista[i].borradoEmpresa == 0){
-          var option = document.createElement("option");
-          option.setAttribute("value", lista[i].idEmpresa);
-          option.setAttribute("label", lista[i].nombreEmpresa);
-  
-          $('#' + selector).append(option);
-        }
-        
-      }
-      $('#' + selector).attr('hidden', false);
-      setLang(getCookie('lang'));
-  
-      }).catch((res) => {
-        respuestaAjaxKO(res.code);
-        setLang(getCookie('lang'));
-        document.getElementById("modal").style.display = "block";
-    });
-  }
-  function showAsociarEmpresaPersona(dniPersona){
-  
-      $('#tituloFormsModal3').addClass('SELECT_EMPRESA');
-      $('#formularioGenericoModal3').attr('action', 'javascript:asociarPersonaEmpresa(' + "'" + dniPersona + "'" + ');');
-      $('#iconoAccionesSelectEmpresas').attr('src', 'images/edit.png');
-      $("#iconoAcciones").removeClass();
-      $('#iconoAccionesSelectEmpresas').addClass('ICONO_EDIT');
-      $('#iconoAccionesSelectEmpresas').addClass('iconoEditarPersona');
-      $('#iconoAccionesSelectEmpresas').attr('alt', 'Editar');
-      $('#spanAccionesSelectEmpresa').removeClass();
-      $('#spanAccionesSelectEmpresa').addClass('tooltiptext');
-      $('#spanAccionesSelectEmpresa').addClass('ICONO_EDIT');
-      $('#btnAccionesSelectEmpresas').attr('value', 'Editar');
-  
-     
-      setLang(getCookie('lang'));
   }
   
   /** Función para recuperar los permisos de un usuario sobre la funcionalidad **/
@@ -1536,42 +1134,22 @@
       var token = getCookie('tokenUsuario');
       
       var usuario = nombreUsuario;
+     
+      var data = {
+        controlador : 'GestionACL',
+        action: 'searchAccionesPorFuncionalidadUsuario',
+        usuario : usuario,
+        nombre_funcionalidad : 'Gestión de personas'
+      }
     
       $.ajax({
-        method: "GET",
+        method: "POST",
         url: urlPeticionAjaxAccionesUsuario,
-        contentType : "application/json",
-        data: { usuario : usuario, funcionalidad : 'Gestión de personas'},  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'ACCIONES_USUARIO_OK') {
-            reject(res);
-          }
-          resolve(res);
-      }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-    });
-  }
-  
-  /** Función para recuperar los permisos de un usuario sobre la funcionalidad **/
-  function cargarPermisosFuncEmpresaPersonaAjaxPromesa(){
-    return new Promise(function(resolve, reject) {
-      var nombreUsuario = getCookie('usuario');
-      var token = getCookie('tokenUsuario');
-      
-      var usuario = nombreUsuario;
-    
-      $.ajax({
-        method: "GET",
-        url: urlPeticionAjaxAccionesUsuario,
-        contentType : "application/json",
-        data: { usuario : usuario, funcionalidad : 'Gestión de empresas'},  
-        dataType : 'json',
-        headers: {'Authorization': token},
-        }).done(res => {
-          if (res.code != 'ACCIONES_USUARIO_OK') {
+          if (res.code != 'BUSQUEDA_ACL_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -1584,7 +1162,7 @@
   /** Función para gestionar los iconos dependiendo de los permisos de los usuarios **/
   function gestionarPermisosPersona(idElementoList) {
     idElementoList.forEach( function (idElemento) {
-      switch(idElemento){
+      switch(idElemento.nombre_accion){
         case "Añadir":
           $('#btnAddPersona').attr('src', 'images/add3.png');
           $('#btnAddPersona').css("cursor", "pointer");
@@ -1635,24 +1213,8 @@
     setLang(getCookie('lang'));
   }
   
-  
-  /** Función para gestionar los iconos dependiendo de los permisos de los usuarios **/
-  function gestionarPermisosEmpresaPersona(idElementoList) {
-    idElementoList.forEach( function (idElemento) {
-      switch(idElemento){
-        case "Modificar" : 
-          $('.editarPermisoEmpresa').attr('src', 'images/edit3.png');
-          $('.editarPermisoEmpresa').css("cursor", "pointer");
-          $('.editarPermisoEmpresa').attr("data-toggle", "modal");
-          $('.editarPermisoEmpresa').attr("data-target", "#modalSeleccionEmpresa");
-        break;
-      } 
-      }); 
-    setLang(getCookie('lang'));
-  }
-  
   /**Función que rellenado los datos del formulario*/
-  function rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo, cifEmpresa, nombreEmpresa, direccionEmpresa, telefonoEmpresa) {
+  function rellenarFormulario(dniP, nombreP, apellidosP, fechaNacP, direccionP, telefonoP, emailP, borradoP, usuario, rol, activo) {
   
       $("#dniP").val(dniP);
       $("#nombreP").val(nombreP);
@@ -1673,37 +1235,13 @@
         $('#esActivo').val('No');
       }
   
-      if(cifEmpresa == ""){
-        $('#cifEmpresa').val('-');
-      }else{
-         $('#cifEmpresa').val(cifEmpresa);
-      }
-  
-      if(nombreEmpresa == ""){
-        $('#nombreEmpresa').val('-');
-      }else{
-         $('#nombreEmpresa').val(nombreEmpresa);
-      }
-  
-      if(direccionEmpresa == ""){
-        $('#direccionEmpresa').val('-');
-      }else{
-         $('#direccionEmpresa').val(direccionEmpresa);
-      }
-  
-      if(telefonoEmpresa == ""){
-        $('#telefonoEmpresa').val('-');
-      }else{
-         $('#telefonoEmpresa').val(telefonoEmpresa);
-      }
-  
       setLang(getCookie('lang'));
   
   }
   
   /**Función para cambiar onBlur de los campos*/
   function cambiarOnBlurCampos(onBlurDNI, onBlurNombrePersona, onBlurApellidosPersona, onBlurFechaNacimiento, onBlurDireccion, 
-                                onBlurTelefono, onBlurEmail, onBlurUser, onBlurPass, onBlurPassRepetida, onBlurCifEmpresa, onBlurNombreEmpresa, onBlurDireccionEmpresa, onBlurTelefonoEmpresa) {
+                                onBlurTelefono, onBlurEmail, onBlurUser, onBlurPass, onBlurPassRepetida) {
       
       if (onBlurDNI != ''){
           $("#dniP").attr('onblur', onBlurDNI);
@@ -1745,53 +1283,30 @@
           $("#passwdUsuario2").attr('onblur', onBlurPassRepetida);
       }
   
-      if(onBlurCifEmpresa!= ''){
-          $("#cifEmpresa").attr('onblur', onBlurCifEmpresa);
-      }
-  
-      if(onBlurNombreEmpresa!= ''){
-          $("#nombreEmpresa").attr('onblur', onBlurNombreEmpresa);
-      }
-  
-      if(onBlurDireccionEmpresa!= ''){
-          $("#direccionEmpresa").attr('onblur', onBlurDireccionEmpresa);
-      }
-  
-      if(onBlurTelefonoEmpresa!= ''){
-          $("#telefonoEmpresa").attr('onblur', onBlurTelefonoEmpresa);
-      }
-  
       setLang(getCookie('lang'));
   }
   
   function cargaDatosPersona(datos){
-     var fechaNacimiento = new Date(datos[0].fechaNacP);
+     var fechaNacimiento = new Date(datos[0].persona.fecha_nac_persona);
   
-     if(datos[0].empresa != null){
-      var atributosFunciones = ["'" + datos[0].dniP + "'", "'" + datos[0].nombreP + "'", "'" + datos[0].apellidosP + "'", "'" + convertirFecha(fechaNacimiento.toString()) + "'",
-            "'" + datos[0].direccionP + "'", "'" + datos[0].telefonoP + "'", "'" + datos[0].emailP + "'", 
-            "'" + datos[0].borradoP + "'", "'" + datos[0].usuario.usuario + "'", "'" + datos[0].usuario.rol.rolName + "'", "'" + datos[0].usuario.borradoUsuario + "'",
-            "'" + datos[0].empresa.cifEmpresa + "'", "'" + datos[0].empresa.nombreEmpresa + "'", "'" + datos[0].empresa.direccionEmpresa + "'", "'" + datos[0].empresa.telefonoEmpresa + "'"]; 
-    }else{
-  
-      var atributosFunciones = ["'" + datos[0].dniP + "'", "'" + datos[0].nombreP + "'", "'" + datos[0].apellidosP + "'", "'" + convertirFecha(fechaNacimiento.toString()) + "'",
-            "'" + datos[0].direccionP + "'", "'" + datos[0].telefonoP + "'", "'" + datos[0].emailP + "'", 
-            "'" + datos[0].borradoP + "'", "'" + datos[0].usuario.usuario + "'", "'" + datos[0].usuario.rol.rolName + "'", "'" + datos[0].usuario.borradoUsuario + "'"]; 
-    }
+    var atributosFunciones = ["'" + datos[0].persona.dni_persona + "'", "'" + datos[0].persona.nombre_persona + "'", "'" + datos[0].persona.apellidos_persona + "'", "'" + convertirFecha(fechaNacimiento.toString()) + "'",
+            "'" + datos[0].persona.direccion_persona + "'", "'" + datos[0].persona.telefono_persona + "'", "'" + datos[0].persona.email_persona + "'", 
+            "'" + datos[0].persona.borrado_persona + "'", "'" + datos[0].usuario.usuario + "'", "'" + datos[0].rol.nombre_rol + "'", "'" + datos[0].usuario.borrado_usuario + "'"]; 
+    
       
     $('#cardPersona').html('');
   
-       var fecha = new Date(datos[0].fechaNacP);
+       var fecha = new Date(datos[0].persona.fecha_nac_persona);
   
        var cardPersona = '<img class="card-img-top" src="images/users.png" alt="Card image" style="width:100%">' + 
                                '<div class="card-body">' + 
                                    '<div class="nombreApellidosInfo">' + 
                                        '<img class="nombreApellidosImg" src="images/users.png" alt="nombreApellidos">' + 
-                                           '<h4 class="card-title nombreApellidos">' + datos[0].nombreP + " " + datos[0].apellidosP + '</h4>' +
+                                           '<h4 class="card-title nombreApellidos">' + datos[0].persona.nombre_persona + " " + datos[0].persona.apellidos_persona + '</h4>' +
                                    '</div>' + 
                                    '<div class="dniPInfo">' +
                                        '<img class="dniPImg" src="images/dni.png" alt="dniP">' + 
-                                       '<p class="card-text dniP">' +  datos[0].dniP + '</p>' + 
+                                       '<p class="card-text dniP">' +  datos[0].persona.dni_persona + '</p>' + 
                                    '</div>' + 
                                    '<div class="fechaNacimientoInfo">' + 
                                        '<img class="fechaNacimientoImg" src="images/cumpleanhos.png" alt="fechaNacimiento">' + 
@@ -1799,15 +1314,15 @@
                                    '</div>' + 
                                    '<div class="direccionInfo">' + 
                                        '<img class="direccionImg" src="images/direccion.png" alt="direccion">' + 
-                                       '<p class="card-text direccion">' + datos[0].direccionP + '</p>' + 
+                                       '<p class="card-text direccion">' + datos[0].persona.direccion_persona + '</p>' + 
                                    '</div>' + 
                                    '<div class="telefonoInfo">' + 
                                        '<img class="telefonoImg" src="images/telefono.png" alt="telefono">' + 
-                                       '<p class="card-text telefono">' + datos[0].telefonoP + '</p>' + 
+                                       '<p class="card-text telefono">' + datos[0].persona.telefono_persona + '</p>' + 
                                    '</div>' +
                                    '<div class="emailInfo">' + 
                                        '<img class="emailImg" src="images/email.png" alt="email">' + 
-                                       '<p class="card-text email">' + datos[0].emailP + '</p>' + 
+                                       '<p class="card-text email">' + datos[0].persona.email_persona + '</p>' + 
                                    '</div>' + 
                                    '<div class="tooltip">' + 
                                        '<img class="editarCard editarPermiso" src="images/edit.png" data-toggle="" data-target="" onclick="showEditar(' + atributosFunciones + 
@@ -1831,7 +1346,7 @@
                                    '</div>' + 
                                    '<div class="dniInfo">' + 
                                        '<img class="dniImg" src="images/dni.png" alt="dni">' + 
-                                       '<p class="card-text dni">' + datos[0].usuario.dniUsuario + '</p>' + 
+                                       '<p class="card-text dni">' + datos[0].usuario.dni_usuario + '</p>' + 
                                    '</div>' +
                                    '<div class="passInfo">' + 
                                        '<img class="passImg" src="images/pass.png" alt="pass">' + 
@@ -1839,7 +1354,7 @@
                                    '</div>' + 
                                    '<div class="rolInfo">' + 
                                        '<img class="rolImg" src="images/rol.png" alt="rol">'  +
-                                       '<p class="card-text rol">' + datos[0].usuario.rol.rolName + '</p>' +
+                                       '<p class="card-text rol">' + datos[0].rol.nombre_rol + '</p>' +
                                    '<div>' + 
                                '<div>';
   
@@ -1848,113 +1363,27 @@
        setLang(getCookie('lang'));
   }
   
-  function cargaDatosEmpresa(datos){
-  
-      if(datos[0].empresa == null){
-        var nombreEmpresa = " - ";
-        var cifEmpresa = " - ";
-        var direccionEmpresa = " - ";
-        var telefonoEmpresa = " - ";
-      }else{
-        var nombreEmpresa = datos[0].empresa.nombreEmpresa;
-        var cifEmpresa = datos[0].empresa.cifEmpresa;
-        var direccionEmpresa = datos[0].empresa.direccionEmpresa;
-        var telefonoEmpresa = datos[0].empresa.telefonoEmpresa;
-      }
-  
-       $('#cardEmpresa').html('');
-  
-       var cardEmpresa = '<img class="card-img-top" src="images/empresa2.png" alt="Card image">' + 
-                               '<div class="card-body">' + 
-                                   '<div class="nombreEInfo">' + 
-                                       '<img class="nombreEImg" src="images/empresa2.png" alt="nombreE">' + 
-                                       '<h4 class="card-title nombreE">' + nombreEmpresa + '</h4>' + 
-                                   '</div>' + 
-                                   '<div class="cifInfo">' + 
-                                       '<img class="cifImg" src="images/cif.png" alt="cif">' + 
-                                       '<p class="card-text cif">' + cifEmpresa + '</p>' + 
-                                   '</div>' + 
-                                   '<div class="direccionEInfo">' + 
-                                       '<img class="direccionEImg" src="images/direccion.png" alt="direccionE">' + 
-                                       '<p class="card-text direccionE">' + direccionEmpresa + '</p>' + 
-                                   '</div>' +
-                                   '<div class="telefonoEInfo">' +
-                                       '<img class="telefonoEImg" src="images/telefono.png" alt="telefonoE">' + 
-                                       '<p class="card-text telefonoE">' + telefonoEmpresa + '</p>' +
-                                   '</div>' + 
-                                   '<div class="tooltip">' + 
-                                       '<img class="editarCard editarPermisoEmpresa" src="images/edit.png" data-toggle="" data-target="" onclick="showAsociarEmpresaPersona(' + "'" +  datos[0].dniP + "'" + ')" alt="Editar"/>' + 
-                                       '<span class="tooltiptext iconEditUser ICONO_EDIT">Editar</span>' + 
-                                   '</div>' + 
-                               '</div>';
-  
-  
-      $('#cardEmpresa').append(cardEmpresa);
-      setLang(getCookie('lang'));
-  
-  }
-  
-  function cargarEmpresasAjaxPromesa(){
-    return new Promise(function(resolve, reject) {
-  
-      $.ajax({
-        method: "GET",
-        url: urlPeticionAjaxListadoEmpresas,
-        contentType: "application/json",
-      }).done(res => {
-        if (res.code != 'EMPRESAS_LISTADAS') {
-          reject(res);
-        }
-        resolve(res);
-      }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-  
-    });
-  }
-  
-  
   $(document).ready(function() {
     $("#form-modal").on('hidden.bs.modal', function() {
   
       let idElementoErrorList = ["errorFormatoDni", "errorFormatoNombrePersona", "errorFormatoApellidosP", "errorFormatoFecha", "errorFormatoDireccion", "errorFormatoTelefono",
-        "errorFormatoEmail", "errorFormatoUserRegistro", "errorFormatoPassRegistro", "errorFormatoPassRegistro2", "errorFormatoCifEmpresa", "errorFormatoNombreEmpresa", "errorFormatoDireccionEmpresa", "errorFormatoTelefonoEmpresa",
-        "bloqueoMayusculasRegistro"];
+        "errorFormatoEmail", "errorFormatoUserRegistro", "errorFormatoPassRegistro", "errorFormatoPassRegistro2","bloqueoMayusculasRegistro"];
       
-      let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", "usuario", "passwdUsuario1", "passwdUsuario2", "cifEmpresa",
-        "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-  
-      let idElementosRadioButtons = ["asociarEmpresaSi", "asociarEmpresaNo", "seleccionarEmpresaSi", "seleccionarEmpresaNo"];
+      let idElementoList = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "telefonoP", "emailP", "usuario", "passwdUsuario1", "passwdUsuario2"];
   
       let iconos = ["iconoTabDatosPersonales", "iconoTabDatosUsuario"];
   
       limpiarFormulario(idElementoList);
-      limpiaRadioButton(idElementosRadioButtons);
-      $('#formRegistroEmpresa').prop("hidden", true);
-      $('#selectEmpresas').prop('hidden', true);
+     
       $('#error').removeClass();
       $("#error").html('');
       $("#error").css("display", "none");
       
       $('#iconoTabDatosPersonales').attr('hidden',true);
       $('#iconoTabDatosUsuario').attr('hidden',true);
-      $('#iconoTabDatosEmpresa').attr('hidden',true);
   
       eliminarMensajesValidacionError(idElementoErrorList, idElementoList);
       ocultarIconoErroresTabs(iconos);
-      setLang(getCookie('lang'));
-     
-    });
-  
-    $("#modalSeleccionEmpresa").on('hidden.bs.modal', function() {
-  
-      let idElementosRadioButtons = ["quitarEmpresaSi", "quitarEmpresaNo"];
-  
-      limpiaRadioButton(idElementosRadioButtons);
-      
-      $('#labelSelectEmpresa').attr('hidden',true);
-      $('#select').attr('hidden',true);
-  
       setLang(getCookie('lang'));
      
     });

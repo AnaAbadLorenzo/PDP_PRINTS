@@ -367,39 +367,6 @@ function comprobarTokenUsuario(funcionalidad){
 				document.getElementById("accordion").style.display = "block";
 				document.getElementById("volver").style.display = "block";
 			break;
-			case 'plan':
-				if (rol !== 'admin' && rol !== 'gestor'){
-					document.getElementById("cabecera").style.display = "block";
-					document.getElementById("tablaDatos").style.display = "none";
-					document.getElementById("volver").style.display = "block";
-				} else {
-					document.getElementById("cabecera").style.display = "block";
-					document.getElementById("tablaDatos").style.display = "block";
-					document.getElementById("volver").style.display = "block";
-				}
-			break;
-			case 'procedimiento':
-				if (rol !== 'admin' && rol !== 'gestor'){
-					document.getElementById("cabecera").style.display = "block";
-					document.getElementById("tablaDatos").style.display = "none";
-					document.getElementById("volver").style.display = "block";
-				} else {
-					document.getElementById("cabecera").style.display = "block";
-					document.getElementById("tablaDatos").style.display = "block";
-					document.getElementById("volver").style.display = "block";
-				}
-			break;
-			case 'proceso':
-				if (rol !== 'admin' && rol !== 'gestor'){
-					document.getElementById("cabecera").style.display = "block";
-					document.getElementById("tablaDatos").style.display = "none";
-					document.getElementById("volver").style.display = "block";
-				} else {
-					document.getElementById("cabecera").style.display = "block";
-					document.getElementById("tablaDatos").style.display = "block";
-					document.getElementById("volver").style.display = "block";
-				}
-			break;
 			case 'procedimientosejecutados':
 			break;
 		}
@@ -497,38 +464,16 @@ function construyeFila(entidad, fila) {
         break;
 
         case 'PERSONA':
-        	if(fila.empresa == null){
-        		var filaEmpresaCif = "";
-        		var filaEmpresaNombre = "";
-        		var filaEmpresaDireccion = "";
-        		var filaEmpresaTelefono = "";
-        		var filaEmpresa = "";
-        		var filaIdEmpresa = "";
-        	}else{
-        		var filaEmpresaCif = fila.empresa.cifEmpresa;
-        		var filaEmpresaNombre = fila.empresa.nombreEmpresa;
-        		var filaEmpresaDireccion = fila.empresa.direccionEmpresa;
-        		var filaEmpresaTelefono = fila.empresa.telefonoEmpresa;
-        		var filaIdEmpresa = fila.empresa.idEmpresa;
-        	}
-
-        	var fechaNacimiento = new Date(fila.fechaNacP);
-        	atributosFunciones = ["'" + fila.dniP + "'", "'" + fila.nombreP + "'", "'" + fila.apellidosP + "'", "'" + convertirFecha(fechaNacimiento.toString()) + "'"
-        	, "'" + fila.direccionP + "'", "'" + fila.telefonoP + "'", "'" + fila.emailP + "'", "'" + fila.borradoP + "'",
-        	"'" + fila.usuario.usuario + "'", "'" + fila.usuario.rol.rolName + "'", "'" + fila.usuario.borradoUsuario + "'", "'" + filaEmpresaCif + "'", "'" + filaEmpresaNombre + "'", "'" + filaEmpresaDireccion + "'"
-        	, "'" + filaEmpresaTelefono + "'", "'" + filaIdEmpresa + "'"];
+        	var fechaNacimiento = new Date(fila.persona.fecha_nac_persona);
+        	atributosFunciones = ["'" + fila.persona.dni_persona + "'", "'" + fila.persona.nombre_persona + "'", "'" + fila.persona.apellidos_persona + "'", "'" + convertirFecha(fechaNacimiento.toString()) + "'"
+        	, "'" + fila.persona.direccion_persona + "'", "'" + fila.persona.telefono_persona + "'", "'" + fila.persona.email_persona + "'", "'" + fila.persona.borrado_persona + "'",
+        	"'" + fila.usuario.usuario + "'", "'" + fila.rol.nombre_rol + "'", "'" + fila.usuario.borrado_usuario + "'"];
 			
-        	if(filaEmpresaNombre == ""){
-        		var filaEmpresaNombreTabla = " - ";
-        	}else{
-        		var filaEmpresaNombreTabla = fila.empresa.nombreEmpresa;
-        	}
-			filaTabla = '<tr class="impar"> <td>' + fila.dniP + 
-                '</td> <td>' + fila.nombreP + 
-                '</td> <td>' + fila.apellidosP  + 
-                '</td> <td>' + fila.emailP + 
-                '</td> <td>' + fila.usuario.usuario + 
-                '</td> <td>' + filaEmpresaNombreTabla;
+			filaTabla = '<tr class="impar"> <td>' + fila.persona.dni_persona + 
+                '</td> <td>' + fila.persona.nombre_persona + 
+                '</td> <td>' + fila.persona.apellidos_persona  + 
+                '</td> <td>' + fila.persona.email_persona + 
+                '</td> <td>' + fila.usuario.usuario;
         break;
 
         case 'NOTICIA':
@@ -840,32 +785,18 @@ function construyeFilaEliminados(entidad, fila) {
         break;
 
         case 'PERSONA':
-        	if(fila.empresa == null){
-        		var filaEmpresaCif = " - ";
-        		var filaEmpresaNombre = " - ";
-        		var filaEmpresaDireccion = " - ";
-        		var filaEmpresaTelefono = " - ";
-        		var filaEmpresa = " - ";
-        	}else{
-        		var filaEmpresaCif = fila.empresa.cifEmpresa;
-        		var filaEmpresaNombre = fila.empresa.nombreEmpresa;
-        		var filaEmpresaDireccion = fila.empresa.direccionEmpresa;
-        		var filaEmpresaTelefono = fila.empresa.telefonoEmpresa;
-        	}
 
-        	var fechaNacimiento = new Date(fila.fechaNacP);
-        	atributosFunciones = ["'" + fila.dniP + "'", "'" + fila.nombreP + "'", "'" + fila.apellidosP + "'", "'" + convertirFecha(fechaNacimiento.toString())
-        	, "'" + fila.direccionP + "'", "'" + fila.telefonoP + "'", "'" + fila.emailP + "'", "'" + fila.borradoP + "'",
-        	"'" + fila.usuario.usuario + "'", "'" + fila.usuario.rol.rolName + "'", "'" + fila.usuario.borradoUsuario + "'", "'" + filaEmpresaCif + "'", "'" + filaEmpresaNombre + "'", "'" + filaEmpresaDireccion + "'"
-        	, "'" + filaEmpresaTelefono + "'"];
+        	var fechaNacimiento = new Date(fila.persona.fecha_nac_persona);
+        	atributosFunciones = ["'" + fila.persona.dni_persona + "'", "'" + fila.persona_nombre_persona + "'", "'" + fila.persona.apellidos_persona + "'", "'" + convertirFecha(fechaNacimiento.toString())
+        	, "'" + fila.persona.direccion_persona + "'", "'" + fila.persona.telefono_persona + "'", "'" + fila.persona.email_persona + "'", "'" + fila.persona.borrado_persona + "'",
+        	"'" + fila.usuario.usuario + "'", "'" + fila.rol.nombre_rol + "'", "'" + fila.usuario.borrado_usuario + "'"];
 			
 
-			filaTabla = '<tr class="impar"> <td>' + fila.dniP + 
-                '</td> <td>' + fila.nombreP + 
-                '</td> <td>' + fila.apellidosP  + 
-                '</td> <td>' + fila.emailP + 
-                '</td> <td>' + fila.usuario.usuario + 
-                '</td> <td>' + filaEmpresaNombre;
+			filaTabla = '<tr class="impar"> <td>' + fila.persona.dni_persona + 
+                '</td> <td>' + fila.persona.nombre_persona + 
+                '</td> <td>' + fila.persona.apellidos_persona  + 
+                '</td> <td>' + fila.persona.email_persona + 
+                '</td> <td>' + fila.usuario.usuario;
         break;
 
         case 'EMPRESA':
@@ -1137,7 +1068,7 @@ function cargarHref(dato){
 		break;
 
 		case 'Gestión de procedimientos' :
-			if (rol !== 'admin' && rol !== 'gestor'){
+			if (rol !== 'Administardor' && rol !== 'gestor'){
 				href = "MisProcedimientos.html";
 			} else {
 				href = "GestionDeProcedimientos.html";
@@ -1179,7 +1110,7 @@ function cargarClass(dato, rol){
 		break;
 
 		case 'Gestión de usuarios':
-			if (rol !== 'admin'){
+			if (rol !== 'Administrador'){
 				clase = "GESTION_USUARIOS_NO_ADMIN";
 			} else {
 				clase="GESTION_USUARIOS";
@@ -1187,7 +1118,7 @@ function cargarClass(dato, rol){
 		break;
 
 		case 'Gestión de personas':
-			if (rol !== 'admin'){
+			if (rol !== 'Administrador'){
 				clase = "GESTION_PERSONAS_NO_ADMIN";
 			} else {
 				clase="GESTION_PERSONAS";
@@ -1210,52 +1141,8 @@ function cargarClass(dato, rol){
 			clase = "GESTION_NOTICIAS";
 		break;
 
-		case 'Gestión de empresas':
-			if (rol !== 'admin'){
-				clase = "GESTION_EMPRESAS_NO_ADMIN";
-			} else {
-				clase = "GESTION_EMPRESAS";
-			}
-		break;
-
-		case 'Gestión de objetivos':
-			clase = "GESTION_OBJETIVOS";
-		break;
-
 		case 'Gestión de respuestas posibles':
 			clase = "GESTION_RESPUESTAS_POSIBLES";
-		break;
-
-		case 'Gestión de planes':
-			if (rol !== 'admin' && rol !== 'gestor'){
-				clase = "GESTION_PLANES_NO_ADMIN";
-			} else {
-				clase="GESTION_PLANES";
-			}
-		break;
-		
-		case 'Gestión de procedimientos':
-			if (rol !== 'admin' && rol !== 'gestor'){
-				clase = "GESTION_PROCEDIMIENTOS_NO_ADMIN";
-			} else {
-				clase="GESTION_PROCEDIMIENTOS";
-			}
-		break;
-
-		case 'Gestión de procesos':
-			if (rol !== 'admin' && rol !== 'gestor'){
-				clase = "GESTION_PROCESOS_NO_ADMIN";
-			} else {
-				clase="GESTION_PROCESOS";
-			}
-		break; 
-
-		case 'Gestión de procedimientos ejecutados' : 
-			clase = "GESTION_PROCEDIMIENTOS_EJECUTADOS";
-		break;
-
-		case 'Gestión de procesos ejecutados' : 
-			clase = "GESTION_PROCESOS_EJECUTADOS";
 		break;
 	}
 
@@ -1270,7 +1157,7 @@ function cambiarTituloGestion(funcionalidad){
 
 	switch(funcionalidad){
 		case 'empresa':
-			if (rol !== 'admin'){
+			if (rol !== 'Administrador'){
 				 $("#gestion").addClass("GESTION_EMPRESAS_NO_ADMIN");
 				 document.getElementById("gestion").style.left = "44.5%";
 			} else {
@@ -1278,7 +1165,7 @@ function cambiarTituloGestion(funcionalidad){
 			}
 		break;
 		case 'persona':
-			if (rol !== 'admin'){
+			if (rol !== 'Administrador'){
 				 $("#gestion").addClass("GESTION_PERSONAS_NO_ADMIN");
 				 document.getElementById("gestion").style.left = "40%";
 			} else {
@@ -1286,21 +1173,21 @@ function cambiarTituloGestion(funcionalidad){
 			}
 		break; 
 		case 'usuario':
-			if (rol !== 'admin'){
+			if (rol !== 'Administrador'){
 				$("#gestion").addClass("GESTION_USUARIOS_NO_ADMIN");
 			} else {
 				$("#gestion").addClass("GESTION_USUARIOS");
 			}
 		break;
 		case 'plan':
-			if (rol !== 'admin' && rol !== 'gestor'){
+			if (rol !== 'Administrador'){
 				$("#gestion").addClass("GESTION_PLANES_NO_ADMIN");
 			} else {
 				$("#gestion").addClass("GESTION_PLANES");
 			}
 		break;
 		case 'procedimiento':
-			if (rol !== 'admin' && rol !== 'gestor'){
+			if (rol !== 'Administrador'){
 				$("#gestion").removeClass();
 				$("#gestion").addClass("gestion GESTION_PROCEDIMIENTOS_DESDE_PLAN");
 			} else {
@@ -1309,7 +1196,7 @@ function cambiarTituloGestion(funcionalidad){
 			}
 		break;
 		case 'proceso':
-			if (rol !== 'admin' && rol !== 'gestor'){
+			if (rol !== 'Administrador'){
 				$("#gestion").addClass("GESTION_PROCESOS_NO_ADMIN");
 			} else {
 				$("#gestion").addClass("GESTION_PROCESOS");

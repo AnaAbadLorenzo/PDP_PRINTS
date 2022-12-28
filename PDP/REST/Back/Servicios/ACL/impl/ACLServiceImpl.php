@@ -285,12 +285,14 @@ class ACLServiceImpl extends ServiceBase implements ACLService {
                 }
             }
         }
+
         $accionesNoEliminadas = array();
 
         switch($datos['nombre_funcionalidad']){
             case 'Gestión de personas':
                 for($i=0; $i<sizeof($permisosFuncionalidad); $i++){
-                    if($permisosFuncionalidad[$i]['funcionalidad']['nombre_funcionalidad'] != 'Reactivar'){
+                    $action = $permisosFuncionalidad[$i]-> accion;
+                    if($action['nombre_accion'] != 'Reactivar'){
                         array_push($accionesNoEliminadas,$permisosFuncionalidad[$i]);
                     }
                 }

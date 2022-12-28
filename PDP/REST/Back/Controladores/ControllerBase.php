@@ -20,7 +20,6 @@ abstract class ControllerBase{
 	}
 
 	function getRespuesta($respuesta){
-		
 	    header('Content-type: application/json');
 		echo(json_encode($respuesta));
 

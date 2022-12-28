@@ -29,7 +29,7 @@ class UsuarioMapping extends MappingBase {
 
     function delete($datosEliminar) {
        
-        $this->query = "DELETE FROM `usuario` WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";
+        $this->query = "UPDATE FROM `usuario` SET `borrado_usuario`=1 WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
@@ -42,6 +42,7 @@ class UsuarioMapping extends MappingBase {
 
     function search() {
         $this->query = "SELECT * FROM `usuario` ";
+        $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
 
@@ -104,6 +105,12 @@ class UsuarioMapping extends MappingBase {
 
         return $respuesta;
 
+    }
+
+    function numberFindAll() {
+        $this->query = "SELECT COUNT(*) FROM `usuario` WHERE `borrado_usuario`= 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
     }
     
 }

@@ -9,6 +9,7 @@ interface GestionPersonasService {
     function delete($mensaje);
     function search($mensaje, $paginacion);
     function searchByParameters($mensaje, $paginacion);
+    function searchByUsuario();
 	
 }
 

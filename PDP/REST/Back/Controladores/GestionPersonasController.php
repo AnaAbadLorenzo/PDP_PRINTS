@@ -79,7 +79,7 @@ class GestionPersonasController extends ControllerBase{
     }
 	function searchDelete(){
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
-        $respuesta = $this->gestionPersonasService->searchDelete('BUSQUEDA_PERSONA_ELIMINADA_CORRECTO', $paginacion);
+        $respuesta = $this->gestionPersonasService->searchDelete('BUSQUEDA_PERSONA_CORRECTO', $paginacion);
 		$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
@@ -91,5 +91,11 @@ class GestionPersonasController extends ControllerBase{
 		$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
+
+	function searchByUsuario(){
+		$respuesta = $this->gestionPersonasService->searchByUsuario();
+		$this->rellenarRespuesta('BUSQUEDA_PERSONA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+	}
 }
 ?>

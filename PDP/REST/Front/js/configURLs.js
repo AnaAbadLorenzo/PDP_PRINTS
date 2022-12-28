@@ -51,3 +51,12 @@ var urlPeticionAjaxAddRol = urlComun;
 var urlPeticionAjaxEditRol = urlComun;
 var urlPeticionAjaxDeleteRol = urlComun;
 var urlPeticionAjaxReactivarRol = urlComun;
+
+/** Urls de persona */
+var urlPeticionAjaxListarPersonaPorUsuario = urlComun;
+var urlPeticionAjaxListarTodasPersonas = urlComun;
+var urlPeticionAjaxPersonaGuardar = urlComun;
+var urlPeticionAjaxEditPersona = urlComun;
+var urlPeticionAjaxDeletePersona = urlComun;
+var urlPeticionAjaxListarPersona = urlComun;
+var urlPeticionAjaxListarPersonasEliminadas = urlComun;

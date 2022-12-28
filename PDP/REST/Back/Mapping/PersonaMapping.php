@@ -84,7 +84,13 @@ class PersonaMapping extends MappingBase {
     }
 
     function search($paginacion) {
-        $this->query = "SELECT * FROM `persona` WHERE `borrado_persona`= 0 LIMIT" .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
+        $this->query = "SELECT * FROM `persona` WHERE `borrado_persona`= 0 LIMIT " .$paginacion->inicio. ",".$paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
+    function searchAll() {
+        $this->query = "SELECT * FROM `persona` WHERE `borrado_persona`= 0";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }

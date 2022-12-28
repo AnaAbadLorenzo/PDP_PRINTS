@@ -3,6 +3,7 @@
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/GestionUsuarios/impl/GestionUsuariosServiceImpl.php';
 include_once './Validation/Atributo/Controlador/UsuarioValidation.php';
+include_once './Servicios/Comun/Paginacion.php';
 
 class GestionUsuariosController extends ControllerBase{
 
@@ -69,10 +70,10 @@ class GestionUsuariosController extends ControllerBase{
 
     }
     function search(){
-
-        $respuesta = $this->gestionUsuariosService->search('BUSQUEDA_USUARIO_CORRECTO');
-			$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
-			$this->getRespuesta($respuesta);
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionUsuariosService->search('BUSQUEDA_USUARIO_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
     }
     function searchByParameters(){
 		$this->gestionUsuariosService->inicializarParametros('searchByParameters');
@@ -80,7 +81,7 @@ class GestionUsuariosController extends ControllerBase{
 		$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
-
+	
 	function reactivar() {
 
 		$this -> gestionUsuariosService -> inicializarParametros('reactivar');

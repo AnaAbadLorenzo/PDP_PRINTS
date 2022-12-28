@@ -28,7 +28,7 @@
   <script type="text/javascript" src="Locale/Lang_ES.js"></script>
   <script type="text/javascript" src="Locale/Lang_GA.js"></script>	
   <link rel="shortcut icon" type="image/png" href="images/iconoIndex2.png">
-  <title>Sustainable Development Society</title>
+   <title>Carboon Footprint</title>
 </head>
 <body onload="(async ()=>{
   comprobarTokenUsuario('persona');
@@ -37,7 +37,6 @@
   cambiarTituloGestion('persona');posicionarTitulo('persona');modalCambioPass();cargarIdioma();includeFooter();setLang('');
   await cargarPersonas(0, tamanhoPaginaPersona, 'PaginadorNo');
   await cargarPermisosFuncPersona();
-  await cargarPermisosFuncEmpresaPersona();
   ejecutaFuncion(function(){compruebaFuncionalidadesPermisos('PERSONA')},30000);
   })();">  
 	
@@ -49,11 +48,10 @@
 	<h1 id="gestion" class="gestion"></h1>
 
   <div id="personaInfoParaUsuario" class="personaInfoParaUsuario overflow-auto" hidden>
+      <br>
     	<div id = "cardPersona" class="card card-person"></div>
     	<br>
     	<div id="cardUsuario" class="card card-user"></div>
-      <br>
-      <div id="cardEmpresa" class="card card-enterprise"></div>
       <br>
   </div>
 
@@ -143,16 +141,6 @@
                             <span class="tooltiptext iconOrdenar ORDENAR"></span>
                       </div>
                 </th>
-
-                <th scope="col" class="NOMBRE_EMPRESA_COLUMN">
-                  <div class="NOMBRE_EMPRESA nombreEmpresaColumn"></div>
-                      <div name="btnOrdenar" value="Ordenar" onclick="sortTable(5, 'tablaPersonas')" 
-                        class="tooltip7 ordenarIconNombreEmpresaPersona">
-                            <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
-                            <span class="tooltiptext iconOrdenar ORDENAR"></span>
-                      </div>
-                </th>
-
                 
                 <th scope="col" class="colLast ACCIONES"></th>
               
@@ -201,10 +189,6 @@
                     <a id="datosUser"class="nav-link DATOS_USUARIO" data-toggle="tab" href="#datosUsuario"></a>
                     <img class="iconTab" id="iconoTabDatosUsuario" src="images/failed.png" hidden>
                   </li>
-                    <li class="nav-item">
-                    <a id ="datosEmp" class="nav-link DATOS_EMPRESA" data-toggle="tab" href="#datosEmpresa" onclick="obtenerEmpresas()"></a>
-                    <img class="iconTab" id="iconoTabDatosEmpresa" src="images/failed.png" hidden>
-                 </li> 
                 </ul>
                 <div class="tab-content">
                   <div id="datosPersonales" class="container tab-pane active overflow-auto"><br>
@@ -292,105 +276,6 @@
                     <input type="text" maxlength="2" size="2" placeholder="ACTIVO" name="ACTIVO" id="esActivo" class="ACTIVO" hidden></input>
 
                   </div>
-                  
-                  <div id="datosEmpresa" class="container tab-pane fade"><br>
-                    <div class="preguntasEmpresa" id="asociarEmpresa">
-                      <label class="ASOCIARTE_EMPRESA asociarteEmpresa"></label>
-                      <div class="obligatorio tooltip2" id="obligatorioPreg1Em">*
-                          <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                      </div>
-                      <div class="form-check-inline">
-                      <label class="form-check-label" for="radio3">
-                          <input type="radio" class="form-check-input" id="asociarEmpresaSi" name="asociarEmpresa" value="si">
-                          <label class="SI"></label>
-                      </label>
-                     </div>
-                    <div class="form-check-inline">
-                      <label class="form-check-label" for="radio4">
-                          <input type="radio" class="form-check-input NO" id="asociarEmpresaNo" name="asociarEmpresa" value="no">
-                          <label class="NO"></label>
-                      </label>
-                    </div>
-                   </div>
-
-                  <div class="preguntasEmpresa" id="selectEmpresas" hidden>
-                    <label class="SELECCIONAR_EMPRESA"></label>
-                    <div class="obligatorio tooltip2" id="obligatorioPreg2Em">*
-                        <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                    </div>
-                  <div class="form-check-inline">
-                    <label class="form-check-label" for="radio5">
-                      <input type="radio" class="form-check-input" id="seleccionarEmpresaSi" name="seleccionarEmpresa" value="si" >
-                      <label class="SI"></label>
-                    </label>
-                  </div>
-                  <div class="form-check-inline">
-                    <label class="form-check-label" for="radio6">
-                      <input type="radio" class="form-check-input" id="seleccionarEmpresaNo" name="seleccionarEmpresa" value="no">
-                      <label class="NO"></label>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="preguntasEmpresa" id="quitarEmpresaId1" hidden>
-                  <label class="QUITAR_EMPRESA quitarEmpresa"></label>
-                    <div class="obligatorio tooltip2" id="obligatorioPreg4Em">*
-                      <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                    </div>
-                    <div class="form-check-inline">
-                      <label class="form-check-label" for="radio5">
-                        <input type="radio" class="form-check-input " id="quitarEmpresaSi1" name="quitarEmpresa" value="si">
-                        <label class="SI"></label>
-                      </label>
-                    </div>
-                    <div class="form-check-inline">
-                      <label class="form-check-label" for="radio6">
-                        <input type="radio" class="form-check-input" id="quitarEmpresaNo2" name="quitarEmpresa" value="no">
-                        <label class="NO"></label>
-                      </label>
-                    </div>
-                </div>
-                <div class="preguntasEmpresa">
-                  <div id="selectEmpresasDisponibles" hidden>
-                    <label class="EMPRESAS_DISPONIBLES"></label>
-                    <div class="obligatorio tooltip2" id="obligatorioSelectEmpresas">*
-                        <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                    </div>
-                    <select class="form-control" id="empresasDisponibles" disabled></select>
-                  </div>
-                </div>
-
-                <div id="formRegistroEmpresa" hidden>
-                    <label class="labelForm CIF" id="labelCifEmpresa" hidden></label>
-                    <input type="text" name="cif" placeholder="CIF" id="cifEmpresa" class="cif CIF" maxlength="9" size="9" onblur="return comprobarCIF('cifEmpresa', 'errorFormatoCifEmpresa', 'cifEmpresaRegistro')">
-                    <div class="obligatorio tooltip2" id="obligatorioCifEmpresa">*
-                        <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                    </div>
-                      <small id = "formatoCIF" class="FORMATO_CIF"></small>
-                    <div style="display:none" id="errorFormatoCifEmpresa"></div>  
-
-                    <label class="labelForm NOMBRE_EMPRESA" id="labelNombreEmpresa" hidden></label>
-                    <input type="text" name="nombre" id="nombreEmpresa" placeholder="Nombre" class="NOMBRE_EMPRESA"  maxlength="48" size="48" onblur="return comprobarNombreEmpresa('nombreEmpresa', 'errorFormatoNombreEmpresa', 'nombreEmpresaRegistro')">
-                    <div class="obligatorio tooltip2" id="obligatorioNombreEmpresa">*
-                        <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                    </div>
-                    <div style="display:none" id="errorFormatoNombreEmpresa"></div>
-
-                    <label class="labelForm DIRECCION_EMPRESA" id="labelDireccionEmpresa" hidden></label>
-                    <input type="text" name="direccion" id="direccionEmpresa" placeholder="Direccion" class="DIRECCION_EMPRESA" maxlength="128" size="128" onblur="return comprobarDireccion('direccionEmpresa', 'errorFormatoDireccionEmpresa', 'direccionEmpresaRegistro');">
-                        <div class="obligatorio tooltip2" id="obligatorioDireccionEmpresa">*
-                           <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                        </div>
-                        <div style="display:none" id="errorFormatoDireccionEmpresa"></div>
-
-                    <label class="labelForm TELEFONO" id="labelTelefonoEmpresa" hidden></label>
-                    <input type="tel" name="telefonoEmpresa" id="telefonoEmpresa" placeholder="TELEFONO" class ="TELEFONO" maxlength="9" size="9" onblur="return comprobarTelefono('telefonoEmpresa', 'errorFormatoTelefonoEmpresa', 'telefonoEmpresaRegistro');">
-                          <div class="obligatorio tooltip2" id="obligatorioTelefonoEmp">*
-                            <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                        </div>
-                        <small id = "formatoTelfEmpresa" class="FORMATO_TELF"></small>
-                        <div style="display:none" id="errorFormatoTelefonoEmpresa"></div>
-                    </div>
                   </div>
                     <button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAcciones">
                       <img class="" src="" alt="" id="iconoAcciones" />
@@ -405,49 +290,7 @@
   </div>
 </div>
 
-  <div class="modal modal2 fade" id="modalSeleccionEmpresa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-      <div class="formmodal-container">
-        <div id="formularioAccionesSelectEmpresa">
-          <div id="contenidoFormSelectEmpresa">
-            <div class="formularioComun">
-              <h1 id="tituloFormsModal3" class="datos"></h1>
-              <form name="formularioSeleccionEmpresa" id="formularioGenericoModal3" action="" onsubmit="">
-                <div class="preguntasEmpresa" id="quitarEmpresaId">
-                  <label class="QUITAR_EMPRESA quitarEmpresa"></label>
-                    <div class="obligatorio tooltip2" id="obligatorioPreg4Em">*
-                      <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                    </div>
-                    <div class="form-check-inline">
-                      <label class="form-check-label" for="radio5">
-                        <input type="radio" class="form-check-input " id="quitarEmpresaSi" name="quitarEmpresa" value="si">
-                        <label class="SI"></label>
-                      </label>
-                    </div>
-                    <div class="form-check-inline">
-                      <label class="form-check-label" for="radio6">
-                        <input type="radio" class="form-check-input" id="quitarEmpresaNo" name="quitarEmpresa" value="no">
-                        <label class="NO"></label>
-                      </label>
-                    </div>
-                </div>
-                <label id="labelSelectEmpresa" class="EMPRESAS_DISPONIBLES labelForm" hidden></label>
-                <select class="form-control" id="select" hidden></select>
-                <button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAccionesSelectEmpresas">
-                  <img class="" src="" alt="" id="iconoAccionesSelectEmpresas" />
-                  <span class="tooltiptext" id="spanAccionesSelectEmpresa"></span>
-                </button>
-              </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-	<div id="volver" class="volver" style="display: none;">
+<div id="volver" class="volver" style="display: none;">
 		<div name="btnBack" value="Volver" onclick="javascript:volver()" class="tooltip6 backIcon">
         		<img class="iconoBack iconBack" src="images/home2.png" alt="Volver" />
         		<span class="tooltiptext iconBack ICONO_VOLVER">Menú</span>

@@ -12,12 +12,12 @@ class PersonaModel extends ModelBase{
     public $email_persona;
     public $telefono_persona;
     public $borrado_persona;
-	//public $clavesForaneas;
+	public $clavesForaneas;
 
 	function __construct(){
 		
 		$this->fillfields();
-		//$this->clavesForaneas = array('rol');
+		$this->clavesForaneas = array('usuario');
 	}
 
 	function fillfields(){
@@ -43,10 +43,9 @@ class PersonaModel extends ModelBase{
 	}
 
 	function getByDNI($tabla, $datosSearch){
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
-		//$datosSearch['foraneas'] = $this->clavesForaneas;
 		return $this->mapping->searchByDNI($datosSearch);
 	}
 
