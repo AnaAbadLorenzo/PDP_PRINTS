@@ -2,6 +2,7 @@
 
 include_once './Servicios/ServiceBase.php';
 include_once './Servicios/GestionUsuarios/GestionUsuariosService.php';
+include_once './Servicios/Comun/ReturnBusquedas.php';
 
 include_once "./Mapping/UsuarioMapping.php";
 include_once "./Mapping/RolMapping.php";
@@ -173,9 +174,11 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
     }
 
     function search($mensaje){
-        $usuario_mapping = new UsuarioMapping();
-        $usuario_mapping->search();
-        return $usuario_mapping->feedback['resource'];
+            $usuario_mapping = new UsuarioMapping();
+            $usuario_mapping->search($paginacion);
+            $returnBusquedas = new ReturnBusquedas($usuario_mapping->feedback['resource'], '',
+                        $this->numberFindAll()["COUNT(*)"],sizeof($usuario_mapping->feedback['resource']), $paginacion->inicio);
+            return $returnBusquedas;
     }
 
     function searchByParameters($mensaje){
@@ -204,7 +207,9 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
         $usuario_mapping = new UsuarioMapping();
         $usuario_mapping->searchByParameters($datosSearchParameters);
-        return $usuario_mapping->feedback['resource'];
+        $returnBusquedas = new ReturnBusquedas($usuario_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+                            sizeof($usuario_mapping->feedback['resource']), $paginacion->inicio);
+        return $returnBusquedas;
     }
 
     function reactivar() {

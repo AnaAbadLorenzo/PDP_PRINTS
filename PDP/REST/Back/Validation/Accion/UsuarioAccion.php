@@ -26,6 +26,13 @@ class UsuarioAccion extends ValidacionesBase {
 		return $this -> respuesta;
 	}
 
+    function comprobarDeleteUsuario($datosUsuario){
+        $this->respuesta = null;
+		$this -> noExisteUsuario($datosUsuario);
+		return $this -> respuesta;
+	}
+
+
     function existeUsuario($datosEditUsuario){
 		$datoBuscar = array();
 		$datoBuscar['dni_usuario'] = $datosEditUsuario['dni_usuario'];
