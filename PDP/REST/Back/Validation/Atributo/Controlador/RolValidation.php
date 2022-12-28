@@ -61,10 +61,7 @@ class RolValidation extends ValidacionesBase {
 
         $atributos_validacion = array('id_rol', 'nombre_rol', 'descripcion_rol');
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
-
-        header('Content-type: application/json');
-        echo(json_encode($atributos)); 
-        exit();
+        
         $rol_validation_formato -> validarAtributosSearch($atributos);
         $this -> respuesta_formato = $rol_validation_formato -> respuesta;
 

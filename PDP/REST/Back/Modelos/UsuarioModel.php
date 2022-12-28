@@ -49,7 +49,7 @@ class UsuarioModel extends ModelBase{
 			$datosSearch['foraneas'] = $this->clavesForaneas;
 		}
 
-		return $this->mapping->searchById($datosSearch);
+		return $this -> mapping -> searchById($datosSearch);
 	}
 
 	function getAllUsers($tabla) {

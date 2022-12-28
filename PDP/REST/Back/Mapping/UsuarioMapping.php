@@ -52,7 +52,7 @@ class UsuarioMapping extends MappingBase {
     }
 
     function searchById($datosSearch) {
-        $this->query = "SELECT * FROM `usuario` WHERE 'dni_usuario='".$datosSearch['dni_usuario']."'";
+        $this->query = "SELECT * FROM `usuario` WHERE `dni_usuario`='".$datosSearch['dni_usuario']."'";
         if(isset($datosSearch->foraneas)){
             $foraneas = $datosSearch->foraneas;
         }
@@ -65,6 +65,7 @@ class UsuarioMapping extends MappingBase {
                 array_push($respuesta['resource'], $result);
             }
         }
+        return $respuesta;
     }
 
     function searchByLogin($datosSearch) {
@@ -88,6 +89,21 @@ class UsuarioMapping extends MappingBase {
         }else{
             return $this->respuesta;
         }
+    }
+ 
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `usuario`
+            SET `borrado_usuario`=0
+            WHERE `dni_usuario`='" . $datos['dni_usuario'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
     }
     
 }

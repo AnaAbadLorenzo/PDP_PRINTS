@@ -56,6 +56,7 @@ class PersonaMapping extends MappingBase {
     }
 
     function searchByParameters($datosSearchParameters, $paginacion) {
+       
         $this->query = "SELECT * FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
                         LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
                         LOWER(`apellidos_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['apellidos_persona']."', '%')) AND
@@ -112,6 +113,21 @@ class PersonaMapping extends MappingBase {
             }else{
                 return $respuesta;
             }
+    }
+
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `persona`
+            SET `borrado_persona`=0
+            WHERE `dni_persona`='" . $datos['dni_persona'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
     }
    
 }

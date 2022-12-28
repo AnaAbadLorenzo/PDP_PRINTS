@@ -4,6 +4,7 @@
     include_once './Servicios/GestionCategorias/GestionCategoriasService.php';
     include_once './Mapping/CategoriaMapping.php';
     include_once './Mapping/UsuarioMapping.php';
+    include_once './Servicios/Comun/ReturnBusquedas.php';
 
 class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategoriasService {
 
@@ -186,29 +187,52 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
            
         }
 
-        function searchByParameters($mensaje){
+        function searchByParameters($mensaje, $paginacion){
 
             echo("llego");
-            /*
+          
             $respuesta = '';
             
-                $datosSearchParameters = array();
-                if($this->accion->nombre_accion===null){
-                    $datosSearchParameters['nombre_accion'] = '';
-                }else{
-                    $datosSearchParameters['nombre_accion'] = $this->accion->nombre_accion;
-                }
-                if($this->accion->descripcion_accion===null){
-                    $datosSearchParameters['descripcion_accion'] = '';
-                }else{
-                    $datosSearchParameters['descripcion_accion'] = $this->accion->descripcion_accion;
-                }
-                
-                //$datosSearchParameters['borrado_persona'] = 0;
-            $accion_mapping = new AccionMapping();
-            $accion_mapping->searchByParameters($datosSearchParameters);
-            return $this->accion_mapping->feedback['resource']; 
-             */
+            $datosSearchParameters = array();
+            if($this->categoria->nombre_categoria===null || $this->categoria->nombre_categoria === ""){
+                $datosSearchParameters['nombre_categoria'] = '';
+            }else{
+                $datosSearchParameters['nombre_categoria'] = $this->categoria->nombre_categoria;
+            }
+            if($this->categoria->descripcion_categoria===null){
+                $datosSearchParameters['descripcion_categoria'] = '';
+            }else{
+                $datosSearchParameters['descripcion_categoria'] = $this->categoria->descripcion_categoria;
+            }
+            if($this->categoria->dni_responsable===null){
+                $datosSearchParameters['dni_responsable'] = '';
+            }else{
+                $datosSearchParameters['dni_responsable'] = $this->categoria->dni_responsable;
+            }
+            if($this->categoria->id_padre_categoria===null){
+                $datosSearchParameters['id_padre_categoria'] = '';
+            }else{
+                $datosSearchParameters['id_padre_categoria'] = $this->categoria->id_padre_categoria;
+            }
+            if($this->categoria->dni_usuario===null){
+                $datosSearchParameters['dni_usuario'] = '';
+            }else{
+                $datosSearchParameters['dni_usuario'] = $this->categoria->dni_usuario;
+            }
+            
+            $datosSearchParameters['borrado_categoria'] = 0;
+        
+        $categoria_mapping= new CategoriaMapping();
+        $categoria_mapping->searchByParameters($datosSearchParameters, $paginacion);
+        $returnBusquedas = new ReturnBusquedas($categoria_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+                        sizeof($categoria_mapping->feedback['resource']), $paginacion->inicio);
+        return $returnBusquedas;
+        }
+
+        function numberFindParameters($datosSearchParameters){
+            $categoria_mapping = new CategoriaMapping();
+            $categoria_mapping->numberFindParameters($datosSearchParameters);
+            return $categoria_mapping->feedback['resource'];
         }
       
     }

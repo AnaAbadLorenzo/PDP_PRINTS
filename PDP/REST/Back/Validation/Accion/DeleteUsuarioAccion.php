@@ -20,6 +20,34 @@ class DeleteUsuarioAccion extends ValidacionesBase{
 
 	}
 
+	function comprobarReactivar($datos) {
+		$this -> existeUsuarioReactivar($datos);
+		$this -> estaBorradoAUno($datos); //aqui salta un warning si no existe el id a revisar
+	}
+
+	function estaBorradoAUno($datos) {
+		$resultado = $this -> usuario -> getByDNI('usuario', $datos)['resource'];
+
+		if ($resultado['borrado_usuario'] === 0) {
+			$this -> respuesta = 'USUARIO_YA_ESTABA_ACTIVADO';
+		} else {
+			return true;
+		}
+
+	}
+
+	function existeUsuarioReactivar($datos) {
+
+		$resultado = $this -> usuario -> getByDNI('usuario', $datos)['resource'];
+
+		if(!empty($resultado)) {
+			return true;
+		}else{
+			$this->respuesta = 'USUARIO_NO_EXISTE';
+		}
+
+	}
+
 function existeUsuario($datosDeleteUsuario){
 
 		$datoBuscar = array();

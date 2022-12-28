@@ -84,6 +84,7 @@ class GestionPersonasController extends ControllerBase{
 		$this->getRespuesta($respuesta);
     }
     function searchByParameters(){
+		
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$this->gestionPersonasService->inicializarParametros('searchByParameters');
 		$respuesta = $this->gestionPersonasService->searchByParameters('BUSQUEDA_PERSONA_CORRECTO', $paginacion);

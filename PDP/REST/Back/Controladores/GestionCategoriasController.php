@@ -4,6 +4,7 @@ include_once './Controladores/ControllerBase.php';
 include_once './Servicios/GestionCategorias/impl/GestionCategoriasServiceImpl.php';
 include_once './Validation/Atributo/Controlador/AddCategoriaValidation.php';
 include_once './Validation/Atributo/Controlador/RegistroValidation.php';
+include_once './Servicios/Comun/Paginacion.php';
 
 class GestionCategoriasController extends ControllerBase{
 
@@ -87,9 +88,10 @@ class GestionCategoriasController extends ControllerBase{
     }
 
     function searchByParameters(){
-        echo("entroooooo");
+   
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$this->gestionCategoriaService->inicializarParametros('searchByParameters');
-		$respuesta = $this->gestionCategoriaService->searchByParameters('BUSQUEDA_CATEGORIA_CORRECTO');
+		$respuesta = $this->gestionCategoriaService->searchByParameters('BUSQUEDA_CATEGORIA_CORRECTO', $paginacion);
 		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }

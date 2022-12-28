@@ -61,10 +61,7 @@ class NoticiaValidation extends ValidacionesBase {
 
         $atributos_validacion = array('id_noticia', 'titulo_noticia', 'contenido_noticia', 'fecha_noticia');
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
-
-        header('Content-type: application/json');
-        echo(json_encode($atributos));
-        exit();
+        
         $noticia_validation_formato -> validarAtributosSearch($atributos);
         $this -> respuesta_formato = $noticia_validation_formato -> respuesta;
 

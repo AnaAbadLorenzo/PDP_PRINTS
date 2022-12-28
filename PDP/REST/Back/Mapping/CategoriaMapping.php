@@ -65,35 +65,31 @@ class categoriaMapping extends MappingBase {
        p.borradoP=0"),
 	*/
     
-    /*
+    
     function searchByParameters($datosSearchParameters, $paginacion) {
-        $this->query = "SELECT * FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
-                        LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
-                        LOWER(`apellidos_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['apellidos_persona']."', '%')) AND
-                        LOWER(`fecha_nac_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_nac_persona']."', '%')) AND
-                        LOWER(`direccion_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['direccion_persona']."', '%')) AND
-                        LOWER(`email_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['email_persona']."', '%')) AND
-                        LOWER(`telefono_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['telefono_persona']."', '%')) AND
+        $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+                        LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
+                        LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%')) AND
+                        LOWER(`id_padre_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['id_padre_categoria']."', '%')) AND
+                        LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']."', '%')) AND
                         `borrado_persona` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
-*/
-/*
+
+
     function numberFindParameters($datosSearchParameters) {
-        $this->query = "SELECT COUNT(*) FROM `persona` WHERE LOWER(`dni_persona`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_persona']. "', '%')) AND
-                        LOWER(`nombre_persona`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['nombre_persona']."', '%')) AND
-                        LOWER(`apellidos_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['apellidos_persona']."', '%')) AND
-                        LOWER(`fecha_nac_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_nac_persona']."', '%')) AND
-                        LOWER(`direccion_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['direccion_persona']."', '%')) AND
-                        LOWER(`email_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['email_persona']."', '%')) AND
-                        LOWER(`telefono_persona`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['telefono_persona']."', '%')) AND
+        $this->query = "SELECT COUNT(*) FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+                        LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
+                        LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_responsable']."', '%')) AND
+                        LOWER(`id_padre_categoria`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_padre_categoria']."', '%')) AND
+                        LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_usuario']."', '%')) AND
                         `borrado_persona` = 0"; 
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
     }
-*/
+
 function search() {
     $this->query = "SELECT * FROM `categoria`";
     $this->stmt = $this->conexion->prepare($this->query);
