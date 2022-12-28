@@ -95,9 +95,13 @@ class FuncionalidadMapping extends MappingBase {
 
     function searchByName($datosSearch) {
         $this->query = "SELECT * FROM `funcionalidad` WHERE `nombre_funcionalidad`='".$datosSearch['nombre_funcionalidad']."'";
+
         $this->stmt = $this->conexion->prepare($this->query);
     
         $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
     }
  
     function reactivar($datos) {
