@@ -446,15 +446,15 @@ function construyeFila(entidad, fila) {
 
 	switch(entidad){
 		case 'ROL':
-			atributosFunciones = ["'" + fila.rolName + "'", "'" + fila.rolDescription + "'", "'" + fila.idRol + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.rolName + 
-                '</td> <td>' + fila.rolDescription;
+			atributosFunciones = ["'" + fila.nombre_rol + "'", "'" + fila.descripcion_rol + "'", "'" + fila.id_rol + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.nombre_rol + 
+                '</td> <td>' + fila.descripcion_rol;
         break;
 
         case 'FUNCIONALIDAD':
-			atributosFunciones = ["'" + fila.nombreFuncionalidad + "'", "'" + fila.descripFuncionalidad + "'", "'" + fila.idFuncionalidad + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreFuncionalidad + 
-                '</td> <td>' + fila.descripFuncionalidad;
+			atributosFunciones = ["'" + fila.nombre_funcionalidad + "'", "'" + fila.descripcion_funcionalidad + "'", "'" + fila.id_funcionalidad + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.nombre_funcionalidad + 
+                '</td> <td>' + fila.descripcion_funcionalidad;
         break;
 
         case 'ACCION':
@@ -807,15 +807,15 @@ function construyeFilaEliminados(entidad, fila) {
 
 	switch(entidad){
 		case 'ROL':
-			atributosFunciones = ["'" + fila.rolName + "'", "'" + fila.rolDescription + "'", "'" + fila.idRol + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.rolName + 
-                '</td> <td>' + fila.rolDescription;
+			atributosFunciones = ["'" + fila.nombre_rol + "'", "'" + fila.descripcion_rol + "'", "'" + fila.id_rol + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.nombre_rol + 
+                '</td> <td>' + fila.descripcion_rol;
         break;
 
         case 'FUNCIONALIDAD':
-			atributosFunciones = ["'" + fila.nombreFuncionalidad + "'", "'" + fila.descripFuncionalidad + "'", "'" + fila.idFuncionalidad + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreFuncionalidad + 
-                '</td> <td>' + fila.descripFuncionalidad;
+			atributosFunciones = ["'" + fila.nombre_funcionalidad + "'", "'" + fila.descripcion_funcionalidad + "'", "'" + fila.id_funcionalidad + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.nombre_funcionalidad + 
+                '</td> <td>' + fila.descripcion_funcionalidad;
         break;
 
         case 'ACCION':

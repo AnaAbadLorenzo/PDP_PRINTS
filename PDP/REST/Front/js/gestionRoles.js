@@ -5,7 +5,7 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   
       var data = {
         controlador : 'GestionRoles',
-        data : 'search',
+        action : 'search',
         inicio : calculaInicio(numeroPagina, tamanhoPaginaRol),
         tamanhoPagina : tamanhoPaginaRol,
       }
@@ -34,7 +34,7 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   
       var data = {
         controlador : 'GestionRoles',
-        data : 'searchDelete',
+        action : 'searchDelete',
         inicio : calculaInicio(numeroPagina, tamanhoPaginaRol),
         tamanhoPagina : tamanhoPaginaRol,
       }
@@ -116,17 +116,13 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   function anadirRolAjaxPromesa(){
     return new Promise(function(resolve, reject) {
         var token = getCookie('tokenUsuario');
-  
-        var rol = {
-        nombre_rol : $('#nombreRol').val(),
-        descripcion_rol : $('#descripcionRol').val(),
-        borrado_rol : 0
-        }
       
       var data = {
         controlador : 'GestionRoles',
         action: 'add',
-        rol : rol
+        nombre_rol : $('#nombreRol').val(),
+        descripcion_rol : $('#descripcionRol').val(),
+        borrado_rol : 0
       }
   
         $.ajax({
@@ -150,18 +146,14 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   function editarRolAjaxPromesa(){
     return new Promise(function(resolve, reject) {
         var token = getCookie('tokenUsuario');
-  
-        var rol = {
-            id_rol : $("input[name=idRol]").val(),
-            nombre_rol : $('#nombreRol').val(),
-            descripcion_rol : $('#descripcionRol').val(),
-            borrado_rol : 0
-        }
-      
+
       var data = {
         controlador : 'GestionRoles',
         action : 'edit',
-        rol : rol
+        id_rol : $("input[name=idRol]").val(),
+        nombre_rol : $('#nombreRol').val(),
+        descripcion_rol : $('#descripcionRol').val(),
+        borrado_rol : 0
       }
   
         $.ajax({
@@ -185,18 +177,14 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   function eliminarRolAjaxPromesa(){
     return new Promise(function(resolve, reject) {
         var token = getCookie('tokenUsuario');
-  
-        var rol = {
+
+        var data = {
+            controlador : 'GestionRoles',
+            action : 'delete',
             id_rol : $("input[name=idRol]").val(),
             nombre_rol : $('#nombreRol').val(),
             descripcion_rol : $('#descripcionRol').val(),
             borradoRol : 1
-        }
-      
-      var data = {
-        controlador : 'GestionRoles',
-        action : 'delete',
-        rol : rol
       }
   
         $.ajax({
@@ -206,7 +194,7 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
         data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'ROL_ELIMINADO') {
+          if (res.code != 'DELETE_ROL_COMPLETO') {
             reject(res);
           }
           resolve(res);
@@ -251,28 +239,24 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   function reactivarRolesAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
-      
-      var rol = {
+    
+      var data = {
+        controlador:'GestionRoles',
+        action: 'reactivar',
         id_rol : $("input[name=idRol]").val(),
         nombre_rol : $('#nombreRol').val(),
         descripcion_rol : $('#descripcionRol').val(),
         borrado_rol : 0
       }
   
-      var data = {
-        
-        rol: rol
-      }
-  
         $.ajax({
         method: "POST",
         url: urlPeticionAjaxReactivarRol,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'ROL_REACTIVADO') {
+          if (res.code != 'REACTIVAR_ROL_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -286,28 +270,28 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   async function cargarRoles(numeroPagina, tamanhoPagina, paginadorCreado){
       await cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina)
         .then((res) => {
-            var numResults = res.data.numResultados + '';
-            var totalResults = res.data.tamanhoTotal + '';
-          var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
-          inicio = 0;
-        }else{
-          inicio = parseInt(res.data.inicio)+1;
-        }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+            var numResults = res.resource.numResultados + '';
+            var totalResults = res.resource.tamanhoTotal + '';
+            var inicio = 0;
+            if(res.resource.listaBusquedas.length == 0){
+                inicio = 0;
+            }else{
+                inicio = parseInt(res.resource.inicio)+1;
+            }
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
         
         document.getElementById('cabecera').style.display="block";
         document.getElementById('cabeceraEliminados').style.display="none";
   
-             $("#datosRol").html("");
-             $("#checkboxColumnas").html("");
-             $("#paginacion").html("");
-              for (var i = 0; i < res.data.listaBusquedas.length; i++){
-                  var tr = construyeFila('ROL', res.data.listaBusquedas[i]);
-                  $("#datosRol").append(tr);
-              }
+        $("#datosRol").html("");
+        $("#checkboxColumnas").html("");
+        $("#paginacion").html("");
+        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('ROL', res.resource.listaBusquedas[i]);
+            $("#datosRol").append(tr);
+        }
           
-          var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
+        var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
@@ -337,36 +321,37 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
       await cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina)
       .then((res) => {
         cargarPermisosFuncRol();
-        setCookie('nombreRol', '');
-        setCookie('descripcionRol', '');
-            var numResults = res.data.numResultados + '';
-            var totalResults = res.data.tamanhoTotal + '';
-            var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        setCookie('nombre_rol', '');
+        setCookie('descripcion_rol', '');
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
+        var inicio = 0;
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
         document.getElementById('cabecera').style.display="block";
         document.getElementById('cabeceraEliminados').style.display="none";
   
-             $("#datosRol").html("");
-             $("#checkboxColumnas").html("");
-             $("#paginacion").html("");
-              for (var i = 0; i < res.data.listaBusquedas.length; i++){
-                  var tr = construyeFila('ROL', res.data.listaBusquedas[i]);
-                  $("#datosRol").append(tr);
-              }
+        $("#datosRol").html("");
+        $("#checkboxColumnas").html("");
+        $("#paginacion").html("");
+        
+        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('ROL', res.resource.listaBusquedas[i]);
+            $("#datosRol").append(tr);
+        }
           
-          var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
+        var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
   
-        setCookie('rolName', '');
-        setCookie('rolDescription', '');
+        setCookie('nombre_rol', '');
+        setCookie('descripcion_rol', '');
   
         paginador(totalResults, 'cargarRoles', 'ROL');
   
@@ -402,32 +387,35 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
         if($('#form-modal').is(':visible')) {
            $("#form-modal").modal('toggle');
         };
-        guardarParametrosBusqueda(res.data.datosBusqueda);
-            var numResults = res.data.numResultados + '';
-            var totalResults = res.data.tamanhoTotal + '';
-            var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        var datosBusquedas = [];
+        datosBusquedas.push('nombre_rol: ' + res.resource.datosBusquedas['nombre_rol']);
+        datosBusquedas.push('descripcion_rol: ' + res.resource.datosBusquedas['descripcion_rol']);
+        guardarParametrosBusqueda(datosBusquedas);
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
+        var inicio = 0;
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
         }
   
-             $("#datosRol").html("");
-             $("#checkboxColumnas").html("");
-             $("#paginacion").html("");
-              for (var i = 0; i < res.data.listaBusquedas.length; i++){
-                  var tr = construyeFila('ROL', res.data.listaBusquedas[i]);
-                  $("#datosRol").append(tr);
-              }
+        $("#datosRol").html("");
+        $("#checkboxColumnas").html("");
+        $("#paginacion").html("");
+        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('ROL', res.resource.listaBusquedas[i]);
+            $("#datosRol").append(tr);
+        }
           
-          var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
+        var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
@@ -463,19 +451,19 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   async function addRol(){
       await anadirRolAjaxPromesa()
       .then((res) => {
-          $("#form-modal").modal('toggle');
+        $("#form-modal").modal('toggle');
   
-      respuestaAjaxOK("ROL_GUARDADO_OK", res.code);
+        respuestaAjaxOK("ROL_GUARDADO_OK", res.code);
   
-      let idElementoList = ["nombreRol", "descripcionRol"];
-      resetearFormulario("formularioGenerico", idElementoList);
-      setLang(getCookie('lang'));
-      document.getElementById("modal").style.display = "block";
+        let idElementoList = ["nombreRol", "descripcionRol"];
+        resetearFormulario("formularioGenerico", idElementoList);
+        setLang(getCookie('lang'));
+        document.getElementById("modal").style.display = "block";
       
-      $('#nombreRol').val(getCookie('rolName'));
-      $('#descripcionRol').val(getCookie('rolDescription'));
-      buscarRol(getCookie('numeroPagina'), tamanhoPaginaRol, 'buscarPaginacion', 'PaginadorNo');
-      setLang(getCookie('lang'));
+        $('#nombreRol').val(getCookie('rolName'));
+        $('#descripcionRol').val(getCookie('rolDescription'));
+        buscarRol(getCookie('numeroPagina'), tamanhoPaginaRol, 'buscarPaginacion', 'PaginadorNo');
+        setLang(getCookie('lang'));
   
     }).catch((res) => {
           $("#form-modal").modal('toggle');
@@ -590,19 +578,19 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
     await buscarEliminadosAjaxPromesa(numeroPagina, tamanhoPagina)
     .then((res) => {
         cargarPermisosFuncRol();
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
           $('#itemPaginacion').attr('hidden', true);
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
           $('#itemPaginacion').attr('hidden', false);
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
             document.getElementById('cabecera').style.display="none";
             document.getElementById('cabeceraEliminados').style.display="block";
         }
@@ -611,14 +599,14 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
         $("#datosRol").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFilaEliminados('ROL', res.data.listaBusquedas[i]);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFilaEliminados('ROL', res.resource.listaBusquedas[i]);
             $("#datosRol").append(tr);
           }
   
-          if(res.data.listaBusquedas.length == 0){
-            $('.cabecera').attr('hidden', true);
-            $('.cabeceraEliminados').attr('hidden', false);
+          if(res.resource.listaBusquedas.length == 0){
+            document.getElementById('cabecera').style.display= "none";
+            document.getElementById('cabeceraEliminados').style.display= "block";
           }
         
         var div = createHideShowColumnsWindow({ROL_DESCRIPTION_COLUMN:2});
@@ -626,8 +614,8 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
   
-        setCookie('rolName', '');
-        setCookie('rolDescription', '');
+        setCookie('nombre_rol', '');
+        setCookie('descripcion_rol', '');
   
         if(paginadorCreado != 'PaginadorCreado'){
           paginador(totalResults, 'buscarEliminadosRol', 'ROL');
@@ -677,7 +665,7 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   async function cargarPermisosFuncRol(){
     await cargarPermisosFuncRolAjaxPromesa()
     .then((res) => {
-      gestionarPermisosRol(res.data);
+      gestionarPermisosRol(res.resource);
       setLang(getCookie('lang'));
       
       }).catch((res) => {
@@ -872,20 +860,25 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
       var token = getCookie('tokenUsuario');
       
       var usuario = nombreUsuario;
+      var data = {
+        controlador : 'GestionACL',
+        action: 'searchAccionesPorFuncionalidadUsuario',
+        usuario : usuario,
+        nombre_funcionalidad : 'Gestión de roles'
+      }
     
       $.ajax({
-        method: "GET",
+        method: "POST",
         url: urlPeticionAjaxAccionesUsuario,
-        contentType : "application/json",
-        data: { usuario : usuario, funcionalidad : 'Gestión de roles'},  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'ACCIONES_USUARIO_OK') {
+          if (res.code != 'BUSQUEDA_ACL_CORRECTO') {
             reject(res);
           }
           resolve(res);
-      }).fail( function( jqXHR, textStatus, errorThrown ) {
+      }).fail( function( jqXHR ) {
           errorFailAjax(jqXHR.status);
         });
     });
@@ -894,7 +887,7 @@ function cargarRolesAjaxPromesa(numeroPagina, tamanhoPagina){
   /** Función para gestionar los iconos dependiendo de los permisos de los usuarios **/
   function gestionarPermisosRol(idElementoList) {
     idElementoList.forEach( function (idElemento) {
-      switch(idElemento){
+      switch(idElemento.nombre_accion){
         case "Añadir":
           $('#btnAddRol').attr('src', 'images/add3.png');
           $('#btnAddRol').css("cursor", "pointer");

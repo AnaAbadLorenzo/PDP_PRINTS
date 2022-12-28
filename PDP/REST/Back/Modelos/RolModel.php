@@ -31,14 +31,14 @@ class RolModel extends ModelBase {
 	}
 
 	function getById($tabla, $datosSearch) {
-        include_once './Mapping/' . $tabla . 'Mapping.php';
+        include_once './Mapping/' . ucfirst($tabla) . 'Mapping.php';
         $map = $tabla . 'Mapping';
         $this -> mapping = new $map();
 		return $this -> mapping -> searchById($datosSearch);
 	}
 
 	function getByName($tabla, $datosSearch) {
-        include_once './Mapping/' . $tabla . 'Mapping.php';
+        include_once './Mapping/' . ucfirst($tabla) . 'Mapping.php';
         $map = $tabla . 'Mapping';
         $this -> mapping = new $map();
 		$datosSearch['foraneas'] = $this -> clavesForaneas;

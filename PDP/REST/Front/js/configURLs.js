@@ -35,6 +35,13 @@ var urlPeticionAjaxReactivarAccion = urlComun;
 
 /** Urls de funcionalidades */
 var urlPeticionAjaxListadoFuncionalidadesSinP = urlComun;
+var urlPeticionAjaxAddFuncionalidad = urlComun;
+var urlPeticionAjaxListarFuncionalidad = urlComun;
+var urlPeticionAjaxEditFuncionalidad = urlComun;
+var urlPeticionAjaxDeleteFuncionalidad = urlComun;
+var urlPeticionAjaxListadoFuncionalidades = urlComun;
+var urlPeticionAjaxListadoFuncionalidadesEliminadas = urlComun;
+var urlPeticionAjaxReactivarFuncionalidad = urlComun;
 
 /** Urls de roles */
 var urlPeticionAjaxListadoRoles = urlComun;
@@ -43,3 +50,4 @@ var urlPeticionAjaxListarRol = urlComun;
 var urlPeticionAjaxAddRol = urlComun;
 var urlPeticionAjaxEditRol = urlComun;
 var urlPeticionAjaxDeleteRol = urlComun;
+var urlPeticionAjaxReactivarRol = urlComun;

@@ -59,7 +59,7 @@ class RolAtributos extends ValidacionesFormato {
 		$this -> respuesta = '';
 		if ($atributo === null || $this -> Es_Vacio($atributo) === true) {
 			$this -> respuesta = 'NOMBRE_ROL_VACIO';
-		} else if (sizeof($atributo) > 50) {
+		} else if (strlen($atributo) > 50) {
 			$this -> respuesta = 'NOMBRE_ROL_DEMASIADO_LARGO';
 		} else if (!ctype_alnum($atributo)) {
 			$this -> respuesta = 'NOMBRE_ROL_CARACTERES_INCORRECTOS';
@@ -68,7 +68,7 @@ class RolAtributos extends ValidacionesFormato {
 
 	function validarNombreRolSearch($atributo) {
 		$this -> respuesta = '';
-		if (sizeof($atributo) > 50) {
+		if (strlen($atributo) > 50) {
 			$this -> respuesta = 'NOMBRE_ROL_DEMASIADO_LARGO';
 		} else if (!ctype_alnum($atributo)) {
 			$this -> respuesta = 'NOMBRE_ROL_CARACTERES_INCORRECTOS';
@@ -84,7 +84,7 @@ class RolAtributos extends ValidacionesFormato {
 
 	function validarDescripcionRolSearch($atributo) {
 		$this -> respuesta = '';
-		if (sizeof($atributo) > 80) {
+		if (strlen($atributo) > 80) {
 			$this -> respuesta = 'DESCRIPCION_ROL_DEMASIADO_LARGO';
 		} else if (!ctype_alnum($atributo)) {
 			$this -> respuesta = 'DESCRIPCION_ROL_CARACTERES_INCORRECTOS';
