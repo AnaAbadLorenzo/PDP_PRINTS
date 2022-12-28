@@ -9,20 +9,20 @@ class UsuarioAtributos extends ValidacionesFormato {
 				$this->validar_usuario($atributos['usuario']);
 			}
             if($this->respuesta == ''){
-				$this->validar_passwd_usuario($atributos['usuario']);
+				$this->validar_passwd_usuario($atributos['passwd_usuario']);
             }
 	}
 
 	function validar_dni_usuario($atributo){
 		$this->respuesta = '';
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
-			$this->respuesta = 'DNI_PERSONA_VACIO';
+			$this->respuesta = 'DNI_USUARIO_VACIO';
 		}
 		if($this->Formato_dni($atributo)===false){
-			$this->respuesta = 'DNI_PERSONA_ALFANUMERICO_INCORRECTO';
+			$this->respuesta = 'DNI_USUARIO_ALFANUMERICO_INCORRECTO';
 		}
 		if($this->LetraNIF($atributo)===false){
-			$this->respuesta = 'DNI_PERSONA_LETRA_INCORRECTO';
+			$this->respuesta = 'DNI_USUARIO_LETRA_INCORRECTO';
 		}
 	}
 
@@ -52,7 +52,34 @@ class UsuarioAtributos extends ValidacionesFormato {
 			$this->respuesta = 'PASSWD_USUARIO_VACIO';
 		}
 	}
+    function comprobarSearchUsuario($datosUsuario){
+		$this -> validarUsuarioSearch($atributos['usuario']);
+		if ($this -> respuesta != '') {
+			return $this -> respuesta;
+		}
+		$this -> validarIdRolSearch($atributos['id_rol']);
+		if ($this -> respuesta != '') {
+			return $this -> respuesta;
+		}
+	}
 
+	function validarUsuarioSearch($atributo) {
+		$this -> respuesta = '';
+		if (strlen($atributo) > 40) {
+			$this -> respuesta = 'USUARIO_DEMASIADO_LARGO';
+		} else if (!ctype_alnum($atributo)) {
+			$this -> respuesta = 'CARACTERES_USUARIO_INCORRECTOS';
+		}
+	}
+
+	function validarIdRolSearch($atributo) {
+		$this -> respuesta = '';
+		if (strlen($atributo) > 40) {
+			$this -> respuesta = 'ID_ROL_DEMASIADO_LARGO';
+		} else if (!ctype_digit($atributo)) {
+			$this -> respuesta = 'CARACTERES_ID_ROL_INCORRECTOS';
+		}
+	}
     
 
 }

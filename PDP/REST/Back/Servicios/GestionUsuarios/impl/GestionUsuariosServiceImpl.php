@@ -231,7 +231,9 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
         $usuario_mapping = new UsuarioMapping();
         $usuario_mapping->searchByParameters($datosSearchParameters);
-        return $usuario_mapping->feedback['resource'];
+        $returnBusquedas = new ReturnBusquedas($usuario_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+                            sizeof($usuario_mapping->feedback['resource']), $paginacion->inicio);
+        return $returnBusquedas;
     }
 
     function reactivar() {

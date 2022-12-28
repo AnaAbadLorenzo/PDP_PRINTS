@@ -52,6 +52,19 @@ class UsuarioMapping extends MappingBase {
         $this->get_results_from_query();
     }
 
+    function searchByParameters($datosSearchParameters, $paginacion) {
+
+        $this->query = "SELECT * FROM `usuario` WHERE LOWER(`dni_usuario`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']. "', '%')) AND
+                        LOWER(`usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['usuario']."', '%')) AND
+                        LOWER(`passwd_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['passwd_usuario']."', '%')) AND
+                        LOWER(`id_rol`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_rol']."', '%')) AND
+                        `borrado_usuario` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina."";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
+
     function searchById($datosSearch) {
         $this->query = "SELECT * FROM `usuario` WHERE `dni_usuario`='".$datosSearch['dni_usuario']."'";
         if(isset($datosSearch->foraneas)){
