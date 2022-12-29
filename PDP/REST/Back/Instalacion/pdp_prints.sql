@@ -41,7 +41,7 @@ CREATE TABLE `accion` (
   `nombre_accion` varchar(32) NOT NULL,
   `descripcion_accion` text NOT NULL,
   `borrado_accion` int(11) NOT NULL,
-  PRIMARY KEY (`id_accion`),
+  PRIMARY KEY (`id_accion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `categoria` (
   `dni_responsable` varchar(9) NOT NULL,
   `id_padre_categoria` int(11) NULL,
   `dni_usuario` varchar(9) NOT NULL,
-  PRIMARY KEY (`id_categoria`),
+  PRIMARY KEY (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -88,7 +88,7 @@ CREATE TABLE `funcionalidad` (
   `nombre_funcionalidad` varchar(128) NOT NULL,
   `descripcion_funcionalidad` text NOT NULL,
   `borrado_funcionalidad` int(11) NOT NULL,
-  PRIMARY KEY (`id_funcionalidad`),
+  PRIMARY KEY (`id_funcionalidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `funcionalidad` WRITE;
@@ -118,7 +118,7 @@ CREATE TABLE `log_excepciones` (
   `tipo_excepcion` varchar(255) NOT NULL,
   `descripcion_excepcion` text NOT NULL,
   `fecha` date NOT NULL,
-   PRIMARY KEY (`id_logExcepciones`),
+   PRIMARY KEY (`id_logExcepciones`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -133,7 +133,7 @@ CREATE TABLE `noticia` (
   `titulo_noticia` varchar(255) NOT NULL,
   `contenido_noticia` text NOT NULL,
   `fecha_noticia` date NOT NULL
-   PRIMARY KEY (`id_noticia`),
+   PRIMARY KEY (`id_noticia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `noticia` WRITE;
@@ -152,7 +152,7 @@ CREATE TABLE `parametro` (
   `parametro_formula` varchar(56) NOT NULL,
   `descripcion_parametro` text NOT NULL,
   `id_proceso` int(11) NOT NULL,
-   PRIMARY KEY (`id_parametro`),
+   PRIMARY KEY (`id_parametro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -201,7 +201,7 @@ CREATE TABLE `proceso` (
   `formula_proceso` varchar(255) NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `dni_usuario` varchar(9) NOT NULL,
-   PRIMARY KEY (`id_proceso`),
+  PRIMARY KEY (`id_proceso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -218,7 +218,7 @@ CREATE TABLE `proceso_usuario` (
   `borrado_proceso_usuario` int(11) NOT NULL,
   `dni_usuario` varchar(9) NOT NULL,
   `id_proceso` int(11) NOT NULL,
-  PRIMARY KEY (`id_proceso_usuario`),
+  PRIMARY KEY (`id_proceso_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -246,7 +246,7 @@ CREATE TABLE `rol` (
   `nombre_rol` varchar(32) NOT NULL,
   `descripcion_rol` text NOT NULL,
   `borrado_rol` int(11) NOT NULL,
-  PRIMARY KEY (`id_rol`),
+  PRIMARY KEY (`id_rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
