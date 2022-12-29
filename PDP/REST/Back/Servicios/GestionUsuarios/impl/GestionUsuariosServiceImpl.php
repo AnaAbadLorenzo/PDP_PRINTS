@@ -27,8 +27,9 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
                 $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
             break;
             case 'delete':
-                $this->usuario = $this->crearModelo('Usuario');
-                $this->clase_validacionAccionDeleteUsuario = $this->crearValidacionAccion('Usuario');
+                $this -> usuario = $this -> crearModelo('Usuario');
+                $this -> validacion_formato = $this->crearValidacionFormato('Usuario');
+                $this -> validacion_accion = $this->crearValidacionAccion('Usuario');
                 break;
             case 'reactivar':
                 $this -> funcionalidad = $this -> crearModelo('Usuario');
@@ -176,24 +177,25 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
     function delete($mensaje){
 
-        $respuesta = '';
-        $datosDeleteUsuario = array();
-        $datosDeleteUsuario['dni_usuario'] = $this->usuario->dni_usuario;
+        $usuario = [
+            'dni_usuario' => $this -> usuario -> dni_usuario
+        ];
 
-        if($this->clase_validacionAccionDeleteUsuario != null) {
-            $this->clase_validacionAccionDeleteUsuario->comprobarDeleteUsuario($datosDeleteUsuario);
+        $this -> validacion_formato -> validar_dni_usuario($usuario['dni_usuario']);
+        if ($this -> validacion_formato -> respuesta != '') {
+            return $this -> validacion_formato -> respuesta;
         }
-        if($this->clase_validacionAccionDeleteUsuario->respuesta != null){
-            $respuesta =  $this->clase_validacionAccionDeleteUsuario->respuesta;
-        }else{
-            $usuarioDatos = [
-                'dni_usuario' => $datosDeleteUsuario['dni_usuario'],
-            ];
-            $usuario_mapping = new UsuarioMapping();
-            $usuario_mapping->delete($usuarioDatos);
-            $respuesta= $mensaje;
+
+        $this -> validacion_accion -> comprobarDeleteUsuario($usuario);
+        if ($this -> validacion_accion -> respuesta != null){
+            return $this -> validacion_accion -> respuesta;
         }
-        return $respuesta;
+        
+        $usuario_mapping = new UsuarioMapping;
+        $usuario_mapping -> delete($usuario);
+        
+        return $mensaje;
+
     }
 
     function search($mensaje, $paginacion){

@@ -33,11 +33,15 @@ class UsuarioMapping extends MappingBase {
         $this->execute_single_query();
     }
 
-    function delete($datosEliminar) {
-       
-        $this->query = "UPDATE `usuario` SET `borrado_usuario`=1 WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";
+    function delete($datosEliminar) { 
+        $this -> query = 
+            "UPDATE `usuario`
+            SET `borrado_usuario`=1
+            WHERE `dni_usuario`='". $datosEliminar['dni_usuario'] . "';"
+        ;
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
+
     }
 
     function search($paginacion) {
@@ -60,10 +64,14 @@ class UsuarioMapping extends MappingBase {
 
     function searchByParameters($datosSearchParameters, $paginacion) {
 
-        $this->query = "SELECT * FROM `usuario` WHERE LOWER(`dni_usuario`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']. "', '%')) AND
-                        LOWER(`usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['usuario']."', '%')) AND
-                        LOWER(`id_rol`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_rol']."', '%')) AND
-                        `borrado_usuario` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina."";
+        $this -> query = 
+            "SELECT * FROM `usuario` 
+            WHERE 
+                LOWER(`dni_usuario`) like LOWER(CONCAT('%','" . $datosSearchParameters['dni_usuario']. "','%')) AND
+                LOWER(`usuario`) LIKE LOWER(CONCAT('%','" . $datosSearchParameters['usuario'] . "','%')) AND
+                LOWER(`id_rol`) LIKE LOWER(CONCAT('%','". $datosSearchParameters['id_rol'] . "','%')) AND
+                `borrado_usuario`=0
+                LIMIT " . $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . ";";
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
