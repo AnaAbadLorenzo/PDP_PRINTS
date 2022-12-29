@@ -26,7 +26,7 @@ class AddAccionAccion extends ValidacionesBase{
 		$resultado = $this->accion->getByName('accion', $datoBuscar)['resource'];
         
 		if(sizeof($resultado) != 0) {
-			$this->respuesta = 'NOMBRE_ACCION_YA_EXISTE';
+			$this->respuesta = 'ACCION_YA_EXISTE';
 		}else{
 			return true;
 		}

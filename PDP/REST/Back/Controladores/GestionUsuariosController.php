@@ -44,12 +44,12 @@ class GestionUsuariosController extends ControllerBase{
 		$this->usuarioValidation->validarEditPassUsuario();
 		$this->gestionUsuariosService->inicializarParametros('editPassUsuario');
 
-		$respuesta = $this->gestionUsuariosService->editPassUsuario('EDIT_USUARIO_COMPLETO');
+		$respuesta = $this->gestionUsuariosService->editPassUsuario('EDIT_PASS_USUARIO_COMPLETO');
 
-		if($respuesta != 'EDIT_USUARIO_COMPLETO') {
+		if($respuesta != 'EDIT_PASS_USUARIO_COMPLETO') {
 			$this->rellenarRespuesta($respuesta, true, '');
 		}else{
-			$this->rellenarRespuesta('EDIT_USUARIO_COMPLETO', false, '');
+			$this->rellenarRespuesta('EDIT_PASS_USUARIO_COMPLETO', false, '');
 		}
 		$this->getRespuesta($respuesta);
 	}
@@ -88,6 +88,17 @@ class GestionUsuariosController extends ControllerBase{
 		$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
+
+	function searchDelete() {
+
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+		$respuesta = $this -> gestionUsuariosService -> searchDelete('BUSQUEDA_USUARIO_CORRECTO', $paginacion);
+
+		$this -> rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
+		$this -> getRespuesta($respuesta);
+
+    }
+
     function searchByParameters(){
 		$this->gestionUsuariosService->inicializarParametros('searchByParameters');
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
@@ -99,16 +110,16 @@ class GestionUsuariosController extends ControllerBase{
 	function reactivar() {
 
 		$this -> gestionUsuariosService -> inicializarParametros('reactivar');
-		$respuesta = $this -> gestionUsuariosService -> reactivar();
+		$respuesta = $this -> gestionUsuariosService -> reactivar('REACTIVAR_USUARIO_CORRECTO');
 
 		if (!is_array($respuesta)) { //cuando ocurre un error de validacion
 			$this->rellenarRespuesta($respuesta, false, $respuesta);
 			$this->getRespuesta($respuesta);
 		} else if (!$respuesta['ok']) { //error sql
-			$this->rellenarRespuesta('REACTIVAR_USUARIO_FALLIDO', true, $respuesta);
+			$this->rellenarRespuesta($respuesta['resource']['code'], true, '');
 			$this->getRespuesta($respuesta);
 		} else {
-			$this->rellenarRespuesta('REACTIVAR_USUARIO_CORRECTO', false, $respuesta);
+			$this->rellenarRespuesta($respuesta, false, '');
 			$this->getRespuesta($respuesta);
 		}
 

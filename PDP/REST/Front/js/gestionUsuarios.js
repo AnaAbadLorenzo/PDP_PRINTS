@@ -8,7 +8,7 @@ async function cargarUsuarios(numeroPagina, tamanhoPagina, paginadorCreado){
 			$("#cardUsuario").html('');
 
 			for(var i = 0; i<res.resource.listaBusquedas.length; i++){
-				if(res.resource.listaBusquedas[i].usuario == getCookie('usuario')){
+				if(res.resource.listaBusquedas[i].usuario.usuario == getCookie('usuario')){
 					var datosUsuario = cargaInformacion(res.resource.listaBusquedas[i]);
 				}
 			}
@@ -100,7 +100,7 @@ async function buscarEliminadosUsuario(numeroPagina, tamanhoPagina, paginadorCre
       }
       var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
 
-      if(res.resouce.listaBusquedas.length == 0){
+      if(res.resource.listaBusquedas.length == 0){
         document.getElementById('cabecera').style.display = "none";
         document.getElementById('cabeceraEliminados').style.display = "block";
       }
@@ -334,7 +334,7 @@ function buscarEliminadosUsuarioAjaxPromesa(numeroPagina, tamanhoPagina){
       data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'BUSCAR_USUARIOS_COMPLETO') {
+        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -414,6 +414,8 @@ function reactivarUsuariosAjaxPromesa(){
     var token = getCookie('tokenUsuario');
 
     var data = {
+      controlador : 'GestionUsuarios',
+      action : 'reactivar',
       dni_usuario : $('#dniUsuario').val(),
       usuario : $('#loginUsuario').val(),
       passwd_usuario : "",
@@ -999,19 +1001,19 @@ function cargaInformacion(usuario){
 					'<div class="card-body">' + 
 						'<div class="userInfo">' + 
 						'<img class="userImg" src="images/user.png" alt="usuario">' +
-						'<h4 class="card-title user">' + usuario.usuario + '</h4>' +
+						'<h4 class="card-title user">' + usuario.usuario.usuario + '</h4>' +
 					'</div>' + 
 					'<div class="dniInfo">' + 
 		      			'<img class="dniImg" src="images/dni.png" alt="dni">' + 
-		      			'<p class="card-text dni">' + usuario.dniUsuario + '</p>' + 
+		      			'<p class="card-text dni">' + usuario.usuario.dni_usuario + '</p>' + 
 	      			'</div>' + 
 	      			'<div class="passInfo">' + 
 	      				'<img class="passImg" src="images/pass.png" alt="pass">' + 
-	      				'<p class="card-text pass">' + convertirPass(usuario.passwdUsuario) +  '</p>' + 
+	      				'<p class="card-text pass">' + convertirPass(usuario.usuario.passwd_usuario) +  '</p>' + 
 	      			'</div>' + 
 	      			'<div class="rolInfo">' + 
 	      				'<img class="rolImg" src="images/rol.png" alt="rol">' + 
-	      				'<p class="card-text rol">' + usuario.rol.rolName + '</p>' + 
+	      				'<p class="card-text rol">' + usuario.rol.nombre_rol + '</p>' + 
 	      			'</div>';
               
   setLang(getCookie('lang'));

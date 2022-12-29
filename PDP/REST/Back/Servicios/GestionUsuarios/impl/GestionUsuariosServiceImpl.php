@@ -217,6 +217,27 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         return $returnBusquedas;
     }
 
+    function searchDelete($mensaje, $paginacion){
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->searchDelete($paginacion);
+        $datosRol = $this->searchForeignKeys();
+
+        $datosADevolver = array();
+        $datosUsuarioRol = array();
+        foreach($usuario_mapping->feedback['resource'] as $usuario){
+            foreach($datosRol as $rol){
+                if($usuario['id_rol'] == $rol['id_rol']){
+                    $datosUsuarioRol['usuario'] = $usuario;
+                    $datosUsuarioRol['rol'] = $rol;
+                    array_push($datosADevolver, $datosUsuarioRol);
+                }
+            }
+        }
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                    $this->numberFindAll()["COUNT(*)"],sizeof($usuario_mapping->feedback['resource']), $paginacion->inicio);
+        return $returnBusquedas;
+    }
+
     function searchForeignKeys() {
         $rol_mapping = new RolMapping();
         $rol_mapping->searchAll();
@@ -273,7 +294,7 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         return $returnBusquedas;
     }
 
-    function reactivar() {
+    function reactivar($mensaje) {
 
         $this -> validacion_reactivar -> comprobarReactivar($_POST);
         if (!empty($this -> validacion_reactivar -> respuesta)) {
@@ -282,9 +303,6 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         
         $usuario_mapping = new UsuarioMapping;
         $respuesta = $usuario_mapping -> reactivar($_POST);
-        if (!$respuesta['ok']) {
-            return $respuesta;
-        }
 		
         $datos_persona = [
             'dni_persona' => $_POST['dni_usuario']
@@ -293,6 +311,8 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         $persona_mapping = new PersonaMapping;
         $respuesta = $persona_mapping -> reactivar($datos_persona);
 
+        $respuesta = $mensaje; 
+        
         return $respuesta;
 
     }

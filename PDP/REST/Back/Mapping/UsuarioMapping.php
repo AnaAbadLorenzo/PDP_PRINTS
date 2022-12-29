@@ -35,13 +35,19 @@ class UsuarioMapping extends MappingBase {
 
     function delete($datosEliminar) {
        
-        $this->query = "UPDATE FROM `usuario` SET `borrado_usuario`=1 WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";
+        $this->query = "UPDATE `usuario` SET `borrado_usuario`=1 WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->execute_single_query();
     }
 
     function search($paginacion) {
         $this->query = "SELECT * FROM `usuario` WHERE `borrado_usuario`= 0 LIMIT " .$paginacion->inicio. " ," .$paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
+    function searchDelete($paginacion) {
+        $this->query = "SELECT * FROM `usuario` WHERE `borrado_usuario`= 1 LIMIT " .$paginacion->inicio. " ," .$paginacion->tamanhoPagina;
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }

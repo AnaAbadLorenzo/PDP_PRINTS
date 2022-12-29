@@ -27,7 +27,7 @@ class AddFuncionalidadAccion extends ValidacionesBase{
 		$resultado = $this->funcionalidad->getByName('funcionalidad', $datoBuscar)['resource'];
 	
 		if($resultado != null) {
-			$this->respuesta = 'NOMBRE_FUNCIONALIDAD_YA_EXISTE';
+			$this->respuesta = 'FUNCIONALIDAD_YA_EXISTE';
 		}else{
             return true;
         }

@@ -270,7 +270,7 @@ function anadirAccionAjaxPromesa(){
         data: data,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'ACCION_ENCONTRADA') {
+          if (res.code != 'BUSQUEDA_ACCION_CORRECTO') {
             reject(res);
           }
           resolve(res);
