@@ -1,3 +1,8 @@
--- Usuario para acceder a la aplicación --
-usuario: anita1312
-passwd_usuario: anita1312
+-- Usuarios para acceder a la aplicación --
+    -- Admin --
+    usuario: anita1312
+    passwd_usuario: anita1312
+
+    -- Usuario --
+    usuario: fatima
+    passwd_usuario: fatima

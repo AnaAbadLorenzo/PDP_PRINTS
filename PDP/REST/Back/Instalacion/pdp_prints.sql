@@ -44,6 +44,20 @@ CREATE TABLE `accion` (
   PRIMARY KEY (`id_accion`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `accion`
+--
+
+LOCK TABLES `accion` WRITE;
+INSERT INTO `accion` (`id_accion`, `nombre_accion`, `descripcion_accion`, `borrado_accion`) VALUES
+(1, 'Añadir', 'Permite añadir nuevos datos a la aplicación', 0),
+(2, 'Modificar', 'Permite modificar datos de la aplicación', 0),
+(3, 'Eliminar', 'Permite eliminar datos de la aplicación', 0),
+(4, 'Listar', 'Permite visualizar los datos de la aplicación en forma de listado', 0),
+(5, 'Visualizar', 'Permite ver en detalle los datos de la aplicación', 0),
+(6, 'Reactivar', 'Permite reactivar los datos eliminados de la aplicación', 0);
+UNLOCK TABLES;
+
 -- --------------------------------------------------------
 
 --
@@ -77,6 +91,20 @@ CREATE TABLE `funcionalidad` (
   PRIMARY KEY (`id_funcionalidad`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `funcionalidad` WRITE;
+INSERT INTO `funcionalidad` (`id_funcionalidad`, `nombre_funcionalidad`, `descripcion_funcionalidad`, `borrado_funcionalidad`) VALUES
+(1, 'Gestión de acciones', 'Permite realizar acciones sobre las acciones de la aplicación', 0),
+(2, 'Gestión de funcionalidades', 'Permite realizar acciones sobre las funcionalidades de la aplicación', 0),
+(3, 'Gestión de noticias', 'Permite realizar acciones sobre las noticias de la aplicación', 0),
+(4, 'Gestión de personas', 'Permite realizar acciones sobre las personas de la aplicación', 0),
+(5, 'Gestión de procesos', 'Permite realizar acciones sobre los procesos de la aplicación', 0),
+(6, 'Gestión de procesos ejecutados', 'Permite realizar acciones sobre los procesos ejecutados por los usuarios de la aplicación', 0),
+(7, 'Gestión de respuestas posibles', 'Permite realizar acciones sobre las respuestas posibles de la aplicación', 0),
+(8, 'Gestión de roles', 'Permite realizar acciones sobre los roles de la aplicación', 0),
+(9, 'Gestión de usuarios', 'Permite realizar acciones sobre los usuarios de la aplicación', 0);
+UNLOCK TABLES;
+
+
 -- --------------------------------------------------------
 
 --
@@ -108,6 +136,10 @@ CREATE TABLE `noticia` (
    PRIMARY KEY (`id_noticia`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `noticia` WRITE;
+INSERT INTO `noticia` (`id_noticia`, `titulo_noticia`, `contenido_noticia`, `fecha_noticia`) VALUES
+(1, 'Bienvenidos a Carboon Footprint', 'Bienevidos a esta nueva aplicación para calcular la huella de carbono de tus actividades', '2022-12-26');
+UNLOCK TABLES;
 -- --------------------------------------------------------
 
 --
@@ -145,8 +177,11 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
+LOCK TABLES `persona` WRITE;
 INSERT INTO `persona` (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES
+('45146319X', 'Fátima', 'Abad Lorenzo', '1997-10-12', 'Avenida de calle', 'fatima@gmail.com', '988776655', 0),
 ('45146321N', 'Ana', 'Abad Lorenzo', '2000-12-13', 'Avenida de Portugal', 'anaa1312@gmail.com', '988745241', 0);
+UNLOCK TABLES;
 
 -- --------------------------------------------------------
 
@@ -218,9 +253,11 @@ CREATE TABLE `rol` (
 -- Volcado de datos para la tabla `rol`
 --
 
+LOCK TABLES `rol` WRITE;
 INSERT INTO `rol` (`id_rol`, `nombre_rol`, `descripcion_rol`, `borrado_rol`) VALUES
 (1, 'Administrador', 'Contendrá a todos los responsables de administrar la aplicación', 0),
 (2, 'Usuario', 'Contendrá a todas las personas registradas en la aplicación', 0);
+UNLOCK TABLES;
 
 -- --------------------------------------------------------
 
@@ -234,6 +271,49 @@ CREATE TABLE `rol_accion_funcionalidad` (
   `id_accion` int(11) NOT NULL,
   `id_funcionalidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+LOCK TABLES `rol_accion_funcionalidad` WRITE;
+INSERT INTO `rol_accion_funcionalidad` (`id_rol`, `id_accion`, `id_funcionalidad`) VALUES
+(1, 1, 1),
+(1, 1, 2),
+(1, 1, 3),
+(1, 1, 4),
+(1, 1, 8),
+(1, 1, 9),
+(1, 2, 1),
+(1, 2, 2),
+(1, 2, 3),
+(1, 2, 4),
+(1, 2, 8),
+(1, 2, 9),
+(1, 3, 1),
+(1, 3, 2),
+(1, 3, 3),
+(1, 3, 4),
+(1, 3, 8),
+(1, 3, 9),
+(1, 4, 1),
+(1, 4, 2),
+(1, 4, 3),
+(1, 4, 4),
+(1, 4, 8),
+(1, 4, 9),
+(1, 5, 1),
+(1, 5, 2),
+(1, 5, 3),
+(1, 5, 4),
+(1, 5, 8),
+(1, 5, 9),
+(1, 6, 1),
+(1, 6, 2),
+(1, 6, 8),
+(1, 6, 9),
+(2, 2, 4),
+(2, 4, 4),
+(2, 4, 9),
+(2, 5, 4),
+(2, 5, 9);
+UNLOCK TABLES;
 
 -- --------------------------------------------------------
 
@@ -254,8 +334,11 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
+LOCK TABLES `usuario` WRITE;
 INSERT INTO `usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES
-('45146321N', 'anita1312', '98cd48d44fffa390eb2302b4953d1953', 0, 2);
+('45146319X', 'fatima', 'b5d5f67b30809413156655abdda382a3', 0, 2),
+('45146321N', 'anita1312', '83349cbdac695f3943635a4fd1aaa7d0', 0, 1);
+UNLOCK TABLES;
 
 --
 -- Índices para tablas volcadas
