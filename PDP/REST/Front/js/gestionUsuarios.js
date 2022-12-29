@@ -26,6 +26,7 @@ async function cargarUsuarios(numeroPagina, tamanhoPagina, paginadorCreado){
 		.then((res) => {
 			$("#cardUsuario").attr('hidden', true);
 			$('#infoAdmin').attr('hidden', false);
+            document.getElementById("tablaDatos").style.display = "block";
 
 			var numResults = res.resource.numResultados + '';
 	  	    var totalResults = res.resource.tamanhoTotal + '';
@@ -394,7 +395,7 @@ function cargarUsuariosAjaxPromesa(numeroPagina, tamanhoPagina){
       data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'BUSCAR_USUARIO_COMPLETO') {
+        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
           reject(res);
         }
         resolve(res);

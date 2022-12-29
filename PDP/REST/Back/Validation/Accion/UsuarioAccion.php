@@ -22,7 +22,7 @@ class UsuarioAccion extends ValidacionesBase {
 
 	function comprobarEditPassUsuario($datosUsuario){
         $this->respuesta = null;
-		$this -> existeUsuario($datosUsuario);
+		$this -> existeUsuarioByLogin($datosUsuario);
 		return $this -> respuesta;
 	}
 
@@ -44,6 +44,18 @@ class UsuarioAccion extends ValidacionesBase {
 		$datoBuscar = array();
 		$datoBuscar['dni_usuario'] = $datosEditUsuario['dni_usuario'];
 		$resultado = $this->usuario->getByDNI('usuario', $datoBuscar)['resource'];
+
+		if(!sizeof($resultado) == 0) {
+			return true;
+		}else{
+			$this->respuesta = 'USUARIO_NO_EXISTE';
+		}
+    }
+
+	function existeUsuarioByLogin($datosEditUsuario){
+		$datoBuscar = array();
+		$datoBuscar['usuario'] = $datosEditUsuario['usuario'];
+		$resultado = $this->usuario->getByLogin('usuario', $datoBuscar)['resource'];
 
 		if(!sizeof($resultado) == 0) {
 			return true;

@@ -119,15 +119,19 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         }else if($this->clase_validacionAccionEditUsuario->respuesta != null){
             $respuesta = $this->clase_validacionAccionEditUsuario->respuesta;
         }else{
+            $usuario_mapping = new UsuarioMapping();
+            $datoBuscar = array();
+            $datoBuscar['usuario'] = $datosEditUsuario['usuario'];
+            $usuario_mapping->searchByLogin($datoBuscar);
+            $resultado = $usuario_mapping->feedback['resource'];
             $usuarioDatos = [
 
-                'dni_usuario' => $datosEditUsuario['dni_usuario'],
+                'dni_usuario' => $resultado['dni_usuario'],
                 'usuario' => $this->usuario->usuario,
-                'passwd_usuario' => md5($this->usuario->passwd_usuario),
+                'passwd_usuario' => $this->usuario->passwd_usuario,
                 'borrado_usuario' => 0
             ];
 
-            $usuario_mapping = new UsuarioMapping();
             $usuario_mapping->edit($usuarioDatos);
             $respuesta= $mensaje;
         }
@@ -185,10 +189,6 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
             $usuarioDatos = [
                 'dni_usuario' => $datosDeleteUsuario['dni_usuario'],
             ];
-
-            $usuarioDatos = [
-                'dni_usuario' => $datosDeleteUsuario['dni_usuario'],
-            ];
             $usuario_mapping = new UsuarioMapping();
             $usuario_mapping->delete($usuarioDatos);
             $respuesta= $mensaje;
@@ -207,7 +207,7 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
             foreach($datosRol as $rol){
                 if($usuario['id_rol'] == $rol['id_rol']){
                     $datosUsuarioRol['usuario'] = $usuario;
-                    $datosUsuarioRol['rol'] = $usuario;
+                    $datosUsuarioRol['rol'] = $rol;
                     array_push($datosADevolver, $datosUsuarioRol);
                 }
             }

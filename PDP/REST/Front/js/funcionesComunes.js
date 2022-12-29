@@ -449,18 +449,18 @@ function construyeFila(entidad, fila) {
         break;
 
         case 'USUARIO':
-			atributosFunciones = ["'" + fila.dniUsuario + "'", "'" + fila.usuario + "'", "'" + fila.borradoUsuario + "'", "'" + fila.rol.rolName + "'"];
+			atributosFunciones = ["'" + fila.usuario.dni_usuario + "'", "'" + fila.usuario.usuario + "'", "'" + fila.usuario.borrado_usuario + "'", "'" + fila.rol.nombre_rol + "'"];
 			var usuarioActivo = "";
-			if(fila.borradoUsuario == 0){
+			if(fila.usuario.borrado_usuario == 0){
 				usuarioActivo = "Sí";
 			}else{
 				usuarioActivo = "No";
 			}
 
-			filaTabla = '<tr class="impar"> <td>' + fila.dniUsuario + 
-                '</td> <td>' + fila.usuario + 
+			filaTabla = '<tr class="impar"> <td>' + fila.usuario.dni_usuario + 
+                '</td> <td>' + fila.usuario.usuario + 
                 '</td> <td>' + usuarioActivo +
-                '</td> <td>' + fila.rol.rolName;
+                '</td> <td>' + fila.rol.nombre_rol;
         break;
 
         case 'PERSONA':

@@ -69,3 +69,4 @@ var urlPeticionAjaxEditarRolUsuario = urlComun;
 var urlPeticionAjaxListarTodosUsuarios = urlComun;
 var urlPeticionAjaxReactivarUsuario = urlComun;
 var urlPeticionAjaxEliminarUsuario = urlComun;
+var urlPeticionAjaxCambiarContrasenaUsuario = urlComun;

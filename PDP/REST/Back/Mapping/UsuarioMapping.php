@@ -46,8 +46,8 @@ class UsuarioMapping extends MappingBase {
         $this->get_results_from_query();
     }
 
-    function search() {
-        $this->query = "SELECT * FROM `usuario` ";
+    function search($paginacion) {
+        $this->query = "SELECT * FROM `usuario` WHERE `borrado_usuario`= 0 LIMIT " .$paginacion->inicio. " ," .$paginacion->tamanhoPagina;
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }

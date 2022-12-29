@@ -51,20 +51,21 @@ function changePassUsuarioAjaxPromesa(){
       var token = getCookie('tokenUsuario');
       var passwdUsuario =  $('#passChangePass1').val();
 
-      var cambiarContrasena = {
+      var data = {
+        controlador : 'GestionUsuarios',
+        action : 'editPassUsuario',
         usuario : usuario,
-        passwdUsuario : passwdUsuario
+        passwd_usuario : passwdUsuario
       };
   
       $.ajax({
       method: "POST",
       url: urlPeticionAjaxCambiarContrasenaUsuario,
-      contentType : "application/json",
-      data: JSON.stringify(cambiarContrasena),
-      dataType : 'json',
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'PASSWORD_CAMBIADA') {
+        if (res.code != 'EDIT_USUARIO_COMPLETO') {
           reject(res);
         }
         resolve(res);
@@ -169,7 +170,7 @@ function cargarNoticiasAjaxPromesa(){
 
 /**Función que carga las funcionalidades asociadas al usuario**/
 
-/*function cargarFuncionalidadesUsuario(datos){
+function cargarFuncionalidadesUsuario(datos){
   var i;
   var rolUsuario = getCookie('rolUsuario');
 
@@ -177,85 +178,20 @@ function cargarNoticiasAjaxPromesa(){
 
   var htmlMenu = '';
 
-  if (rolUsuario === 'admin') {
+  if (rolUsuario === 'Administrador') {
 
-    for(i = 0; i<(datos.funcionalidades.length) - 1; i++) {
-      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos.funcionalidades[i], rolUsuario) + '" href="' + cargarHref(datos.funcionalidades[i]) + '">' + datos.funcionalidades[i] + '</a> <div class="dropdown-divider"></div>';
+    for(i = 0; i<(datos.length) - 1; i++) {
+      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a> <div class="dropdown-divider"></div>';
     }
 
-    htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos.funcionalidades[i], rolUsuario) + '" href="' + cargarHref(datos.funcionalidades[i]) + '">' + datos.funcionalidades[i] + '</a>';
-
-  } else if (rolUsuario === 'gestor') {
-
-    var funcionalidadEncontrada = 0;
-    var totalFuncionalidades = 11;
-
-    if (datos.funcionalidades.includes('Gestión de empresas')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de usuarios')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de personas')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de noticias')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de objetivos')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de respuestas posibles')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de planes')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de procedimientos')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de procesos')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de procedimientos ejecutados')) {
-      funcionalidadEncontrada ++;
-    }
-
-    if (datos.funcionalidades.includes('Gestión de procesos ejecutados')) {
-      funcionalidadEncontrada ++;
-    }
-
-
-    if (funcionalidadEncontrada === totalFuncionalidades) {
-
-      htmlMenu = '<a class="dropdown-item ' + cargarClass('Gestión de noticias', rolUsuario) + '" href="' + cargarHref('Gestión de noticias') + '">Gestión de noticias</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de objetivos', rolUsuario) + '" href="' + cargarHref('Gestión de objetivos') + '">Gestión de objetivos</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de planes', rolUsuario) + '" href="' + cargarHref('Gestión de planes') + '">Gestión de planes</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de procedimientos', rolUsuario) + '" href="' + cargarHref('Gestión de procedimientos') + '">Gestión de procedimientos</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de procedimientos ejecutados', rolUsuario) + '" href="' + cargarHref('Gestión de procedimientos ejecutados') + '">Gestión de procedimientos ejecutados</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de procesos', rolUsuario) + '" href="' + cargarHref('Gestión de procesos') + '">Gestión de procesos</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de procesos ejecutados', rolUsuario) + '" href="' + cargarHref('Gestión de procesos ejecutados') + '">Gestión de procesos ejecutados</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de respuestas posibles', rolUsuario) + '" href="' + cargarHref('Gestión de respuestas posibles') + '">Gestión de respuestas posibles</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de empresas', rolUsuario) + '" href="' + cargarHref('Gestión de empresas') + '">Gestión de empresas</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de usuarios', rolUsuario) + '" href="' + cargarHref('Gestión de usuarios') + '">Gestión de usuarios</a> <div class="dropdown-divider"></div>' +
-                 '<a class="dropdown-item ' + cargarClass('Gestión de personas', rolUsuario) + '" href="' + cargarHref('Gestión de personas') + '">Gestión de personas</a>';
-    }
+    htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a>';
 
   } else if (rolUsuario === 'Usuario') {
 
     var funcionalidadEncontrada = 0;
     var totalFuncionalidades = 5;
 
-    if (datos.funcionalidades.includes('Gestión de ')) {
+    if (datos.funcionalidades.includes('Gestión de roles')) {
       funcionalidadEncontrada ++;
     }
 
@@ -288,29 +224,6 @@ function cargarNoticiasAjaxPromesa(){
     document.getElementById('listadoFuncionalidades').style.overflowY =  "hidden";
 
   }
-
-  $("#listadoFuncionalidades").append(htmlMenu);
-
-  setLang(getCookie('lang'));
-
-}*/
-
-function cargarFuncionalidadesUsuario(datos){
-  var i;
-  var rolUsuario = getCookie('rolUsuario');
-
-  $("#listadoFuncionalidades").html("");
-
-  var htmlMenu = '';
-
-  for(i = 0; i<(datos.length) - 1; i++) {
-      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a> <div class="dropdown-divider"></div>';
-  }
-
-    htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a>';
-
-    document.getElementById('listadoFuncionalidades').style.height = "236px";    
-    document.getElementById('listadoFuncionalidades').style.overflowY =  "hidden";
 
   $("#listadoFuncionalidades").append(htmlMenu);
 

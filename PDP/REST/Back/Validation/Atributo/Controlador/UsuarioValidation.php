@@ -24,7 +24,7 @@ class UsuarioValidation extends ValidacionesBase {
         $usuarioValidationFormato = new UsuarioAtributos();
         $usuarioValidationAccion = new UsuarioAccion();
 
-        $atributosValidacion = array('dni_usuario', 'usuario', 'passwd_usuario');
+        $atributosValidacion = array('usuario', 'passwd_usuario');
         $atributos = $this -> recogerValoresAtributosPeticion($atributosValidacion);
 
         $usuarioValidationFormato -> validarAtributoPass($atributos['passwd_usuario']);
