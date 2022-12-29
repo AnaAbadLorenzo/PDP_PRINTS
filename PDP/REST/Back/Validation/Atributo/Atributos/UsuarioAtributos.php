@@ -19,6 +19,13 @@ class UsuarioAtributos extends ValidacionesFormato {
 		}
 	}
 
+	function validarAtributoRolUsuario($atributo){
+		$this -> respuesta = '';
+		if ($atributo === null || $this -> Es_Vacio($atributo) === true) {
+			$this -> respuesta = 'ID_ROL_VACIO';
+		}
+	}
+
 	function validar_dni_usuario($atributo){
 		$this->respuesta = '';
 		if($atributo === null || $this->Es_Vacio($atributo)===true){

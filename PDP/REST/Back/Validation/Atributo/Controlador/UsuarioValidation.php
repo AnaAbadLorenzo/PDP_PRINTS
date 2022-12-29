@@ -32,6 +32,19 @@ class UsuarioValidation extends ValidacionesBase {
 
         $this -> respuesta_accion = $usuarioValidationAccion -> comprobarEditPassUsuario($atributos);
     }
+
+    function validarEditRolUsuario()  {
+        $usuarioValidationFormato = new UsuarioAtributos();
+        $usuarioValidationAccion = new UsuarioAccion();
+
+        $atributosValidacion = array('dni_usuario', 'usuario', 'passwd_usuario', 'id_rol');
+        $atributos = $this -> recogerValoresAtributosPeticion($atributosValidacion);
+
+        $usuarioValidationFormato -> validarAtributoRolUsuario($atributos['id_rol']);
+        $this -> respuesta_formato = $usuarioValidationFormato -> respuesta;
+
+        $this -> respuesta_accion = $usuarioValidationAccion -> comprobarEditRolUsuario($atributos);
+    }
 }
 
 ?>

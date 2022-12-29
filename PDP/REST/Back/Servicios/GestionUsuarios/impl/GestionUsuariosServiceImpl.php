@@ -21,6 +21,11 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
                 $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('Usuario');
                 $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
             break;
+            case 'editRolUsuario':
+                $this->usuario = $this->crearModelo('Usuario');
+                $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('Usuario');
+                $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
+            break;
             case 'delete':
                 $this->usuario = $this->crearModelo('Usuario');
                 $this->clase_validacionAccionDeleteUsuario = $this->crearValidacionAccion('Usuario');
@@ -124,6 +129,41 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
             $usuario_mapping = new UsuarioMapping();
             $usuario_mapping->edit($usuarioDatos);
+            $respuesta= $mensaje;
+        }
+        return $respuesta;
+    }
+
+    function editRolUsuario($mensaje) {
+       
+        $respuesta = '';
+        $datosEditUsuario = array();
+        $datosEditUsuario['dni_usuario'] = $this->usuario->dni_usuario;
+        $datosEditUsuario['usuario'] = $this->usuario->usuario;
+        $datosEditUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
+        $datosEditUsuario['borrado_usuario'] = 0;
+        $datosEditUsuario['id_rol'] = $this->usuario->id_rol;
+        
+        if($this->clase_validacionFormatoEditUsuario != null) {
+            $this->clase_validacionFormatoEditUsuario->validarAtributoRolUsuario($datosEditUsuario['id_rol']);
+        }
+
+        if($this->clase_validacionAccionEditUsuario != null) {
+            $this->clase_validacionAccionEditUsuario->comprobarEditRolUsuario($datosEditUsuario);
+        }
+        
+        if($this->clase_validacionFormatoEditUsuario->respuesta != null){
+            $respuesta =  $this->clase_validacionFormatoEditUsuario->respuesta;
+        }else if($this->clase_validacionAccionEditUsuario->respuesta != null){
+            $respuesta = $this->clase_validacionAccionEditUsuario->respuesta;
+        }else{
+            $usuarioDatos = [
+                'dni_usuario' => $datosEditUsuario['dni_usuario'],
+                'id_rol' => $datosEditUsuario['id_rol']
+            ];
+
+            $usuario_mapping = new UsuarioMapping();
+            $usuario_mapping->editRol($usuarioDatos);
             $respuesta= $mensaje;
         }
         return $respuesta;

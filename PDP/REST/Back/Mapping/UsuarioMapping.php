@@ -27,6 +27,12 @@ class UsuarioMapping extends MappingBase {
         $this->execute_single_query();
     }
 
+    function editRol($datosModificar) {
+        $this->query = "UPDATE `usuario` SET `id_rol`='". $datosModificar['id_rol'] . "' WHERE `dni_usuario`='". $datosModificar['dni_usuario'] . "'";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->execute_single_query();
+    }
+
     function delete($datosEliminar) {
        
         $this->query = "UPDATE FROM `usuario` SET `borrado_usuario`=1 WHERE `dni_usuario` = '". $datosEliminar['dni_usuario']."'";

@@ -52,15 +52,13 @@ class GestionUsuariosController extends ControllerBase{
 			$this->rellenarRespuesta('EDIT_USUARIO_COMPLETO', false, '');
 		}
 		$this->getRespuesta($respuesta);
-
 	}
 
 	function editRolUsuario(){
-		$this->editUsuarioValidation->validarEditUsuario();
-		$this->gestionUsuariosService->inicializarParametros('edit');
+		$this->usuarioValidation->validarEditRolUsuario();
+		$this->gestionUsuariosService->inicializarParametros('editRolUsuario');
 
-		$respuesta = $this->gestionUsuariosService->edit('EDIT_USUARIO_COMPLETO');
-
+		$respuesta = $this->gestionUsuariosService->editRolUsuario('EDIT_USUARIO_COMPLETO');
 
 		if($respuesta != 'EDIT_USUARIO_COMPLETO') {
 			$this->rellenarRespuesta($respuesta, true, '');

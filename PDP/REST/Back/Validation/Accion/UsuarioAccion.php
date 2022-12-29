@@ -26,6 +26,13 @@ class UsuarioAccion extends ValidacionesBase {
 		return $this -> respuesta;
 	}
 
+	function comprobarEditRolUsuario($datosUsuario){
+        $this->respuesta = null;
+		$this -> existeUsuario($datosUsuario);
+		$this->existeRol($datosUsuario);
+		return $this -> respuesta;
+	}
+
     function comprobarDeleteUsuario($datosUsuario){
         $this->respuesta = null;
 		$this -> noExisteUsuario($datosUsuario);
@@ -44,6 +51,19 @@ class UsuarioAccion extends ValidacionesBase {
 			$this->respuesta = 'USUARIO_NO_EXISTE';
 		}
     }
+
+	function existeRol($rol_datos) {
+		$rol = new RolModel();
+		$rol -> getById('Rol', $rol_datos);
+		$resultado = $rol -> mapping -> resource;
+
+		if (sizeof($resultado) != 0) {
+			return true;
+		} else {
+			$this -> respuesta = 'ROL_NO_EXISTE';
+		}
+		
+	}
 
     function noExisteUsuario($datosEditUsuario){
 		$datoBuscar = array();
