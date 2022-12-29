@@ -21,6 +21,12 @@ then
     echo "---------- Descarga completada."
     exit 0
 else
+    if [ ! -z "$(ls -A /var/www/PDP_PRINTS)" ]
+    then
+        echo "Limpiando directorio..."
+        rm -r /var/www/PDP_PRINTS
+        echo ""
+    fi
     git clone https://github.com/AnaAbadLorenzo/PDP_PRINTS.git /var/www/PDP_PRINTS
     echo ""
 fi
