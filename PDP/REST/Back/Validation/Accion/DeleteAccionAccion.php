@@ -4,22 +4,24 @@ include_once './Validation/ValidacionesBase.php';
 include_once './Comun/funcionesComunes.php';
 
 include_once './Mapping/AccionMapping.php';
+include_once './Mapping/ACLMapping.php';
 
 class DeleteAccionAccion extends ValidacionesBase {
 	
 	private $accion;
+	private $acl;
+
 	public $respuesta;
 
 	function __construct()
 	{
 		$this->accion = new AccionModel();
+		$this -> acl = new ACLMapping;
 	}
 
 	function comprobarDeleteAccion($datosDeleteAccion){
-
-		
-		$this->existeIdAccion($datosDeleteAccion);
-		
+		$this -> existeIdAccion($datosDeleteAccion);
+		$this -> accionNoEstaEnPermisos($datosDeleteAccion);
 	}
 
 	function comprobarReactivar($datos) {
@@ -34,6 +36,19 @@ class DeleteAccionAccion extends ValidacionesBase {
 		} else {
 			return true;
 		}
+	}
+
+	function accionNoEstaEnPermisos($datos) {
+
+		$this -> acl -> searchByAccion($datos);
+		$resultado = $this -> acl -> resource;
+
+		if (sizeof($resultado) == 0) {
+			return true;
+		} else {
+			$this -> respuesta = 'ACCION_TIENE_PERMISOS_ASOCIADOS';
+		}
+
 	}
 
 function existeIdAccion($datosDeleteAccion){

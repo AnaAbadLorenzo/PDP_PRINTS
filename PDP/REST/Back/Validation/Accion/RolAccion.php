@@ -4,17 +4,21 @@ include_once './Validation/ValidacionesBase.php';
 include_once './Comun/funcionesComunes.php';
 include_once './Modelos/RolModel.php';
 
+include_once './Mapping/UsuarioMapping.php';
+include_once './Mapping/ACLMapping.php';
+
 class RolAccion extends ValidacionesBase {
 
 	private $rol;
-
 	private $usuario;
+	private $acl;
 
 	public $respuesta;
 
 	function __construct() {
-		$this -> rol = new RolModel();
-		$this -> usuario = new UsuarioMapping();
+		$this -> rol = new RolModel;
+		$this -> usuario = new UsuarioMapping;
+		$this -> acl = new ACLMapping;
 	}
 
 	function comprobarAddRol($rol_datos){
@@ -30,6 +34,7 @@ class RolAccion extends ValidacionesBase {
 	function comprobarDeleteRol($rol_datos){
 		$this -> noExisteRol($rol_datos);
 		$this -> rolAsociadoAUsuario($rol_datos);
+		$this -> rolNoEstaEnPermisos($rol_datos);
 		return $this -> respuesta;
 	}
 
@@ -101,6 +106,19 @@ class RolAccion extends ValidacionesBase {
 		if($this->respuesta != 'ROL_ASOCIADO_USUARIO'){
 			return true;
 		}
+	}
+
+	function rolNoEstaEnPermisos($rol_datos) {
+
+		$this -> acl -> searchByRol($rol_datos);
+		$resultado = $this -> acl -> resource;
+
+		if (sizeof($resultado) == 0) {
+			return true;
+		} else {
+			$this -> respuesta = 'ROL_TIENE_PERMISOS_ASOCIADOS';
+		}
+
 	}
 
 }

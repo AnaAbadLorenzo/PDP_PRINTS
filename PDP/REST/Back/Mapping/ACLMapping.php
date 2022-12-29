@@ -57,6 +57,45 @@ class ACLMapping extends MappingBase {
 
     }
 
+    function searchByAccion($datos_search) {
+        
+        $this -> query = 
+            "SELECT * FROM `rol_accion_funcionalidad`
+            WHERE
+                `id_accion`='" . $datos_search['id_accion'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
+    function searchByFuncionalidad($datos_search) {
+        
+        $this -> query = 
+            "SELECT * FROM `rol_accion_funcionalidad`
+            WHERE
+                `id_funcionalidad`='" . $datos_search['id_funcionalidad'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
+    function searchByRol($datos_search) {
+        
+        $this -> query = 
+            "SELECT * FROM `rol_accion_funcionalidad`
+            WHERE
+                `id_rol`='" . $datos_search['id_rol'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
     function searchSpecific($datos_search) {
 
         $this -> query = 

@@ -10,13 +10,13 @@
       $rest = controlador;
       $action = action;
       if ($rest != 'Autenticacion' && $rest != 'Registro'){
-            include_once './Controladores/AutenticacionController.php';
-            $auth = new AutenticacionController();
-            $resultado = $auth->verificarTokenUsuario();
+            // include_once './Controladores/AutenticacionController.php';
+            // $auth = new AutenticacionController();
+            // $resultado = $auth->verificarTokenUsuario();
 
-            if($resultado === 'TOKEN_USUARIO_INCORRECTO') {
-                  rellenarExcepcion('TOKEN_USUARIO_INCORRECTO');
-            }
+            // if($resultado === 'TOKEN_USUARIO_INCORRECTO') {
+            //       rellenarExcepcion('TOKEN_USUARIO_INCORRECTO');
+            // }
       }
 
 
