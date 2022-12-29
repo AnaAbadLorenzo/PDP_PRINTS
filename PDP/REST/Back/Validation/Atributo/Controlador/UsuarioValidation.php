@@ -19,6 +19,19 @@ class UsuarioValidation extends ValidacionesBase {
 
         $this -> respuesta_accion = $usuarioValidationAccion -> comprobarAddUsuario($atributos);
     }
+
+    function validarEditPassUsuario()  {
+        $usuarioValidationFormato = new UsuarioAtributos();
+        $usuarioValidationAccion = new UsuarioAccion();
+
+        $atributosValidacion = array('dni_usuario', 'usuario', 'passwd_usuario');
+        $atributos = $this -> recogerValoresAtributosPeticion($atributosValidacion);
+
+        $usuarioValidationFormato -> validarAtributoPass($atributos['passwd_usuario']);
+        $this -> respuesta_formato = $usuarioValidationFormato -> respuesta;
+
+        $this -> respuesta_accion = $usuarioValidationAccion -> comprobarEditPassUsuario($atributos);
+    }
 }
 
 ?>

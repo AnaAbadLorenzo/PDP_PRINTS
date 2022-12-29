@@ -40,19 +40,34 @@ class GestionUsuariosController extends ControllerBase{
 		}
 	}
 
-	function edit(){
+	function editPassUsuario(){
+		$this->usuarioValidation->validarEditPassUsuario();
+		$this->gestionUsuariosService->inicializarParametros('editPassUsuario');
+
+		$respuesta = $this->gestionUsuariosService->editPassUsuario('EDIT_USUARIO_COMPLETO');
+
+		if($respuesta != 'EDIT_USUARIO_COMPLETO') {
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
+			$this->rellenarRespuesta('EDIT_USUARIO_COMPLETO', false, '');
+		}
+		$this->getRespuesta($respuesta);
+
+	}
+
+	function editRolUsuario(){
 		$this->editUsuarioValidation->validarEditUsuario();
 		$this->gestionUsuariosService->inicializarParametros('edit');
 
 		$respuesta = $this->gestionUsuariosService->edit('EDIT_USUARIO_COMPLETO');
 
 
-			if($respuesta != 'EDIT_USUARIO_COMPLETO') {
-				$this->rellenarRespuesta($respuesta, true, '');
-			}else{
-				$this->rellenarRespuesta('EDIT_USUARIO_COMPLETO', false, '');
-			}
-			$this->getRespuesta($respuesta);
+		if($respuesta != 'EDIT_USUARIO_COMPLETO') {
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
+			$this->rellenarRespuesta('EDIT_USUARIO_COMPLETO', false, '');
+		}
+		$this->getRespuesta($respuesta);
 
 	}
 

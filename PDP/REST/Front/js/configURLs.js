@@ -60,3 +60,12 @@ var urlPeticionAjaxEditPersona = urlComun;
 var urlPeticionAjaxDeletePersona = urlComun;
 var urlPeticionAjaxListarPersona = urlComun;
 var urlPeticionAjaxListarPersonasEliminadas = urlComun;
+
+
+/** Urls de usuario */
+var urlPeticionAjaxListarUsuario = urlComun;
+var urlPeticionAjaxListarTodosUsuariosEliminados = urlComun;
+var urlPeticionAjaxEditarRolUsuario = urlComun;
+var urlPeticionAjaxListarTodosUsuarios = urlComun;
+var urlPeticionAjaxReactivarUsuario = urlComun;
+var urlPeticionAjaxEliminarUsuario = urlComun;

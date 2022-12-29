@@ -16,11 +16,11 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
                 $this->clase_validacionAccionAddUsuario = $this->crearValidacionAccion('Usuario');
                 $this->clase_validacionFormatoAddUsuario = $this->crearValidacionFormato('Usuario');
             break;
-            case 'edit':
+            case 'editPassUsuario':
                 $this->usuario = $this->crearModelo('Usuario');
                 $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('Usuario');
                 $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
-                break;
+            break;
             case 'delete':
                 $this->usuario = $this->crearModelo('Usuario');
                 $this->clase_validacionAccionDeleteUsuario = $this->crearValidacionAccion('Usuario');
@@ -90,85 +90,69 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
     }
 
-    function edit($mensaje) {
+    function editPassUsuario($mensaje) {
+       
+        $respuesta = '';
+        $datosEditUsuario = array();
+        $datosEditUsuario['dni_usuario'] = $this->usuario->dni_usuario;
+        $datosEditUsuario['usuario'] = $this->usuario->usuario;
+        $datosEditUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
+        $datosEditUsuario['borrado_usuario'] = 0;
+        
+        if($this->clase_validacionFormatoEditUsuario != null) {
+            $this->clase_validacionFormatoEditUsuario->validarAtributoPass($datosEditUsuario['passwd_usuario']);
+        }
 
-            $respuesta = '';
-            $datosEditUsuario = array();
-            $datosEditUsuario['dni_usuario'] = $this->usuario->dni_usuario;
-            $datosEditUsuario['usuario'] = $this->usuario->usuario;
-            $datosEditUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
-            $datosEditUsuario['borrado_usuario'] = 0;
-            if($this->clase_validacionFormatoEditUsuario != null) {
+        if($this->clase_validacionAccionEditUsuario != null) {
+            $this->clase_validacionAccionEditUsuario->comprobarEditPassUsuario($datosEditUsuario);
+        }
+        
+        if($this->clase_validacionFormatoEditUsuario->respuesta != null){
 
-                $this->clase_validacionFormatoRegistroUsuario->validarAtributosLogin($datosRegistroUsuario);
+            $respuesta =  $this->clase_validacionFormatoEditUsuario->respuesta;
 
-            }
-
-            if($this->clase_validacionAccionEditUsuario != null) {
-
-                $this->clase_validacionAccionEditUsuario>comprobarEditUsuario($datosEditUsuario);
-            }
-            if($this->clase_validacionFormatoEditUsuario->respuesta != null){
-
-                $respuesta =  $this->clase_validacionFormatoEditUsuario->respuesta;
-
-            }else if($this->clase_validacionAccionEditUsuario->respuesta != null){
-
-                $respuesta = $this->clase_validacionAccionEditUsuario->respuesta;
-
-            }else{
-
+        }else if($this->clase_validacionAccionEditUsuario->respuesta != null){
+            $respuesta = $this->clase_validacionAccionEditUsuario->respuesta;
+        }else{
             $usuarioDatos = [
 
                 'dni_usuario' => $datosEditUsuario['dni_usuario'],
                 'usuario' => $this->usuario->usuario,
-                'passwd_usuario' => $this->usuario->passwd_usuario,
+                'passwd_usuario' => md5($this->usuario->passwd_usuario),
                 'borrado_usuario' => 0
-
             ];
 
             $usuario_mapping = new UsuarioMapping();
             $usuario_mapping->edit($usuarioDatos);
             $respuesta= $mensaje;
         }
-
-
         return $respuesta;
-
     }
 
 
     function delete($mensaje){
 
+        $respuesta = '';
+        $datosDeleteUsuario = array();
+        $datosDeleteUsuario['dni_usuario'] = $this->usuario->dni_usuario;
 
-            $respuesta = '';
-            $datosDeleteUsuario = array();
-            $datosDeleteUsuario['dni_usuario'] = $this->usuario->dni_usuario;
-
-            if($this->clase_validacionAccionDeleteUsuario != null) {
+        if($this->clase_validacionAccionDeleteUsuario != null) {
             $this->clase_validacionAccionDeleteUsuario->comprobarDeleteUsuario($datosDeleteUsuario);
-            }
-            if($this->clase_validacionAccionDeleteUsuario->respuesta != null){
-
-                $respuesta =  $this->clase_validacionAccionDeleteUsuario->respuesta;
-
-            }else{
-
+        }
+        if($this->clase_validacionAccionDeleteUsuario->respuesta != null){
+            $respuesta =  $this->clase_validacionAccionDeleteUsuario->respuesta;
+        }else{
             $usuarioDatos = [
                 'dni_usuario' => $datosDeleteUsuario['dni_usuario'],
-
             ];
 
             $usuarioDatos = [
                 'dni_usuario' => $datosDeleteUsuario['dni_usuario'],
-
             ];
             $usuario_mapping = new UsuarioMapping();
             $usuario_mapping->delete($usuarioDatos);
             $respuesta= $mensaje;
         }
-
-
         return $respuesta;
     }
 

@@ -13,6 +13,12 @@ class UsuarioAtributos extends ValidacionesFormato {
             }
 	}
 
+	function validarAtributoPass($atributo){
+		if($atributo === null || $this->Es_Vacio($atributo)===true){
+			$this->respuesta = 'PASSWD_USUARIO_VACIO';
+		}
+	}
+
 	function validar_dni_usuario($atributo){
 		$this->respuesta = '';
 		if($atributo === null || $this->Es_Vacio($atributo)===true){
@@ -53,11 +59,11 @@ class UsuarioAtributos extends ValidacionesFormato {
 		}
 	}
     function comprobarSearchUsuario($datosUsuario){
-		$this -> validarUsuarioSearch($atributos['usuario']);
+		$this -> validarUsuarioSearch($datosUsuario['usuario']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
-		$this -> validarIdRolSearch($atributos['id_rol']);
+		$this -> validarIdRolSearch($datosUsuario['id_rol']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}

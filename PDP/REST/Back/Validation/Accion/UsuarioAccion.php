@@ -20,7 +20,7 @@ class UsuarioAccion extends ValidacionesBase {
 		return $this -> respuesta;
 	}
 
-	function comprobarEditUsuario($datosUsuario){
+	function comprobarEditPassUsuario($datosUsuario){
         $this->respuesta = null;
 		$this -> existeUsuario($datosUsuario);
 		return $this -> respuesta;
