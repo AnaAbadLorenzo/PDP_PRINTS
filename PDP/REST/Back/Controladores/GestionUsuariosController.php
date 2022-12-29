@@ -79,9 +79,8 @@ class GestionUsuariosController extends ControllerBase{
 			$this->rellenarRespuesta('DELETE_USUARIO_COMPLETO', false, '');
 		}
 		$this->getRespuesta($respuesta);
-
-
     }
+	
     function search(){
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
         $respuesta = $this->gestionUsuariosService->search('BUSQUEDA_USUARIO_CORRECTO', $paginacion);

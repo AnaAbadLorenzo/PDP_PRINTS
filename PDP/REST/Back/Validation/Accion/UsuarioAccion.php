@@ -34,11 +34,18 @@ class UsuarioAccion extends ValidacionesBase {
 	}
 
     function comprobarDeleteUsuario($datosUsuario){
-        $this->respuesta = null;
+        $this -> respuesta = null;
 		$this -> existeUsuario($datosUsuario);
+		$this -> estaBorradoACero($datosUsuario);
 		return $this -> respuesta;
 	}
 
+	function estaBorradoACero($datosUsuario) {
+		$resultado = $this -> usuario -> getByDNI('usuario', $datosUsuario)['resource'];
+		if ($resultado['borrado_usuario'] === 1) {
+			$this -> respuesta = 'USUARIO_YA_ELIMINADO';
+		} 
+	}
 
     function existeUsuario($datosEditUsuario){
 		$datoBuscar = array();
