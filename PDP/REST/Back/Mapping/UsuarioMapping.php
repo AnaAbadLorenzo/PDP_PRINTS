@@ -40,12 +40,6 @@ class UsuarioMapping extends MappingBase {
         $this->execute_single_query();
     }
 
-    function searchBy() {
-        $this->query = "SELECT * FROM `usuario` WHERE 'dni_usuario='". $this->usuario->dni_usuario."' AND usuario='". $this->usuario->usuario.
-                        "'AND borrado_usuario='". $this->usuario->borrado_usuario."' AND id_rol='". $this->usuario->id_rol."'";
-        $this->get_results_from_query();
-    }
-
     function search($paginacion) {
         $this->query = "SELECT * FROM `usuario` WHERE `borrado_usuario`= 0 LIMIT " .$paginacion->inicio. " ," .$paginacion->tamanhoPagina;
         $this->stmt = $this->conexion->prepare($this->query);
@@ -62,7 +56,6 @@ class UsuarioMapping extends MappingBase {
 
         $this->query = "SELECT * FROM `usuario` WHERE LOWER(`dni_usuario`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']. "', '%')) AND
                         LOWER(`usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['usuario']."', '%')) AND
-                        LOWER(`passwd_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['passwd_usuario']."', '%')) AND
                         LOWER(`id_rol`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_rol']."', '%')) AND
                         `borrado_usuario` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina."";
 
@@ -128,6 +121,15 @@ class UsuarioMapping extends MappingBase {
 
     function numberFindAll() {
         $this->query = "SELECT COUNT(*) FROM `usuario` WHERE `borrado_usuario`= 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+    }
+
+    function numberFindParameters($datosSearchParameters) {
+        $this->query = "SELECT COUNT(*) FROM `usuario` WHERE LOWER(`dni_usuario`) like LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']. "', '%')) AND
+                        LOWER(`usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['usuario']."', '%')) AND
+                        LOWER(`id_rol`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_rol']."', '%')) AND
+                        `borrado_usuario` = 0";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
     }

@@ -6,7 +6,7 @@ interface GestionUsuariosService {
     function add($mensaje);
     function delete($mensaje);
     function search($mensaje, $paginacion);
-    function searchByParameters($mensaje);
+    function searchByParameters($mensaje, $paginacion);
 
 }
 

@@ -90,7 +90,8 @@ class GestionUsuariosController extends ControllerBase{
     }
     function searchByParameters(){
 		$this->gestionUsuariosService->inicializarParametros('searchByParameters');
-		$respuesta = $this->gestionUsuariosService->searchByParameters('BUSQUEDA_USUARIO_CORRECTO');
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+		$respuesta = $this->gestionUsuariosService->searchByParameters('BUSQUEDA_USUARIO_CORRECTO', $paginacion);
 		$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }

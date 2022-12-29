@@ -35,7 +35,7 @@ class UsuarioAccion extends ValidacionesBase {
 
     function comprobarDeleteUsuario($datosUsuario){
         $this->respuesta = null;
-		$this -> noExisteUsuario($datosUsuario);
+		$this -> existeUsuario($datosUsuario);
 		return $this -> respuesta;
 	}
 

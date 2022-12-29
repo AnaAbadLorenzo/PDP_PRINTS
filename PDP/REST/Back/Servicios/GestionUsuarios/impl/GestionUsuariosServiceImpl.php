@@ -229,9 +229,7 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         return $usuario_mapping->feedback['resource'];
     }
 
-    function searchByParameters($mensaje){
-
-        $respuesta = '';
+    function searchByParameters($mensaje, $paginacion){
 
             $datosSearchParameters = array();
             if($this->usuario->dni_usuario===null){
@@ -244,18 +242,33 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
             }else{
                 $datosSearchParameters['usuario'] = $this->usuario->usuario;
             }
-            if($this->usuario->passwd_usuario===null){
-                $datosSearchParameters['passwd_usuario'] = '';
+
+            if($this->usuario->id_rol===null ||$this->usuario->id_rol==="0"){
+                $datosSearchParameters['id_rol'] = '';
             }else{
-                $datosSearchParameters['passwd_usuario'] = $this->usuario->passwd_usuario;
+                $datosSearchParameters['id_rol'] = $this->usuario->id_rol;
             }
 
             $datosSearchParameters['borrado_usuario'] = 0;
 
 
         $usuario_mapping = new UsuarioMapping();
-        $usuario_mapping->searchByParameters($datosSearchParameters);
-        $returnBusquedas = new ReturnBusquedas($usuario_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+        $usuario_mapping->searchByParameters($datosSearchParameters, $paginacion);
+        $datosRol = $this->searchForeignKeys();
+
+        $datosADevolver = array();
+        $datosUsuarioRol = array();
+        foreach($usuario_mapping->feedback['resource'] as $usuario){
+            foreach($datosRol as $rol){
+                if($usuario['id_rol'] == $rol['id_rol']){
+                    $datosUsuarioRol['usuario'] = $usuario;
+                    $datosUsuarioRol['rol'] = $rol;
+                    array_push($datosADevolver, $datosUsuarioRol);
+                }
+            }
+        }
+
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
                             sizeof($usuario_mapping->feedback['resource']), $paginacion->inicio);
         return $returnBusquedas;
     }
@@ -282,6 +295,12 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
         return $respuesta;
 
+    }
+
+    function numberFindParameters($datosSearchParameters){
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->numberFindParameters($datosSearchParameters);
+        return $usuario_mapping->feedback['resource'];
     }
 
 }

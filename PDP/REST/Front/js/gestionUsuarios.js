@@ -221,9 +221,11 @@ function buscarUsuarioAjaxPromesa(numeroPagina, tamanhoPagina, accion){
       }
 
       var data = {
+          controlador : 'GestionUsuarios',
+          action: 'searchByParameters',
           dni_usuario : $('#dniUsuario').val(),
           usuario : $('#loginUsuario').val(),
-          rol : rolUser,
+          id_rol : rolUser.id_rol,
           inicio : calculaInicio(numeroPagina, tamanhoPaginaUsuario),
           tamanhoPagina : tamanhoPaginaUsuario
         }
@@ -289,7 +291,7 @@ function buscarUsuarioAjaxPromesa(numeroPagina, tamanhoPagina, accion){
         action : 'searchByParameters',
         dni_usuario : '',
 	    usuario : getCookie('usuario'),
-	    rol : rol,
+	    id_rol : rol.id_rol,
 	    inicio : 0,
 	    tamanhoPagina : 1
 	}
@@ -303,7 +305,7 @@ function buscarUsuarioAjaxPromesa(numeroPagina, tamanhoPagina, accion){
       data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'BUSCAR_USUARIO_CORRECTO') {
+        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -346,16 +348,16 @@ function editarRolUsuarioAjaxPromesa(){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
 
-    var rolEntity = escogeRol($('#selectRoles').val());
+    var idRol = escogeRol($('#selectRoles').val());
 
     var data = {
         controlador : 'GestionUsuarios',
-        action : 'editRol',
+        action : 'editRolUsuario',
         dni_usuario : $('#dniUsuario').val(),
         usuario : $('#loginUsuario').val(),
         passwd_usuario : "",
         borrado_usuario : $('#borradoUsuario').val(),
-        rol : rolEntity,
+        id_rol : idRol,
     }
 
     $.ajax({
@@ -365,7 +367,7 @@ function editarRolUsuarioAjaxPromesa(){
         data: data,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'EDIT_ROL_USUARIO_COMPLETO') {
+          if (res.code != 'EDIT_USUARIO_COMPLETO') {
             reject(res);
           }
           resolve(res);
@@ -446,7 +448,7 @@ async function buscarUsuario(numeroPagina, tamanhoPagina, accion, paginadorCread
 
         var datosBusquedas = [];
         datosBusquedas.push('usuarioBuscar: ' +res.resource.datosBusquedas['usuario']);
-        datosBusquedas.push('rol: ' +res.resource.datosBusquedas['rol']['id_rol']);
+        datosBusquedas.push('rol: ' +res.resource.datosBusquedas['id_rol']);
         guardarParametrosBusqueda(datosBusquedas);
         var numResults = res.resource.numResultados + '';
         var totalResults = res.resource.tamanhoTotal + '';
@@ -678,7 +680,7 @@ function detalleUsuarioAjaxPromesa(){
         controlador : 'GestionUsuarios',
         action : 'searchByParameters',
         usuario : $('#loginUsuario').val(),
-        rol : rol,
+        id_rol : rol.id_rol,
         inicio : 0,
         tamanhoPagina : 1
     }
@@ -690,7 +692,7 @@ function detalleUsuarioAjaxPromesa(){
       data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'BUSCAR_USUARIO_COMPLETO') {
+        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -780,6 +782,7 @@ function showBuscarUsuario() {
   $('#dniUsuario').attr('hidden', false);
   $('#labelActivo').attr('hidden', true);
   $('#esActivo').attr('hidden', true);
+  $('#labelRolName').attr('hidden', true);
 
 
   let campos = ["dniUsuario", "loginUsuario", "selectRoles", "esActivo"];
@@ -1023,21 +1026,26 @@ function construyeSelect(){
 	
 	$('#selectRoles').html('');
 
-	 var token = getCookie('tokenUsuario');
+	var token = getCookie('tokenUsuario');
+
+    var data = {
+        controlador : 'GestionRoles',
+        action :'searchAll'
+    }
 
     $.ajax({
-      method: "GET",
-      url: urlPeticionAjaxObtenerTodos,
-      contentType : "application/json",
-      dataType : 'json',
+      method: "POST",
+      url: urlPeticionAjaxListadoRoles,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'ROLES_LISTADOS') {
+        if (res.code != 'BUSQUEDA_ROL_CORRECTO') {
         	respuestaAjaxKO(res.code);
         }
         options = '<option selected value=0><label class="OPCION_DEFECTO_ROL">Selecciona el rol</label></option>';
         for(var i = 0; i< res.resource.length ; i++){
-					options += '<option value=' + res.resource[i].id_rol + '>' + res.resouce[i].nombre_rol + '</option>';
+					options += '<option value=' + res.resource[i].id_rol + '>' + res.resource[i].nombre_rol + '</option>';
 				}
 
 				$('#selectRoles').append(options);
@@ -1049,37 +1057,7 @@ function construyeSelect(){
 
 /**Funcion para montar los datos del rol **/
 function escogeRol(rolId){
-	var rol = "";
-
-	switch(rolId){
-		case "1":
-			rol = {
-			id_rol : 1,
-	    	nombre_rol : "Administrador",
-	    	descripcion_rol : "Contendrá a todos los responsables de administrar la aplicación",
-	    	borrado_rol : 0
-			}
-		break;
-		case "2": 
-			rol = {
-                id_rol : 2,
-                nombre_rol : "Usuario",
-                descripcion_rol : "Contendrá a todas las personas registradas en la aplicación",
-                borrado_rol : 0
-			}
-		break;
-		case "3":
-			rol = {
-			idRol : 3,
-	    	rolName : "Gestor",
-	    	rolDescription : "Contendrá a todos los gestores de planes y procedimientos de la aplicación",
-	    	borradoRol : 0
-			}
-		break;
-
-	}
-
-	return rol;
+	return rolId;
 }
 
 /**Función que rellenado los datos del formulario*/
@@ -1119,3 +1097,14 @@ function cambiarOnBlurCampos(onBlurNombreUsuario, onBlurRol) {
         $("selectRoles").attr('onblur', onBlurRol);
     }
 }
+
+$(document).ready(function() {
+    $("#form-modal").on('hidden.bs.modal', function() {
+        
+        let idElementoList = ["dniUsuario","loginUsuario"];
+
+        limpiarFormulario(idElementoList);
+        setLang(getCookie('lang'));
+    });
+
+});

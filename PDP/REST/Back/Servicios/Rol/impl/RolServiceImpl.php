@@ -140,6 +140,16 @@ class RolServiceImpl extends ServiceBase implements RolService {
 
     }
 
+    function searchAll() {
+
+        $rol_mapping = new RolMapping();
+        $rol_mapping -> searchAll();
+
+        return $rol_mapping->feedback['resource'];
+
+    }
+
+
     function numberFindAll(){
         $rol_mapping = new RolMapping();
         $rol_mapping -> numberFindAll();

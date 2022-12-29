@@ -95,11 +95,16 @@ class GestionRolesController extends ControllerBase {
     }
 	
     function search() {
-
 		$this -> rol_service -> inicializarParametros();
-
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$respuesta = $this -> rol_service -> search($paginacion);
+
+		$this -> rellenarRespuesta('BUSQUEDA_ROL_CORRECTO', false, $respuesta);
+		$this -> getRespuesta($respuesta);
+    }
+
+	function searchAll() {
+		$respuesta = $this -> rol_service -> searchAll();
 
 		$this -> rellenarRespuesta('BUSQUEDA_ROL_CORRECTO', false, $respuesta);
 		$this -> getRespuesta($respuesta);
