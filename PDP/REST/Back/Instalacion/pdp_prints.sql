@@ -132,8 +132,8 @@ CREATE TABLE `noticia` (
   `id_noticia` int(11) NOT NULL AUTO_INCREMENT,
   `titulo_noticia` varchar(255) NOT NULL,
   `contenido_noticia` text NOT NULL,
-  `fecha_noticia` date NOT NULL
-   PRIMARY KEY (`id_noticia`)
+  `fecha_noticia` date NOT NULL,
+  PRIMARY KEY (`id_noticia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `noticia` WRITE;
@@ -152,7 +152,7 @@ CREATE TABLE `parametro` (
   `parametro_formula` varchar(56) NOT NULL,
   `descripcion_parametro` text NOT NULL,
   `id_proceso` int(11) NOT NULL,
-   PRIMARY KEY (`id_parametro`)
+  PRIMARY KEY (`id_parametro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
