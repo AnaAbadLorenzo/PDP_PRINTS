@@ -5,6 +5,7 @@
     include_once './Servicios/GestionPersonas/GestionPersonasService.php';
     include_once './Mapping/PersonaMapping.php';
     include_once './Mapping/UsuarioMapping.php';
+    include_once './Mapping/RolMapping.php';
 
 class GestionPersonasServiceImpl extends ServiceBase implements GestionPersonasService {
 
