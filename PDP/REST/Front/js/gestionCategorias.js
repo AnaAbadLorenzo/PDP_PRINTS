@@ -39,7 +39,7 @@ function anadirCategoriaAjaxPromesa(){
   
       if(accion == "buscarModal"){
 
-        var data = {
+        var categoria = {
             controlador: 'GestionCategorias',
             action: 'searchByParameters',
             nombre_categoria : $('#nombreCategoria').val(),
@@ -69,7 +69,7 @@ function anadirCategoriaAjaxPromesa(){
             var dniResponsable = getCookie('dniResponsable');
           }
   
-        var data = {
+        var categoria = {
             controlador: 'GestionCategorias',
             action: 'searchByParameters',
             nombre_categoria : nombreCat,
@@ -215,7 +215,7 @@ function anadirCategoriaAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var data = {
+      var categoria = {
         inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
         tamanhoPagina : tamanhoPaginaCategoria
       }
@@ -265,26 +265,28 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /**Función para ver en detalle un objetivo con ajax y promesas*/
-  function detalleObjetivoAjaxPromesa(){
+  function detalleCategoriaAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
       var data = {
-        nombreObjetivo : $('#nombreObjetivo').val(),
-        descripObjetivo : $('#descripcionObjetivo').val(),
+        controlador: 'GestionCategorias',
+        action: 'searchByParameters',
+        nombre_categoria : $('#nombreCategoria').val(),
+        descripcion_categoria : $('#descripcionCategoria').val(),
+        dni_responsable: $('#dniResponsable').val(),
         inicio : 0,
         tamanhoPagina : 1
       }
   
         $.ajax({
         method: "POST",
-        url: urlPeticionAjaxListarObjetivo,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        url: urlPeticionAjaxListarCategoria,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: categoria,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'OBJETIVO_ENCONTRADO') {
+          if (res.code != 'BUSQUEDA_CATEGORIA_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -296,31 +298,29 @@ function anadirCategoriaAjaxPromesa(){
   
   
   /**Función para reactivar un objetivo con ajax y promesas*/
-  function reactivarObjetivosAjaxPromesa(){
+  function reactivarCategoriasAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var objetivo = {
-        idObjetivo : $("input[name=idObjetivo]").val(),
-        nombreObjetivo : $('#nombreObjetivo').val(),
-        descripObjetivo : $('#descripcionObjetivo').val(),
-        borradoObjetivo : 0
-      }
-  
-      var data = {
-        usuario: getCookie('usuario'),
-        objetivo : objetivo
+      var categoria = {
+        controlador: 'GestionCategorias',
+        action: 'reactivar',
+        id_categoria : $("input[name=idCategoria]").val(),
+        nombre_categoria : $('#nombreCategoria').val(),
+        descripcion_categoria : $('#descripcionCategoria').val(),
+        dni_responsable : $('#dniResponsable').val(),
+        id_padre_categoria : $('#categoriaPadre').val(),
+        usuario : getCookie('usuario'),
       }
   
         $.ajax({
         method: "POST",
-        url: urlPeticionAjaxReactivarObjetivo,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        url: urlPeticionAjaxReactivarCategoria,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: categoria,
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'OBJETIVO_REACTIVADO') {
+          if (res.code != 'REACTIVAR_CATEGORIA_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -331,41 +331,40 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /* Función para obtener los objetivos del sistema */
-  async function cargarObjetivos(numeroPagina, tamanhoPagina, paginadorCreado){
-    await cargarObjetivosAjaxPromesa(numeroPagina, tamanhoPagina)
+  async function cargarCategorias(numeroPagina, tamanhoPagina, paginadorCreado){
+    await cargarCategoriasAjaxPromesa(numeroPagina, tamanhoPagina)
       .then((res) => {
-  
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
           var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
         }
   
-        $("#datosObjetivo").html("");
+        $("#datosCategoria").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
   
-        for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('OBJETIVO', res.data.listaBusquedas[i]);
-            $("#datosObjetivo").append(tr);
+        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('CATEGORIA', res.resource.listaBusquedas[i]);
+            $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2});
+        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
           $("#checkboxColumnas").append(div);
           $("#paginacion").append(textPaginacion);
   
           if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarObjetivos', 'OBJETIVO');
+            paginador(totalResults, 'cargarCategorias', 'CATEGORIA');
           }
   
           if(numeroPagina == 0){
@@ -386,78 +385,75 @@ function anadirCategoriaAjaxPromesa(){
       });
   }
   
-  /** Funcion añadir objetivo **/
-  async function addObjetivo(){
-    await anadirObjetivoAjaxPromesa()
+  /** Funcion añadir categoria **/
+  async function addCategoria(){
+    await anadirCategoriaAjaxPromesa()
     .then((res) => {
   
       $("#form-modal").modal('toggle');
-      respuestaAjaxOK("OBJETIVO_GUARDADO_OK", res.code);
+      respuestaAjaxOK("CATEGORIA_GUARDADA_OK", res.code);
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
       resetearFormulario("formularioGenerico", idElementoList);
       document.getElementById("modal").style.display = "block";
   
-      $('#nombreObjetivo').val(getCookie('nombreObjetivo'));
-      $('#descripcionObjetivo').val(getCookie('descripObjetivo'));
+      $('#nombreCategoria').val(getCookie('nombre_categoria'));
+      $('#descripcionCategoria').val(getCookie('descripcion_categoria'));
+      $('#dniResponsable').val(getCookie('dni_responsable'));
       buscarObjetivo(getCookie('numeroPagina'), tamanhoPaginaObjetivo, 'buscarPaginacion', 'PaginadorNo');
       setLang(getCookie('lang'));
   
     }).catch((res) => {
         $("#form-modal").modal('toggle');
-  
         respuestaAjaxKO(res.code);
-  
-        let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
         resetearFormulario("formularioGenerico", idElementoList);
-  
         setLang(getCookie('lang'));
-  
         document.getElementById("modal").style.display = "block";
     });
   }
   
   
-  /** Funcion buscar objetivo **/
-  async function buscarObjetivo(numeroPagina, tamanhoPagina, accion, paginadorCreado){
-    await buscarObjetivoAjaxPromesa(numeroPagina, tamanhoPagina,accion)
+  /** Funcion buscar categoria **/
+  async function buscarCategoria(numeroPagina, tamanhoPagina, accion, paginadorCreado){
+    await buscarCategoriaAjaxPromesa(numeroPagina, tamanhoPagina,accion)
     .then((res) => {
-        cargarPermisosFuncObjetivo();
+        cargarPermisosFuncCategoria();
         if($('#form-modal').is(':visible')) {
            $("#form-modal").modal('toggle');
         };
-        guardarParametrosBusqueda(res.data.datosBusqueda);
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        guardarParametrosBusqueda(res.resource.datosBusqueda);
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
           var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
         }
   
-        $("#datosObjetivo").html("");
+        $("#datosCategoria").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('OBJETIVO', res.data.listaBusquedas[i]);
-            $("#datosObjetivo").append(tr);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('CATEGORIA', res.resource.listaBusquedas[i]);
+            $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2});
+        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
   
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
   
         if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'buscarObjetivo', 'OBJETIVO');
+            paginador(totalResults, 'buscarCategoria', 'CATEGORIA');
         }
   
         if(numeroPagina == 0){
@@ -472,10 +468,10 @@ function anadirCategoriaAjaxPromesa(){
   
   
     }).catch((res) => {
-        cargarPermisosFuncObjetivo();
+        cargarPermisosFuncCategoria();
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -486,22 +482,23 @@ function anadirCategoriaAjaxPromesa(){
   
   /*Función que refresca la tabla por si hay algún cambio en BD */
   async function refrescarTabla(numeroPagina, tamanhoPagina){
-    await cargarObjetivosAjaxPromesa(numeroPagina, tamanhoPagina)
+    await cargarCategoriasAjaxPromesa(numeroPagina, tamanhoPagina)
     .then((res) => {
-        cargarPermisosFuncObjetivo();
-        setCookie('nombreObjetivo', '');
-        setCookie('descripObjetivo', '');
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        cargarPermisosFuncCategoria();
+        setCookie('nombre_categoria', '');
+        setCookie('descripcion_categoria', '');
+        setCookie('dni_responsable', '');
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
@@ -510,21 +507,21 @@ function anadirCategoriaAjaxPromesa(){
         document.getElementById('cabecera').style.display = "block";
         document.getElementById('cabeceraEliminados').style.display = "none";
   
-        $("#datosObjetivo").html("");
+        $("#datosCategoria").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('OBJETIVO', res.data.listaBusquedas[i]);
-            $("#datosObjetivo").append(tr);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('CATEGORIA', res.resource.listaBusquedas[i]);
+            $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2});
+        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setCookie('nombreObjetivo', '');
         setCookie('descripObjetivo', '');
   
-        paginador(totalResults, 'cargarObjetivos', 'OBJETIVO');
+        paginador(totalResults, 'cargarCategorias', 'CATEGORIA');
   
         if(numeroPagina == 0){
           $('#' + (numeroPagina+1)).addClass("active");
@@ -550,41 +547,42 @@ function anadirCategoriaAjaxPromesa(){
   async function buscarEliminados(numeroPagina, tamanhoPagina, paginadorCreado){
     await buscarEliminadosAjaxPromesa(numeroPagina, tamanhoPagina)
     .then((res) => {
-        cargarPermisosFuncObjetivo();
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        cargarPermisosFuncCategoria();
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
           $('#itemPaginacion').attr('hidden', true);
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
           $('#itemPaginacion').attr('hidden', false);
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           document.getElementById('cabecera').style.display = "none";
           document.getElementById('cabeceraEliminados').style.display = "block";
         }
   
-        $("#datosObjetivo").html("");
+        $("#datosCategoria").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFilaEliminados('OBJETIVO', res.data.listaBusquedas[i]);
-            $("#datosObjetivo").append(tr);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFilaEliminados('CATEGORIA', res.resource.listaBusquedas[i]);
+            $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPTION_OBJETIVO_COLUMN:2});
+        var div = createHideShowColumnsWindow({DESCRIPTION_OBJETIVO_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
   
-        setCookie('nombreObjetivo', '');
-        setCookie('descripObjetivo', '');
+        setCookie('nombre_categoria', '');
+        setCookie('descripcion_categoria', '');
+        setCookie('dni_responsable', '');
   
         if(paginadorCreado != 'PaginadorCreado'){
-           paginador(totalResults, 'buscarEliminadosObjetivo', 'OBJETIVO');
+           paginador(totalResults, 'buscarEliminadosCategoria', 'CATEGORIA');
         }
   
   
@@ -606,15 +604,16 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Función que visualiza un objetivo**/
-  async function detalleObjetivo(){
-    await detalleObjetivoAjaxPromesa()
+  async function detalleCategoria(){
+    await detalleCategoriaAjaxPromesa()
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
       resetearFormulario("formularioGenerico", idElementoList);
-      $('#nombreObjetivo').val(getCookie('nombreObjetivo'));
-      $('#descripcionObjetivo').val(getCookie('descripObjetivo'));
+      $('#nombreCategoria').val(getCookie('nombre_categoria'));
+      $('#descripcionCategoria').val(getCookie('descripcion_categoria'));
+      $('#dniResponsable').val(getCookie('dni_responsable'));
       setLang(getCookie('lang'));
   
     }).catch((res) => {
@@ -622,7 +621,7 @@ function anadirCategoriaAjaxPromesa(){
   
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -632,19 +631,20 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Función que edita un objetivo **/
-  async function editObjetivo(){
-    await editarObjetivoAjaxPromesa()
+  async function editCategoria(){
+    await editarCategoriaAjaxPromesa()
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      respuestaAjaxOK("OBJETIVO_EDITADO_OK", res.code);
+      respuestaAjaxOK("CATEGORIA_EDITADA_OK", res.code);
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
       resetearFormulario("formularioGenerico", idElementoList);
       document.getElementById("modal").style.display = "block";
-      $('#nombreObjetivo').val(getCookie('nombreObjetivo'));
-      $('#descripcionObjetivo').val(getCookie('descripObjetivo'));
-      buscarObjetivo(getCookie('numeroPagina'), tamanhoPaginaObjetivo, 'buscarPaginacion', 'PaginadorCreado');
+      $('#nombreCategoria').val(getCookie('nombre_categoria'));
+      $('#descripcionCategoria').val(getCookie('descripcion_categoria'));
+      $('#dniResponsable').val(getCookie('dni_responsable'));
+      buscarCategoria(getCookie('numeroPagina'), tamanhoPaginaCategoria, 'buscarPaginacion', 'PaginadorCreado');
       setLang(getCookie('lang'));
   
     }).catch((res) => {
@@ -652,7 +652,7 @@ function anadirCategoriaAjaxPromesa(){
   
        respuestaAjaxKO(res.code);
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+       let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
       resetearFormulario("formularioGenerico", idElementoList);
   
       setLang(getCookie('lang'));
@@ -664,18 +664,18 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Función que elimina un objetivo **/
-  async function deleteObjetivo(){
-    await eliminarObjetivoAjaxPromesa()
+  async function deleteCategoria(){
+    await eliminarCategoriaAjaxPromesa()
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      respuestaAjaxOK("OBJETIVO_ELIMINADO_OK", res.code);
+      respuestaAjaxOK("CATEGORIA_ELIMINADA_OK", res.code);
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
       resetearFormulario("formularioGenerico", idElementoList);
       document.getElementById("modal").style.display = "block";
   
-      refrescarTabla(0, tamanhoPaginaObjetivo);
+      refrescarTabla(0, tamanhoPaginaCategoria);
       setLang(getCookie('lang'));
   
     }).catch((res) => {
@@ -683,7 +683,7 @@ function anadirCategoriaAjaxPromesa(){
        $("#form-modal").modal('toggle');
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -695,26 +695,26 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /*Función que reactiva los eliminados de la tabla de objetivos*/
-  async function reactivarObjetivo(){
-    await reactivarObjetivosAjaxPromesa()
+  async function reactivarCategoria(){
+    await reactivarCategoriasAjaxPromesa()
     .then((res) => {
   
-      cargarPermisosFuncObjetivo();
+      cargarPermisosFuncCategoria();
       $("#form-modal").modal('toggle');
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
       resetearFormulario("formularioGenerico", idElementoList);
   
-      respuestaAjaxOK("OBJETIVO_REACTIVADO_OK", res.code);
+      respuestaAjaxOK("CATEGORIA_REACTIVADA_OK", res.code);
       document.getElementById("modal").style.display = "block";
   
-      buscarEliminados(0, tamanhoPaginaObjetivo, 'PaginadorNo');
+      buscarEliminados(0, tamanhoPaginaCategoria, 'PaginadorNo');
       setLang(getCookie('lang'));
   
       }).catch((res) => {
   
         $("#form-modal").modal('toggle');
-        let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
         resetearFormulario("formularioGenerico", idElementoList);
         respuestaAjaxKO(res.code);
         setLang(getCookie('lang'));
@@ -723,19 +723,19 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Funcion para mostrar el formulario para añadir un objetivo **/
-  function showAddObjetivos() {
-    cambiarFormulario('ADD_OBJETIVO', 'javascript:addObjetivo();', 'return comprobarAddObjetivo();');
-    cambiarOnBlurCampos('return comprobarNombreObjetivo(\'nombreObjetivo\', \'errorFormatoNombreObjetivo\', \'nombreObjetivo\')', 
-        'return comprobarDescripcionObjetivo(\'descripcionObjetivo\', \'errorFormatoDescripcionObjetivo\', \'descripcionObjetivo\')');
-    cambiarIcono('images/add.png', 'ICONO_ADD', 'iconoAddObjetivo', 'Añadir');
+  function showAddCategorias() {
+    cambiarFormulario('ADD_CATEGORIA', 'javascript:addCategoria();', 'return comprobarAddCategoria();');
+    cambiarOnBlurCampos('return comprobarNombreCategoria(\'nombreCategoria\', \'errorFormatoNombreCategoria\', \'nombreCategoria\')', 
+        'return comprobarDescripcionCategoria(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')');
+    cambiarIcono('images/add.png', 'ICONO_ADD', 'iconoAddCategoria', 'Añadir');
   
     $('#subtitulo').attr('hidden', true);
-    $('#labelNombreObjetivo').attr('hidden', true);
-    $('#labelDescripcionObjetivo').attr('hidden', true);
-    $('#labelNombreObjetivo').attr('hidden', true);
+    $('#labelNombreCategoria').attr('hidden', true);
+    $('#labelDescripcionCategoria').attr('hidden', true);
+    $('#labelDniResponsable').attr('hidden', true);
   
-    let campos = ["nombreObjetivo", "descripcionObjetivo"];
-    let obligatorios = ["obligatorioNombreObjetivo", "obligatorioDescripcionObjetivo"];
+    let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+    let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
     eliminarReadonly(campos);
     mostrarObligatorios(obligatorios);
     habilitaCampos(campos);
@@ -745,18 +745,18 @@ function anadirCategoriaAjaxPromesa(){
   
   /** Funcion para buscar un objetivo **/
   function showBuscarObjetivo() {
-    cambiarFormulario('SEARCH_OBJETIVO', 'javascript:buscarObjetivo(0,' + tamanhoPaginaObjetivo + ', \'buscarModal\'' + ',\'PaginadorNo\');', 'return comprobarBuscarObjetivo();');
-    cambiarOnBlurCampos('return comprobarNombreObjetivoSearch(\'nombreObjetivo\', \'errorFormatoNombreObjetivo\', \'nombreObjetivo\')', 
-        'return comprobarDescripcionObjetivoSearch(\'descripcionObjetivo\', \'errorFormatoDescripcionObjetivo\', \'descripcionObjetivo\')');
-    cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchObjetivo', 'Buscar');
+    cambiarFormulario('SEARCH_CATEGORIA', 'javascript:buscarCategoria(0,' + tamanhoPaginaCategoria + ', \'buscarModal\'' + ',\'PaginadorNo\');', 'return comprobarBuscarCategoria();');
+    cambiarOnBlurCampos('return comprobarNombreCategoriaSearch(\'nombreCategoria\', \'errorFormatoNombreCategoria\', \'nombreCategoria\')', 
+        'return comprobarDescripcionCategoriaSearch(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')');
+    cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchCategoria', 'Buscar');
   
     $('#subtitulo').attr('hidden', true);
-    $('#labelNombreObjetivo').attr('hidden', true);
-    $('#labelDescripcionObjetivo').attr('hidden', true);
-    $('#labelNombreObjetivo').attr('hidden', true);
+    $('#labelNombreCategoria').attr('hidden', true);
+    $('#labelDescripcionCategoria').attr('hidden', true);
+    $('#labelDniResponsable').attr('hidden', true);
   
-    let campos = ["nombreObjetivo", "descripcionObjetivo"];
-    let obligatorios = ["obligatorioNombreObjetivo", "obligatorioDescripcionObjetivo"];
+    let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+    let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
     eliminarReadonly(campos);
     ocultarObligatorios(obligatorios);
     habilitaCampos(campos);
@@ -765,19 +765,20 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Funcion para visualizar un objetivo **/
-  function showDetalle(nombreObjetivo, descripcionObjetivo) {
+  function showDetalle(nombreCategoria, descripcionCategoria, usuarioResponsable) {
   
-      cambiarFormulario('DETAIL_OBJECTIVE', 'javascript:detalleObjetivo();', '');
+      cambiarFormulario('DETAIL_CATEGORIA', 'javascript:detalleCategoria();', '');
       cambiarIcono('images/close2.png', 'ICONO_CERRAR', 'iconoCerrar', 'Detalle');
   
-      $('#labelNombreObjetivo').removeAttr('hidden');
-      $('#labelDescripcionObjetivo').removeAttr('hidden');
+      $('#labelNombreCategoria').attr('hidden', false);
+      $('#labelDescripcionCategoria').attr('hidden', false);
+      $('#labelDniResponsable').attr('hidden', false);
       $('#subtitulo').attr('hidden', '');
   
-      rellenarFormulario(nombreObjetivo, descripcionObjetivo);
+      rellenarFormulario(nombreCategoria, descripcionCategoria, usuarioResponsable);
   
-      let campos = ["nombreObjetivo", "descripcionObjetivo"];
-      let obligatorios = ["obligatorioNombreObjetivo", "obligatorioDescripcionObjetivo"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
       deshabilitaCampos(campos);
@@ -785,53 +786,54 @@ function anadirCategoriaAjaxPromesa(){
   
   }
   
-  /** Funcion para editar un objetivo **/
-  function showEditar(nombreObjetivo, descripcionObjetivo, idObjetivo) {
+  /** Funcion para editar un Categoria **/
+  function showEditar(nombreCategoria, descripcionCategoria, usuarioResponsable, idCategoria) {
   
-      cambiarFormulario('EDIT_OBJETIVO', 'javascript:editObjetivo();', 'return comprobarEditObjetivo();');
-      cambiarOnBlurCampos('return comprobarNombreObjetivo(\'nombreObjetivo\', \'errorFormatoNombreObjetivo\', \'nombreObjetivo\')', 
-        'return comprobarDescripcionObjetivo(\'descripcionObjetivo\', \'errorFormatoDescripcionObjetivo\', \'descripcionObjetivo\')'
+      cambiarFormulario('EDIT_CATEGORIA', 'javascript:editCategoria();', 'return comprobarEditCategoria();');
+      cambiarOnBlurCampos('return comprobarNombreCategoria(\'nombreCategoria\', \'errorFormatoNombreCategoria\', \'nombreCategoria\')', 
+        'return comprobarDescripcionCategoria(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')'
        );
-      cambiarIcono('images/edit.png', 'ICONO_EDIT', 'iconoEditarObjetivo', 'Editar');
+      cambiarIcono('images/edit.png', 'ICONO_EDIT', 'iconoEditarCategoria', 'Editar');
   
       $('#subtitulo').attr('hidden', true);
-      $('#labelNombreObjetivo').attr('hidden', true);
-      $('#labelDescripcionObjetivo').attr('hidden', true);
-      $('#labelNombreObjetivo').attr('hidden', true);
+      $('#labelNombreCategoria').attr('hidden', true);
+      $('#labelDescripcionCategoria').attr('hidden', true);
+      $('#labelDniResponsable').attr('hidden', true);
   
-      rellenarFormulario(nombreObjetivo, descripcionObjetivo);
-      insertacampo(document.formularioGenerico,'idObjetivo', idObjetivo);
+      rellenarFormulario(nombreCategoria, descripcionCategoria, usuarioResponsable);
+      insertacampo(document.formularioGenerico,'idCategoria', idCategoria);
   
-      let campos = ["nombreObjetivo", "descripcionObjetivo"];
-      let obligatorios = ["obligatorioNombreObjetivo", "obligatorioDescripcionObjetivo"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       eliminarReadonly(campos);
       mostrarObligatorios(obligatorios);
       habilitaCampos(campos);
-      deshabilitaCampos(["nombreObjetivo"]);
-      anadirReadonly(["nombreObjetivo"]);
+      deshabilitaCampos(["nombreCategoria"]);
+      anadirReadonly(["nombreCategoria"]);
       setLang(getCookie('lang'));
   
   }
   
-  /** Función para eliminar un objetivo **/
-  function showEliminar(nombreObjetivo, descripcionObjetivo , idObjetivo) {
+  /** Función para eliminar un Categoria **/
+  function showEliminar(nombreCategoria, descripcionCategoria , usuarioResponsable, idCategoria) {
   
-      cambiarFormulario('DELETE_OBJETIVO', 'javascript:deleteObjetivo();', '');
+      cambiarFormulario('DELETE_CATEGORIA', 'javascript:deleteCategoria();', '');
       cambiarIcono('images/delete.png', 'ICONO_ELIMINAR', 'iconoEliminar', 'Eliminar');
   
-      $('#labelNombreObjetivo').removeAttr('hidden');
-      $('#labelDescripcionObjetivo').removeAttr('hidden');
+      $('#labelNombreCategoria').removeAttr('hidden');
+      $('#labelDescripcionCategoria').removeAttr('hidden');
+      $('#labelDniResponsable').removeAttr('hidden');
       $('#subtitulo').removeAttr('class');
       $('#subtitulo').empty();
       $('#subtitulo').attr('class', 'SEGURO_ELIMINAR_OBJ');
       $('#subtitulo').attr('hidden', false);
   
   
-      rellenarFormulario(nombreObjetivo, descripcionObjetivo);
-      insertacampo(document.formularioGenerico,'idObjetivo', idObjetivo);
+      rellenarFormulario(nombreCategoria, descripcionCategoria, usuarioResponsable);
+      insertacampo(document.formularioGenerico,'idCategoria', idCategoria);
   
-      let campos = ["nombreObjetivo", "descripcionObjetivo"];
-      let obligatorios = ["obligatorioNombreObjetivo", "obligatorioDescripcionObjetivo"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
       deshabilitaCampos(campos);
@@ -839,25 +841,26 @@ function anadirCategoriaAjaxPromesa(){
   
   }
   
-  /** Función para reactivar un objetivo **/
-  function showReactivar(nombreObjetivo, descripcionObjetivo , idObjetivo) {
+  /** Función para reactivar un Categoria **/
+  function showReactivar(nombreCategoria, descripcionCategoria , usuarioResponsable, idCategoria) {
   
-      cambiarFormulario('REACTIVATE_OBJETIVO', 'javascript:reactivarObjetivo();', '');
+      cambiarFormulario('REACTIVATE_CATEGORIA', 'javascript:reactivarCategoria();', '');
       cambiarIcono('images/reactivar2.png', 'ICONO_REACTIVAR', 'iconoReactivar', 'Reactivar');
   
-      $('#labelNombreObjetivo').removeAttr('hidden');
-      $('#labelDescripcionObjetivo').removeAttr('hidden');
+      $('#labelNombreCategoria').removeAttr('hidden');
+      $('#labelDescripcionCategoria').removeAttr('hidden');
+      $('#labelDniResponsable').removeAttr('hidden');
       $('#subtitulo').removeAttr('class');
       $('#subtitulo').empty();
       $('#subtitulo').attr('class', 'SEGURO_REACTIVAR_OBJ');
       $('#subtitulo').attr('hidden', false);
   
   
-      rellenarFormulario(nombreObjetivo, descripcionObjetivo);
-      insertacampo(document.formularioGenerico,'idObjetivo', idObjetivo);
+      rellenarFormulario(nombreCategoria, descripcionCategoria , usuarioResponsable);
+      insertacampo(document.formularioGenerico,'idCategoria', idCategoria);
   
-      let campos = ["nombreObjetivo", "descripcionObjetivo"];
-      let obligatorios = ["obligatorioNombreObjetivo", "obligatorioDescripcionObjetivo"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
       deshabilitaCampos(campos);
@@ -866,39 +869,40 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /**Función para cambiar onBlur de los campos*/
-  function cambiarOnBlurCampos(onBlurNombreObjetivo, onBlurDescripcionObjetivo) {
+  function cambiarOnBlurCampos(onBlurNombreCategoria, onBlurDescripcionCategoria) {
   
-      if (onBlurNombreObjetivo != ''){
-          $("#nombreObjetivo").attr('onblur', onBlurNombreObjetivo);
+      if (onBlurNombreCategoria != ''){
+          $("#nombreCategoria").attr('onblur', onBlurNombreCategoria);
       }
   
-      if (onBlurDescripcionObjetivo != ''){
-          $("#descripcionObjetivo").attr('onblur', onBlurDescripcionObjetivo);
+      if (onBlurDescripcionCategoria != ''){
+          $("#descripcionCategoria").attr('onblur', onBlurDescripcionCategoria);
       }
   }
   
   /**Función que rellenado los datos del formulario*/
-  function rellenarFormulario(nombreObjetivo, descripcionObjetivo) {
+  function rellenarFormulario(nombreCategoria, descripcionCategoria) {
   
-      $("#nombreObjetivo").val(nombreObjetivo);
-      $("#descripcionObjetivo").val(descripcionObjetivo); 
+      $("#nombreCategoria").val(nombreCategoria);
+      $("#descripcionCategoria").val(descripcionCategoria); 
+      $("#dniResponsable").val(dniResponsable); 
   
   }
   
   /** Función para gestionar los iconos dependiendo de los permisos de los usuarios **/
-  function gestionarPermisosObjetivo(idElementoList) {
+  function gestionarPermisosCategoria(idElementoList) {
     document.getElementById('cabecera').style.display = "none";
     document.getElementById('tablaDatos').style.display = "none";
     document.getElementById('filasTabla').style.display = "none";
     $('#itemPaginacion').attr('hidden', true);
   
     idElementoList.forEach( function (idElemento) {
-      switch(idElemento){
+      switch(idElemento.nombre_accion){
         case "Añadir":
-          $('#btnAddObjetivo').attr('src', 'images/add3.png');
-          $('#btnAddObjetivo').css("cursor", "pointer");
-          $('#divAddObjetivo').attr("data-toggle", "modal");
-          $('#divAddObjetivo').attr("data-target", "#form-modal");
+          $('#btnAddCategoria').attr('src', 'images/add3.png');
+          $('#btnAddCategoria').css("cursor", "pointer");
+          $('#divAddCategoria').attr("data-toggle", "modal");
+          $('#divAddCategoria').attr("data-target", "#form-modal");
         break;
   
         case "Modificar" : 
@@ -916,13 +920,13 @@ function anadirCategoriaAjaxPromesa(){
         break;
   
         case 'Listar' :
-          $('#btnListarObjetivos').attr('src', 'images/search3.png');
+          $('#btnListarCategorias').attr('src', 'images/search3.png');
           $('#btnSearchDelete').attr('src', 'images/searchDelete3.png');
-          $('#btnListarObjetivos').css("cursor", "pointer");
+          $('#btnListarCategorias').css("cursor", "pointer");
           $('.iconoSearchDelete').css("cursor", "pointer");
-          $('#divSearchDelete').attr("onclick", "javascript:buscarEliminados(0,\'tamanhoPaginaObjetivo\', \'PaginadorNo\')");
-          $('#divListarObjetivos').attr("data-toggle", "modal");
-          $('#divListarObjetivos').attr("data-target", "#form-modal");
+          $('#divSearchDelete').attr("onclick", "javascript:buscarEliminados(0,\'tamanhoPaginaCategoria\', \'PaginadorNo\')");
+          $('#divListarCategorias').attr("data-toggle", "modal");
+          $('#divListarCategorias').attr("data-target", "#form-modal");
           document.getElementById('cabecera').style.display = "block";
           document.getElementById('tablaDatos').style.display = "block";
           document.getElementById('filasTabla').style.display = "block";
@@ -957,14 +961,49 @@ function anadirCategoriaAjaxPromesa(){
       } 
       }); 
     setLang(getCookie('lang'));
-  }
+}
+
+/** Función para construír el select **/
+function construyeSelect(){
+	var options = "";
+	
+	$('#selectUsuarios').html('');
+
+	var token = getCookie('tokenUsuario');
+
+    var data = {
+        controlador : 'GestionUsuarios',
+        action :'searchAll'
+    }
+
+    $.ajax({
+      method: "POST",
+      url: urlPeticionAjaxListadoUsuarios,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
+      headers: {'Authorization': token},
+      }).done(res => {
+        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
+        	respuestaAjaxKO(res.code);
+        }
+        options = '<option selected value=0><label class="OPCION_DEFECTO_USUARIO">Selecciona el usuario</label></option>';
+        for(var i = 0; i< res.resource.length ; i++){
+					options += '<option value=' + res.resource[i].dni_usuario + '>' + res.resource[i].usuario + '</option>';
+				}
+
+				$('#selectUsuarios').append(options);
+    		
+      }).fail( function( jqXHR ) {
+        errorFailAjax(jqXHR.status);
+      });
+}
   
   $(document).ready(function() {
     $("#form-modal").on('hidden.bs.modal', function() {
   
-      let idElementoErrorList = ["errorFormatoNombreObjetivo", "errorFormatoDescripcionObjetivo"];
+      let idElementoErrorList = ["errorFormatoNombreCategoria", "errorFormatoDescripcionCategoria"];
   
-      let idElementoList = ["nombreObjetivo", "descripcionObjetivo"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria"];
   
       limpiarFormulario(idElementoList);
       eliminarMensajesValidacionError(idElementoErrorList, idElementoList);

@@ -159,7 +159,7 @@ abstract class MappingBase{
 
 	function obtenerDatosClaveForanea($tabla){
 		$this->query = "SELECT * FROM ".$tabla;
-		$this->stmt = $this->conexion->prepare($this->query);
+		$this->stmt = $this->conn->prepare($this->query);
 		$this->get_results_from_query(array());
 		return $this->feedback;
 	}

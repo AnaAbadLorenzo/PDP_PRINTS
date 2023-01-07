@@ -37,6 +37,7 @@
     modalCambioPass();cargarIdioma();includeFooter();setLang('');
 	await cargarObjetivos(0, tamanhoPaginaObjetivo, 'PaginadorNo');
 	await cargarPermisosFuncObjetivo();
+    await construyeSelect();
 	ejecutaFuncion(function(){compruebaFuncionalidadesPermisos('CATEGORIA')},30000);
   })();">  
 	<div id="topMenu"></div>
@@ -169,7 +170,7 @@
 	                      <div style="display:none" id="errorFormatoDescripcionObjetivo"></div>
 
                           <label class="labelForm DNI_RESPONSABLE" id="labelDniResponsable" hidden></label>
-	                      <input type="text" placeholder="DNI_RESPONSABLE" name="DNI_RESPONSABLE" id="dniResponsable" class="DNI_RESPONSABLE" onblur=""/>
+	                      <select id="selectUsuarios" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
 	                       <div class="obligatorio tooltip2" id="obligatorioDniResponsable">*
                   			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
               			  </div>

@@ -1206,10 +1206,10 @@ function comprobarAddEmpresa(){
 }
 
 /** Funcion que valida el formato del Nombre del objetivo **/
-function comprobarNombreObjetivo(idElemento, idElementoError, campo){
+function comprobarNombreCategoria(idElemento, idElementoError, campo){
 	document.getElementById(idElemento).style.borderWidth = "2px";
 
-	if(validaNoVacio(idElemento, idElementoError, campo) && comprobarLetrasNumerosEspacios(idElemento, idElementoError, campo) && comprobarTamañoMinimo(idElemento, 3, idElementoError, campo) && comprobarTamañoMaximo(idElemento, 48,  idElementoError, campo)) {
+	if(validaNoVacio(idElemento, idElementoError, campo) && comprobarLetrasNumerosEspacios(idElemento, idElementoError, campo) && comprobarTamañoMinimo(idElemento, 3, idElementoError, campo) && comprobarTamañoMaximo(idElemento, 128,  idElementoError, campo)) {
 		validacionOK(idElemento, idElementoError);
         return true;
 	} else{
@@ -1230,7 +1230,7 @@ function comprobarPuntuacionProcedimientoEjecutado(idElemento, idElementoError, 
 }
 
 /** Funcion que valida el formato de la descripcion del objetivo **/
-function comprobarDescripcionObjetivo(idElemento, idElementoError, campo){
+function comprobarDescripcionCategoria(idElemento, idElementoError, campo){
 	document.getElementById(idElemento).style.borderWidth = "2px";
 
 	if(validaNoVacio(idElemento, idElementoError, campo) && comprobarLetrasNumerosEspacios(idElemento, idElementoError, campo) && comprobarTamañoMinimo(idElemento, 3, idElementoError, campo)) {
@@ -1244,8 +1244,8 @@ function comprobarDescripcionObjetivo(idElemento, idElementoError, campo){
 
 /**Función que valida el editar de un objetivo **/
 function comprobarEditObjetivo(){
-	if(comprobarNombreObjetivo('nombreObjetivo', 'errorFormatoNombreObjetivo', 'nombreObjetivo') &&
-		comprobarDescripcionObjetivo('descripcionObjetivo', 'errorFormatoDescripcionObjetivo', 'descripcionObjetivo')){
+	if(comprobarNombreCategoria('nombreCategoria', 'errorFormatoNombreCategoria', 'nombreCategoria') &&
+		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria')){
 		return true;
 	}else{
 		return false;
@@ -1253,17 +1253,17 @@ function comprobarEditObjetivo(){
 }
 
 /**Función que valida el añadir de un objetivo **/
-function comprobarAddObjetivo(){
-	if(comprobarNombreObjetivo('nombreObjetivo', 'errorFormatoNombreObjetivo', 'nombreObjetivo') &&
-		comprobarDescripcionObjetivo('descripcionObjetivo', 'errorFormatoDescripcionObjetivo', 'descripcionObjetivo')){
+function comprobarAddCategoria(){
+	if(comprobarNombreCategoria('nombreCategoria', 'errorFormatoNombreCategoria', 'nombreCategoria') &&
+		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria')){
 		return true;
 	}else{
 		return false;
 	}
 }
 
-/**Función que valida el nombre del objetivo en el buscar*/
-function comprobarNombreObjetivoSearch(idElemento, idElementoError, campo) {
+/**Función que valida el nombre del Categoria en el buscar*/
+function comprobarNombreCategoriaSearch(idElemento, idElementoError, campo) {
 
 	document.getElementById(idElemento).style.borderWidth = "2px";
 		
@@ -1288,8 +1288,8 @@ function comprobarNombreObjetivoSearch(idElemento, idElementoError, campo) {
 	}
 }
 
-/**Función que valida la descripcion del objetivo en el buscar*/
-function comprobarDescripcionObjetivoSearch(idElemento, idElementoError, campo) {
+/**Función que valida la descripcion del Categoria en el buscar*/
+function comprobarDescripcionCategoriaSearch(idElemento, idElementoError, campo) {
 
 	document.getElementById(idElemento).style.borderWidth = "2px";
 		
@@ -1310,10 +1310,10 @@ function comprobarDescripcionObjetivoSearch(idElemento, idElementoError, campo) 
 	}
 }
 
-/**Función que valida el buscar de un objetivo **/
-function comprobarBuscarObjetivo(){
-	if(comprobarNombreObjetivoSearch('nombreObjetivo', 'errorFormatoNombreObjetivo', 'nombreObjetivo') &&
-		comprobarDescripcionObjetivoSearch('descripcionObjetivo', 'errorFormatoDescripcionObjetivo', 'descripcionObjetivo')){
+/**Función que valida el buscar de un Categoria **/
+function comprobarBuscarCategoria(){
+	if(comprobarNombreCategoriaSearch('nombreCategoria', 'errorFormatoNombreCategoria', 'nombreCategoria') &&
+		comprobarDescripcionCategoriaSearch('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria')){
 		return true;
 	}else{
 		return false;

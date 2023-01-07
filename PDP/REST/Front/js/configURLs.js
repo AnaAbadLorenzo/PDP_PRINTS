@@ -77,3 +77,4 @@ var urlPeticionAjaxListarCategoria = urlComun;
 var urlPeticionAjaxEditarCategoria = urlComun;
 var urlPeticionAjaxListadoCategorias = urlComun;
 var urlPeticionAjaxListarCategoriasEliminadas = urlComun;
+var urlPeticionAjaxReactivarCategoria = urlComun;
