@@ -8,6 +8,7 @@ class NoticiaModel extends ModelBase{
 	public $titulo_noticia;
 	public $contenido_noticia;
 	public $fecha_noticia;
+	public $mapping;
 
 	function __construct(){
 

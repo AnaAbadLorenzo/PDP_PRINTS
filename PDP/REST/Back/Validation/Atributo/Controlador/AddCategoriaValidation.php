@@ -14,7 +14,7 @@ class AddCategoriaValidation extends ValidacionesBase {
         $this->respuesta = '';
 
         $validacionAddCategoria = new CategoriaAtributos();
-        $atributosValidacion = array('nombre_categoria', 'descripcion_categoria');
+        $atributosValidacion = array('nombre_categoria', 'descripcion_categoria', 'dni_responsable');
         $atributos = $this ->recogerValoresAtributosPeticion($atributosValidacion);
         $validacionAddCategoria->validarAtributosCategoria($atributos);
 

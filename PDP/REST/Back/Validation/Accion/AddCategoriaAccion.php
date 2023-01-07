@@ -8,6 +8,8 @@ class AddCategoriaAccion extends ValidacionesBase{
 	
 	private $persona;
 	public $respuesta;
+    private $usuario;
+    private $categoria;
 
 	function __construct()
 	{
@@ -17,7 +19,6 @@ class AddCategoriaAccion extends ValidacionesBase{
 	}
 	function comprobarAddCategoria($datosAddCategoria){
 
-		
 		$this->existeDNIResponsable($datosAddCategoria);
 		$this->existeDNIUsuario($datosAddCategoria);
         $this->existeIdCategoriaPadre($datosAddCategoria);

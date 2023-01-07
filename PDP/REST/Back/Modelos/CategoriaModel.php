@@ -10,13 +10,11 @@ class CategoriaModel extends ModelBase{
 	public $borrado_categoria;
 	public $dni_responsable;
     public $id_padre_categoria;
-    public $dni_usuario;
-	//public $clavesForaneas;
+    public $usuario;
+	public $mapping;
 
 	function __construct(){
-		
 		$this->fillfields();
-		//$this->clavesForaneas = array('rol');
 	}
 
 	function fillfields(){
@@ -26,7 +24,7 @@ class CategoriaModel extends ModelBase{
 	  	$this->borrado_categoria = '';
 	  	$this->dni_responsable = '';
         $this->id_padre_categoria = '';
-	  	$this->dni_usuario = '';
+	  	$this->usuario = '';
 	  	
 
 		if ($_POST){
@@ -36,7 +34,7 @@ class CategoriaModel extends ModelBase{
 			if(isset($_POST['borrado_categoria'])) $this->borrado_categoria = $_POST['borrado_categoria'];
 			if(isset($_POST['dni_responsable'])) $this->dni_responsable = $_POST['dni_responsable'];		
             if(isset($_POST['id_padre_categoria'])) $this->id_padre_categoria = $_POST['id_padre_categoria'];
-			if(isset($_POST['dni_usuario'])) $this->dni_usuario = $_POST['dni_usuario'];
+			if(isset($_POST['usuario'])) $this->usuario = $_POST['usuario'];
 		}
 	}
 
@@ -50,7 +48,7 @@ class CategoriaModel extends ModelBase{
 
 
     function searchByIdPadre($tabla, $datosSearch){
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
 		//$datosSearch['foraneas'] = $this->clavesForaneas;
@@ -59,7 +57,7 @@ class CategoriaModel extends ModelBase{
 
     function searchById($tabla, $datosSearch){
 		
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
 		//$datosSearch['foraneas'] = $this->clavesForaneas;

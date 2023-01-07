@@ -7,10 +7,12 @@ class categoriaAtributos extends ValidacionesFormato{
 			
 			$this->validar_nombre_categoria($atributos['nombre_categoria']);
 			
-
-		
 			if($this->respuesta == ''){
 				$this->validar_descripcion_categoria($atributos['descripcion_categoria']);
+			}
+
+			if($this->respuesta == ''){
+				$this->validar_dni_responsable($atributos['dni_responsable']);
 			}
 
 			
@@ -50,6 +52,24 @@ class categoriaAtributos extends ValidacionesFormato{
 		if($this->comprobarLetras($atributo)===false){
 			$this->respuesta = 'DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO';
 		}
+	}
+
+	function validar_dni_responsable($atributo){
+		$this->respuesta = '';
+		
+		
+		if($atributo === null || $this->Es_Vacio($atributo)===true){
+			$this->respuesta = 'DNI_PERSONA_VACIO';
+		}
+		if($this->Formato_dni($atributo)===false){
+			$this->respuesta = 'DNI_PERSONA_ALFANUMERICO_INCORRECTO';
+		}
+		if($this->LetraNIF($atributo)===false){
+			$this->respuesta = 'DNI_PERSONA_LETRA_INCORRECTO';
+			
+		
+		}	
+
 	}
 
     

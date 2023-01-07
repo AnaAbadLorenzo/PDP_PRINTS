@@ -42,6 +42,36 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestAcciones':
+                    switch($nombreAtributo){
+                        case 'nombre_accion':
+                            $mensaje = 'NOMBRE_ACCION_VACIO'. " - ". NOMBRE_ACCION_VACIO;
+                        break;
+                        case 'descripcion_accion':
+                            $mensaje = 'DESCRIPCION_ACCION_VACIO'. " - ". DESCRIPCION_ACCION_VACIO;
+                        break;
+                    }
+                break;
+                case 'gestFuncionalidades':
+                    switch($nombreAtributo){
+                        case 'nombre_funcionalidad':
+                            $mensaje = 'NOMBRE_FUNCIONALIDAD_VACIO'. " - ". NOMBRE_FUNCIONALIDAD_VACIO;
+                        break;
+                        case 'descripcion_funcionalidad':
+                            $mensaje = 'DESCRIPCION_FUNCIONALIDAD_VACIO'. " - ". DESCRIPCION_FUNCIONALIDAD_VACIO;
+                        break;
+                    }
+                break;
+                case 'gestRoles':
+                    switch($nombreAtributo){
+                        case 'nombre_rol':
+                            $mensaje = 'NOMBRE_ROL_VACIO'. " - ". NOMBRE_ROL_VACIO;
+                        break;
+                        case 'descripcion_rol':
+                            $mensaje = 'DESCRIPCION_ROL_VACIO'. " - ". DESCRIPCION_ROL_VACIO;
+                        break;
+                    }
+                break;
             }
         }
 
@@ -83,6 +113,36 @@ class FuncionesComunes {
                         break;
                         case 'telefono_persona':
                             $mensaje = 'TELEFONO_PERSONA_MENOR_QUE_9'. " - ". TELEFONO_PERSONA_MENOR_QUE_9;
+                        break;
+                    }
+                break;
+                case 'gestAcciones':
+                    switch($nombreAtributo){
+                        case 'nombre_accion':
+                            $mensaje = 'NOMBRE_ACCION_MENOR_QUE_3'. " - ". NOMBRE_ACCION_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_accion':
+                            $mensaje = 'DESCRIPCION_ACCION_MENOR_QUE_3'. " - ". DESCRIPCION_ACCION_MENOR_QUE_3;
+                        break;
+                    }
+                break;
+                case 'gestFuncionalidades':
+                    switch($nombreAtributo){
+                        case 'nombre_funcionalidad':
+                            $mensaje = 'NOMBRE_FUNCIONALIDAD_MENOR_QUE_3'. " - ". NOMBRE_FUNCIONALIDAD_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_funcionalidad':
+                            $mensaje = 'DESCRIPCION_FUNCIONALIDAD_MENOR_QUE_3'. " - ". DESCRIPCION_FUNCIONALIDAD_MENOR_QUE_3;
+                        break;
+                    }
+                break;
+                case 'gestRoles':
+                    switch($nombreAtributo){
+                        case 'nombre_rol':
+                            $mensaje = 'NOMBRE_ROL_MENOR_QUE_3'. " - ". NOMBRE_ROL_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_rol':
+                            $mensaje = 'DESCRIPCION_ROL_MENOR_QUE_3'. " - ". DESCRIPCION_ROL_MENOR_QUE_3;
                         break;
                     }
                 break;
@@ -128,6 +188,27 @@ class FuncionesComunes {
                         break;
                         case 'telefono_persona':
                             $mensaje = 'TELEFONO_PERSONA_MAYOR_QUE_9'. " - ". TELEFONO_PERSONA_MAYOR_QUE_9;
+                        break;
+                    }
+                break;
+                case 'gestAcciones':
+                    switch($nombreAtributo){
+                        case 'nombre_accion':
+                            $mensaje = 'NOMBRE_ACCION_MAYOR_QUE_32'. " - ". NOMBRE_ACCION_MAYOR_QUE_32;
+                        break;
+                    }
+                break;
+                case 'gestFuncionalidades':
+                    switch($nombreAtributo){
+                        case 'nombre_funcionalidad':
+                            $mensaje = 'NOMBRE_FUNCIONALIDAD_MAYOR_QUE_128'. " - ". NOMBRE_FUNCIONALIDAD_MAYOR_QUE_128;
+                        break;
+                    }
+                break;
+                case 'gestRoles':
+                    switch($nombreAtributo){
+                        case 'nombre_rol':
+                            $mensaje = 'NOMBRE_ROL_MAYOR_QUE_32'. " - ". NOMBRE_ROL_MAYOR_QUE_32;
                         break;
                     }
                 break;
@@ -254,6 +335,36 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestAcciones':
+                    switch($nombreAtributo){
+                        case 'nombre_accion':
+                            $mensaje = 'NOMBRE_ACCION_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ACCION_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_accion':
+                            $mensaje = 'DESCRIPCION_ACCION_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ACCION_ALFABETICO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestFuncionalidades':
+                    switch($nombreAtributo){
+                        case 'nombre_funcionalidad':
+                            $mensaje = 'NOMBRE_FUNCIONALIDAD_ALFABETICO_INCORRECTO'. " - ". NOMBRE_FUNCIONALIDAD_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_funcionalidad':
+                            $mensaje = 'DESCRIPCION_FUNCIONALIDAD_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_FUNCIONALIDAD_ALFABETICO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestRoles':
+                    switch($nombreAtributo){
+                        case 'nombre_rol':
+                            $mensaje = 'NOMBRE_ROL_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ROL_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_rol':
+                            $mensaje = 'DESCRIPCION_ROL_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ROL_ALFABETICO_INCORRECTO;
+                        break;
+                    }
+                break;
             }
         }
 
@@ -289,6 +400,23 @@ class FuncionesComunes {
                             break;
                             case 'telefono_persona':
                                 $mensaje = 'TELEFONO_PERSONA_NUMERICO_INCORRECTO'. " - ". TELEFONO_PERSONA_NUMERICO_INCORRECTO;
+                            break;
+                        }
+                    break;
+                    case 'gestAcciones':
+                        switch($nombreAtributo){
+                            case 'nombre_accion':
+                                $mensaje = 'NOMBRE_ACCION_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ACCION_ALFABETICO_INCORRECTO;
+                            break;
+                        }
+                    break;
+                    case 'gestRoles':
+                        switch($nombreAtributo){
+                            case 'nombre_rol':
+                                $mensaje = 'NOMBRE_ROL_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ROL_ALFABETICO_INCORRECTO;
+                            break;
+                            case 'descripcion_funcionalidad':
+                                $mensaje = 'DESCRIPCION_ROL_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ROL_ALFABETICO_INCORRECTO;
                             break;
                         }
                     break;

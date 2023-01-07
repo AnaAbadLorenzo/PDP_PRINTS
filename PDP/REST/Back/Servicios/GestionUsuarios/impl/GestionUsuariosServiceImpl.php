@@ -9,31 +9,36 @@ include_once "./Mapping/PersonaMapping.php";
 
 class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosService {
 
+    private $usuario;
+    private $clase_validacionAccionUsuario;
+    private $clase_validacionFormatoUsuario;
+    private $recursos;
+
     function inicializarParametros($accion){
         switch($accion){
             case 'add' :
                 $this->usuario = $this->crearModelo('Usuario');
-                $this->clase_validacionAccionAddUsuario = $this->crearValidacionAccion('Usuario');
-                $this->clase_validacionFormatoAddUsuario = $this->crearValidacionFormato('Usuario');
+                $this->clase_validacionAccionUsuario = $this->crearValidacionAccion('Usuario');
+                $this->clase_validacionFormatoUsuario = $this->crearValidacionFormato('Usuario');
             break;
             case 'editPassUsuario':
                 $this->usuario = $this->crearModelo('Usuario');
-                $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('Usuario');
-                $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
+                $this->clase_validacionAccionUsuario = $this->crearValidacionAccion('Usuario');
+                $this->clase_validacionFormatoUsuario = $this->crearValidacionFormato('Usuario');
             break;
             case 'editRolUsuario':
                 $this->usuario = $this->crearModelo('Usuario');
-                $this->clase_validacionAccionEditUsuario = $this->crearValidacionAccion('Usuario');
-                $this->clase_validacionFormatoEditUsuario = $this->crearValidacionFormato('Usuario');
+                $this->clase_validacionAccionUsuario = $this->crearValidacionAccion('Usuario');
+                $this->clase_validacionFormatoUsuario = $this->crearValidacionFormato('Usuario');
             break;
             case 'delete':
                 $this -> usuario = $this -> crearModelo('Usuario');
-                $this -> validacion_formato = $this->crearValidacionFormato('Usuario');
-                $this -> validacion_accion = $this->crearValidacionAccion('Usuario');
+                $this -> clase_validacionFormatoUsuario = $this->crearValidacionFormato('Usuario');
+                $this -> clase_validacionAccionUsuario = $this->crearValidacionAccion('Usuario');
                 break;
             case 'reactivar':
-                $this -> funcionalidad = $this -> crearModelo('Usuario');
-                $this -> validacion_reactivar = $this -> crearValidacionAccion('DeleteUsuario'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
+                $this -> usuario = $this -> crearModelo('Usuario');
+                $this -> clase_validacionAccionUsuario = $this -> crearValidacionAccion('DeleteUsuario');
                 break;
             case 'searchByParameters':
                 $this->usuario = $this->crearModelo('Usuario');
@@ -58,18 +63,18 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
             $datosUsuario['borrado_usuario'] = 0;
 
             
-            if ($this->clase_validacionFormatoAddUsuario != null) {
-                $this->clase_validacionFormatoAddUsuario->validarAtributosUsuario($datosUsuario);
+            if ($this->clase_validacionFormatoUsuario != null) {
+                $this->clase_validacionFormatoUsuario->validarAtributosUsuario($datosUsuario);
             }
         
-            if ($this->clase_validacionAccionAddUsuario != null){
-                $this->clase_validacionAccionAddUsuario->comprobarAddUsuario($datosUsuario);
+            if ($this->clase_validacionAccionUsuario != null){
+                $this->clase_validacionAccionUsuario->comprobarAddUsuario($datosUsuario);
             }
             
-            if($this->clase_validacionFormatoAddUsuario->respuesta != null){
-                $respuesta = $this->clase_validacionFormatoAddUsuario->respuesta;
-            }else if($this->clase_validacionAccionAddUsuario->respuesta != null){
-                $respuesta = $this->clase_validacionAccionAddUsuario->respuesta;
+            if($this->clase_validacionFormatoUsuario->respuesta != null){
+                $respuesta = $this->clase_validacionFormatoUsuario->respuesta;
+            }else if($this->clase_validacionAccionUsuario->respuesta != null){
+                $respuesta = $this->clase_validacionAccionUsuario->respuesta;
             }else{
                 $rolMapping = new RolMapping();
                 $datosSearchRol = array(
@@ -105,20 +110,20 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         $datosEditUsuario['passwd_usuario'] = $this->usuario->passwd_usuario;
         $datosEditUsuario['borrado_usuario'] = 0;
         
-        if($this->clase_validacionFormatoEditUsuario != null) {
-            $this->clase_validacionFormatoEditUsuario->validarAtributoPass($datosEditUsuario['passwd_usuario']);
+        if($this->clase_validacionFormatoUsuario != null) {
+            $this->clase_validacionFormatoUsuario->validarAtributoPass($datosEditUsuario['passwd_usuario']);
         }
 
-        if($this->clase_validacionAccionEditUsuario != null) {
-            $this->clase_validacionAccionEditUsuario->comprobarEditPassUsuario($datosEditUsuario);
+        if($this->clase_validacionAccionUsuario != null) {
+            $this->clase_validacionAccionUsuario->comprobarEditPassUsuario($datosEditUsuario);
         }
         
-        if($this->clase_validacionFormatoEditUsuario->respuesta != null){
+        if($this->clase_validacionFormatoUsuario->respuesta != null){
 
-            $respuesta =  $this->clase_validacionFormatoEditUsuario->respuesta;
+            $respuesta =  $this->clase_validacionFormatoUsuario->respuesta;
 
-        }else if($this->clase_validacionAccionEditUsuario->respuesta != null){
-            $respuesta = $this->clase_validacionAccionEditUsuario->respuesta;
+        }else if($this->clase_validacionAccionUsuario->respuesta != null){
+            $respuesta = $this->clase_validacionAccionUsuario->respuesta;
         }else{
             $usuario_mapping = new UsuarioMapping();
             $datoBuscar = array();
@@ -149,18 +154,18 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         $datosEditUsuario['borrado_usuario'] = 0;
         $datosEditUsuario['id_rol'] = $this->usuario->id_rol;
         
-        if($this->clase_validacionFormatoEditUsuario != null) {
-            $this->clase_validacionFormatoEditUsuario->validarAtributoRolUsuario($datosEditUsuario['id_rol']);
+        if($this->clase_validacionFormatoUsuario != null) {
+            $this->clase_validacionFormatoUsuario->validarAtributoRolUsuario($datosEditUsuario['id_rol']);
         }
 
-        if($this->clase_validacionAccionEditUsuario != null) {
-            $this->clase_validacionAccionEditUsuario->comprobarEditRolUsuario($datosEditUsuario);
+        if($this->clase_validacionAccionUsuario != null) {
+            $this->clase_validacionAccionUsuario->comprobarEditRolUsuario($datosEditUsuario);
         }
         
-        if($this->clase_validacionFormatoEditUsuario->respuesta != null){
-            $respuesta =  $this->clase_validacionFormatoEditUsuario->respuesta;
-        }else if($this->clase_validacionAccionEditUsuario->respuesta != null){
-            $respuesta = $this->clase_validacionAccionEditUsuario->respuesta;
+        if($this->clase_validacionFormatoUsuario->respuesta != null){
+            $respuesta =  $this->clase_validacionFormatoUsuario->respuesta;
+        }else if($this->clase_validacionAccionUsuario->respuesta != null){
+            $respuesta = $this->clase_validacionAccionUsuario->respuesta;
         }else{
             $usuarioDatos = [
                 'dni_usuario' => $datosEditUsuario['dni_usuario'],
@@ -181,14 +186,14 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
             'dni_usuario' => $this -> usuario -> dni_usuario
         ];
 
-        $this -> validacion_formato -> validar_dni_usuario($usuario['dni_usuario']);
-        if ($this -> validacion_formato -> respuesta != '') {
-            return $this -> validacion_formato -> respuesta;
+        $this -> clase_validacionFormatoUsuario -> validar_dni_usuario($usuario['dni_usuario']);
+        if ($this -> clase_validacionFormatoUsuario -> respuesta != '') {
+            return $this -> clase_validacionFormatoUsuario -> respuesta;
         }
 
-        $this -> validacion_accion -> comprobarDeleteUsuario($usuario);
-        if ($this -> validacion_accion -> respuesta != null){
-            return $this -> validacion_accion -> respuesta;
+        $this -> clase_validacionAccionUsuario -> comprobarDeleteUsuario($usuario);
+        if ($this -> clase_validacionAccionUsuario -> respuesta != null){
+            return $this -> clase_validacionAccionUsuario -> respuesta;
         }
         
         $usuario_mapping = new UsuarioMapping;
@@ -298,9 +303,9 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
 
     function reactivar($mensaje) {
 
-        $this -> validacion_reactivar -> comprobarReactivar($_POST);
-        if (!empty($this -> validacion_reactivar -> respuesta)) {
-            return $this -> validacion_reactivar -> respuesta;
+        $this -> clase_validacionAccionUsuario -> comprobarReactivar($_POST);
+        if (!empty($this -> clase_validacionAccionUsuario -> respuesta)) {
+            return $this -> clase_validacionAccionUsuario -> respuesta;
         }
         
         $usuario_mapping = new UsuarioMapping;

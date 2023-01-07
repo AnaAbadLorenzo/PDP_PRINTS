@@ -349,7 +349,7 @@ function comprobarTokenUsuario(funcionalidad){
 			case 'accion':
 			case 'funcionalidad':
 			case 'noticias':
-			case 'objetivo':
+			case 'categoria':
 			case 'respuestaPosible':
 			case 'rol':
 			case 'logAcciones':
@@ -1442,8 +1442,8 @@ function compruebaFuncionalidadesPermisos(entidad){
 			cargarPermisosFuncEmpresa();
 		break;
 
-		case 'OBJETIVO' :
-			cargarPermisosFuncObjetivo();
+		case 'CATEGORIA' :
+			cargarPermisosFuncCategoria();
 		break;
 
 		case 'RESPUESTA_POSIBLE' :
@@ -1512,8 +1512,8 @@ function cargarPermisosSegunEntidad(entidad){
 			cargarPermisosFuncEmpresa();
 		break;
 		
-		case 'OBJETIVO' :
-			cargarPermisosFuncObjetivo();
+		case 'CATEGORIA' :
+			cargarPermisosFuncCategoria();
 		break;
 
 		case 'RESPUESTA_POSIBLE' :

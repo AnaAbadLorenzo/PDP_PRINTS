@@ -7,26 +7,27 @@
     include_once './Servicios/Comun/ReturnBusquedas.php';
 
 class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategoriasService {
-
-        private $categoria_mapping;
-        private $usuario_mapping;
+        
+        private $categoria;
+        private $clase_validacionAccionCategoria;
+        private $clase_validacionFormatoCategoria;
+        public $recursos;
 
         function inicializarParametros($accion){
             switch($accion){
                 case 'add' :
                     $this->categoria = $this->crearModelo('Categoria');
-				    $this->clase_validacionAccionCategoriaAdd = $this->crearValidacionAccion('AddCategoria'); 
+				    $this->clase_validacionAccionCategoria = $this->crearValidacionAccion('AddCategoria'); 
                     $this->clase_validacionFormatoCategoria = $this->crearValidacionFormato('Categoria');
+                break;
                 case 'edit':
                     $this->categoria = $this->crearModelo('Categoria');
                     $this->clase_validacionAccionCategoria = $this->crearValidacionAccion('EditCategoria');
                     $this->clase_validacionFormatoCategoria = $this->crearValidacionFormato('Categoria');
-                   
-                    break;
+                break;
                 case 'delete':
-            
                     $this->categoria = $this->crearModelo('Categoria');
-                    $this->clase_validacionAccionDeleteCategoria = $this->crearValidacionAccion('DeleteCategoria');
+                    $this->clase_validacionAccionCategoria = $this->crearValidacionAccion('DeleteCategoria');
                     break;
                 case 'searchByParameters':
                     $this->categoria = $this->crearModelo('Categoria');
@@ -41,44 +42,48 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             $respuesta = '';
 
             if($this->categoria->nombre_categoria != null &&
-            $this->categoria->descripcion_categoria != null &&
-            $this->categoria->dni_responsable != null &&
-            $this->categoria->dni_usuario != null 
-           ){
-                $datosCategoria = array();
+                $this->categoria->descripcion_categoria != null &&
+                $this->categoria->dni_responsable != null){
                 
+                $datosCategoria = array();
+                $datosUsuario = array();
+                $datosUsuario['usuario'] = $this->categoria->usuario;
+
+                $usuario_mapping = new UsuarioMapping();
+                $usuario_mapping->searchByLogin($datosUsuario);
+                $resultadoUsuario = $usuario_mapping->feedback['resource'];
+
                 $datosCategoria['nombre_categoria'] = $this->categoria->nombre_categoria;
                 $datosCategoria['descripcion_categoria'] = $this->categoria->descripcion_categoria;
                 $datosCategoria['dni_responsable'] = $this->categoria->dni_responsable;
                 $datosCategoria['id_padre_categoria'] = $this->categoria->id_padre_categoria;
-                $datosCategoria['dni_usuario'] = $this->categoria->dni_usuario;
+                $datosCategoria['dni_usuario'] = $resultadoUsuario['dni_usuario'];
                 $datosCategoria['borrado_categoria'] = 0;
 
                 
                 if ($this->clase_validacionFormatoCategoria != null) {
                     $this->clase_validacionFormatoCategoria->validarAtributosCategoria($datosCategoria);
                 }
-                //no hay que realizar ninguna premisa para insertar...
-                if ($this->clase_validacionAccionCategoriaAdd != null){
-                    $this->clase_validacionAccionCategoriaAdd->comprobarAddCategoria($datosCategoria);
+               
+                if ($this->clase_validacionAccionCategoria != null){
+                    $this->clase_validacionAccionCategoria->comprobarAddCategoria($datosCategoria);
                 }
                 
-            
                 if($this->clase_validacionFormatoCategoria->respuesta != null){
                     $respuesta = $this->clase_validacionFormatoCategoria->respuesta;
-                }else if($this->clase_validacionAccionCategoriaAdd->respuesta != null){
-                    $respuesta = $this->clase_validacionAccionCategoriaAdd->respuesta;
+                }else if($this->clase_validacionAccionCategoria->respuesta != null){
+                    $respuesta = $this->clase_validacionAccionCategoria->respuesta;
                 }else{
                     $CategoriaDatos = [
                         'nombre_categoria' => $this->categoria->nombre_categoria,
                         'descripcion_categoria' => $this->categoria->descripcion_categoria,
                         'dni_responsable' => $this->categoria->dni_responsable,
                         'id_padre_categoria' => $this->categoria->id_padre_categoria,
-                        'dni_usuario' => $this->categoria->dni_usuario,
+                        'dni_usuario' => $resultadoUsuario['dni_usuario'],
                         'borrado_categoria' => 0
                     ];
-                    if ($this->categoria->id_padre_categoria=="" || is_null($this->categoria->id_padre_categoria)){
-                        $CategoriaDatos['id_padre_categoria']="null";  
+                    if ($this->categoria->id_padre_categoria== "" || is_null($this->categoria->id_padre_categoria)){
+                        $CategoriaDatos['id_padre_categoria']= "null";  
                     }
           
                     $categoria_mapping = new CategoriaMapping();
@@ -105,7 +110,6 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                 $datosEditCategoria['dni_usuario'] = $this->categoria->dni_usuario;
                 $datosEditCategoria['borrado_categoria'] = $this->categoria->borrado_categoria;
 
-                
                 if ($this->clase_validacionFormatoCategoria != null) {
                     $this->clase_validacionFormatoCategoria->validarAtributosCategoria($datosEditCategoria);
                 }
@@ -113,7 +117,6 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                     $this->clase_validacionAccionCategoria->comprobarEditCategoria($datosEditCategoria);
                 }
 
-                
                 if($this->clase_validacionFormatoCategoria->respuesta != null){
                     $respuesta = $this->clase_validacionFormatoCategoria->respuesta;
                 }else if($this->clase_validacionAccionCategoria->respuesta != null){
@@ -133,7 +136,7 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                     $categoria_mapping = new CategoriaMapping();
                     
                     if ($this->categoria->id_padre_categoria=="" || is_null($this->categoria->id_padre_categoria)){
-                        $CategoriaDatos['id_padre_categoria']="null";  
+                        $CategoriaDatos['id_padre_categoria']= "null";  
                     }
                 
                     $categoria_mapping->edit($CategoriaDatos);
@@ -155,13 +158,11 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                 $datosDeleteCategoria['id_categoria'] = $this->categoria->id_categoria;
 
                 
-                if($this->clase_validacionAccionDeleteCategoria != null) {
-                $this->clase_validacionAccionDeleteCategoria->comprobarDeleteCategoria($datosDeleteCategoria);
+                if($this->clase_validacionAccionCategoria != null) {
+                    $this->clase_validacionAccionCategoria->comprobarDeleteCategoria($datosDeleteCategoria);
                 }
-                if($this->clase_validacionAccionDeleteCategoria->respuesta != null){
-
-                    $respuesta =  $this->clase_validacionAccionDeleteCategoria->respuesta;
-
+                if($this->clase_validacionAccionCategoria->respuesta != null){
+                    $respuesta =  $this->clase_validacionAccionCategoria->respuesta;
                 }else{
                
                 $categoriaDatos = [
@@ -179,11 +180,28 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             
         }
     
-        function search($mensaje){
-           
+        function search($mensaje, $paginacion){
+            $usuario_mapping = new UsuarioMapping();
             $categoria_mapping = new CategoriaMapping();
             $categoria_mapping->search();
-            return $categoria_mapping->feedback['resource'];
+            $datosCategoria =  $categoria_mapping->feedback['resource'];
+            $datosUsuario = $this->searchForeignKeys();
+
+            $datosADevolver = array();
+            $datosUsuarioDev = array();
+            foreach($datosUsuario as $usuario){
+                foreach($datosCategoria as $categoria){
+                    if($usuario['dni_usuario'] == $categoria['dni_responsable']){
+                        $datosUsuarioDev['categoria'] = $datosCategoria;
+                        $datosUsuarioDev['responsable'] = $usuario;
+                        array_push($datosADevolver, $datosUsuarioDev);
+                    }
+                }
+            }
+            $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                        $this->numberFindAll()["COUNT(*)"],sizeof($categoria_mapping->feedback['resource']), $paginacion->inicio);
+
+            return $returnBusquedas;
            
         }
 
@@ -224,15 +242,41 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
         
         $categoria_mapping= new CategoriaMapping();
         $categoria_mapping->searchByParameters($datosSearchParameters, $paginacion);
+        $datosCategoria =  $categoria_mapping->feedback['resource'];
+            $datosUsuario = $this->searchForeignKeys();
+
+            $datosADevolver = array();
+            $datosUsuarioDev = array();
+            foreach($datosUsuario as $usuario){
+                foreach($datosCategoria as $categoria){
+                    if($usuario['dni_usuario'] == $categoria['dni_responsable']){
+                        $datosUsuarioDev['categoria'] = $datosCategoria;
+                        $datosUsuarioDev['responsable'] = $usuario;
+                        array_push($datosADevolver, $datosUsuarioDev);
+                    }
+                }
+            }
         $returnBusquedas = new ReturnBusquedas($categoria_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
                         sizeof($categoria_mapping->feedback['resource']), $paginacion->inicio);
         return $returnBusquedas;
+        }
+
+        function numberFindAll(){
+            $categoria_mapping = new CategoriaMapping();
+            $categoria_mapping->numberFindAll();
+            return $categoria_mapping->feedback['resource'];
         }
 
         function numberFindParameters($datosSearchParameters){
             $categoria_mapping = new CategoriaMapping();
             $categoria_mapping->numberFindParameters($datosSearchParameters);
             return $categoria_mapping->feedback['resource'];
+        }
+
+        function searchForeignKeys() {
+            $usuario_mapping = new UsuarioMapping();
+            $usuario_mapping->searchAll();
+            return $usuario_mapping->feedback['resource'];
         }
       
     }

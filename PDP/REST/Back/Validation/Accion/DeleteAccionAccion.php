@@ -39,9 +39,9 @@ class DeleteAccionAccion extends ValidacionesBase {
 	}
 
 	function accionNoEstaEnPermisos($datos) {
-
+		$resultado = array();
 		$this -> acl -> searchByAccion($datos);
-		$resultado = $this -> acl -> resource;
+		$resultado = $this -> acl -> feedback['resource'];
 
 		if (sizeof($resultado) == 0) {
 			return true;
@@ -60,8 +60,7 @@ function existeIdAccion($datosDeleteAccion){
 		if(!sizeof($resultado) == 0) {
 			return true;
 		}else{
-			$this->respuesta = 'ID_ACCION_NO_EXISTE';
-			//throw new DNINoExisteException('DNI_NO_EXISTE');
+			$this->respuesta = 'ACCION_NO_EXISTE';
 		}}
 		
 	

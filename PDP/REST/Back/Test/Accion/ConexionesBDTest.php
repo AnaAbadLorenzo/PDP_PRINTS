@@ -34,10 +34,13 @@ class ConexionesBDTest extends MappingBase {
         curl_setopt($cliente, CURLOPT_POST, true);
         curl_setopt($cliente, CURLOPT_POSTFIELDS, $parametrosPeticion);
         curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
-            
+
         $resultado = curl_exec($cliente);
         $codigoHTTP = curl_getinfo($cliente, CURLINFO_HTTP_CODE);
 
+        if (curl_errno($cliente)) { 
+            print curl_error($cliente); 
+         } 
 
         if(!$resultado){
             return false;

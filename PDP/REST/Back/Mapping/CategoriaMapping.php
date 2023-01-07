@@ -13,10 +13,10 @@ class categoriaMapping extends MappingBase {
     function add($datosInsertar) {
         
 
-        $this->query = "INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `descripcion_categoria`, `borrado_categoria`, `dni_responsable`, `id_padre_categoria`, `dni_usuario`) VALUES (2,'".$datosInsertar['nombre_categoria']."','".$datosInsertar['descripcion_categoria']."','"
+        $this->query = "INSERT INTO `categoria` (`nombre_categoria`, `descripcion_categoria`, `borrado_categoria`, `dni_responsable`, `id_padre_categoria`, `dni_usuario`) VALUES ('".$datosInsertar['nombre_categoria']."','".$datosInsertar['descripcion_categoria']."','"
         .$datosInsertar['borrado_categoria']."','".$datosInsertar['dni_responsable']."',".$datosInsertar['id_padre_categoria'].",'".$datosInsertar['dni_usuario']. "')";
         $this->stmt = $this->conexion->prepare($this->query);
-        
+        echo($this->query);
         $this->execute_single_query();   
         
     }
@@ -115,6 +115,12 @@ function search() {
             }else{
                 return $respuesta;
             }
+    }
+
+    function numberFindAll() {
+        $this->query = "SELECT COUNT(*) FROM `categoria` WHERE `borrado_categoria`= 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
     }
 
     function searchById($datosSearch) {

@@ -70,3 +70,10 @@ var urlPeticionAjaxListarTodosUsuarios = urlComun;
 var urlPeticionAjaxReactivarUsuario = urlComun;
 var urlPeticionAjaxEliminarUsuario = urlComun;
 var urlPeticionAjaxCambiarContrasenaUsuario = urlComun;
+
+/**Urls de categoria */
+var urlPeticionAjaxAddCategoria = urlComun;
+var urlPeticionAjaxListarCategoria = urlComun;
+var urlPeticionAjaxEditarCategoria = urlComun;
+var urlPeticionAjaxListadoCategorias = urlComun;
+var urlPeticionAjaxListarCategoriasEliminadas = urlComun;

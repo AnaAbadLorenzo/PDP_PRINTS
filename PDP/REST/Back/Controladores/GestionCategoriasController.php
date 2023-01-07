@@ -10,14 +10,10 @@ class GestionCategoriasController extends ControllerBase{
 
 	private $gestionCategoriaService;
 	private $addCategoriaValidation;
-	private $registroValidation;
 
 	public function __construct(){
 		$this->gestionCategoriaService = new GestionCategoriasServiceImpl();
         $this->addCategoriaValidation = new AddCategoriaValidation();
-		//$this->editCategoriaValidation = new EditCategoriaValidation();
-		
-
 	}
     
 	function add(){
@@ -38,7 +34,6 @@ class GestionCategoriasController extends ControllerBase{
 				$this->rellenarRespuesta('ADD_CATEGORIA_COMPLETO', false, '');
 			}
 		$this->getRespuesta($respuesta);
-
 	}
 
 	function edit(){	
@@ -64,7 +59,6 @@ class GestionCategoriasController extends ControllerBase{
 	}
    
     function delete(){
-   
 
         $this->gestionCategoriaService->inicializarParametros('delete');
         $respuesta = $this->gestionCategoriaService->delete('DELETE_CATEGORIA_COMPLETO');
@@ -75,16 +69,15 @@ class GestionCategoriasController extends ControllerBase{
 			$this->rellenarRespuesta('DELETE_CATEGORIA_COMPLETO', false, '');
 		}
 		$this->getRespuesta($respuesta);
-
    
     }
 
 
     function search(){
-       
-        $respuesta = $this->gestionCategoriaService->search('BUSQUEDA_CATEGORIA_CORRECTO');
-			$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
-			$this->getRespuesta($respuesta);
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionCategoriaService->search('BUSQUEDA_CATEGORIA_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
     }
 
     function searchByParameters(){

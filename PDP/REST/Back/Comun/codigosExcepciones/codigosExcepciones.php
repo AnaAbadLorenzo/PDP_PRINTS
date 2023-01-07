@@ -9,6 +9,9 @@ define('TEST_ACCIONES_REGISTRO_OK', 'Los test de acciones para el registro se ha
 define('REGISTRO_USUARIO_OK', 'El registro del usuario se ha realizado correctamente');
 define('TEST_ATRIBUTOS_RECUPERAR_PASS_OK', 'Los test de atributos para la recuperación de contraseña se han ejecutado correctamente');
 define('TEST_ACCIONES_RECUPERAR_PASS_OK', 'Los test de acciones para para la recuperación de contraseña se han ejecutado correctamente');
+define('TEST_ATRIBUTOS_GESTION_ACCIONES_OK', 'Los test de atributos para la gestión de acciones se han ejecutado correctamente');
+define('TEST_ATRIBUTOS_GESTION_FUNCIONALIDADES_OK', 'Los test de atributos para la gestión de funcionalidades se han ejecutado correctamente');
+define('TEST_ACCIONES_GESTION_ACCIONES_PASS_OK', 'Los test de acciones para para la gestión de acciones se han ejecutado correctamente');
 
 define('TOKEN_CLAVE_VACIA', 'La clave del token no puede ser vacía');
 define('TOKEN_INCORRECTO', 'El token es incorrecto');
@@ -74,4 +77,38 @@ define('USUARIO_YA_EXISTE', 'El usuario ya existe');
 define('PERSONA_YA_EXISTE', 'La persona ya existe');
 define('DNI_NO_EXISTE', 'El DNI no existe');
 
+define('NOMBRE_ACCION_VACIO', 'El nombre de la acción no puede ser vacío');
+define('NOMBRE_ACCION_MENOR_QUE_3', 'El nombre de la acción no puede tener menos de 3 caracteres');
+define('NOMBRE_ACCION_MAYOR_QUE_32', 'El nombre de la acción no puede tener más de 32 caracteres');
+define('NOMBRE_ACCION_ALFABETICO_INCORRECTO', 'El nombre de la acción sólo puede contener letras');
+
+define('DESCRIPCION_ACCION_VACIO', 'La descripción  de la acción no puede ser vacía');
+define('DESCRIPCION_ACCION_MENOR_QUE_3', 'La descripción de la acción no puede tener menos de 3 caracteres');
+define('DESCRIPCION_ACCION_ALFABETICO_INCORRECTO', 'La descripción de la acción sólo puede contener letras, acentos y espacios');
+
+define('NOMBRE_FUNCIONALIDAD_VACIO', 'El nombre de la funcionalidad no puede ser vacío');
+define('NOMBRE_FUNCIONALIDAD_MENOR_QUE_3', 'El nombre de la funcionalidad no puede tener menos de 3 caracteres');
+define('NOMBRE_FUNCIONALIDAD_MAYOR_QUE_128', 'El nombre de la funcionalidad no puede tener más de 128 caracteres');
+define('NOMBRE_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'El nombre de la funcionalidad sólo puede contener letras');
+
+define('DESCRIPCION_FUNCIONALIDAD_VACIO', 'La descripción  de la funcionalidad no puede ser vacía');
+define('DESCRIPCION_FUNCIONALIDAD_MENOR_QUE_3', 'La descripción de la funcionalidad no puede tener menos de 3 caracteres');
+define('DESCRIPCION_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'La descripción de la funcionalidad sólo puede contener letras, acentos y espacios');
+
+define('NOMBRE_ROL_VACIO', 'El nombre del rol no puede ser vacío');
+define('NOMBRE_ROL_MENOR_QUE_3', 'El nombre del rol no puede tener menos de 3 caracteres');
+define('NOMBRE_ROL_MAYOR_QUE_32', 'El nombre del rol no puede tener más de 32 caracteres');
+define('NOMBRE_ROL_ALFABETICO_INCORRECTO', 'El nombre del rol sólo puede contener letras');
+
+define('DESCRIPCION_ROL_VACIO', 'La descripción del rol no puede ser vacía');
+define('DESCRIPCION_ROL_MENOR_QUE_3', 'La descripción del rol no puede tener menos de 3 caracteres');
+define('DESCRIPCION_ROL_ALFABETICO_INCORRECTO', 'La descripción del rol sólo puede contener letras, acentos y espacios');
+
+define('ADD_ACCION_COMPLETO', 'La acción se ha insertado correctamente');
+define('ACCION_YA_EXISTE', 'La acción ya existe');
+define('EDIT_ACCION_COMPLETO', 'La acción se ha editado correctamente');
+define('ACCION_NO_EXISTE', 'La acción no existe');
+define('DELETE_ACCION_COMPLETO', 'La acción se ha eliminado correctamente');
+define('REACTIVAR_ACCION_CORRECTO', 'La acción se ha reactivado correctamente');
+define('ACCION_TIENE_PERMISOS_ASOCIADOS', 'La acción está asociada a un usuario y a una funcionalidad');
 ?>

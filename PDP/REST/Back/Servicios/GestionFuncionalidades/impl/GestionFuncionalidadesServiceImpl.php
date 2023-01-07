@@ -10,6 +10,10 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
 
         private $funcionalidad_mapping;
         private $usuario_mapping;
+        private $funcionalidad;
+        private $clase_validacionFuncionalidadAccion;
+        private $clase_validacionFormatoFuncionalidad;
+        private $recursos;
 
         function inicializarParametros($accion){
             switch($accion){
@@ -26,14 +30,14 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                     break;
                 case 'delete':
                     $this->funcionalidad = $this->crearModelo('Funcionalidad');
-                    $this->clase_validacionAccionDeleteFuncionalidad = $this->crearValidacionAccion('DeleteFuncionalidad');
+                    $this->clase_validacionFuncionalidadAccion = $this->crearValidacionAccion('DeleteFuncionalidad');
                     break;
                 case 'searchByParameters':
                     $this->funcionalidad = $this->crearModelo('Funcionalidad');
                     break;
                 case 'reactivar':
                     $this -> funcionalidad = $this -> crearModelo('Funcionalidad');
-                    $this -> validacion_reactivar = $this -> crearValidacionAccion('DeleteFuncionalidad'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
+                    $this -> clase_validacionFuncionalidadAccion = $this -> crearValidacionAccion('DeleteFuncionalidad'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
                     break;
                 default:
                     break;
@@ -138,12 +142,12 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                 $datosDeleteFuncionalidad['id_funcionalidad'] = $this->funcionalidad->id_funcionalidad;
 
                 
-                if($this->clase_validacionAccionDeleteFuncionalidad != null) {
-                $this->clase_validacionAccionDeleteFuncionalidad->comprobarDeleteFuncionalidad($datosDeleteFuncionalidad);
+                if($this->clase_validacionFuncionalidadAccion != null) {
+                $this->clase_validacionFuncionalidadAccion->comprobarDeleteFuncionalidad($datosDeleteFuncionalidad);
                 }
-                if($this->clase_validacionAccionDeleteFuncionalidad->respuesta != null){
+                if($this->clase_validacionFuncionalidadAccion->respuesta != null){
 
-                    $respuesta =  $this->clase_validacionAccionDeleteFuncionalidad->respuesta;
+                    $respuesta =  $this->clase_validacionFuncionalidadAccion->respuesta;
 
                 }else{
                
@@ -232,9 +236,9 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
 
         function reactivar() {
     
-            $this -> validacion_reactivar -> comprobarReactivar($_POST);
-            if (!empty($this -> validacion_reactivar -> respuesta)) {
-                return $this -> validacion_reactivar -> respuesta;
+            $this -> clase_validacionFuncionalidadAccion -> comprobarReactivar($_POST);
+            if (!empty($this -> clase_validacionFuncionalidadAccion -> respuesta)) {
+                return $this -> clase_validacionFuncionalidadAccion -> respuesta;
             }
             
             $funcionalidad_mapping = new FuncionalidadMapping;

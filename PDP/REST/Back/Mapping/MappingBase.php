@@ -153,7 +153,6 @@ abstract class MappingBase{
 	function deleteFromTest($peticion) {
 		$this->connection();
 		$this->query = "DELETE FROM `".$peticion['tabla']. "` WHERE `". $peticion['clave']. "` = '". $peticion['valor'] ."'";
-		echo($this->query);
 		$this->stmt = $this->conn->prepare($this->query);
         $this->execute_single_query();
 	}

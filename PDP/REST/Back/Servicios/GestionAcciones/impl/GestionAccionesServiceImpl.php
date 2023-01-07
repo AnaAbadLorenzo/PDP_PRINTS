@@ -8,7 +8,10 @@
 
 class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesService {
 
-    private $accion_mapping;
+    private $accion;
+    private $clase_validacionAccionAccion;
+    private $clase_validacionFormatoAccion;
+    private $recursos;
 
     function inicializarParametros($accion){
         switch($accion){
@@ -25,14 +28,14 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
             break;
             case 'delete':
                 $this->accion = $this->crearModelo('Accion');
-                $this->clase_validacionAccionDeleteAccion = $this->crearValidacionAccion('DeleteAccion');
+                $this->clase_validacionAccionAccion = $this->crearValidacionAccion('DeleteAccion');
                 break;
             case 'searchByParameters':
                 $this->accion = $this->crearModelo('Accion');
                 break;
             case 'reactivar':
                 $this -> accion = $this -> crearModelo('Accion');
-                $this -> validacion_reactivar = $this -> crearValidacionAccion('DeleteAccion'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
+                $this -> clase_validacionAccionAccion = $this -> crearValidacionAccion('DeleteAccion');
                 break;
             default:
                 break;
@@ -43,10 +46,9 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
         $respuesta = '';
 
         if($this->accion->nombre_accion != null &&
-        $this->accion->descripcion_accion != null
+            $this->accion->descripcion_accion != null
         ){
             $datosAccion = array();
-            
             $datosAccion['nombre_accion'] = $this->accion->nombre_accion;
             $datosAccion['descripcion_accion'] = $this->accion->descripcion_accion;
             $datosAccion['borrado_accion'] = 0;
@@ -128,26 +130,21 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
 
 
     function delete($mensaje){
-        
-        
             $respuesta = '';
             $datosDeleteAccion = array();
             $datosDeleteAccion['id_accion'] = $this->accion->id_accion;
 
-            
-            if($this->clase_validacionAccionDeleteAccion != null) {
-            $this->clase_validacionAccionDeleteAccion->comprobarDeleteAccion($datosDeleteAccion);
+            if($this->clase_validacionAccionAccion != null) {
+            $this->clase_validacionAccionAccion->comprobarDeleteAccion($datosDeleteAccion);
             }
-            if($this->clase_validacionAccionDeleteAccion->respuesta != null){
+            if($this->clase_validacionAccionAccion->respuesta != null){
 
-                $respuesta =  $this->clase_validacionAccionDeleteAccion->respuesta;
+                $respuesta =  $this->clase_validacionAccionAccion->respuesta;
 
             }else{
-            
-            $accionDatos = [
-                'id_accion' => $datosDeleteAccion['id_accion'],
-                
-            ];
+                $accionDatos = [
+                    'id_accion' => $datosDeleteAccion['id_accion'],
+                ];
 
             $accion_mapping = new AccionMapping();
             $accion_mapping->delete($accionDatos);
@@ -218,12 +215,10 @@ class GestionAccionesServiceImpl extends ServiceBase implements GestionAccionesS
     }
 
     function reactivar() {
-
-        $this -> validacion_reactivar -> comprobarReactivar($_POST);
-        if (!empty($this -> validacion_reactivar -> respuesta)) {
-            return $this -> validacion_reactivar -> respuesta;
+        $this -> clase_validacionAccionAccion -> comprobarReactivar($_POST);
+        if (!empty($this -> clase_validacionAccionAccion -> respuesta)) {
+            return $this -> clase_validacionAccionAccion -> respuesta;
         }
-        
         $accion_mapping = new AccionMapping;
         $respuesta = $accion_mapping -> reactivar($_POST);
 
