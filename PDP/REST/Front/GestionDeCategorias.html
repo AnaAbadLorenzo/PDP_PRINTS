@@ -38,6 +38,7 @@
 	await cargarObjetivos(0, tamanhoPaginaObjetivo, 'PaginadorNo');
 	await cargarPermisosFuncObjetivo();
     await construyeSelect();
+	await construyeSelectCategorias();
 	ejecutaFuncion(function(){compruebaFuncionalidadesPermisos('CATEGORIA')},30000);
   })();">  
 	<div id="topMenu"></div>
@@ -177,7 +178,7 @@
 	                      <div style="display:none" id="errorFormatoDniResponsable"></div>
 
                           <label class="labelForm CATEGORIA_PADRE" id="labelCategoriaPadre" hidden></label>
-	                      <input type="text" placeholder="CATEGORIA_PADRE" name="CATEGORIA_PADRE" id="categoriaPadre" class="CATEGORIA_PADRE" onblur=""/>
+	                      <select id="selectCategoriaPadre" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
 	                      <div style="display:none" id="errorFormatoCategoriaPadre"></div>
 
                           <button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAcciones">

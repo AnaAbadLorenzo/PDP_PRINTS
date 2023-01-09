@@ -72,10 +72,15 @@ class GestionCategoriasController extends ControllerBase{
    
     }
 
-
     function search(){
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
         $respuesta = $this->gestionCategoriaService->search('BUSQUEDA_CATEGORIA_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
+	function searchAllWithoutPagination(){
+        $respuesta = $this->gestionCategoriaService->searchAllWithoutPagination('BUSQUEDA_CATEGORIA_CORRECTO');
 		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }

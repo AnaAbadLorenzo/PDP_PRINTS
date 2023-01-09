@@ -181,9 +181,8 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
         }
     
         function search($mensaje, $paginacion){
-            $usuario_mapping = new UsuarioMapping();
             $categoria_mapping = new CategoriaMapping();
-            $categoria_mapping->search();
+            $categoria_mapping->search($paginacion);
             $datosCategoria =  $categoria_mapping->feedback['resource'];
             $datosUsuario = $this->searchForeignKeys();
 
@@ -200,6 +199,30 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             }
             $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
                         $this->numberFindAll()["COUNT(*)"],sizeof($categoria_mapping->feedback['resource']), $paginacion->inicio);
+
+            return $returnBusquedas;
+           
+        }
+
+        function searchAllWithoutPagination(){
+            $categoria_mapping = new CategoriaMapping();
+            $categoria_mapping->searchAll();
+            $datosCategoria =  $categoria_mapping->feedback['resource'];
+            $datosUsuario = $this->searchForeignKeys();
+
+            $datosADevolver = array();
+            $datosUsuarioDev = array();
+            foreach($datosUsuario as $usuario){
+                foreach($datosCategoria as $categoria){
+                    if($usuario['dni_usuario'] == $categoria['dni_responsable']){
+                        $datosUsuarioDev['categoria'] = $datosCategoria;
+                        $datosUsuarioDev['responsable'] = $usuario;
+                        array_push($datosADevolver, $datosUsuarioDev);
+                    }
+                }
+            }
+            $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                        $this->numberFindAll()["COUNT(*)"],sizeof($categoria_mapping->feedback['resource']), '');
 
             return $returnBusquedas;
            

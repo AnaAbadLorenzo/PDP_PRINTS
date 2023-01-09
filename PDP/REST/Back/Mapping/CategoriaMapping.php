@@ -90,7 +90,14 @@ class categoriaMapping extends MappingBase {
         $this->get_one_result_from_query();
     }
 
-function search() {
+    function search($paginacion) {
+        $this->query = "SELECT * FROM `categoria` LIMIT " .$paginacion->inicio. "," .$paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
+    
+function searchAll() {
     $this->query = "SELECT * FROM `categoria`";
     $this->stmt = $this->conexion->prepare($this->query);
     $this->get_results_from_query();

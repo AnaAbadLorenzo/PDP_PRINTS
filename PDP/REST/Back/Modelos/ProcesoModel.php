@@ -14,6 +14,7 @@ class ProcesoModel extends ModelBase{
     public $formula_proceso;
     public $id_categoria;
     public $dni_usuario;
+	public $mapping;
 	//public $clavesForaneas;
 
 	function __construct(){
@@ -68,7 +69,7 @@ class ProcesoModel extends ModelBase{
 */
     function searchById($tabla, $datosSearch){
 		
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
 		//$datosSearch['foraneas'] = $this->clavesForaneas;
@@ -77,11 +78,9 @@ class ProcesoModel extends ModelBase{
 
 	function getVersion($tabla, $datosSearch){
 		
-        include_once './Mapping/'.$tabla.'Mapping.php';
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
-		
-		//$datosSearch['foraneas'] = $this->clavesForaneas;
 		return $this->mapping->getVersion($datosSearch);
 	}
 

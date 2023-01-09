@@ -8,31 +8,33 @@
 
 class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosService {
 
-        private $proceso_mapping;
-        private $usuario_mapping;
+        private $proceso;
+        private $clase_validacionAccionProceso;
+        private $clase_validacionFormatoProceso;
+        private $recursos;
 
         function inicializarParametros($accion){
             switch($accion){
                 case 'add' :
                     $this->proceso = $this->crearModelo('Proceso');
-				    $this->clase_validacionAccionProcesoAdd = $this->crearValidacionAccion('AddProceso'); 
+				    $this->clase_validacionAccionProceso = $this->crearValidacionAccion('AddProceso'); 
                     $this->clase_validacionFormatoProceso = $this->crearValidacionFormato('Proceso');
+                break;
                 case 'edit':
                     $this->proceso = $this->crearModelo('Proceso');
                     $this->clase_validacionAccionProceso = $this->crearValidacionAccion('EditProceso');
                     $this->clase_validacionFormatoProceso = $this->crearValidacionFormato('Proceso');
                    
-                    break;
+                break;
                 case 'delete':
-            
                     $this->proceso = $this->crearModelo('Proceso');
-                    $this->clase_validacionAccionDeleteProceso = $this->crearValidacionAccion('DeleteProceso');
-                    break;
+                    $this->clase_validacionAccionProceso = $this->crearValidacionAccion('DeleteProceso');
+                break;
                 case 'searchByParameters':
                     $this->proceso = $this->crearModelo('Proceso');
-                    break;
+                break;
                 default:
-                    break;
+                break;
             }
         }
 
@@ -57,29 +59,26 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                 $datosProceso['formula_proceso'] = $this->proceso->formula_proceso;
                 $datosProceso['id_categoria'] = $this->proceso->id_categoria;
                 $datosProceso['dni_usuario'] = $this->proceso->dni_usuario;
-             
-
                 
                 if ($this->clase_validacionFormatoProceso != null) {
                     $this->clase_validacionFormatoProceso->validarAtributosProceso($datosProceso);
                 }
-                //no hay que realizar ninguna premisa para insertar...
-                if ($this->clase_validacionAccionProcesoAdd != null){
-                    $this->clase_validacionAccionProcesoAdd->comprobarAddProceso($datosProceso);
+                if ($this->clase_validacionAccionProceso != null){
+                    $this->clase_validacionAccionProceso->comprobarAddProceso($datosProceso);
                 }
                 
             
                 if($this->clase_validacionFormatoProceso->respuesta != null){
                     $respuesta = $this->clase_validacionFormatoProceso->respuesta;
-                }else if($this->clase_validacionAccionProcesoAdd->respuesta != null){
-                    $respuesta = $this->clase_validacionAccionProcesoAdd->respuesta;
+                }else if($this->clase_validacionAccionProceso->respuesta != null){
+                    $respuesta = $this->clase_validacionAccionProceso->respuesta;
                 }else{
                     $ProcesoDatos = [
                         'nombre_proceso' => $this->proceso->nombre_proceso,
                         'descripcion_proceso' => $this->proceso->descripcion_proceso,
                         'fecha_proceso' => date('Y-m-d'),
                         'version_proceso' => 1,
-                        'check_aprobacion' => 0,
+                        'check_aprobacion' => $this->proceso->check_aprobacion,
                         'formula_proceso' => $this->proceso->formula_proceso,
                         'id_categoria' => $this->proceso->id_categoria,
                         'dni_usuario' => $this->proceso->dni_usuario,
@@ -89,6 +88,16 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
           
                     $proceso_mapping = new ProcesoMapping();
                     $proceso_mapping->add($ProcesoDatos);
+
+                    if($this->proceso->check_aprobacion == 1) {
+                        $noticia_mapping = new NoticiaMapping();
+                        $datosNoticia = array(
+                            'titulo_noticia' => 'Publicación de proceso',
+                            'contenido_noticia' => 'Se ha publicado un nuevo proceso con nombre ' + $this->proceso->nombre_proceso,
+                            'fecha_noticia' => date('Y-m-d')
+                        );
+                        $noticia_mapping->add($datosNoticia);
+                    }
 
                     $respuesta = $mensaje;
                     $this->recursos = '';
@@ -100,8 +109,6 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
         }
 
         function edit($mensaje) {
-            
-                $proceso_model = new ProcesoModel();
                 $respuesta = '';
                 $datosEditProceso = array();
                 $datosEditProceso['id_proceso'] = $this->proceso->id_proceso;
@@ -147,6 +154,19 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                     ];
              
                     $proceso_mapping = new ProcesoMapping();  
+                    $proceso_mapping->searchById($datosEditProceso);
+
+                    if($proceso_mapping->feedback['resource']['check_aprobacion'] == 0 && $this->proceso->check_aprobacion == 1) {
+                        $noticia_mapping = new NoticiaMapping();
+                        $datosNoticia = array(
+                            'titulo_noticia' => 'Publicación de proceso',
+                            'contenido_noticia' => 'Se ha publicado un nuevo proceso con nombre ' + $this->proceso->nombre_proceso,
+                            'fecha_noticia' => date('Y-m-d')
+                        );
+                        $noticia_mapping->add($datosNoticia);
+                    }
+
+                    
                     $proceso_mapping->edit($ProcesoDatos);
 
                     $respuesta = $mensaje;
@@ -166,12 +186,12 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                 $datosDeleteProceso['id_proceso'] = $this->proceso->id_proceso;
 
                 
-                if($this->clase_validacionAccionDeleteProceso != null) {
-                $this->clase_validacionAccionDeleteProceso->comprobarDeleteProceso($datosDeleteProceso);
+                if($this->clase_validacionAccionProceso != null) {
+                $this->clase_validacionAccionProceso->comprobarDeleteProceso($datosDeleteProceso);
                 }
-                if($this->clase_validacionAccionDeleteProceso->respuesta != null){
+                if($this->clase_validacionAccionProceso->respuesta != null){
 
-                    $respuesta =  $this->clase_validacionAccionDeleteProceso->respuesta;
+                    $respuesta =  $this->clase_validacionAccionProceso->respuesta;
 
                 }else{
                

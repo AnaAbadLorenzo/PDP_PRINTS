@@ -997,6 +997,41 @@ function construyeSelect(){
         errorFailAjax(jqXHR.status);
       });
 }
+
+/** Función para construír el select **/
+function construyeSelectCategorias(){
+	var options = "";
+	
+	$('#selectUsuarios').html('');
+
+	var token = getCookie('tokenUsuario');
+
+    var data = {
+        controlador : 'GestionCategorias',
+        action :'searchAllWithouPagination'
+    }
+
+    $.ajax({
+      method: "POST",
+      url: urlPeticionAjaxListarTodasCategorias,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
+      headers: {'Authorization': token},
+      }).done(res => {
+        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
+        	respuestaAjaxKO(res.code);
+        }
+        options = '<option selected value=0><label class="OPCION_DEFECTO_CATEGORIA">Selecciona la categoria</label></option>';
+        for(var i = 0; i< res.resource.length ; i++){
+					options += '<option value=' + res.resource[i].id_categoria + '>' + res.resource[i].nombre_categoria + '</option>';
+				}
+
+				$('#selectCategorias').append(options);
+    		
+      }).fail( function( jqXHR ) {
+        errorFailAjax(jqXHR.status);
+      });
+}
   
   $(document).ready(function() {
     $("#form-modal").on('hidden.bs.modal', function() {
