@@ -9,8 +9,8 @@ function anadirCategoriaAjaxPromesa(){
         id_categoria: "",
         nombre_categoria : $('#nombreCategoria').val(),
         descripcion_categoria : $('#descripcionCategoria').val(),
-        dni_responsable : $('#dniResponsable').val(),
-        id_padre_categoria : $('#categoriaPadre').val(),
+        dni_responsable : $('#selectUsuarios').val(),
+        id_padre_categoria : $('#selectCategoriaPadre').val(),
         usuario : getCookie('usuario'),
         borrado_categoria : 0
       }
@@ -44,29 +44,36 @@ function anadirCategoriaAjaxPromesa(){
             action: 'searchByParameters',
             nombre_categoria : $('#nombreCategoria').val(),
             descripcion_categoria : $('#descripcionCategoria').val(),
-            dni_responsable: $('#dniResponsable').val(),
+            dni_responsable: $('#selectUsuarios').val(),
+            id_padre_categoria : $('#selectCategoriaPadre').val(),
             inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
             tamanhoPagina : tamanhoPaginaCategoria
         }
       }
   
       if(accion == "buscarPaginacion"){
-        if(getCookie('nombreCategoria') == null || getCookie('nombreCategoria') == ""){
+        if(getCookie('nombre_categoria') == null || getCookie('nombre_categoria') == ""){
           var nombreCat = "";
         }else{
-          var nombreCat = getCookie('nombreCategoria');
+          var nombreCat = getCookie('nombre_categoria');
         }
   
-        if(getCookie('descripCategoria') == null || getCookie('descripCategoria') == ""){
+        if(getCookie('descripcion_categoria') == null || getCookie('descripcion_categoria') == ""){
           var descripCat = "";
         }else{
-          var descripCat = getCookie('descripCategoria');
+          var descripCat = getCookie('descripcion_categoria');
         }
 
-        if(getCookie('dniResponsable') == null || getCookie('dniResponsable') == ""){
+        if(getCookie('dni_responsable') == null || getCookie('dni_responsable') == ""){
             var dniResponsable = "";
           }else{
-            var dniResponsable = getCookie('dniResponsable');
+            var dniResponsable = getCookie('dni_responsable');
+          }
+
+          if(getCookie('id_padre_categoria') == null || getCookie('id_padre_categoria') == ""){
+            var idPadreCategoria = "";
+          }else{
+            var idPadreCategoria = getCookie('id_padre_categoria');
           }
   
         var categoria = {
@@ -75,6 +82,7 @@ function anadirCategoriaAjaxPromesa(){
             nombre_categoria : nombreCat,
             descripcion_categoria : descripCat,
             dni_responsable : dniResponsable,
+            id_padre_categoria : idPadreCategoria,
             inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
             tamanhoPagina : tamanhoPaginaCategoria
         }
@@ -200,7 +208,7 @@ function anadirCategoriaAjaxPromesa(){
   async function cargarPermisosFuncCategoria(){
     await cargarPermisosFuncCategoriaAjaxPromesa()
     .then((res) => {
-      gestionarPermisosCategoria(res.data);
+      gestionarPermisosCategoria(res.resource);
       setLang(getCookie('lang'));
     }).catch((res) => {
         respuestaAjaxKO(res.code);
@@ -216,6 +224,8 @@ function anadirCategoriaAjaxPromesa(){
       var token = getCookie('tokenUsuario');
   
       var categoria = {
+        controlador : 'GestionCategorias',
+        action : 'search',
         inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
         tamanhoPagina : tamanhoPaginaCategoria
       }
@@ -359,7 +369,7 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
           $("#checkboxColumnas").append(div);
           $("#paginacion").append(textPaginacion);
   
@@ -393,20 +403,21 @@ function anadirCategoriaAjaxPromesa(){
       $("#form-modal").modal('toggle');
       respuestaAjaxOK("CATEGORIA_GUARDADA_OK", res.code);
   
-      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       resetearFormulario("formularioGenerico", idElementoList);
       document.getElementById("modal").style.display = "block";
   
       $('#nombreCategoria').val(getCookie('nombre_categoria'));
       $('#descripcionCategoria').val(getCookie('descripcion_categoria'));
-      $('#dniResponsable').val(getCookie('dni_responsable'));
-      buscarObjetivo(getCookie('numeroPagina'), tamanhoPaginaObjetivo, 'buscarPaginacion', 'PaginadorNo');
+      $('#selectUsuarios').val(getCookie('dni_responsable'));
+      $('#selectCategoriaPadre').val(getCookie('id_categoria_padre'));
+      buscarCategoria(getCookie('numeroPagina'), tamanhoPaginaCategoria, 'buscarPaginacion', 'PaginadorNo');
       setLang(getCookie('lang'));
   
     }).catch((res) => {
         $("#form-modal").modal('toggle');
         respuestaAjaxKO(res.code);
-        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
         resetearFormulario("formularioGenerico", idElementoList);
         setLang(getCookie('lang'));
         document.getElementById("modal").style.display = "block";
@@ -422,7 +433,12 @@ function anadirCategoriaAjaxPromesa(){
         if($('#form-modal').is(':visible')) {
            $("#form-modal").modal('toggle');
         };
-        guardarParametrosBusqueda(res.resource.datosBusqueda);
+        var datosBusquedas = [];
+        datosBusquedas.push('nombre_categoria: ' + res.resource.datosBusquedas['nombre_categoria']);
+        datosBusquedas.push('descripcion_categoria: ' + res.resource.datosBusquedas['descripcion_categoria']);
+        datosBusquedas.push('dni_responsable: ' + res.resource.datosBusquedas['dni_responsable']);
+        datosBusquedas.push('id_padre_categoria: ' + res.resource.datosBusquedas['id_padre_categoria']);
+        guardarParametrosBusqueda(datosBusquedas);
         var numResults = res.resource.numResultados + '';
         var totalResults = res.resource.tamanhoTotal + '';
           var inicio = 0;
@@ -447,7 +463,7 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
   
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
@@ -471,7 +487,7 @@ function anadirCategoriaAjaxPromesa(){
         cargarPermisosFuncCategoria();
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+        let idElementoList = ["nombre_categoria", "descripcion_categoria", "selectUsuarios", "selectCategoriaPadre"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -515,7 +531,7 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setCookie('nombreObjetivo', '');
@@ -573,7 +589,7 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPTION_OBJETIVO_COLUMN:2, DNI_RESPONSABLE_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPTION_OBJETIVO_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
   
@@ -732,9 +748,10 @@ function anadirCategoriaAjaxPromesa(){
     $('#subtitulo').attr('hidden', true);
     $('#labelNombreCategoria').attr('hidden', true);
     $('#labelDescripcionCategoria').attr('hidden', true);
-    $('#labelDniResponsable').attr('hidden', true);
+    $('#labelDniResponsable').attr('hidden', false);
+    $('#labelCategoriaPadre').attr('hidden', false);
   
-    let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+    let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
     let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
     eliminarReadonly(campos);
     mostrarObligatorios(obligatorios);
@@ -744,7 +761,7 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Funcion para buscar un objetivo **/
-  function showBuscarObjetivo() {
+  function showBuscarCategoria() {
     cambiarFormulario('SEARCH_CATEGORIA', 'javascript:buscarCategoria(0,' + tamanhoPaginaCategoria + ', \'buscarModal\'' + ',\'PaginadorNo\');', 'return comprobarBuscarCategoria();');
     cambiarOnBlurCampos('return comprobarNombreCategoriaSearch(\'nombreCategoria\', \'errorFormatoNombreCategoria\', \'nombreCategoria\')', 
         'return comprobarDescripcionCategoriaSearch(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')');
@@ -753,9 +770,10 @@ function anadirCategoriaAjaxPromesa(){
     $('#subtitulo').attr('hidden', true);
     $('#labelNombreCategoria').attr('hidden', true);
     $('#labelDescripcionCategoria').attr('hidden', true);
-    $('#labelDniResponsable').attr('hidden', true);
+    $('#labelDniResponsable').attr('hidden', false);
+    $('#labelCategoriaPadre').attr('hidden', false);
   
-    let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+    let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
     let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
     eliminarReadonly(campos);
     ocultarObligatorios(obligatorios);
@@ -978,7 +996,7 @@ function construyeSelect(){
 
     $.ajax({
       method: "POST",
-      url: urlPeticionAjaxListadoUsuarios,
+      url: urlPeticionAjaxListarTodosUsuarios,
       contentType : "application/x-www-form-urlencoded; charset=UTF-8",
       data: data,
       headers: {'Authorization': token},
@@ -987,8 +1005,10 @@ function construyeSelect(){
         	respuestaAjaxKO(res.code);
         }
         options = '<option selected value=0><label class="OPCION_DEFECTO_USUARIO">Selecciona el usuario</label></option>';
-        for(var i = 0; i< res.resource.length ; i++){
-					options += '<option value=' + res.resource[i].dni_usuario + '>' + res.resource[i].usuario + '</option>';
+        for(var i = 0; i< res.resource.listaBusquedas.length ; i++){
+          if(res.resource.listaBusquedas[i].usuario.borrado_usuario == 0){
+            options += '<option value=' + res.resource.listaBusquedas[i].usuario.dni_usuario + '>' + res.resource.listaBusquedas[i].usuario.usuario + '</option>';
+          }
 				}
 
 				$('#selectUsuarios').append(options);
@@ -1002,13 +1022,13 @@ function construyeSelect(){
 function construyeSelectCategorias(){
 	var options = "";
 	
-	$('#selectUsuarios').html('');
+	$('#selectCategoriaPadre').html('');
 
 	var token = getCookie('tokenUsuario');
 
     var data = {
         controlador : 'GestionCategorias',
-        action :'searchAllWithouPagination'
+        action :'searchAllWithoutPagination'
     }
 
     $.ajax({
@@ -1018,15 +1038,15 @@ function construyeSelectCategorias(){
       data: data,
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
+        if (res.code != 'BUSQUEDA_CATEGORIA_CORRECTO') {
         	respuestaAjaxKO(res.code);
         }
         options = '<option selected value=0><label class="OPCION_DEFECTO_CATEGORIA">Selecciona la categoria</label></option>';
-        for(var i = 0; i< res.resource.length ; i++){
-					options += '<option value=' + res.resource[i].id_categoria + '>' + res.resource[i].nombre_categoria + '</option>';
+        for(var i = 0; i< res.resource.listaBusquedas.length ; i++){
+					options += '<option value=' + res.resource.listaBusquedas[i].categoria.id_categoria + '>' + res.resource.listaBusquedas[i].categoria.nombre_categoria + '</option>';
 				}
 
-				$('#selectCategorias').append(options);
+				$('#selectCategoriaPadre').append(options);
     		
       }).fail( function( jqXHR ) {
         errorFailAjax(jqXHR.status);

@@ -16,7 +16,6 @@ class categoriaMapping extends MappingBase {
         $this->query = "INSERT INTO `categoria` (`nombre_categoria`, `descripcion_categoria`, `borrado_categoria`, `dni_responsable`, `id_padre_categoria`, `dni_usuario`) VALUES ('".$datosInsertar['nombre_categoria']."','".$datosInsertar['descripcion_categoria']."','"
         .$datosInsertar['borrado_categoria']."','".$datosInsertar['dni_responsable']."',".$datosInsertar['id_padre_categoria'].",'".$datosInsertar['dni_usuario']. "')";
         $this->stmt = $this->conexion->prepare($this->query);
-        echo($this->query);
         $this->execute_single_query();   
         
     }
@@ -70,9 +69,8 @@ class categoriaMapping extends MappingBase {
         $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
                         LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
                         LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%')) AND
-                        LOWER(`id_padre_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['id_padre_categoria']."', '%')) AND
-                        LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']."', '%')) AND
-                        `borrado_persona` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
+                        (`id_padre_categoria` IS NULL OR LOWER(`id_padre_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['id_padre_categoria']."', '%'))) AND
+                        `borrado_categoria` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
 
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
@@ -84,8 +82,7 @@ class categoriaMapping extends MappingBase {
                         LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
                         LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_responsable']."', '%')) AND
                         LOWER(`id_padre_categoria`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_padre_categoria']."', '%')) AND
-                        LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_usuario']."', '%')) AND
-                        `borrado_persona` = 0"; 
+                        `borrado_categoria` = 0"; 
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
     }

@@ -36,6 +36,18 @@
   -moz-box-sizing: border-box;
 }
 
+select, select option{
+  width: 90% !important;
+  font-family: Roboto;
+}
+
+select option:checked{
+  background-color: #B39DDB !important;
+  font-weight: bold;
+  color:  #ffffff;
+}
+
+
 
 /********* ICONOS ***********/
 

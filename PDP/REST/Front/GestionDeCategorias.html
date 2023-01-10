@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 	<link rel="stylesheet" href="css/bootstrap.min.css" >
 	<link rel="stylesheet" type="text/css" href="css/comun.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="css/gestionObjetivos.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/gestionCategorias.css" media="screen" />
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>		
@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/validaciones.js"></script>
 	<script type="text/javascript" src="js/menu.js"></script>
-	<script type="text/javascript" src="js/gestionObjetivos.js"></script>
+	<script type="text/javascript" src="js/gestionCategorias.js"></script>
 	<script type="text/javascript" src="Locale/idioma.js"></script>
     <script type="text/javascript" src="Locale/Lang_EN.js"></script>
     <script type="text/javascript" src="Locale/Lang_ES.js"></script>
@@ -35,8 +35,8 @@
   	await includeTopMenu('categoria');
     await funcionalidadesUsuario();
     modalCambioPass();cargarIdioma();includeFooter();setLang('');
-	await cargarObjetivos(0, tamanhoPaginaObjetivo, 'PaginadorNo');
-	await cargarPermisosFuncObjetivo();
+	await cargarCategorias(0, tamanhoPaginaCategoria, 'PaginadorNo');
+	await cargarPermisosFuncCategoria();
     await construyeSelect();
 	await construyeSelectCategorias();
 	ejecutaFuncion(function(){compruebaFuncionalidadesPermisos('CATEGORIA')},30000);
@@ -50,7 +50,7 @@
 
 	<div id="cabecera" class="cabecera" style="display: none;">
 		<div id="divAddCategoria" name="btnAdd" value="Añadir" data-toggle="" data-target="" onclick="javascript:showAddCategorias()" class="tooltip6 addIcon">
-        <img id="btnAddCategosria" class="iconoAdd" src="images/add.png" alt="Añadir" />
+        <img id="btnAddCategoria" class="iconoAdd" src="images/add.png" alt="Añadir" />
         <span class="tooltiptext iconAddCatgeoria ICONO_ADD"></span>
     	</div>      
 
@@ -83,7 +83,7 @@
     </div>    
 
 	<div class="table-responsive" id="tablaDatos" style="display: none;">
-		<table class="table table-bordered" id="tablaObjetivos">
+		<table class="table table-bordered" id="tablaCategorias">
 			<thead>
 		    	<tr>
 			      <th scope="col" class="colFirst NOMBRE_CATEGORIA_COLUMN">
@@ -103,8 +103,8 @@
 					  </th>
 
                       <th scope="col" class="RESPONSABLE_CATEGORIA_COLUMN">
-					    <div class="RESPONSABLE_CATEGORIA responsableCategoriaColumn"></div>
-		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(1, 'tablaCategorias')" class="tooltip7 ordenarIconResponsableCategoria">
+					    <div class="RESPONSABLE_CATEGORIA dniResponsableColumn"></div>
+		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(2, 'tablaCategorias')" class="tooltip7 ordenarIconDniResponsableCategoria">
 		                    <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
 		                    <span class="tooltiptext ORDENAR"></span>
 		              </div>
@@ -112,7 +112,7 @@
 
 					  <th scope="col" class="CATEGORIA_ID_COLUMN" hidden>
 					    <div class="CATEGORIA_ID idCategoriaColumn"></div>
-		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(2, 'tablaCategorias')" class="tooltip7 
+		              <div name="btnOrdenar" value="Ordenar" onclick="sortTable(3, 'tablaCategorias')" class="tooltip7 
 		              ordenarIconIdCategoria">
 		                    <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
 		                    <span class="tooltiptext ORDENAR"></span>
@@ -154,7 +154,6 @@
       			<div id="contenidoForm">
               			<div class="formularioComun">
               				<h1 id="tituloForms" class="datos"></h1>
-              				<p id = "subtitulo" class="SEGURO_ELIMINAR_OBJ" hidden></p>
                     	<form name="formularioGenerico" id="formularioGenerico" action="" onsubmit="">
                     	  <label class="labelForm NOMBRE_CATEGORIA" id="labelNombreCategoria" hidden></label>                            
                           <input type="text" maxlength="128" size="128" placeholder="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" id="nombreCategoria" class="NOMBRE_CATEGORIA" onblur=""/>
@@ -163,14 +162,14 @@
               			  </div>
                           <div style="display:none" id="errorFormatoNombreCategoria"></div>
                           
-                          <label class="labelForm DESCRIPCION_OBJETIVO" id="labelDescripcionObjetivo" hidden></label>
-	                      <input type="text" placeholder="DESCRIPCION_OBJETIVO" name="DESCRIPCION_OBJETIVO" id="descripcionObjetivo" class="DESCRIPCION_OBJETIVO" onblur=""/>
-	                       <div class="obligatorio tooltip2" id="obligatorioDescripcionObjetivo">*
+                          <label class="labelForm DESCRIPCION_CATEGORIA" id="labelDescripcionObjetivo" hidden></label>
+	                      <input type="text" placeholder="DESCRIPCION_OBJETIVO" name="DESCRIPCION_OBJETIVO" id="descripcionCategoria" class="DESCRIPCION_OBJETIVO" onblur=""/>
+	                       <div class="obligatorio tooltip2" id="obligatorioDescripcionCategoria">*
                   			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
               			  </div>
-	                      <div style="display:none" id="errorFormatoDescripcionObjetivo"></div>
+	                      <div style="display:none" id="errorFormatoDescripcionCategoria"></div>
 
-                          <label class="labelForm DNI_RESPONSABLE" id="labelDniResponsable" hidden></label>
+                          <label class="labelForm RESPONSABLE_CATEGORIA" id="labelDniResponsable" hidden></label>
 	                      <select id="selectUsuarios" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
 	                       <div class="obligatorio tooltip2" id="obligatorioDniResponsable">*
                   			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>

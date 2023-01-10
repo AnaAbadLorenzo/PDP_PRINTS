@@ -10,7 +10,8 @@ class UsuarioModel extends ModelBase{
 	public $borrado_usuario;
 	public $id_rol;
 	public $clavesForaneas;
-
+	public $mapping;
+	
 	function __construct(){
 		
 		$this->fillfields();

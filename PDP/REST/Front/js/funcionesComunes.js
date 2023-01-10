@@ -485,18 +485,16 @@ function construyeFila(entidad, fila) {
                 '</td> <td>' + convertirFecha(fechaNoticia.toString());
         break;
 
-        case 'EMPRESA':
-			atributosFunciones = ["'" + fila.cifEmpresa + "'", "'" + fila.nombreEmpresa + "'", "'" + fila.direccionEmpresa + "'", "'" + fila.telefonoEmpresa + "'", "'" + fila.idEmpresa + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.cifEmpresa + 
-                '</td> <td>' + fila.nombreEmpresa +
-                '</td> <td>' + fila.direccionEmpresa +
-                '</td> <td>' + fila.telefonoEmpresa;
-        break;
-
-        case 'OBJETIVO':
-			atributosFunciones = ["'" + fila.nombreObjetivo + "'", "'" + fila.descripObjetivo + "'", "'" + fila.idObjetivo + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreObjetivo + 
-                '</td> <td>' + fila.descripObjetivo;
+        case 'CATEGORIA':
+			if(fila.categoria_padre != null){
+				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'", "'" + fila.responsable.usuario + "'", "'" + fila.categoria_padre.id_categoria + "'", "'" + fila.categoria_padre.nombre_categoria + "'", "'" + fila.categoria.id_categoria + "'"];
+			}else{
+				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'", "'" + fila.responsable.usuario + "'","'" + fila.categoria.id_categoria + "'"];
+			}
+			
+			filaTabla = '<tr class="impar"> <td>' + fila.categoria.nombre_categoria + 
+                '</td> <td>' + fila.categoria.descripcion_categoria +
+				'</td> <td>' + fila.responsable.usuario;
         break;
 
         case 'RESPUESTA_POSIBLE' :
@@ -1051,12 +1049,8 @@ function cargarHref(dato){
 			href="GestionDeNoticias.html";
 		break;
 
-		case 'Gestión de empresas':
-			href="GestionDeEmpresas.html";
-		break;
-
-		case 'Gestión de objetivos':
-			href="GestionDeObjetivos.html";
+		case 'Gestión de categorias':
+			href="GestionDeCategorias.html";
 		break;
 
 		case 'Gestión de respuestas posibles':
@@ -1143,6 +1137,14 @@ function cargarClass(dato, rol){
 
 		case 'Gestión de respuestas posibles':
 			clase = "GESTION_RESPUESTAS_POSIBLES";
+		break;
+
+		case 'Gestión de respuestas posibles':
+			clase = "GESTION_RESPUESTAS_POSIBLES";
+		break;
+
+		case 'Gestión de categorias':
+			clase = "GESTION_CATEGORIAS";
 		break;
 	}
 
@@ -1436,10 +1438,6 @@ function compruebaFuncionalidadesPermisos(entidad){
 		
 		case 'NOTICIA':
 			cargarPermisosFuncNoticia();
-		break;
-
-		case 'EMPRESA':
-			cargarPermisosFuncEmpresa();
 		break;
 
 		case 'CATEGORIA' :

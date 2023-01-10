@@ -27,12 +27,11 @@ class GestionCategoriasController extends ControllerBase{
 		$this->gestionCategoriaService->inicializarParametros('add');
 		
 		$respuesta = $this->gestionCategoriaService->add('ADD_CATEGORIA_COMPLETO');
-
 		if($respuesta != 'ADD_CATEGORIA_COMPLETO') {
-				$this->rellenarRespuesta($respuesta, true, '');
-			}else{
-				$this->rellenarRespuesta('ADD_CATEGORIA_COMPLETO', false, '');
-			}
+			$this->rellenarRespuesta($respuesta, true, '');
+		}else{
+			$this->rellenarRespuesta($respuesta, false, '');
+		}
 		$this->getRespuesta($respuesta);
 	}
 

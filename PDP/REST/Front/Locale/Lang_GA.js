@@ -38,6 +38,8 @@ arrayGA={
 	'FECHA_NOTICIA' : 'Data noticia',
 	'NOMBRE_CATEGORIA' : 'Nome categoría',
 	'DESCRIPCION_CATEGORIA' : 'Descripción categoría',
+	'RESPONSABLE_CATEGORIA' : 'Responsable categroría',
+	'CATEGORIA_PADRE' : 'Categoría padre',
 	'TEXTO_RESPUESTA_POSIBLE' : 'Texto resposta posible',
 	'NOMBRE_PLAN' : 'Nome plan',
 	'DESCRIPCION_PLAN' : 'Descripción plan',

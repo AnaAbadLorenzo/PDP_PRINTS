@@ -54,7 +54,7 @@
   .textoNoticiaColumn, .fechaNoticiaColumn, .idNoticiaColumn, .dniColumn, .nombrePersonaColumn, .apellidosPersonaColumn, .direccionPersonaColumn, 
   .fechaNacimientoPersonaColumn, .telefonoColumn, .emailColumn, .activoColumn, .nombreEmpresaColumn, .rolNameColumn, .rolDescriptionColumn, .rolIdColumn, 
   .dniUsuarioColumn, .usuarioActivoColumn, .rolColumn, .cifEmpresaColumn, .nombreEmpresaColumn, .direccionEmpresaColumn, .telefonoColumn, .idEmpresaColumn, 
-  .nombreObjetivoColumn, .descripcionObjetivoColumn, .textoRespuestaPosibleColumn, .idRespuestaPosibleColumn, .nombrePlanColumn, .descripcionPlanColumn, 
+  .nombreCategoriaColumn, .descripcionCategoriaColumn, .dniResponsableColumn, .textoRespuestaPosibleColumn, .idRespuestaPosibleColumn, .nombrePlanColumn, .descripcionPlanColumn, 
   .fechaPlanColumn, .nombreProcedimientoColumn, .descripcionProcedimientoColumn, .fechaProcedimientoColumn, .checkUsuarioColumn, .idProcedimientoColumn, 
   .nombreProcesoColumn, .descripcionProcesoColumn, .fechaProcesoColumn, .idProcesoColumn, .estadoProcedimientoEjecutadoColumn, .fechaProcedimientosEjecutadosColumn, 
   .idProcedimientoEjecutadoColumn, .fechaProcesosEjecutadosColumn { font-size: 0.7rem !important;}
@@ -1542,7 +1542,7 @@ form button[type="button"]:hover {
 .iconoSearchLogExcepciones, .iconoAddNoticia, .iconoSearchNoticia, .iconoEditarNoticia, 
 .iconoSearchRol, .iconoAddRol, .iconoEditarRol, .iconoSearchUsuario, .iconoEditarRolUsuario,
 .iconoAddPersona, .iconoSearchPersona, .iconoEditarPersona, .iconoAddEmpresa,
-.iconoSearchEmpresa, .iconoEditarEmpresa, .iconoAddObjetivo, .iconoSearchObjetivo, .iconoEditarObjetivo,
+.iconoSearchEmpresa, .iconoEditarEmpresa, .iconoAddCategoria, .iconoSearchCategoria, .iconoEditarCategoria,
 .iconoAddRespuestaPosible, .iconoSearchRespuestaPosible, .iconoEditarRespuestaPosible,
 .iconoAddPlan, .iconoSearchPlan, .iconoEditarPlan,
 .iconoAddProcedimiento, .iconoSearchProcedimiento, .iconoEditarProcedimiento,
@@ -1679,8 +1679,8 @@ form button[type="button"]:hover {
 .telefonoColumn, .emailColumn, .activoColumn, .nombreEmpresaColumn, 
 .rolNameColumn, .rolDescriptionColumn, .rolIdColumn,
 .dniUsuarioColumn, .usuarioActivoColumn, .rolColumn, .cifEmpresaColumn,
-.nombreEmpresaColumn, .direccionEmpresaColumn, .telefonoColumn, .idEmpresaColumn, .nombreObjetivoColumn, 
-.descripcionObjetivoColumn, .textoRespuestaPosibleColumn, .idRespuestaPosibleColumn,
+.nombreEmpresaColumn, .direccionEmpresaColumn, .telefonoColumn, .idEmpresaColumn, .nombreCategoriaColumn, 
+.descripcionCategoriaColumn, .dniResponsableColumn, .textoRespuestaPosibleColumn, .idRespuestaPosibleColumn,
 .nombrePlanColumn, .descripcionPlanColumn, .fechaPlanColumn, .nombreProcedimientoColumn,
 .descripcionProcedimientoColumn, .fechaProcedimientoColumn, .checkUsuarioColumn, .idProcedimientoColumn,
 .nombreProcesoColumn, .descripcionProcesoColumn, .fechaProcesoColumn, .idProcesoColumn,
@@ -1700,7 +1700,7 @@ form button[type="button"]:hover {
 .ordenarIconRolName, .ordenarIconRolDescription, .ordenarIconRolId,
 .ordenarIconDniUsuario, .ordenarIconActivo, .ordenarIconRol, .ordenarIconCifEmpresa,
 .ordenarIconNombreEmpresa, .ordenarIconDireccionEmpresa, .ordenarIconTelefonoEmpresa,
-.ordenarIconIdEmpresa, .ordenarIconNombreObjetivo, .ordenarIconDescripcionObjetivo,
+.ordenarIconIdEmpresa, .ordenarIconNombreCategoria, .ordenarIconDescripcionCategoria, .ordenarIconDniResponsableCategoria
 .ordenarTextoRespuestaPosible, .ordenarIdRespuestaPosible, .ordenarIconNombrePlan,
 .ordenarIconDescripcionPlan, .ordenarIconFechaPlan, .ordenarIconNombreObjetivo
 .ordenarIconNombreProcedimiento, .ordenarIconDescripcionProcedimiento,

@@ -301,6 +301,27 @@ class GestionUsuariosServiceImpl extends ServiceBase implements GestionUsuariosS
         return $returnBusquedas;
     }
 
+    function searchAll($mensaje){
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->searchAll();
+        $datosRol = $this->searchForeignKeys();
+
+        $datosADevolver = array();
+        $datosUsuarioRol = array();
+        foreach($usuario_mapping->feedback['resource'] as $usuario){
+            foreach($datosRol as $rol){
+                if($usuario['id_rol'] == $rol['id_rol']){
+                    $datosUsuarioRol['usuario'] = $usuario;
+                    $datosUsuarioRol['rol'] = $rol;
+                    array_push($datosADevolver, $datosUsuarioRol);
+                }
+            }
+        }
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                    $this->numberFindAll()["COUNT(*)"],sizeof($usuario_mapping->feedback['resource']), '');
+        return $returnBusquedas;
+    }
+
     function reactivar($mensaje) {
 
         $this -> clase_validacionAccionUsuario -> comprobarReactivar($_POST);

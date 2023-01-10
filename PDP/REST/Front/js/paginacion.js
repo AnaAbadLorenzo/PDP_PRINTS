@@ -105,12 +105,6 @@ function escogeTamanho(entidad){
         case 'ACCION':
             tamanho = tamanhoPaginaAccion;
         break;
-        case 'LOG_EXCEPCIONES':
-            tamanho = tamanhoPaginaLogExcepciones;
-        break;
-        case 'LOG_ACCIONES':
-            tamanho = tamanhoPaginaLogAcciones;
-        break;
         case 'USUARIO':
             tamanho = tamanhoPaginaUsuario;
         break;
@@ -120,11 +114,8 @@ function escogeTamanho(entidad){
         case 'NOTICIA' : 
             tamanho = tamanhoPaginaNoticia;
         break;
-        case 'EMPRESA' : 
-            tamanho = tamanhoPaginaEmpresa;
-        break;
-        case 'OBJETIVO' : 
-            tamanho = tamanhoPaginaObjetivo;
+        case 'CATEGORIA' : 
+            tamanho = tamanhoPaginaCategoria;
         break;
         case 'RESPUESTA_POSIBLE' :
             tamanho = tamanhoPaginaRespuestaPosible;
@@ -379,21 +370,21 @@ function escogeEntidadPaginacion(entidad, funcionalidad){
 
             }
         break;
-        case 'OBJETIVO':
+        case 'CATEGORIA':
             switch(funcionalidad){
-                case 'cargarObjetivos': 
+                case 'cargarCategorias': 
                     for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarObjetivos(' 
-                            + (i+1) + ',' + tamanhoPaginaObjetivo + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
+                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarCategorias(' 
+                            + (i+1) + ',' + tamanhoPaginaCategoria + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
                     }
                 break;
-                case 'buscarObjetivo' : 
+                case 'buscarCategoria' : 
                     for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarObjetivo(' 
+                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarCategoria(' 
                             + (i+1) + ',' + tamanhoPaginaObjetivo + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
                     }
                 break;
-                case 'buscarEliminadosObjetivo' :
+                case 'buscarEliminadosCategoria' :
                     for(var i = 0; i< 3; i++){
                         paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarEliminados(' 
                             + (i+1) + ',' + tamanhoPaginaObjetivo + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';

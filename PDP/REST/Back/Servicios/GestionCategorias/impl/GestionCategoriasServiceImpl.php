@@ -74,7 +74,7 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                 }else if($this->clase_validacionAccionCategoria->respuesta != null){
                     $respuesta = $this->clase_validacionAccionCategoria->respuesta;
                 }else{
-                    $CategoriaDatos = [
+                    $categoriaDatos = [
                         'nombre_categoria' => $this->categoria->nombre_categoria,
                         'descripcion_categoria' => $this->categoria->descripcion_categoria,
                         'dni_responsable' => $this->categoria->dni_responsable,
@@ -83,11 +83,11 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                         'borrado_categoria' => 0
                     ];
                     if ($this->categoria->id_padre_categoria== "" || is_null($this->categoria->id_padre_categoria)){
-                        $CategoriaDatos['id_padre_categoria']= "null";  
+                        $categoriaDatos['id_padre_categoria']= "null";  
                     }
           
                     $categoria_mapping = new CategoriaMapping();
-                    $categoria_mapping->add($CategoriaDatos);
+                    $categoria_mapping->add($categoriaDatos);
 
                     $respuesta = $mensaje;
                     $this->recursos = '';
@@ -191,8 +191,15 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             foreach($datosUsuario as $usuario){
                 foreach($datosCategoria as $categoria){
                     if($usuario['dni_usuario'] == $categoria['dni_responsable']){
-                        $datosUsuarioDev['categoria'] = $datosCategoria;
+                        $datosUsuarioDev['categoria'] = $categoria;
                         $datosUsuarioDev['responsable'] = $usuario;
+                        $categoria_mapping->searchAll();
+                        $categoriasPadres = $categoria_mapping->feedback['resource'];
+                        foreach($categoriasPadres as $padres){
+                            if($categoria['id_padre_categoria'] != null && $categoria['id_padre_categoria'] == $padres['id_categoria']){
+                                $datosUsuarioDev['categoria_padre'] = $padres;
+                            }
+                        }
                         array_push($datosADevolver, $datosUsuarioDev);
                     }
                 }
@@ -215,8 +222,15 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             foreach($datosUsuario as $usuario){
                 foreach($datosCategoria as $categoria){
                     if($usuario['dni_usuario'] == $categoria['dni_responsable']){
-                        $datosUsuarioDev['categoria'] = $datosCategoria;
+                        $datosUsuarioDev['categoria'] = $categoria;
                         $datosUsuarioDev['responsable'] = $usuario;
+                        $categoria_mapping->searchAll();
+                        $categoriasPadres = $categoria_mapping->feedback['resource'];
+                        foreach($categoriasPadres as $padres){
+                            if($categoria['id_padre_categoria'] != null && $categoria['id_padre_categoria'] == $padres['id_categoria']){
+                                $datosUsuarioDev['categoria_padre'] = $padres;
+                            }
+                        }
                         array_push($datosADevolver, $datosUsuarioDev);
                     }
                 }
@@ -229,8 +243,6 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
         }
 
         function searchByParameters($mensaje, $paginacion){
-
-            echo("llego");
           
             $respuesta = '';
             
@@ -245,20 +257,15 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             }else{
                 $datosSearchParameters['descripcion_categoria'] = $this->categoria->descripcion_categoria;
             }
-            if($this->categoria->dni_responsable===null){
+            if($this->categoria->dni_responsable===null || $this->categoria->dni_responsable==='0'){
                 $datosSearchParameters['dni_responsable'] = '';
             }else{
                 $datosSearchParameters['dni_responsable'] = $this->categoria->dni_responsable;
             }
-            if($this->categoria->id_padre_categoria===null){
+            if($this->categoria->id_padre_categoria===null || $this->categoria->id_padre_categoria==='0'){
                 $datosSearchParameters['id_padre_categoria'] = '';
             }else{
                 $datosSearchParameters['id_padre_categoria'] = $this->categoria->id_padre_categoria;
-            }
-            if($this->categoria->dni_usuario===null){
-                $datosSearchParameters['dni_usuario'] = '';
-            }else{
-                $datosSearchParameters['dni_usuario'] = $this->categoria->dni_usuario;
             }
             
             $datosSearchParameters['borrado_categoria'] = 0;
@@ -266,21 +273,28 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
         $categoria_mapping= new CategoriaMapping();
         $categoria_mapping->searchByParameters($datosSearchParameters, $paginacion);
         $datosCategoria =  $categoria_mapping->feedback['resource'];
-            $datosUsuario = $this->searchForeignKeys();
+        $datosUsuario = $this->searchForeignKeys();
 
             $datosADevolver = array();
             $datosUsuarioDev = array();
             foreach($datosUsuario as $usuario){
                 foreach($datosCategoria as $categoria){
                     if($usuario['dni_usuario'] == $categoria['dni_responsable']){
-                        $datosUsuarioDev['categoria'] = $datosCategoria;
+                        $datosUsuarioDev['categoria'] = $categoria;
                         $datosUsuarioDev['responsable'] = $usuario;
+                        $categoria_mapping->searchAll();
+                        $categoriasPadres = $categoria_mapping->feedback['resource'];
+                        foreach($categoriasPadres as $padres){
+                            if($categoria['id_padre_categoria'] != null && $categoria['id_padre_categoria'] == $padres['id_categoria']){
+                                $datosUsuarioDev['categoria_padre'] = $padres;
+                            }
+                        }
                         array_push($datosADevolver, $datosUsuarioDev);
                     }
                 }
             }
-        $returnBusquedas = new ReturnBusquedas($categoria_mapping->feedback['resource'], $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
-                        sizeof($categoria_mapping->feedback['resource']), $paginacion->inicio);
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, $datosSearchParameters, $this->numberFindParameters($datosSearchParameters)["COUNT(*)"],
+                        sizeof($datosADevolver), $paginacion->inicio);
         return $returnBusquedas;
         }
 

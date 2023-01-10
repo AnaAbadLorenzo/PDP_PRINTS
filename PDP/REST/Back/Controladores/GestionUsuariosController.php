@@ -88,6 +88,12 @@ class GestionUsuariosController extends ControllerBase{
 		$this->getRespuesta($respuesta);
     }
 
+	function searchAll(){
+        $respuesta = $this->gestionUsuariosService->searchAll('BUSQUEDA_USUARIO_CORRECTO');
+		$this->rellenarRespuesta('BUSQUEDA_USUARIO_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
 	function searchDelete() {
 
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
