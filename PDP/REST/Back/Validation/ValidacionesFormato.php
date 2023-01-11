@@ -299,13 +299,13 @@ class ValidacionesFormato{
 		
 	}
 
-	function Formato_fecha($fecha){
-		$patronFecha = '/^[0-9]{4}(-)[0-9]{2}(-)[0-9]{2}/';
-        preg_match_all($patronFecha, $fecha, $matches, PREG_UNMATCHED_AS_NULL);
+	function Formato_fecha($fecha) {
+		$patronFecha = "@^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$@";
+        preg_match($patronFecha, $fecha, $matches, PREG_UNMATCHED_AS_NULL);
 
-		if(!empty($matches)){
-				return true;
-		}else{
+		if (!empty($matches)) {
+			return true;
+		} else {
 			return false;
 		}
 	}
