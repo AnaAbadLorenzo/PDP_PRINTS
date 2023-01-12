@@ -12,8 +12,8 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
 
     function validarAdd() {
 
-        $parametro_validation_formato = new ProcesoUsuarioAtributos;
-        $parametro_validation_accion = new ProcesoUsuarioAccion;
+        $proceso_usuario_validation_formato = new ProcesoUsuarioAtributos;
+        $proceso_usuario_validation_accion = new ProcesoUsuarioAccion;
 
         $atributos_validacion = array(
             'fecha_proceso_usuario',
@@ -23,17 +23,17 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
         );
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
 
-        $parametro_validation_formato -> validarAtributosAdd($atributos);
-        $this -> respuesta_formato = $parametro_validation_formato -> respuesta;
+        $proceso_usuario_validation_formato -> validarAtributosAdd($atributos);
+        $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
 
-        $this -> respuesta_accion = $parametro_validation_accion -> comprobarAdd($atributos);
+        $this -> respuesta_accion = $proceso_usuario_validation_accion -> comprobarAdd($atributos);
 
     }
 
     function validarEdit() {
 
-        $parametro_validation_formato = new ProcesoUsuarioAtributos;
-        $parametro_validation_accion = new ProcesoUsuarioAccion;
+        $proceso_usuario_validation_formato = new ProcesoUsuarioAtributos;
+        $proceso_usuario_validation_accion = new ProcesoUsuarioAccion;
 
         $atributos_validacion = array(
             'id_proceso_usuario',
@@ -44,31 +44,31 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
         );
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
 
-        $parametro_validation_formato -> validarAtributosEdit($atributos);
-        $this -> respuesta_formato = $parametro_validation_formato -> respuesta;
+        $proceso_usuario_validation_formato -> validarAtributosEdit($atributos);
+        $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
 
-        $this -> respuesta_accion = $parametro_validation_accion -> comprobarEdit($atributos);
+        $this -> respuesta_accion = $proceso_usuario_validation_accion -> comprobarEdit($atributos);
 
     }
 
     function validarDelete() {
 
-        $parametro_validation_formato = new ProcesoUsuarioAtributos();
-        $parametro_validation_accion = new ProcesoUsuarioAccion;
+        $proceso_usuario_validation_formato = new ProcesoUsuarioAtributos();
+        $proceso_usuario_validation_accion = new ProcesoUsuarioAccion;
 
         $atributos_validacion = array('id_proceso_usuario');
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
 
-        $parametro_validation_formato -> validarAtributosDelete($atributos);
-        $this -> respuesta_formato = $parametro_validation_formato -> respuesta;
+        $proceso_usuario_validation_formato -> validarAtributosDelete($atributos);
+        $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
         
-        $this -> respuesta_accion = $parametro_validation_accion -> comprobarDelete($atributos);
+        $this -> respuesta_accion = $proceso_usuario_validation_accion -> comprobarDelete($atributos);
 
     }
 
     function validarSearch()  {
 
-        $parametro_validation_formato = new ProcesoUsuarioAtributos();
+        $proceso_usuario_validation_formato = new ProcesoUsuarioAtributos();
 
         $atributos_validacion = array(
             'id_proceso_usuario',
@@ -79,8 +79,8 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
         );
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
         
-        $parametro_validation_formato -> validarAtributosSearch($atributos);
-        $this -> respuesta_formato = $parametro_validation_formato -> respuesta;
+        $proceso_usuario_validation_formato -> validarAtributosSearch($atributos);
+        $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
 
     }
 

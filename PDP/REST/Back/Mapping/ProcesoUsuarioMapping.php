@@ -61,7 +61,9 @@ class ProcesoUsuarioMapping extends MappingBase {
     function delete($datos) {
 
         $this -> query =
-            "DELETE FROM `proceso_usuario`
+            "UPDATE `proceso_usuario`
+            SET
+                `borrado_proceso_usuario`=1
             WHERE
                 `id_proceso_usuario`='" . $datos['id_proceso_usuario'] . "'
             ;"
