@@ -132,6 +132,15 @@ function search() {
     
 }
 
+function getProcesosWhitIdCategoria($datosProceso){
+
+    $this->query = "SELECT * FROM `proceso` WHERE `id_categoria`=".$datosProceso['id_padre_categoria']."";
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_results_from_query();
+  
+
+}
+
 /*
     function searchByIdPadre($datosSearch) {
             $this->query = "SELECT * FROM `categoria` WHERE `id_categoria`='".$datosSearch['id_padre_categoria']."'";

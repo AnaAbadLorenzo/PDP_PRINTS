@@ -32,22 +32,6 @@ class ParametroMapping extends MappingBase {
         $this -> execute_single_query();  
     }
 
-    function edit($datos) {
-
-        $this -> query = 
-            "UPDATE `parametro`
-            SET
-                `parametro_formula`='" . $datos['parametro_formula'] . "'
-                `descripcion_parametro`='" . $datos['descripcion_parametro'] . "'
-            WHERE
-                `id_parametro`='". $datos['id_parametro'] . "';"
-        ;
-
-        $this->stmt = $this->conexion->prepare($this->query);
-        $this->execute_single_query();
-
-    }
-
     function delete($datosEliminar) {
 
         $this -> query =
