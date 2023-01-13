@@ -78,6 +78,13 @@ class GestionCategoriasController extends ControllerBase{
 		$this->getRespuesta($respuesta);
     }
 
+	function searchDelete(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionCategoriaService->searchDelete('BUSQUEDA_CATEGORIA_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
 	function searchAllWithoutPagination(){
         $respuesta = $this->gestionCategoriaService->searchAllWithoutPagination('BUSQUEDA_CATEGORIA_CORRECTO');
 		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
@@ -92,6 +99,24 @@ class GestionCategoriasController extends ControllerBase{
 		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
+
+	function reactivar() {
+
+		$this -> gestionCategoriaService -> inicializarParametros('reactivar');
+		$respuesta = $this -> gestionCategoriaService -> reactivar();
+
+		if (!is_array($respuesta)) { //cuando ocurre un error de validacion
+			$this->rellenarRespuesta($respuesta, false, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else if (!$respuesta['ok']) { //error sql
+			$this->rellenarRespuesta('REACTIVAR_CATEGORIA_FALLIDO', true, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else {
+			$this->rellenarRespuesta('REACTIVAR_CATEGORIA_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
+		}
+
+	}
     
 }
 ?>

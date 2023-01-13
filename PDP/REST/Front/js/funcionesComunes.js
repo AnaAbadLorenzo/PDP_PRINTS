@@ -350,7 +350,7 @@ function comprobarTokenUsuario(funcionalidad){
 			case 'funcionalidad':
 			case 'noticias':
 			case 'categoria':
-			case 'respuestaPosible':
+			case 'parametro':
 			case 'rol':
 			case 'logAcciones':
 			case 'logExcepciones':
@@ -487,9 +487,9 @@ function construyeFila(entidad, fila) {
 
         case 'CATEGORIA':
 			if(fila.categoria_padre != null){
-				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'", "'" + fila.responsable.usuario + "'", "'" + fila.categoria_padre.id_categoria + "'", "'" + fila.categoria_padre.nombre_categoria + "'", "'" + fila.categoria.id_categoria + "'"];
+				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'", "'" + fila.responsable.dni_usuario + "'", "'" + fila.responsable.usuario + "'", "'" + fila.categoria_padre.id_categoria + "'", "'" + fila.categoria_padre.nombre_categoria + "'", "'" + fila.categoria.id_categoria + "'"];
 			}else{
-				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'", "'" + fila.responsable.usuario + "'","'" + fila.categoria.id_categoria + "'"];
+				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'","'" + fila.responsable.dni_usuario + "'", "'" + fila.responsable.usuario + "'","'" + null + "'", "'" + null+ "'","'" + fila.categoria.id_categoria + "'"];
 			}
 			
 			filaTabla = '<tr class="impar"> <td>' + fila.categoria.nombre_categoria + 
@@ -805,11 +805,18 @@ function construyeFilaEliminados(entidad, fila) {
                 '</td> <td>' + fila.telefonoEmpresa;
         break;
 
-        case 'OBJETIVO':
-			atributosFunciones = ["'" + fila.nombreObjetivo + "'", "'" + fila.descripObjetivo + "'", "'" + fila.idObjetivo + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreObjetivo + 
-                '</td> <td>' + fila.descripObjetivo;
+        case 'CATEGORIA':
+			if(fila.categoria_padre != null){
+				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'", "'" + fila.responsable.dni_usuario + "'", "'" + fila.responsable.usuario + "'", "'" + fila.categoria_padre.id_categoria + "'", "'" + fila.categoria_padre.nombre_categoria + "'", "'" + fila.categoria.id_categoria + "'"];
+			}else{
+				atributosFunciones = ["'" + fila.categoria.nombre_categoria + "'", "'" + fila.categoria.descripcion_categoria + "'","'" + fila.responsable.dni_usuario + "'", "'" + fila.responsable.usuario + "'","'" + null + "'", "'" + null+ "'","'" + fila.categoria.id_categoria + "'"];
+			}
+			
+			filaTabla = '<tr class="impar"> <td>' + fila.categoria.nombre_categoria + 
+                '</td> <td>' + fila.categoria.descripcion_categoria +
+				'</td> <td>' + fila.responsable.usuario;
         break;
+
 
         case 'RESPUESTA_POSIBLE' :
         	atributosFunciones = ["'" + fila.textoRespuesta + "'","'" + fila.idRespuesta + "'"];
@@ -1144,7 +1151,11 @@ function cargarClass(dato, rol){
 		break;
 
 		case 'Gestión de categorias':
-			clase = "GESTION_CATEGORIAS";
+			if (rol !== 'Administrador'){
+				clase = "CONSULTA_CATEGORIAS";
+			} else {
+				clase="GESTION_CATEGORIAS";
+			}
 		break;
 	}
 
@@ -1158,14 +1169,6 @@ function cambiarTituloGestion(funcionalidad){
 	var rol = getCookie('rolUsuario');
 
 	switch(funcionalidad){
-		case 'empresa':
-			if (rol !== 'Administrador'){
-				 $("#gestion").addClass("GESTION_EMPRESAS_NO_ADMIN");
-				 document.getElementById("gestion").style.left = "44.5%";
-			} else {
-				 $("#gestion").addClass("GESTION_EMPRESAS");
-			}
-		break;
 		case 'persona':
 			if (rol !== 'Administrador'){
 				 $("#gestion").addClass("GESTION_PERSONAS_NO_ADMIN");
@@ -1181,20 +1184,11 @@ function cambiarTituloGestion(funcionalidad){
 				$("#gestion").addClass("GESTION_USUARIOS");
 			}
 		break;
-		case 'plan':
-			if (rol !== 'Administrador'){
-				$("#gestion").addClass("GESTION_PLANES_NO_ADMIN");
+		case 'categoria':
+			if (rol == 'Administrador'){
+				$("#gestion").addClass("GESTION_CATEGORIAS");
 			} else {
-				$("#gestion").addClass("GESTION_PLANES");
-			}
-		break;
-		case 'procedimiento':
-			if (rol !== 'Administrador'){
-				$("#gestion").removeClass();
-				$("#gestion").addClass("gestion GESTION_PROCEDIMIENTOS_DESDE_PLAN");
-			} else {
-				$("#gestion").removeClass();
-				$("#gestion").addClass("gestion GESTION_PROCEDIMIENTOS");
+				$("#gestion").addClass("CONSULTA_CATEGORIAS");
 			}
 		break;
 		case 'proceso':

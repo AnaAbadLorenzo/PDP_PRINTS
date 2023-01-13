@@ -1243,7 +1243,7 @@ function comprobarDescripcionCategoria(idElemento, idElementoError, campo){
 }
 
 /**Función que valida el editar de un objetivo **/
-function comprobarEditObjetivo(){
+function comprobarEditCategoria(){
 	if(comprobarNombreCategoria('nombreCategoria', 'errorFormatoNombreCategoria', 'nombreCategoria') &&
 		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria')){
 		return true;

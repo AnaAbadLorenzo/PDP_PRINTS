@@ -8,6 +8,8 @@ class EditCategoriaAccion extends ValidacionesBase{
 	
 	private $persona;
 	public $respuesta;
+    public $usuario;
+    public $categoria;
 
 	function __construct()
 	{
@@ -20,7 +22,9 @@ class EditCategoriaAccion extends ValidacionesBase{
 		
 		$this->existeDNIResponsable($datosEditCategoria);
 		$this->existeDNIUsuario($datosEditCategoria);
-        $this->existeIdCategoriaPadre($datosEditCategoria);
+        if($datosEditCategoria['id_padre_categoria'] != null){
+            $this->existeIdCategoriaPadre($datosEditCategoria);
+        }
         $this->existeIdCategoria($datosEditCategoria);
 	}
 

@@ -2,17 +2,53 @@
 
 .refreshIcon { margin-left: 43.5% !important;}
 
+#cabeceraConsultaCategorias { margin-left: 6% !important; }
+
+#cabeceraConsultaCategorias .refreshIcon { margin-left: 63.5% !important; }
+
+.categorias { width: 87% !important; top: 24% !important; height: 53% !important;}
+
+.card-title { font-size: 21px !important; }
+
+.card-text {  font-size: 16px !important; width: 82% !important; }
+
+.tooltip8 .tooltiptext { width: 83px !important; font-size: 10pt !important; left: 16% !important; }
+
+.tooltip9 .tooltiptext { width: 88px !important; font-size: 10pt !important; left: -12% !important; bottom: -58% !important; }
+
+.iconoSubcategoria { margin-left: 100% !important; margin-top: -40% !important; width: 15% !important;z-index: 2500 !important }
+
+#form-modal .modal-dialog { margin: 2rem auto !important; }
+
 }
 
 @media (min-width: 1200px) and (max-width:  1299px){
 
 .refreshIcon { margin-left: 61.5% !important;}
 
+#cabeceraConsultaCategorias { margin-left: 1% !important; margin-top: 5% !important; }
+
+#cabeceraConsultaCategorias .refreshIcon { margin-left: 73.5% !important; }
+
+.categorias { top: 27% !important; }
+
+.tooltip9 .tooltiptext { left: -17% !important; bottom: -122% !important; }
+
+.iconoSubcategoria { margin-left: 369% !important; margin-top: -36% !important; z-index: 2500 !important}
+
 }
 
 @media (min-width: 1300px) and (max-width:  1900px){
 
 .refreshIcon { margin-left: 61.5% !important;}
+
+#cabeceraConsultaCategorias { margin-left: -1% !important; }
+
+#cabeceraConsultaCategorias .refreshIcon { margin-left: 73.5% !important; }
+
+.categorias { top: 27% !important; }
+
+.iconoSubcategoria { margin-left: 398% !important; margin-top: -36% !important; z-index: 2500 !important}
 
 }
 
@@ -74,4 +110,83 @@ select option:checked{
 
 .refreshIcon {
   margin-left: 65%;
+}
+
+.iconoSubcategoria {
+  margin-left: 570%;
+  margin-top: -36%;
+  width: 20%;
+  cursor: pointer;
+  z-index: 2500 !important;
+}
+
+
+/*********** CARDS ****************/
+
+.paddingTop {
+  padding-top: 1%;
+}
+
+.categorias {
+  width: 83%;
+  height: 61%;
+  position: fixed;
+  top: 18%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  bottom: 5%;
+  margin-left: 7%;
+}
+
+.categorias .card {
+  background-color: #4527a0d1;
+}
+
+.card-body-categoria {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #e2d1fb;
+  height: 70px;
+  margin-bottom: 0.2%;
+}
+
+.card-title {
+  font-family: Roboto;
+  color:  #4527A0;
+  margin-bottom: 0rem;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-family: Roboto;
+  font-size: 18px;
+  margin-left:  2%;
+}
+
+
+.card-footer {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.5em;
+  background-color: #efe5ff;
+  height: 55px;
+}
+
+/************** CABECERA ****************/
+#cabeceraConsultaCategorias {
+  margin-left: 2%;
+  margin-top: 1%;
+}
+
+#cabeceraConsultaCategorias .refreshIcon {
+  margin-left:  74%;
+}
+
+/********** TITULO *********/
+.gestion {
+  left: 37%;
 }

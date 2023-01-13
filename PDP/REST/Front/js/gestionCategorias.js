@@ -148,8 +148,8 @@ function anadirCategoriaAjaxPromesa(){
         id_categoria : $("input[name=idCategoria]").val(),
         nombre_categoria : $('#nombreCategoria').val(),
         descripcion_categoria : $('#descripcionCategoria').val(),
-        dni_responsable : $('#dniResponsable').val(),
-        id_padre_categoria : $('#categoriaPadre').val(),
+        dni_responsable : $('#selectUsuarios').val(),
+        id_padre_categoria : $('#selectCategoriaPadre').val(),
         usuario : getCookie('usuario'),
         borrado_categoria : 0
       }
@@ -182,8 +182,8 @@ function anadirCategoriaAjaxPromesa(){
         id_categoria : $("input[name=idCategoria]").val(),
         nombre_categoria : $('#nombreCategoria').val(),
         descripcion_categoria : $('#descripcionCategoria').val(),
-        dni_responsable : $('#dniResponsable').val(),
-        id_padre_categoria : $('#categoriaPadre').val(),
+        dni_responsable : $('#selectUsuarios').val(),
+        id_padre_categoria : $('#selectCategoriaPadre').val(),
         usuario : getCookie('usuario'),
       }
   
@@ -223,11 +223,26 @@ function anadirCategoriaAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var categoria = {
-        controlador : 'GestionCategorias',
-        action : 'search',
-        inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
-        tamanhoPagina : tamanhoPaginaCategoria
+      if(getCookie('rolUsuario') == 'Usuario') {
+        var categoria = {
+          controlador : 'GestionCategorias',
+          action : 'searchByParameters',
+          nombre_categoria: '',
+          descripcion_categoria: '',
+          borrado_categoria: 0,
+          dni_responsable : 0,
+          id_padre_categoria: null,
+          dni_usuario: 0,
+          inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
+          tamanhoPagina : tamanhoPaginaCategoria
+        }
+      }else{
+        var categoria = {
+          controlador : 'GestionCategorias',
+          action : 'search',
+          inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
+          tamanhoPagina : tamanhoPaginaCategoria
+        }
       }
   
       $.ajax({
@@ -252,7 +267,9 @@ function anadirCategoriaAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var data = {
+      var categoria = {
+        controlador: 'GestionCategorias',
+        action: 'searchDelete',
         inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
         tamanhoPagina : tamanhoPaginaCategoria
       }
@@ -279,14 +296,47 @@ function anadirCategoriaAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var data = {
+      var categoria = {
         controlador: 'GestionCategorias',
         action: 'searchByParameters',
         nombre_categoria : $('#nombreCategoria').val(),
         descripcion_categoria : $('#descripcionCategoria').val(),
-        dni_responsable: $('#dniResponsable').val(),
+        dni_responsable: $('#selectUsuarios').val(),
+        id_padre_categoria: $('#selectCategoriaPadre').val(),
         inicio : 0,
         tamanhoPagina : 1
+      }
+  
+        $.ajax({
+        method: "POST",
+        url: urlPeticionAjaxListarCategoria,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: categoria,
+        headers: {'Authorization': token},
+        }).done(res => {
+          if (res.code != 'BUSQUEDA_CATEGORIA_CORRECTO') {
+            reject(res);
+          }
+          resolve(res);
+        }).fail( function( jqXHR ) {
+          errorFailAjax(jqXHR.status);
+        });
+    });
+  }
+
+  function cargarHijosCategoriaAjaxPromesa(id_categoria, numeroPagina, tamanhoPagina){
+    return new Promise(function(resolve, reject) {
+      var token = getCookie('tokenUsuario');
+  
+      var categoria = {
+        controlador: 'GestionCategorias',
+        action: 'searchByParameters',
+        nombre_categoria : '',
+        descripcion_categoria : '',
+        dni_responsable: '',
+        id_padre_categoria: id_categoria,
+        inicio : 0,
+        tamanhoPagina : tamanhoPaginaCategoria
       }
   
         $.ajax({
@@ -318,8 +368,8 @@ function anadirCategoriaAjaxPromesa(){
         id_categoria : $("input[name=idCategoria]").val(),
         nombre_categoria : $('#nombreCategoria').val(),
         descripcion_categoria : $('#descripcionCategoria').val(),
-        dni_responsable : $('#dniResponsable').val(),
-        id_padre_categoria : $('#categoriaPadre').val(),
+        dni_responsable : $('#selectUsuarios').val(),
+        id_padre_categoria : $('#selectCategoriaPadre').val(),
         usuario : getCookie('usuario'),
       }
   
@@ -342,58 +392,243 @@ function anadirCategoriaAjaxPromesa(){
   
   /* Función para obtener los objetivos del sistema */
   async function cargarCategorias(numeroPagina, tamanhoPagina, paginadorCreado){
-    await cargarCategoriasAjaxPromesa(numeroPagina, tamanhoPagina)
-      .then((res) => {
-        var numResults = res.resource.numResultados + '';
-        var totalResults = res.resource.tamanhoTotal + '';
+    if(getCookie('rolUsuario') == "Usuario"){
+      await cargarCategoriasAjaxPromesa(numeroPagina, tamanhoPagina)
+        .then((res) => {
+          document.getElementById('listaCategorias').style.display = "block";
+          document.getElementById('tablaDatos').style.display = "none"; 
+          cargarPermisosFuncCategoria();
+          $('#categorias').html('');
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
           var inicio = 0;
-        if(res.resource.listaBusquedas.length == 0){
-          inicio = 0;
-        }else{
-          inicio = parseInt(res.resource.inicio)+1;
-        }
-        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
-  
-        if(res.resource.listaBusquedas.length == 0){
-          $('#itemPaginacion').attr('hidden',true);
-        }else{
-          $('#itemPaginacion').attr('hidden',false);
-        }
-  
-        $("#datosCategoria").html("");
-        $("#checkboxColumnas").html("");
-        $("#paginacion").html("");
-  
-        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
-            var tr = construyeFila('CATEGORIA', res.resource.listaBusquedas[i]);
-            $("#datosCategoria").append(tr);
+          if(res.resource.listaBusquedas.length == 0){
+            inicio = 0;
+          }else{
+            inicio = parseInt(res.resource.inicio)+1;
           }
-  
-        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
-          $("#checkboxColumnas").append(div);
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+    
+          if(res.resource.listaBusquedas.length == 0){
+            $('#itemPaginacion').attr('hidden',true);
+          }else{
+            $('#itemPaginacion').attr('hidden',false);
+          }
+          $("#paginacion").html("");
+
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+              var tr = construyeCategoriaUsuario(res.resource.listaBusquedas[i]);
+              $("#categorias").append(tr);
+          }
           $("#paginacion").append(textPaginacion);
-  
+          setLang(getCookie('lang'));
+
           if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarCategorias', 'CATEGORIA');
+            paginador(totalResults, 'cargarCategoriasUsuario', 'CATEGORIA');
           }
-  
+
           if(numeroPagina == 0){
             $('#' + (numeroPagina+1)).addClass("active");
             var numPagCookie = numeroPagina+1;
           }else{
             $('#' + numeroPagina).addClass("active");
-             var numPagCookie = numeroPagina;
+            var numPagCookie = numeroPagina;
           }
-  
           setCookie('numeroPagina', numPagCookie);
-          setLang(getCookie('lang'));
-  
-      }).catch((res) => {
-          respuestaAjaxKO(res.code);
-          setLang(getCookie('lang'));
-          document.getElementById("modal").style.display = "block";
-      });
+
+        }).catch((res) => {
+            respuestaAjaxKO(res.code);
+            setLang(getCookie('lang'));
+            document.getElementById("modal").style.display = "block";
+        });
+    
+    }else{
+      await cargarCategoriasAjaxPromesa(numeroPagina, tamanhoPagina)
+        .then((res) => {
+          document.getElementById('listaCategorias').style.display = "none";
+          document.getElementById('tablaDatos').style.display = "block"; 
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
+          var inicio = 0;
+          if(res.resource.listaBusquedas.length == 0){
+            inicio = 0;
+          }else{
+            inicio = parseInt(res.resource.inicio)+1;
+          }
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+    
+          if(res.resource.listaBusquedas.length == 0){
+            $('#itemPaginacion').attr('hidden',true);
+          }else{
+            $('#itemPaginacion').attr('hidden',false);
+          }
+    
+          $("#datosCategoria").html("");
+          $("#checkboxColumnas").html("");
+          $("#paginacion").html("");
+    
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+              var tr = construyeFila('CATEGORIA', res.resource.listaBusquedas[i]);
+              $("#datosCategoria").append(tr);
+          }
+    
+          var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
+            $("#checkboxColumnas").append(div);
+            $("#paginacion").append(textPaginacion);
+    
+            if(paginadorCreado != 'PaginadorCreado'){
+              paginador(totalResults, 'cargarCategorias', 'CATEGORIA');
+            }
+    
+            if(numeroPagina == 0){
+              $('#' + (numeroPagina+1)).addClass("active");
+              var numPagCookie = numeroPagina+1;
+            }else{
+              $('#' + numeroPagina).addClass("active");
+              var numPagCookie = numeroPagina;
+            }
+    
+            setCookie('numeroPagina', numPagCookie);
+            setLang(getCookie('lang'));
+          }).catch((res) => {
+            respuestaAjaxKO(res.code);
+            setLang(getCookie('lang'));
+            document.getElementById("modal").style.display = "block";
+        });
+      }
   }
+  
+  function construyeCategoriaUsuario(categoria){
+
+    document.getElementById('cabecera').style.display = "none";
+    document.getElementById('cabeceraConsultaCategorias').style.display = "block";
+    var cat = "";
+
+    cat = '<div class="col-md-12 col-lg-12 col-xl-12 mb-12 paddingTop">' + 
+            '<div class="card">' + 
+              '<div class="card-body-categoria">' + 
+                '<div class="card-title">' + categoria.categoria.nombre_categoria + '</div>' + 
+                '<div class="card-text">' + categoria.categoria.descripcion_categoria + '</div>' + 
+                '<div class="tooltip9 subCategoriaIcon">' + 
+                  '<img class="iconoSubcategoria iconSubcategoria" src="images/procedimiento.png" alt="Acceder a las subcategorias" onclick="accederSubcategorias(' + categoria.categoria.id_categoria + ',1,'+tamanhoPaginaCategoria+');"/>' + 
+                  '<span class="tooltiptext iconSubcategoria ICON_ACCEDER_CATEGORIAS"></span>' + 
+                '</div>' + 
+              '</div>' + 
+            '</div>' + 
+          '</div>';
+
+  return cat;
+  }
+
+  async function accederSubcategorias(id_categoria, numeroPagina, tamanhoPagina, paginadorCreado){
+    await cargarHijosCategoriaAjaxPromesa(id_categoria, numeroPagina, tamanhoPagina, paginadorCreado)
+      .then((res) => {
+        document.getElementById('listaCategorias').style.display = "block";
+          document.getElementById('tablaDatos').style.display = "none"; 
+          cargarPermisosFuncCategoria();
+          $('#categorias').html('');
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
+          var inicio = 0;
+          if(res.resource.listaBusquedas.length == 0){
+            inicio = 0;
+          }else{
+            inicio = parseInt(res.resource.inicio)+1;
+          }
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+    
+          if(res.resource.listaBusquedas.length == 0){
+            $('#itemPaginacion').attr('hidden',true);
+          }else{
+            $('#itemPaginacion').attr('hidden',false);
+          }
+          $("#paginacion").html("");
+
+          if(res.resource.listaBusquedas.length > 0) {
+            for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+              var tr = construyeCategoriaUsuario(res.resource.listaBusquedas[i]);
+              $("#categorias").append(tr);
+            }
+          }else{
+            window.location.href = "GestionDeProcesos.html";
+          }
+
+          $("#paginacion").append(textPaginacion);
+          setLang(getCookie('lang'));
+
+          if(paginadorCreado != 'PaginadorCreado'){
+            paginador(totalResults, 'accederSubcategorias', 'CATEGORIA', id_categoria);
+          }
+
+          if(numeroPagina == 0){
+            $('#' + (numeroPagina+1)).addClass("active");
+            var numPagCookie = numeroPagina+1;
+          }else{
+            $('#' + numeroPagina).addClass("active");
+            var numPagCookie = numeroPagina;
+          }
+          setCookie('numeroPagina', numPagCookie);
+
+        }).catch((res) => {
+            respuestaAjaxKO(res.code);
+            setLang(getCookie('lang'));
+            document.getElementById("modal").style.display = "block";
+        });
+    }
+
+  /**Funcion para cargar los planes ne vista de usuario **/
+async function cargarCategoriasUsuario(numeroPagina, tamanhoPagina, paginadorCreado){
+  await cargarCategoriasAjaxPromesa(numeroPagina, tamanhoPagina)
+        .then((res) => {
+          document.getElementById('cabecera').style.display = "none";
+          document.getElementById('cabeceraConsultaCategorias').style.display = "block";
+          cargarPermisosFuncCategoria();
+          $('#categorias').html('');
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
+            var inicio = 0;
+          if(res.resource.listaBusquedas.length == 0){
+            inicio = 0;
+          }else{
+            inicio = parseInt(res.resource.inicio)+1;
+          }
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+
+          if(res.resource.listaBusquedas.length == 0){
+            $('#itemPaginacion').attr('hidden',true);
+          }else{
+            $('#itemPaginacion').attr('hidden',false);
+          }
+
+          $("#paginacion").html("");
+
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+              var tr = construyeCategoriaUsuario(res.resource.listaBusquedas[i]);
+              $("#categorias").append(tr);
+          }
+        
+          $("#paginacion").append(textPaginacion);
+          setLang(getCookie('lang'));
+
+            if(paginadorCreado != 'PaginadorCreado'){
+              paginador(totalResults, 'cargarCategoriasUsuario', 'CATEGORIA');
+            }
+
+            if(numeroPagina == 0){
+              $('#' + (numeroPagina+1)).addClass("active");
+              var numPagCookie = numeroPagina+1;
+            }else{
+              $('#' + numeroPagina).addClass("active");
+               var numPagCookie = numeroPagina;
+            }
+
+            setCookie('numeroPagina', numPagCookie);
+
+        }).catch((res) => {
+            respuestaAjaxKO(res.code);
+            document.getElementById("modal").style.display = "block";
+        });
+    }
   
   /** Funcion añadir categoria **/
   async function addCategoria(){
@@ -427,6 +662,7 @@ function anadirCategoriaAjaxPromesa(){
   
   /** Funcion buscar categoria **/
   async function buscarCategoria(numeroPagina, tamanhoPagina, accion, paginadorCreado){
+    if(getCookie('rolUsuario') == 'Administrador'){
     await buscarCategoriaAjaxPromesa(numeroPagina, tamanhoPagina,accion)
     .then((res) => {
         cargarPermisosFuncCategoria();
@@ -463,7 +699,7 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
   
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
@@ -494,7 +730,75 @@ function anadirCategoriaAjaxPromesa(){
   
         document.getElementById("modal").style.display = "block";
     });
+  }else{
+    await buscarCategoriaAjaxPromesa(numeroPagina, tamanhoPagina,accion)
+    .then((res) => {
+      document.getElementById('listaCategorias').style.display = "block";
+      document.getElementById('tablaDatos').style.display = "none"; 
+      cargarPermisosFuncCategoria();
+      if($('#form-modal').is(':visible')) {
+         $("#form-modal").modal('toggle');
+      };
+      var datosBusquedas = [];
+      datosBusquedas.push('nombre_categoria: ' + res.resource.datosBusquedas['nombre_categoria']);
+      datosBusquedas.push('descripcion_categoria: ' + res.resource.datosBusquedas['descripcion_categoria']);
+      datosBusquedas.push('dni_responsable: ' + res.resource.datosBusquedas['dni_responsable']);
+      datosBusquedas.push('id_padre_categoria: ' + res.resource.datosBusquedas['id_padre_categoria']);
+      guardarParametrosBusqueda(datosBusquedas);
+      
+      var numResults = res.resource.numResultados + '';
+      var totalResults = res.resource.tamanhoTotal + '';
+        var inicio = 0;
+      if(res.resource.listaBusquedas.length == 0){
+        inicio = 0;
+      }else{
+        inicio = parseInt(res.resource.inicio)+1;
+      }
+      var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+
+      if(res.resource.listaBusquedas.length == 0){
+        $('#itemPaginacion').attr('hidden',true);
+      }else{
+        $('#itemPaginacion').attr('hidden',false);
+      }
+
+      $("#paginacion").html("");
+
+      $("#categorias").html("");
+      for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+        var tr = construyeCategoriaUsuario(res.resource.listaBusquedas[i]);
+        $("#categorias").append(tr);
+      }
+        
+      $("#paginacion").append(textPaginacion);
+  
+      if(paginadorCreado != 'PaginadorCreado'){
+        paginador(totalResults, 'buscarCategoria', 'CATEGORIA');
+      }
+  
+      if(numeroPagina == 0){
+        $('#' + (numeroPagina+1)).addClass("active");
+        var numPagCookie = numeroPagina+1;
+      }else{
+        $('#' + numeroPagina).addClass("active");
+        var numPagCookie = numeroPagina;
+      }
+      setCookie('numeroPagina', numPagCookie);
+      setLang(getCookie('lang'));
+
+    }).catch((res) => {
+      cargarPermisosFuncCategoria();
+      respuestaAjaxKO(res.code);
+
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
+      resetearFormulario("formularioGenerico", idElementoList);
+
+      setLang(getCookie('lang'));
+
+      document.getElementById("modal").style.display = "block";
+    });
   }
+}
   
   /*Función que refresca la tabla por si hay algún cambio en BD */
   async function refrescarTabla(numeroPagina, tamanhoPagina){
@@ -504,6 +808,7 @@ function anadirCategoriaAjaxPromesa(){
         setCookie('nombre_categoria', '');
         setCookie('descripcion_categoria', '');
         setCookie('dni_responsable', '');
+        setCookie('id_padre_categoria', '');
         var numResults = res.resource.numResultados + '';
         var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
@@ -531,7 +836,7 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPCION_OBJETIVO_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setCookie('nombreObjetivo', '');
@@ -589,13 +894,14 @@ function anadirCategoriaAjaxPromesa(){
             $("#datosCategoria").append(tr);
           }
   
-        var div = createHideShowColumnsWindow({DESCRIPTION_OBJETIVO_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
+        var div = createHideShowColumnsWindow({DESCRIPCION_CATEGORIA_COLUMN:2, RESPONSABLE_CATEGORIA_COLUMN:3});
         $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
   
         setCookie('nombre_categoria', '');
         setCookie('descripcion_categoria', '');
         setCookie('dni_responsable', '');
+        setCookie('id_padre_categoria', '');
   
         if(paginadorCreado != 'PaginadorCreado'){
            paginador(totalResults, 'buscarEliminadosCategoria', 'CATEGORIA');
@@ -625,11 +931,12 @@ function anadirCategoriaAjaxPromesa(){
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       resetearFormulario("formularioGenerico", idElementoList);
       $('#nombreCategoria').val(getCookie('nombre_categoria'));
       $('#descripcionCategoria').val(getCookie('descripcion_categoria'));
-      $('#dniResponsable').val(getCookie('dni_responsable'));
+      $('#selectUsuarios').val(getCookie('dni_responsable'));
+      $('#selectCategoriaPadre').val(getCookie('id_padre_categoria'))
       setLang(getCookie('lang'));
   
     }).catch((res) => {
@@ -637,7 +944,7 @@ function anadirCategoriaAjaxPromesa(){
   
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -654,12 +961,13 @@ function anadirCategoriaAjaxPromesa(){
   
       respuestaAjaxOK("CATEGORIA_EDITADA_OK", res.code);
   
-      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       resetearFormulario("formularioGenerico", idElementoList);
       document.getElementById("modal").style.display = "block";
       $('#nombreCategoria').val(getCookie('nombre_categoria'));
       $('#descripcionCategoria').val(getCookie('descripcion_categoria'));
-      $('#dniResponsable').val(getCookie('dni_responsable'));
+      $('#selectUsuarios').val(getCookie('dni_responsable'));
+      $('#selectCategoriaPadre').val(getCookie('id_padre_categoria'))
       buscarCategoria(getCookie('numeroPagina'), tamanhoPaginaCategoria, 'buscarPaginacion', 'PaginadorCreado');
       setLang(getCookie('lang'));
   
@@ -668,7 +976,7 @@ function anadirCategoriaAjaxPromesa(){
   
        respuestaAjaxKO(res.code);
   
-       let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       resetearFormulario("formularioGenerico", idElementoList);
   
       setLang(getCookie('lang'));
@@ -687,7 +995,7 @@ function anadirCategoriaAjaxPromesa(){
   
       respuestaAjaxOK("CATEGORIA_ELIMINADA_OK", res.code);
   
-      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       resetearFormulario("formularioGenerico", idElementoList);
       document.getElementById("modal").style.display = "block";
   
@@ -699,7 +1007,7 @@ function anadirCategoriaAjaxPromesa(){
        $("#form-modal").modal('toggle');
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -718,9 +1026,9 @@ function anadirCategoriaAjaxPromesa(){
       cargarPermisosFuncCategoria();
       $("#form-modal").modal('toggle');
   
-      let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       resetearFormulario("formularioGenerico", idElementoList);
-  
+
       respuestaAjaxOK("CATEGORIA_REACTIVADA_OK", res.code);
       document.getElementById("modal").style.display = "block";
   
@@ -730,7 +1038,7 @@ function anadirCategoriaAjaxPromesa(){
       }).catch((res) => {
   
         $("#form-modal").modal('toggle');
-        let idElementoList = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+        let idElementoList = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
         resetearFormulario("formularioGenerico", idElementoList);
         respuestaAjaxKO(res.code);
         setLang(getCookie('lang'));
@@ -750,6 +1058,8 @@ function anadirCategoriaAjaxPromesa(){
     $('#labelDescripcionCategoria').attr('hidden', true);
     $('#labelDniResponsable').attr('hidden', false);
     $('#labelCategoriaPadre').attr('hidden', false);
+    $('#selectCategoriaPadre').attr('hidden', false);
+    $('#selectUsuarios').attr('hidden', false);
   
     let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
     let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
@@ -767,11 +1077,19 @@ function anadirCategoriaAjaxPromesa(){
         'return comprobarDescripcionCategoriaSearch(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')');
     cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchCategoria', 'Buscar');
   
-    $('#subtitulo').attr('hidden', true);
-    $('#labelNombreCategoria').attr('hidden', true);
-    $('#labelDescripcionCategoria').attr('hidden', true);
-    $('#labelDniResponsable').attr('hidden', false);
-    $('#labelCategoriaPadre').attr('hidden', false);
+    if(getCookie('rolUsuario') == "Administrador") {
+      $('#subtitulo').attr('hidden', true);
+      $('#labelNombreCategoria').attr('hidden', true);
+      $('#labelDescripcionCategoria').attr('hidden', true);
+      $('#labelDniResponsable').attr('hidden', false);
+      $('#labelCategoriaPadre').attr('hidden', false);
+      $('#selectCategoriaPadre').attr('hidden', false);
+    }else{
+      $('#labelDniResponsable').attr('hidden', true);
+      $('#labelCategoriaPadre').attr('hidden', true);
+      $('#selectUsuarios').attr('hidden', true)
+      $('#selectCategoriaPadre').attr('hidden', true);
+    }
   
     let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
     let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
@@ -783,19 +1101,27 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Funcion para visualizar un objetivo **/
-  function showDetalle(nombreCategoria, descripcionCategoria, usuarioResponsable) {
+  function showDetalle(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable,id_padre_categoria, nombreCategoriaPadre, idCategoria) {
   
       cambiarFormulario('DETAIL_CATEGORIA', 'javascript:detalleCategoria();', '');
       cambiarIcono('images/close2.png', 'ICONO_CERRAR', 'iconoCerrar', 'Detalle');
   
+      if (id_padre_categoria == "null"){
+        $('#labelCategoriaPadre').attr('hidden', true);
+        $('#selectCategoriaPadre').attr('hidden', true);
+      }else{
+        $('#labelCategoriaPadre').attr('hidden', false);
+        $('#selectCategoriaPadre').attr('hidden', false);
+      }
+
       $('#labelNombreCategoria').attr('hidden', false);
       $('#labelDescripcionCategoria').attr('hidden', false);
       $('#labelDniResponsable').attr('hidden', false);
       $('#subtitulo').attr('hidden', '');
   
-      rellenarFormulario(nombreCategoria, descripcionCategoria, usuarioResponsable);
+      rellenarFormulario(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable, id_padre_categoria);
   
-      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
@@ -805,7 +1131,7 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Funcion para editar un Categoria **/
-  function showEditar(nombreCategoria, descripcionCategoria, usuarioResponsable, idCategoria) {
+  function showEditar(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable,id_padre_categoria, nombreCategoriaPadre, idCategoria) {
   
       cambiarFormulario('EDIT_CATEGORIA', 'javascript:editCategoria();', 'return comprobarEditCategoria();');
       cambiarOnBlurCampos('return comprobarNombreCategoria(\'nombreCategoria\', \'errorFormatoNombreCategoria\', \'nombreCategoria\')', 
@@ -813,15 +1139,22 @@ function anadirCategoriaAjaxPromesa(){
        );
       cambiarIcono('images/edit.png', 'ICONO_EDIT', 'iconoEditarCategoria', 'Editar');
   
+      if (id_padre_categoria == "null"){
+        $('#labelCategoriaPadre').attr('hidden', true);
+        $('#selectCategoriaPadre').attr('hidden', true);
+      }else{
+        $('#labelCategoriaPadre').attr('hidden', false);
+        $('#selectCategoriaPadre').attr('hidden', false);
+      }
       $('#subtitulo').attr('hidden', true);
       $('#labelNombreCategoria').attr('hidden', true);
       $('#labelDescripcionCategoria').attr('hidden', true);
-      $('#labelDniResponsable').attr('hidden', true);
-  
-      rellenarFormulario(nombreCategoria, descripcionCategoria, usuarioResponsable);
+      $('#labelDniResponsable').attr('hidden', false);
+      
+      rellenarFormulario(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable, id_padre_categoria);
       insertacampo(document.formularioGenerico,'idCategoria', idCategoria);
   
-      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       eliminarReadonly(campos);
       mostrarObligatorios(obligatorios);
@@ -833,24 +1166,27 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Función para eliminar un Categoria **/
-  function showEliminar(nombreCategoria, descripcionCategoria , usuarioResponsable, idCategoria) {
+  function showEliminar(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable,id_padre_categoria, nombreCategoriaPadre, idCategoria) {
   
       cambiarFormulario('DELETE_CATEGORIA', 'javascript:deleteCategoria();', '');
       cambiarIcono('images/delete.png', 'ICONO_ELIMINAR', 'iconoEliminar', 'Eliminar');
   
+      if (id_padre_categoria == "null"){
+        $('#labelCategoriaPadre').attr('hidden', true);
+        $('#selectCategoriaPadre').attr('hidden', true);
+      }else{
+        $('#labelCategoriaPadre').attr('hidden', false);
+        $('#selectCategoriaPadre').attr('hidden', false);
+      }
+
       $('#labelNombreCategoria').removeAttr('hidden');
       $('#labelDescripcionCategoria').removeAttr('hidden');
       $('#labelDniResponsable').removeAttr('hidden');
-      $('#subtitulo').removeAttr('class');
-      $('#subtitulo').empty();
-      $('#subtitulo').attr('class', 'SEGURO_ELIMINAR_OBJ');
-      $('#subtitulo').attr('hidden', false);
-  
-  
-      rellenarFormulario(nombreCategoria, descripcionCategoria, usuarioResponsable);
+
+      rellenarFormulario(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable, id_padre_categoria);
       insertacampo(document.formularioGenerico,'idCategoria', idCategoria);
   
-      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
@@ -860,24 +1196,27 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /** Función para reactivar un Categoria **/
-  function showReactivar(nombreCategoria, descripcionCategoria , usuarioResponsable, idCategoria) {
+  function showReactivar(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable,id_padre_categoria, nombreCategoriaPadre, idCategoria) {
   
       cambiarFormulario('REACTIVATE_CATEGORIA', 'javascript:reactivarCategoria();', '');
       cambiarIcono('images/reactivar2.png', 'ICONO_REACTIVAR', 'iconoReactivar', 'Reactivar');
   
+      if (id_padre_categoria == "null"){
+        $('#labelCategoriaPadre').attr('hidden', true);
+        $('#selectCategoriaPadre').attr('hidden', true);
+      }else{
+        $('#labelCategoriaPadre').attr('hidden', false);
+        $('#selectCategoriaPadre').attr('hidden', false);
+      }
+
       $('#labelNombreCategoria').removeAttr('hidden');
       $('#labelDescripcionCategoria').removeAttr('hidden');
       $('#labelDniResponsable').removeAttr('hidden');
-      $('#subtitulo').removeAttr('class');
-      $('#subtitulo').empty();
-      $('#subtitulo').attr('class', 'SEGURO_REACTIVAR_OBJ');
-      $('#subtitulo').attr('hidden', false);
   
-  
-      rellenarFormulario(nombreCategoria, descripcionCategoria , usuarioResponsable);
+      rellenarFormulario(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable, id_padre_categoria);
       insertacampo(document.formularioGenerico,'idCategoria', idCategoria);
   
-      let campos = ["nombreCategoria", "descripcionCategoria", "dniResponsable"];
+      let campos = ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
       let obligatorios = ["obligatorioNombreCategoria", "obligatorioDescripcionCategoria", "obligatorioDniResponsable"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
@@ -899,11 +1238,12 @@ function anadirCategoriaAjaxPromesa(){
   }
   
   /**Función que rellenado los datos del formulario*/
-  function rellenarFormulario(nombreCategoria, descripcionCategoria) {
+  function rellenarFormulario(nombreCategoria, descripcionCategoria, dni_responsable, usuarioResponsable, id_padre_categoria) {
   
       $("#nombreCategoria").val(nombreCategoria);
       $("#descripcionCategoria").val(descripcionCategoria); 
-      $("#dniResponsable").val(dniResponsable); 
+      $("#selectUsuarios").val(dni_responsable);
+      $("#selectCategoriaPadre").val(id_padre_categoria);
   
   }
   
@@ -945,20 +1285,31 @@ function anadirCategoriaAjaxPromesa(){
           $('#divSearchDelete').attr("onclick", "javascript:buscarEliminados(0,\'tamanhoPaginaCategoria\', \'PaginadorNo\')");
           $('#divListarCategorias').attr("data-toggle", "modal");
           $('#divListarCategorias').attr("data-target", "#form-modal");
+
+        if(getCookie('rolUsuario') == "Administrador" || getCookie('rolUsuario') == "Gestor" ){
           document.getElementById('cabecera').style.display = "block";
           document.getElementById('tablaDatos').style.display = "block";
           document.getElementById('filasTabla').style.display = "block";
-           $('#itemPaginacion').attr('hidden', false);
-  
+          $('#itemPaginacion').attr('hidden', false);
+
           if(document.getElementById('cabeceraEliminados').style.display == "block"){
-             document.getElementById('cabecera').style.display = "none";
-  
-             var texto = document.getElementById('paginacion').innerHTML;
-             if(texto == "0 - 0 total 0"){
-             $('#itemPaginacion').attr('hidden', true);
-            }
-  
-          }
+            document.getElementById('cabecera').style.display = "none";
+
+           var texto = document.getElementById('paginacion').innerHTML;
+           if(texto == "0 - 0 total 0"){
+            $('#itemPaginacion').attr('hidden', true);
+           }
+        }
+        }else{
+           $('#btnListarCategoriasConsulta').attr('src', 'images/search3.png');
+           $('#btnListarCategoriasConsulta').css("cursor", "pointer");
+           $('#btnListarCategoriasConsulta').attr("data-toggle", "modal");
+           $('#btnListarCategoriasConsulta').attr("data-target", "#form-modal");
+          document.getElementById('cabecera').style.display = "none";
+          document.getElementById('listaCategorias').style.display = "block";
+          document.getElementById('filasTabla').style.display = "block";
+          $('#itemPaginacion').attr('hidden', false);
+        }
   
         break;
   
@@ -1056,9 +1407,9 @@ function construyeSelectCategorias(){
   $(document).ready(function() {
     $("#form-modal").on('hidden.bs.modal', function() {
   
-      let idElementoErrorList = ["errorFormatoNombreCategoria", "errorFormatoDescripcionCategoria"];
+      let idElementoErrorList = ["errorFormatoNombreCategoria", "errorFormatoDescripcionCategoria", "errorFormatoDniResponsable", "errorFormatoCategoriaPadre"];
   
-      let idElementoList = ["nombreCategoria", "descripcionCategoria"];
+      let idElementoList =  ["nombreCategoria", "descripcionCategoria", "selectUsuarios", "selectCategoriaPadre"];
   
       limpiarFormulario(idElementoList);
       eliminarMensajesValidacionError(idElementoErrorList, idElementoList);

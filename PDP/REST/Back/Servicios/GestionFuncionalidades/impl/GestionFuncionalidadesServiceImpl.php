@@ -38,7 +38,7 @@ class GestionFuncionalidadesServiceImpl extends ServiceBase implements GestionFu
                 case 'reactivar':
                     $this -> funcionalidad = $this -> crearModelo('Funcionalidad');
                     $this -> clase_validacionFuncionalidadAccion = $this -> crearValidacionAccion('DeleteFuncionalidad'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
-                    break;
+                break;
                 default:
                     break;
             }

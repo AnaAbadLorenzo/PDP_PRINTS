@@ -34,7 +34,7 @@
 	comprobarTokenUsuario('categoria');
   	await includeTopMenu('categoria');
     await funcionalidadesUsuario();
-    modalCambioPass();cargarIdioma();includeFooter();setLang('');
+    cambiarTituloGestion('categoria');modalCambioPass();cargarIdioma();includeFooter();setLang('');
 	await cargarCategorias(0, tamanhoPaginaCategoria, 'PaginadorNo');
 	await cargarPermisosFuncCategoria();
     await construyeSelect();
@@ -46,7 +46,7 @@
 	<div class="modal modal3 fade" id="changePass-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	</div>
 
-	<h1 class="gestion GESTION_CATEGORIAS"></h1>
+	<h1 id="gestion" class="gestion"></h1>
 
 	<div id="cabecera" class="cabecera" style="display: none;">
 		<div id="divAddCategoria" name="btnAdd" value="Añadir" data-toggle="" data-target="" onclick="javascript:showAddCategorias()" class="tooltip6 addIcon">
@@ -74,6 +74,17 @@
         <span class="tooltiptext iconHideShow ICON_SHOW_HIDE_COLUMNS"></span>
     </div>     
 	</div>
+
+	<div id="cabeceraConsultaCategorias" class="cabecera" style="display: none;">
+		<div id="divListarCategoriaConsulta" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarCategoria()" class="tooltip6 searchIcon">
+	        <img id="btnListarCategoriasConsulta" class="iconoSearch iconSearch" src="images/search.png" alt="Buscar categoria" />
+        	<span class="tooltiptext iconSearch ICONO_SEARCH"></span>
+    	</div>
+    	<div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaCategoria)" class="tooltip6 refreshIcon">
+	        <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
+	        <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
+    	</div>
+    </div>
 
 	<div class = "cabeceraEliminados" id="cabeceraEliminados" style="display:none;">
 		<div id="divVolverAtras" name="btnVolverAtras" value="Volver" onclick="javascript:refrescarTabla(0, tamanhoPaginaCategoria)" class="tooltip6 volverAtrasIcon">
@@ -147,6 +158,11 @@
 		</nav>
 	</div>
 
+	<div id="listaCategorias" class="categorias overflow-auto" style="display: none;">
+		<div id="categorias" class="row">
+		</div>
+	</div>
+
 	<div class="modal modal2 fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
 			<div class="formmodal-container">
@@ -162,8 +178,8 @@
               			  </div>
                           <div style="display:none" id="errorFormatoNombreCategoria"></div>
                           
-                          <label class="labelForm DESCRIPCION_CATEGORIA" id="labelDescripcionObjetivo" hidden></label>
-	                      <input type="text" placeholder="DESCRIPCION_OBJETIVO" name="DESCRIPCION_OBJETIVO" id="descripcionCategoria" class="DESCRIPCION_OBJETIVO" onblur=""/>
+                          <label class="labelForm DESCRIPCION_CATEGORIA" id="labelDescripcionCategoria" hidden></label>
+	                      <input type="text" placeholder="DESCRIPCION_CATEGORIA" name="DESCRIPCION_CATEGORIA" id="descripcionCategoria" class="DESCRIPCION_CATEGORIA" onblur=""/>
 	                       <div class="obligatorio tooltip2" id="obligatorioDescripcionCategoria">*
                   			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
               			  </div>
