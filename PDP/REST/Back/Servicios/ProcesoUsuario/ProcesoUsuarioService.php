@@ -9,6 +9,7 @@ interface ProcesoUsuarioService {
     function delete($mensaje);
     function search($paginacion);
     function searchByParameters($paginacion);
+    function calcular($mensaje);
 	
 }
 
