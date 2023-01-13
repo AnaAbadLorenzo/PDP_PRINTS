@@ -4,6 +4,7 @@
     include_once './Servicios/GestionCategorias/GestionCategoriasService.php';
     include_once './Mapping/CategoriaMapping.php';
     include_once './Mapping/UsuarioMapping.php';
+    include_once './Mapping/ProcesoMapping.php';
     include_once './Servicios/Comun/ReturnBusquedas.php';
 
 class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategoriasService {
@@ -52,11 +53,13 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                 $usuario_mapping = new UsuarioMapping();
                 $usuario_mapping->searchByLogin($datosUsuario);
                 $resultadoUsuario = $usuario_mapping->feedback['resource'];
-
+     
                 $datosCategoria['nombre_categoria'] = $this->categoria->nombre_categoria;
                 $datosCategoria['descripcion_categoria'] = $this->categoria->descripcion_categoria;
                 $datosCategoria['dni_responsable'] = $this->categoria->dni_responsable;
                 $datosCategoria['id_padre_categoria'] = $this->categoria->id_padre_categoria;
+
+                //$datosCategoria['dni_usuario'] = $this->categoria->usuario;
                 $datosCategoria['dni_usuario'] = $resultadoUsuario['dni_usuario'];
                 $datosCategoria['borrado_categoria'] = 0;
 
@@ -83,11 +86,31 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                         'borrado_categoria' => 0
                     ];
                     if ($this->categoria->id_padre_categoria== "" || is_null($this->categoria->id_padre_categoria)){
+
                         $categoriaDatos['id_padre_categoria']= "null";  
+
+                    }else{
+                        $categoria_mapping = new CategoriaMapping();
+                        $categoria_mapping->add($categoriaDatos);
+                        $categoria_mapping->searchByParametersWithoutPagination($categoriaDatos);
+                        $categoriaInsertada = $categoria_mapping->feedback['resource'];
+                        $proceso_mapping = new ProcesoMapping();
+                        $proceso_mapping->getProcesosWhitIdCategoria($categoriaDatos);
+                        $procesosACambiar = $proceso_mapping->feedback['resource'];
+                        	
+	
+                        if(!is_null($procesosACambiar)){
+                         foreach($procesosACambiar as $p){
+                          
+                            $p['id_categoria'] =  $categoriaInsertada[0]['id_categoria'];
+                            $proceso_mapping->edit($p);
+                         }
+                        }
                     }
-          
-                    $categoria_mapping = new CategoriaMapping();
-                    $categoria_mapping->add($categoriaDatos);
+                    
+                   
+
+                   
 
                     $respuesta = $mensaje;
                     $this->recursos = '';

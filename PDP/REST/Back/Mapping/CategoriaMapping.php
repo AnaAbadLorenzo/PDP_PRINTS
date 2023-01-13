@@ -63,7 +63,16 @@ class categoriaMapping extends MappingBase {
       LOWER(p.emailP) LIKE LOWER(CONCAT('%', :emailP, '%')) AND
        p.borradoP=0"),
 	*/
-    
+    function searchByParametersWithoutPagination($datosSearchParameters) {
+        $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+                        LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
+                        LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%')) AND
+                        (`id_padre_categoria` IS NULL OR LOWER(`id_padre_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['id_padre_categoria']."', '%'))) AND
+                        `borrado_categoria` = 0"; 
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
     
     function searchByParameters($datosSearchParameters, $paginacion) {
         $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
@@ -75,6 +84,7 @@ class categoriaMapping extends MappingBase {
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
+
 
 
     function numberFindParameters($datosSearchParameters) {
