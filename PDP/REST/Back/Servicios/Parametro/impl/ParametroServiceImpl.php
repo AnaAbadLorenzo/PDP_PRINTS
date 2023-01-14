@@ -56,6 +56,41 @@ class ParametroServiceImpl extends ServiceBase implements ParametroService {
 
     }
 
+    function edit($mensaje) {
+
+        $parametro_datos = [
+            'id_parametro' => $this -> parametro -> id_parametro,
+            'parametro_formula' => $this -> parametro -> parametro_formula,
+            'descripcion_parametro' => $this -> parametro -> descripcion_parametro,
+            'id_proceso' => $this -> parametro -> id_proceso
+        ];
+    
+        $this -> validacion_formato -> validarAtributosEdit($parametro_datos);
+        $respuesta = $this -> validacion_formato -> respuesta;
+        if ($respuesta != null) {
+            return $respuesta;
+        }
+
+        $this -> validacion_accion -> comprobarEdit($parametro_datos);
+        $respuesta = $this -> validacion_accion -> respuesta;
+        if ($respuesta != null) {
+            return $respuesta;
+        }
+
+        //añadir a bd
+        $parametro_mapping = new ParametroMapping;
+        $parametro_mapping -> edit($parametro_datos);
+
+        if($parametro_mapping->respuesta == null){
+            $respuesta = $mensaje;
+        }else{
+            $respuesta = $parametro_mapping->respuesta;
+        }
+
+        return $respuesta;
+
+    }
+
     function delete($mensaje) {
 
         $parametro_datos = [

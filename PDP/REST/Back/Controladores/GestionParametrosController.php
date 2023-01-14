@@ -39,6 +39,29 @@ class GestionParametrosController extends ControllerBase {
 			$this -> getRespuesta($respuesta);
 		}
 	}
+
+	function edit()
+	{
+		$this -> parametro_validation -> validarEdit();
+		if (!empty($this -> parametro_validation -> respuesta_formato)) {
+			$this -> rellenarRespuesta($this -> parametro_validation -> respuesta_formato, true, '');
+
+		} else if (!empty($this -> parametro_validation -> respuesta_accion)) {
+			$this -> rellenarRespuesta($this -> parametro_validation -> respuesta_accion, true, '');
+
+		} else {
+			$this -> parametro_service -> inicializarParametros();
+	
+			$respuesta = $this -> parametro_service -> edit('PARAMETRO_EDITADO');
+
+			if ($respuesta != 'PARAMETRO_EDITADO') {
+				$this -> rellenarRespuesta($respuesta, true, '');
+			} else {
+				$this -> rellenarRespuesta('PARAMETRO_EDITADO', false, $respuesta);
+			}
+			$this -> getRespuesta($respuesta);
+		}
+	}
     
     function delete() {
 

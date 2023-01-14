@@ -19,6 +19,10 @@ class ParametroAtributos extends ValidacionesFormato {
 		}
 	}
 	
+	function validarAtributosEdit($atributos){
+		$this -> validarAtributosAdd($atributos); // Se hacen las mismas validaciones
+	}
+	
 	function validarAtributosDelete($atributos){
 		$this -> validarIdParametro($atributos['id_parametro']);
 		if ($this -> respuesta != '') {

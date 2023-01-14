@@ -83,8 +83,8 @@ class ProcesoUsuarioParametroMapping extends MappingBase {
         $this -> query = 
             "SELECT * FROM `proceso_usuario_parametro`
             WHERE
-                `id_proceso_usuario`='" . $datos['id_proceso_usuario']  . "' AND
-                `id_parametro`='" .                 $datos['id_parametro']                  . "'
+                `id_proceso_usuario`='" .   $datos['id_proceso_usuario']    . "' AND
+                `id_parametro`='" .         $datos['id_parametro']          . "'
             ;"
         ;
 

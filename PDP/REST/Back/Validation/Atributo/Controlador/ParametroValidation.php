@@ -25,6 +25,21 @@ class ParametroValidation extends ValidacionesBase {
 
     }
 
+    function validarEdit() {
+
+        $parametro_validation_formato = new ParametroAtributos();
+        $parametro_validation_accion = new ParametroAccion;
+
+        $atributos_validacion = array('id_parametro','parametro_formula', 'descripcion_parametro', 'id_proceso');
+        $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
+
+        $parametro_validation_formato -> validarAtributosEdit($atributos);
+        $this -> respuesta_formato = $parametro_validation_formato -> respuesta;
+        
+        $this -> respuesta_accion = $parametro_validation_accion -> comprobarEdit($atributos);
+
+    }
+
     function validarDelete() {
 
         $parametro_validation_formato = new ParametroAtributos();

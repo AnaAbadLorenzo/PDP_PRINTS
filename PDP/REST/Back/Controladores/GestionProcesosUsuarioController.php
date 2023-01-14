@@ -111,6 +111,42 @@ class GestionProcesosUsuarioController extends ControllerBase {
 
     }
 
+
+	/*
+	Recibe:
+	- 'id_proceso_usuario'
+	- 'parametros' (array/mapa)
+		- 'id_parametro' => 'valor_parametro'
+		- 'id_parametro' => 'valor_parametro'
+		...
+	*/
+	function calcular() {
+
+		// $this -> proceso_usuario_validation -> validarCalcular();
+		// if (!empty($this -> proceso_usuario_validation -> respuesta_formato)) {
+		// 	$this -> rellenarRespuesta($this -> proceso_usuario_validation -> respuesta_formato, true, '');
+
+		// } else if (!empty($this -> proceso_usuario_validation -> respuesta_accion)) {
+		// 	$this -> rellenarRespuesta($this -> proceso_usuario_validation -> respuesta_accion, true, '');
+
+		// } else {
+
+			$this -> proceso_usuario_service -> inicializarParametros();
+
+			$respuesta = $this -> proceso_usuario_service -> calcular('CALCULO_PROCESO_USUARIO_CORRECTO');
+
+			if ($respuesta != 'CALCULO_PROCESO_USUARIO_CORRECTO') {
+				$this -> rellenarRespuesta($respuesta, true, '');
+			} else {
+				$this -> rellenarRespuesta($respuesta, false, '');
+			}
+
+			$this -> getRespuesta($respuesta);
+
+		// }
+		
+	}
+
 }
 
 ?>

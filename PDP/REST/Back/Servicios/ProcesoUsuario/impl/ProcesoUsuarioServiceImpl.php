@@ -5,6 +5,8 @@ include_once './Servicios/Comun/ReturnBusquedas.php';
 include_once './Servicios/ProcesoUsuario/ProcesoUsuarioService.php';
 
 include_once './Mapping/ProcesoUsuarioMapping.php';
+include_once './Mapping/ProcesoUsuarioParametroMapping.php';
+include_once './Mapping/ProcesoMapping.php';
 
 include_once './Modelos/ProcesoUsuarioModel.php';
 
@@ -209,6 +211,106 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
         $proceso_usuario_mapping = new ProcesoUsuarioMapping();
         $proceso_usuario_mapping->numberFindParameters($datos_search);
         return $proceso_usuario_mapping->feedback['resource'];
+    }
+
+    function calcular($mensaje) {
+
+        $calculo_datos = [
+            'id_proceso_usuario'    => $_POST['id_proceso_usuario'],
+            'parametros'            => $_POST['parametros']
+        ];
+    
+        // Validar formato datos
+        // $this -> validacion_formato -> validarAtributosCalcular($calculo_datos);
+        // $respuesta = $this -> validacion_formato -> respuesta;
+        // if ($respuesta != null) {
+        //     return $respuesta;
+        // }
+
+        // Comprobacion si existen el id_proceso_usuario y cada uno de los parametros (en sus respectivas tablas)
+        // $this -> validacion_accion -> comprobarCalcular($calculo_datos);
+        // $respuesta = $this -> validacion_accion -> respuesta;
+        // if ($respuesta != null) {
+        //     return $respuesta;
+        // }
+
+        $this -> actualizarParametrosBD($calculo_datos);    // Plasmo en BD todo lo que recibo
+        $this -> calcularYGuardarHuella($calculo_datos);
+
+        return $mensaje;
+
+    }
+
+    function actualizarParametrosBD($calculo_datos) {
+
+        $proceso_usuario_parametro_mapping = new ProcesoUsuarioParametroMapping;
+
+        // Comprobamos si no existe una entrada para cada combinación de proceso y parámetro y hacemos los cambios pertinentes
+        foreach ($calculo_datos['parametros'] as $id_parametro => $valor_parametro) {
+
+            // Defino el array con los datos que pasarán a BD
+            $datos_a_bd = [
+                'id_proceso_usuario' => $calculo_datos['id_proceso_usuario'],
+                'id_parametro' => $id_parametro,
+                'valor_parametro' => $valor_parametro
+            ];
+
+            // Defino el array que se utiliza para preguntar por la existencia
+            $datos_consulta = [
+                'id_proceso_usuario' => $calculo_datos['id_proceso_usuario'],
+                'id_parametro' => $id_parametro
+            ];
+            $resultado = $proceso_usuario_parametro_mapping -> searchById($datos_consulta);
+
+            if (sizeof($resultado['resource']) == 0) { // Si es la primera vez que se escribe, lo añadimos a la tabla
+                $proceso_usuario_parametro_mapping -> add($datos_a_bd);
+            } else { // Si ya existe, lo actualizamos
+                $proceso_usuario_parametro_mapping -> edit($datos_a_bd);
+            }
+
+        }
+
+    }
+
+    function calcularYGuardarHuella($calculo_datos) {
+
+        $proceso_mapping = new ProcesoMapping;
+        $proceso_usuario_mapping = new ProcesoUsuarioMapping;
+
+        // Obtengo el proceso sobre el que tengo que conseguir la formula
+        $proceso_usuario_obtenido = $proceso_usuario_mapping -> searchById($calculo_datos)['resource'];
+
+        // Obtengo los datos del proceso para sacar la formula
+        $proceso_obtenido = $proceso_mapping -> searchById($proceso_usuario_obtenido)['resource'];
+        $formula = $proceso_obtenido['formula_proceso'];
+
+        // Sustituyo el texto que representa los parametros por sus valores
+        $formula_rellenada = $this -> ponerValoresEnFormula($formula, $calculo_datos['parametros']);
+
+        // Realizo el cálculo
+        $resultado_calculo = eval("return " . $formula_rellenada . ";");
+
+        // Guardo el resultado en BD
+        $datos_a_bd = [
+            'id_proceso_usuario' =>     $calculo_datos['id_proceso_usuario'],
+            'calculo_huella_carbono' => $resultado_calculo
+        ];
+        $proceso_usuario_mapping -> anadirResultado($datos_a_bd);
+
+    }
+
+    function ponerValoresEnFormula($formula, $parametros) {
+
+        foreach ($parametros as $id_parametro => $valor_parametro) {
+            $formula = str_replace(
+                "#" . $id_parametro . "#",
+                $valor_parametro,
+                $formula
+            );
+        }
+
+        return $formula;
+
     }
 
 }

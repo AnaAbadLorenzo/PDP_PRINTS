@@ -43,10 +43,27 @@ class ProcesoUsuarioMapping extends MappingBase {
         $this -> query = 
             "UPDATE `proceso_usuario`
             SET
-                `fecha_proceso_usuario`='"  .   $datos['fecha_proceso_usuario']     . "',
+                `fecha_proceso_usuario`='" .    $datos['fecha_proceso_usuario']     . "',
                 `calculo_huella_carbono`='" .   $datos['calculo_huella_carbono']    . "',
                 `dni_usuario`='" .              $datos['dni_usuario']               . "',
                 `id_proceso`='" .               $datos['id_proceso']                . "'
+            WHERE
+                `id_proceso_usuario`='" . $datos['id_proceso_usuario'] . "' AND
+                `borrado_proceso_usuario`=0
+            ;"
+        ;
+
+        $this -> stmt = $this -> conexion -> prepare($this -> query);
+        $this -> execute_single_query();
+
+    }
+
+    function anadirResultado($datos) {
+
+        $this -> query = 
+            "UPDATE `proceso_usuario`
+            SET
+                `calculo_huella_carbono`='" .   $datos['calculo_huella_carbono']    . "'
             WHERE
                 `id_proceso_usuario`='" . $datos['id_proceso_usuario'] . "' AND
                 `borrado_proceso_usuario`=0
