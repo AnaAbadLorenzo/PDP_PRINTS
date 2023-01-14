@@ -37,6 +37,7 @@
     modalCambioPass(); cargarIdioma();includeFooter();setLang('');
 	await cargarParametros(0, tamanhoPaginaParametro, 'PaginadorNo');
 	await cargarPermisosFuncParametro();
+	await construyeSelect();
 	ejecutaFuncion(function(){compruebaFuncionalidadesPermisos('PARAMETRO')},30000);
   })();">  
 	<div id="topMenu"></div>
@@ -47,30 +48,25 @@
 	<h1 class="gestion GESTION_PARAMETROS"></h1>
 
 	<div id="cabecera" class="cabecera" style="display: none;">
-		<div id="divAddParametro" name="btnAdd" value="Añadir" data-toggle="" data-target="" onclick="javascript:showAddParametro()" class="tooltip6 addIcon">
-        <img id="btnAddParametro" class="iconoAdd" src="images/add.png" alt="Añadir" />
-        <span class="tooltiptext iconAddRespuesta ICONO_ADD"></span>
-    	</div>      
+        <div id="divListarParametro" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarParametro()" class="tooltip6 searchIcon">
+            <img id="btnListarParametros" class="iconoSearch iconSearch" src="images/search.png" alt="Buscar Parámetro" />
+            <span class="tooltiptext iconSearch ICONO_SEARCH"></span>
+        </div>
 
-    <div id="divListarParametro" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarParametro()" class="tooltip6 searchIcon">
-        <img id="btnListarParametros" class="iconoSearch iconSearch" src="images/search.png" alt="Buscar Parámetro" />
-        <span class="tooltiptext iconSearch ICONO_SEARCH"></span>
-    </div>
+        <div id="divSearchDelete" name="btnSearchDelete" value="Buscar Eliminados" onclick="" class="tooltip6 searchDeleteIcon">
+            <img id = "btnSearchDelete" class="iconoSearchDelete iconSearchDelete" src="images/searchDelete4.png" alt="Buscar Parámetros Eliminados" />
+            <span class="tooltiptext iconSearchDelete ICONO_SEARCH_DELETE"></span>
+        </div>
 
-    <div id="divSearchDelete" name="btnSearchDelete" value="Buscar Eliminados" onclick="" class="tooltip6 searchDeleteIcon">
-        <img id = "btnSearchDelete" class="iconoSearchDelete iconSearchDelete" src="images/searchDelete4.png" alt="Buscar Parámetros Eliminados" />
-        <span class="tooltiptext iconSearchDelete ICONO_SEARCH_DELETE"></span>
-    </div>
+        <div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaParametro)" class="tooltip6 refreshIcon">
+            <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
+            <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
+        </div>
 
-    <div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaParametro)" class="tooltip6 refreshIcon">
-        <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
-        <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
-    </div>
-
-    <div name="btnHideShowColumns" value="Buscar" onclick="javascript:hideShowColumnsWindow();" class="tooltip6 hideShowIcon" hidden>
-        <img class="iconoHideShow iconHideShow" src="images/hideTable.png" alt="Ocultar/Mostrar Columnas" />
-        <span class="tooltiptext iconHideShow ICON_SHOW_HIDE_COLUMNS"></span>
-    </div>     
+        <div name="btnHideShowColumns" value="Buscar" onclick="javascript:hideShowColumnsWindow();" class="tooltip6 hideShowIcon" hidden>
+            <img class="iconoHideShow iconHideShow" src="images/hideTable.png" alt="Ocultar/Mostrar Columnas" />
+            <span class="tooltiptext iconHideShow ICON_SHOW_HIDE_COLUMNS"></span>
+        </div>     
 	</div>
 
 	<div class = "cabeceraEliminados" id="cabeceraEliminados" style="display: none;">
@@ -156,6 +152,14 @@
                                 <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
                             </div>
                             <div style="display:none" id="errorFormatoDescripcionParametro"></div>
+                            
+                            <label class="labelForm ID_PROCESO" id="labelIdProceso" hidden></label>
+                            <select id="selectProcesos" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
+                            <div class="obligatorio tooltip2" id="obligatorioIdProceso">*
+                                <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+                            </div>
+                            <div style="display:none" id="errorFormatoIdProceso"></div>
+                            
                             <button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAcciones">
                               <img class="" src="" alt="" id="iconoAcciones" />
                               <span class="tooltiptext" id="spanAcciones"></span>

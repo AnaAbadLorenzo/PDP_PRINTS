@@ -1,73 +1,46 @@
-/** Función para añadir respuestas posibles con ajax y promesas **/
-function anadirRespuestaPosibleAjaxPromesa(){
-    return new Promise(function(resolve, reject) {
-      var token = getCookie('tokenUsuario');
-  
-      var respuestaPosibleEntity = {
-        idRespuesta: "",
-        textoRespuesta : $('#textoRespuestaPosible').val(),
-        borradoRespuesta : 0
-      }
-  
-      var data = {
-        usuario : getCookie('usuario'),
-        respuestaPosibleEntity : respuestaPosibleEntity
-      }
-  
-      $.ajax({
-        method: "POST",
-        url: urlPeticionAjaxAddRespuestaPosible,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
-        headers: {'Authorization': token},
-        }).done(res => {
-          if (res.code != 'RESPUESTA_POSIBLE_GUARDADA') {
-            reject(res);
-          }
-          resolve(res);
-        }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-    });
-  }
-  
   /** Función para buscar respuestas posibles con ajax y promesas **/
-  function buscarRespuestaPosibleAjaxPromesa(numeroPagina, tamanhoPagina, accion){
+  function buscarParametroAjaxPromesa(numeroPagina, tamanhoPagina, accion){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
       if(accion == "buscarModal"){
-        var data = {
-          textoRespuesta : $('#textoRespuestaPosible').val(),
-          inicio : calculaInicio(numeroPagina, tamanhoPaginaRespuestaPosible),
-          tamanhoPagina : tamanhoPaginaRespuestaPosible
+        var parametro = {
+          parametro_formula : $('#parametroFormula').val(),
+          descripcion_parametro : $('#descripcionParametro').val(),
+          inicio : calculaInicio(numeroPagina, tamanhoPaginaParametro),
+          tamanhoPagina : tamanhoPaginaParametro
         }
       }
   
       if(accion == "buscarPaginacion"){
-        if(getCookie('textoRespuesta') == null || getCookie('textoRespuesta') == ""){
-          var texto = "";
+        if(getCookie('parametro_formula') == null || getCookie('parametro_formula') == ""){
+          var parametro = "";
         }else{
-          var texto = getCookie('textoRespuesta');
+          var parametro = getCookie('parametro_formula');
         }
-  
-        var data = {
-          textoRespuesta : texto,
-          inicio : calculaInicio(numeroPagina, tamanhoPaginaRespuestaPosible),
-          tamanhoPagina : tamanhoPaginaRespuestaPosible
+        
+        if(getCookie('descripcion_parametro') == null || getCookie('descripcion_parametro') == ""){
+            var descripcionParam = "";
+        }else{
+            var descripcionParam = getCookie('descripcion_parametro');
+        }
+
+        var parametro = {
+          parametro_formula : parametro,
+          descripcion_parametro : descripcionParam,
+          inicio : calculaInicio(numeroPagina, tamanhoPaginaParametro),
+          tamanhoPagina : tamanhoPaginaParametro
         }
       }
   
       $.ajax({
         method: "POST",
-        url: urlPeticionAjaxListarRespuestaPosible,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        url: urlPeticionAjaxListarParametro,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'RESPUESTA_POSIBLE_ENCONTRADA') {
+          if (res.code != 'BUSQUEDA_PARAMETRO_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -80,54 +53,57 @@ function anadirRespuestaPosibleAjaxPromesa(){
   /** Función para recuperar los permisos de un usuario sobre la funcionalidad **/
   function cargarPermisosFuncRespuestaPosibleAjaxPromesa(){
     return new Promise(function(resolve, reject) {
-      var nombreUsuario = getCookie('usuario');
-      var token = getCookie('tokenUsuario');
+        var nombreUsuario = getCookie('usuario');
+        var token = getCookie('tokenUsuario');
+        
+        var usuario = nombreUsuario;
   
-      var usuario = nombreUsuario;
-  
-      $.ajax({
-        method: "GET",
-        url: urlPeticionAjaxAccionesUsuario,
-        contentType : "application/json",
-        data: { usuario : usuario, funcionalidad : 'Gestión de respuestas posibles'},  
-        dataType : 'json',
-        headers: {'Authorization': token},
-        }).done(res => {
-          if (res.code != 'ACCIONES_USUARIO_OK') {
-            reject(res);
-          }
-          resolve(res);
-      }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-    });
+        var data = {
+          controlador : 'GestionACL',
+          action: 'searchAccionesPorFuncionalidadUsuario',
+          usuario : usuario,
+          nombre_funcionalidad : 'Gestión de parametros'
+        }
+      
+        $.ajax({
+          method: "POST",
+          url: urlPeticionAjaxAccionesUsuario,
+          contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+          data: data,  
+          headers: {'Authorization': token},
+          }).done(res => {
+            if (res.code != 'BUSQUEDA_ACL_CORRECTO') {
+              reject(res);
+            }
+            resolve(res);
+        }).fail( function( jqXHR ) {
+            errorFailAjax(jqXHR.status);
+          });
+      });
   }
   
-  /**Función para editar una respuesta posible con ajax y promesas*/
-  function editarRespuestaPosibleAjaxPromesa(){
+  /**Función para editar un parametro con ajax y promesas*/
+  function editarParametroAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var respuestaPosibleEntity = {
-        idRespuesta : $("input[name=idRespuestaPosible]").val(),
-        textoRespuesta : $('#textoRespuestaPosible').val(),
-        borradoRespuesta : 0
+      var parametro = {
+        controlador : 'GestionParametros',
+        action: 'edit',
+        id_parametro : $("input[name=idParametro]").val(),
+        parametro_formula : $('#parametroFormula').val(),
+        descripcion_parametro : $('#descripcionParametro').val(),
+        id_proceso: $('#idProceso').val()
       }
-  
-      var data = {
-        usuario : getCookie('usuario'),
-        respuestaPosibleEntity : respuestaPosibleEntity
-      }
-  
+
         $.ajax({
         method: "POST",
         url: urlPeticionAjaxEditarRespuestaPosible,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'RESPUESTA_POSIBLE_MODIFICADA') {
+          if (res.code != 'EDIT_PARAMETRO_COMPLETO') {
             reject(res);
           }
           resolve(res);
@@ -137,31 +113,26 @@ function anadirRespuestaPosibleAjaxPromesa(){
     });
   }
   
-  /**Función para eliminar una respuesta posible con ajax y promesas*/
-  function eliminarRespuestaPosibleAjaxPromesa(){
+  /**Función para eliminar un parámetro con ajax y promesas*/
+  function eliminarParametroAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var respuestaPosibleEntity = {
-        idRespuesta : $("input[name=idRespuestaPosible]").val(),
-        textoRespuesta : $('#textoRespuestaPosible').val(),
-        borradoRespuesta : 1
+      var parametro = {
+        id_parametro : $("input[name=idParametro]").val(),
+        parametro_formula : $('#parametroFormula').val(),
+        descripcion_parametro : $('#descripcionParametro').val(),
+        id_proceso : $('#idProceso').val()
       }
   
-      var data = {
-        usuario : getCookie('usuario'),
-        respuestaPosibleEntity : respuestaPosibleEntity
-      }
-  
-        $.ajax({
+      $.ajax({
         method: "POST",
-        url: urlPeticionAjaxDeleteRespuestaPosible,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        url: urlPeticionAjaxDeleteParametro,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'RESPUESTA_POSIBLE_ELIMINADA') {
+          if (res.code != 'PARAMETRO_ELIMINADO') {
             reject(res);
           }
           resolve(res);
@@ -171,11 +142,11 @@ function anadirRespuestaPosibleAjaxPromesa(){
     });
   }
   
-  /*Función que comprueba los permisos del usuario sobre la respuesta posible*/
-  async function cargarPermisosFuncRespuestaPosible(){
-    await cargarPermisosFuncRespuestaPosibleAjaxPromesa()
+  /*Función que comprueba los permisos del usuario sobre el parámetro*/
+  async function cargarPermisosFuncParametro(){
+    await cargarPermisosFuncParametroAjaxPromesa()
     .then((res) => {
-      gestionarPermisosRespuestaPosible(res.data);
+      gestionarPermisosParametro(res.resource);
       setLang(getCookie('lang'));
     }).catch((res) => {
         respuestaAjaxKO(res.code);
@@ -185,25 +156,26 @@ function anadirRespuestaPosibleAjaxPromesa(){
   }
   
   
-  /** Función para recuperar las respuestas posibles con ajax y promesas **/
-  function cargarRespuestasPosiblesAjaxPromesa(numeroPagina, tamanhoPagina){
+  /** Función para recuperar los parámetros con ajax y promesas **/
+  function cargarParametrosAjaxPromesa(numeroPagina, tamanhoPagina){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var data = {
-        inicio : calculaInicio(numeroPagina, tamanhoPaginaRespuestaPosible),
-        tamanhoPagina : tamanhoPaginaRespuestaPosible
+      var parametro = {
+        controlador : 'GestionParametros',
+        action: 'search',
+        inicio : calculaInicio(numeroPagina, tamanhoPaginaParametro),
+        tamanhoPagina : tamanhoPaginaParametro
       }
   
       $.ajax({
         method: "POST",
-        url: urlPeticionAjaxListadoRespuestasPosibles,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        url: urlPeticionAjaxListadoParametros,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'RESPUESTAS_POSIBLES_LISTADAS') {
+          if (res.code != 'BUSQUEDA_PARAMETRO_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -213,54 +185,29 @@ function anadirRespuestaPosibleAjaxPromesa(){
     });
   }
   
-  /**Función para recuperar las respuestas posibles eliminadas con ajax y promesas*/
-  function buscarEliminadosAjaxPromesa(numeroPagina, tamanhoPagina){
+  /**Función para ver en detalle un parámetro con ajax y promesas*/
+  function detalleParametroAjaxPromesa(){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
-      var data = {
-        inicio : calculaInicio(numeroPagina, tamanhoPaginaRespuestaPosible),
-        tamanhoPagina : tamanhoPaginaRespuestaPosible
-      }
-  
-      $.ajax({
-        method: "POST",
-        url: urlPeticionAjaxListarRespuestasPosiblesEliminadas,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
-        headers: {'Authorization': token},
-        }).done(res => {
-          if (res.code != 'RESPUESTAS_POSIBLES_ELIMINADAS_LISTADAS') {
-            reject(res);
-          }
-          resolve(res);
-        }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-    });
-  }
-  
-  /**Función para ver en detalle una respuesta posible con ajax y promesas*/
-  function detalleRespuestaPosibleAjaxPromesa(){
-    return new Promise(function(resolve, reject) {
-      var token = getCookie('tokenUsuario');
-  
-      var data = {
-        textoRespuesta : $('#textoRespuestaPosible').val(),
+      var parametro = {
+        controlador: 'GestionParametros',
+        action: 'searchByParameters',
+        parametro_formula: $('#parametroFormula').val(),
+        descripcion_parametro: $('#descripcionParametro').val(),
+        id_proceso : $('#idProceso').val(),
         inicio : 0,
         tamanhoPagina : 1
       }
   
         $.ajax({
         method: "POST",
-        url: urlPeticionAjaxListarRespuestaPosible,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
+        url: urlPeticionAjaxListarParametro,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'RESPUESTA_POSIBLE_ENCONTRADA') {
+          if (res.code != 'BUSQUEDA_PERSONALIZADA_PARAMETRO_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -270,57 +217,23 @@ function anadirRespuestaPosibleAjaxPromesa(){
     });
   }
   
-  
-  /**Función para reactivar una respuesta posible con ajax y promesas*/
-  function reactivarRespuestasPosiblesAjaxPromesa(){
-    return new Promise(function(resolve, reject) {
-      var token = getCookie('tokenUsuario');
-  
-      var respuestaPosibleEntity = {
-        idRespuesta : $("input[name=idRespuestaPosible]").val(),
-        textoRespuesta : $('#textoRespuestaPosible').val(),
-        borradoRespuesta : 0
-      }
-  
-      var data = {
-        usuario: getCookie('usuario'),
-        respuestaPosibleEntity : respuestaPosibleEntity
-      }
-  
-        $.ajax({
-        method: "POST",
-        url: urlPeticionAjaxReactivarRespuestaPosible,
-        contentType : "application/json",
-        data: JSON.stringify(data),  
-        dataType : 'json',
-        headers: {'Authorization': token},
-        }).done(res => {
-          if (res.code != 'RESPUESTA_POSIBLE_REACTIVADA') {
-            reject(res);
-          }
-          resolve(res);
-        }).fail( function( jqXHR ) {
-          errorFailAjax(jqXHR.status);
-        });
-    });
-  }
-  
-  /* Función para obtener las respuestas posibles del sistema */
-  async function cargarRespuestasPosibles(numeroPagina, tamanhoPagina, paginadorCreado){
-    await cargarRespuestasPosiblesAjaxPromesa(numeroPagina, tamanhoPagina)
+  /* Función para obtener los parametros del sistema */
+  async function cargarParametros(numeroPagina, tamanhoPagina, paginadorCreado){
+    await cargarParametrosAjaxPromesa(numeroPagina, tamanhoPagina)
       .then((res) => {
   
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
-          var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
+        var inicio = 0;
+        
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
@@ -330,15 +243,15 @@ function anadirRespuestaPosibleAjaxPromesa(){
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
   
-        for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('RESPUESTA_POSIBLE', res.data.listaBusquedas[i]);
+        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('PARAMETRO', res.resource.listaBusquedas[i]);
             $("#datosRespuestaPosible").append(tr);
           }
           $("#paginacion").append(textPaginacion);
           setLang(getCookie('lang'));
   
           if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarRespuestasPosibles', 'RESPUESTA_POSIBLE');
+            paginador(totalResults, 'cargarParametros', 'PARAMETRO');
           }
   
           if(numeroPagina == 0){
@@ -359,76 +272,78 @@ function anadirRespuestaPosibleAjaxPromesa(){
       });
   }
   
-  /** Funcion añadir respuesta posible **/
-  async function addRespuestaPosible(){
-    await anadirRespuestaPosibleAjaxPromesa()
+  /** Funcion añadir parametro **/
+  async function addParametro(){
+    await anadirParametro()
     .then((res) => {
   
       $("#form-modal").modal('toggle');
-      respuestaAjaxOK("RESPUESTA_POSIBLE_GUARDADA_OK", res.code);
+      respuestaAjaxOK("PARAMETRO_GUARDADO_OK", res.code);
   
-      let idElementoList = ["textoRespuestaPosible"];
+      let idElementoList = ["parametro_formula", "descripcion_parametro"];
       resetearFormulario("formularioGenerico", idElementoList);
       setLang(getCookie('lang'));
       document.getElementById("modal").style.display = "block";
   
-      $('#textoRespuestaPosible').val(getCookie('textoRespuesta'));
-      buscarRespuestaPosible(getCookie('numeroPagina'), tamanhoPaginaRespuestaPosible, 'buscarPaginacion', 'PaginadorNo');
+      $('#parametroFormula').val(getCookie('parametro_formula'));
+      $('#descripcionParametro').val(getCookie('descripcion_parametro'));
+      buscarParametro(getCookie('numeroPagina'), tamanhoPaginaParametro, 'buscarPaginacion', 'PaginadorNo');
       setLang(getCookie('lang'));
   
     }).catch((res) => {
         $("#form-modal").modal('toggle');
-  
         respuestaAjaxKO(res.code);
-  
-        let idElementoList = ["textoRespuestaPosible"];
+        let idElementoList = ["parametro_formula", "descripcion_parametro"];
         resetearFormulario("formularioGenerico", idElementoList);
-  
         setLang(getCookie('lang'));
-  
         document.getElementById("modal").style.display = "block";
     });
   }
   
   
   /** Funcion buscar respuesta posible **/
-  async function buscarRespuestaPosible(numeroPagina, tamanhoPagina, accion, paginadorCreado){
-    await buscarRespuestaPosibleAjaxPromesa(numeroPagina, tamanhoPagina,accion)
+  async function buscarParametro(numeroPagina, tamanhoPagina, accion, paginadorCreado){
+    await buscarParametroAjaxPromesa(numeroPagina, tamanhoPagina,accion)
     .then((res) => {
-        cargarPermisosFuncRespuestaPosible();
+        cargarPermisosFuncParametro();
         if($('#form-modal').is(':visible')) {
            $("#form-modal").modal('toggle');
         };
-        guardarParametrosBusqueda(res.data.datosBusqueda);
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
-          var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        var datosBusquedas = [];
+        datosBusquedas.push('parametro_formula: ' + res.resource.datosBusquedas['parametro_formula']);
+        datosBusquedas.push('descripcion_parametro: ' + res.resource.datosBusquedas['descripcion_parametro']);
+        guardarParametrosBusqueda(datosBusquedas);
+
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
+        var inicio = 0;
+        
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
         }
   
-        $("#datosRespuestaPosible").html("");
+        $("#datosParametro").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('RESPUESTA_POSIBLE', res.data.listaBusquedas[i]);
-            $("#datosRespuestaPosible").append(tr);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('PARAMETRO', res.resource.listaBusquedas[i]);
+            $("#datosParametro").append(tr);
           }
   
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
   
         if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'buscarRespuestaPosible', 'RESPUESTA_POSIBLE');
+            paginador(totalResults, 'buscarParametro', 'PARAMETRO');
         }
   
         if(numeroPagina == 0){
@@ -445,7 +360,7 @@ function anadirRespuestaPosibleAjaxPromesa(){
         cargarPermisosFuncObjetivo();
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["textoRespuestaPosible"];
+        let idElementoList = ["parametroFormula", "descripcionParametro"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -456,40 +371,39 @@ function anadirRespuestaPosibleAjaxPromesa(){
   
   /*Función que refresca la tabla por si hay algún cambio en BD */
   async function refrescarTabla(numeroPagina, tamanhoPagina){
-    await cargarRespuestasPosiblesAjaxPromesa(numeroPagina, tamanhoPagina)
+    await cargarParametrosAjaxPromesa(numeroPagina, tamanhoPagina)
     .then((res) => {
-        cargarPermisosFuncRespuestaPosible();
-        setCookie('textoRespuesta', '');
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
+        cargarPermisosFuncParametro();
+        setCookie('parametro_formula', '');
+        setCookie('ddescripcion_parametro', '');
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           inicio = 0;
         }else{
-          inicio = parseInt(res.data.inicio)+1;
+          inicio = parseInt(res.resource.inicio)+1;
         }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
   
-        if(res.data.listaBusquedas.length == 0){
+        if(res.resource.listaBusquedas.length == 0){
           $('#itemPaginacion').attr('hidden',true);
         }else{
           $('#itemPaginacion').attr('hidden',false);
         }
   
-        $("#datosRespuestaPosible").html("");
+        $("#datosParametro").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFila('RESPUESTA_POSIBLE', res.data.listaBusquedas[i]);
-            $("#datosRespuestaPosible").append(tr);
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            var tr = construyeFila('PARAMETRO', res.resource.listaBusquedas[i]);
+            $("#datosParametro").append(tr);
           }
   
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
-  
-        setCookie('textoRespuesta', '');
-  
-        paginador(totalResults, 'cargarRespuestasPosibles', 'RESPUESTA_POSIBLE');
+
+        paginador(totalResults, 'cargarParametros', 'PARAMETRO');
   
         if(numeroPagina == 0){
           $('#' + (numeroPagina+1)).addClass("active");
@@ -510,73 +424,17 @@ function anadirRespuestaPosibleAjaxPromesa(){
     });
   }
   
-  /*Función que busca los eliminados de la tabla de respuesta posible*/
-  async function buscarEliminados(numeroPagina, tamanhoPagina, paginadorCreado){
-    await buscarEliminadosAjaxPromesa(numeroPagina, tamanhoPagina)
-    .then((res) => {
-        cargarPermisosFuncRespuestaPosible();
-        var numResults = res.data.numResultados + '';
-        var totalResults = res.data.tamanhoTotal + '';
-        var inicio = 0;
-        if(res.data.listaBusquedas.length == 0){
-          inicio = 0;
-          $('#itemPaginacion').attr('hidden', true);
-        }else{
-          inicio = parseInt(res.data.inicio)+1;
-          $('#itemPaginacion').attr('hidden', true);
-        }
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
-  
-        if(res.data.listaBusquedas.length == 0){
-          document.getElementById('cabecera').style.display = "none";
-          document.getElementById('cabeceraEliminados').style.display = "block";    
-        }
-  
-        $("#datosRespuestaPosible").html("");
-        $("#checkboxColumnas").html("");
-        $("#paginacion").html("");
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            var tr = construyeFilaEliminados('RESPUESTA_POSIBLE', res.data.listaBusquedas[i]);
-            $("#datosRespuestaPosible").append(tr);
-          }
-  
-        $("#paginacion").append(textPaginacion);
-        setLang(getCookie('lang'));
-  
-        setCookie('textoRespuesta', '');
-  
-        if(paginadorCreado != 'PaginadorCreado'){
-           paginador(totalResults, 'buscarEliminadosRespuestaPosible', 'RESPUESTA_POSIBLE');
-        }
-  
-  
-        if(numeroPagina == 0){
-          $('#' + (numeroPagina+1)).addClass("active");
-        }else{
-          $('#' + numeroPagina).addClass("active");
-        }
-  
-        setLang(getCookie('lang'));
-  
-      }).catch((res) => {
-  
-        respuestaAjaxKO(res.code);
-        setLang(getCookie('lang'));
-        document.getElementById("modal").style.display = "block";
-  
-    });
-  }
-  
-  /** Función que visualiza una respuesta posible**/
-  async function detalleRespuestaPosible(){
-    await detalleRespuestaPosibleAjaxPromesa()
+  /** Función que visualiza un parametro **/
+  async function detalleParametro(){
+    await detalleParametroAjaxPromesa()
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      let idElementoList = ["textoRespuestaPosible"];
+      let idElementoList = ["parametroFormula", "descripcionParametro"];
       resetearFormulario("formularioGenerico", idElementoList);
       setLang(getCookie('lang'));
-      $('#textoRespuestaPosible').val(getCookie('textoRespuesta'));
+      $('#parametroFormula').val(getCookie('parametro_formula'));
+      $('#descripcionParametro').val(getCookie('descripcion_parametro'));
   
     }).catch((res) => {
         $("#form-modal").modal('toggle');

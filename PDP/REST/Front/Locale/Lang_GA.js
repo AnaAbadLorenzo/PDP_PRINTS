@@ -585,7 +585,8 @@ arrayGA={
 	'PROCEDIMIENTO_EJECUTADO_EDITADO_OK' : 'PROCEDEMENTO EXECUTADO MODIFICADO CORRECTAMENTE',
 	'PROCEDIMIENTO_USUARIO_MODIFICADO' : 'O procedemento executado modificouse correctamente',
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GARDADA CORRECTAMENTE',
-	'EVIDENCIA_GUARDADA' : 'A evidencia gardouse correctamente'
+	'EVIDENCIA_GUARDADA' : 'A evidencia gardouse correctamente',
+	'CATEGORIA_YA_EXISTE' : 'A categoria xa existe'
 
 
 	

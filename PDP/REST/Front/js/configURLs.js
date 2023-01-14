@@ -1,5 +1,5 @@
 /** Url común a todas*/
-var urlComun = "http://localhost/PDP_PRINTS/PDP_PRINTS/PDP/REST/Back/index.php";
+var urlComun = "http://localhost/PDP_PRINTS/PDP/REST/Back/index.php";
 
 
 /** Urls Login*/
@@ -80,3 +80,9 @@ var urlPeticionAjaxListarCategoriasEliminadas = urlComun;
 var urlPeticionAjaxReactivarCategoria = urlComun;
 var urlPeticionAjaxListarTodasCategorias = urlComun;
 var urlPeticionAjaxDeleteCategoria = urlComun;
+
+/**Urls de parametro */
+var urlPeticionAjaxListarParametro = urlComun;
+var urlPeticionAjaxDeleteParametro = urlComun;
+var urlPeticionAjaxListadoParametros = urlComun;
+var urlPeticionAjaxListarParametro = urlComun;

@@ -330,7 +330,7 @@ function anadirCategoriaAjaxPromesa(){
   
       var categoria = {
         controlador: 'GestionCategorias',
-        action: 'searchByParameters',
+        action: 'searchByParametersUser',
         nombre_categoria : '',
         descripcion_categoria : '',
         dni_responsable: '',
@@ -662,7 +662,7 @@ async function cargarCategoriasUsuario(numeroPagina, tamanhoPagina, paginadorCre
   
   /** Funcion buscar categoria **/
   async function buscarCategoria(numeroPagina, tamanhoPagina, accion, paginadorCreado){
-    if(getCookie('rolUsuario') == 'Administrador'){
+    if(getCookie('rolUsuario') == 'Administrador' || getCookie('rolUsuario') == 'Gestor'){
     await buscarCategoriaAjaxPromesa(numeroPagina, tamanhoPagina,accion)
     .then((res) => {
         cargarPermisosFuncCategoria();
@@ -1077,13 +1077,13 @@ async function cargarCategoriasUsuario(numeroPagina, tamanhoPagina, paginadorCre
         'return comprobarDescripcionCategoriaSearch(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')');
     cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchCategoria', 'Buscar');
   
-    if(getCookie('rolUsuario') == "Administrador") {
+    if(getCookie('rolUsuario') == "Administrador" || getCookie('rolUsuario') == "Gestor") {
       $('#subtitulo').attr('hidden', true);
       $('#labelNombreCategoria').attr('hidden', true);
       $('#labelDescripcionCategoria').attr('hidden', true);
       $('#labelDniResponsable').attr('hidden', false);
-      $('#labelCategoriaPadre').attr('hidden', false);
-      $('#selectCategoriaPadre').attr('hidden', false);
+      $('#labelCategoriaPadre').attr('hidden', true);
+      $('#selectCategoriaPadre').attr('hidden', true);
     }else{
       $('#labelDniResponsable').attr('hidden', true);
       $('#labelCategoriaPadre').attr('hidden', true);
@@ -1355,7 +1355,7 @@ function construyeSelect(){
         if (res.code != 'BUSQUEDA_USUARIO_CORRECTO') {
         	respuestaAjaxKO(res.code);
         }
-        options = '<option selected value=0><label class="OPCION_DEFECTO_USUARIO">Selecciona el usuario</label></option>';
+        options = '<option selected value=0><label class="">Selecciona el usuario responsable</label></option>';
         for(var i = 0; i< res.resource.listaBusquedas.length ; i++){
           if(res.resource.listaBusquedas[i].usuario.borrado_usuario == 0){
             options += '<option value=' + res.resource.listaBusquedas[i].usuario.dni_usuario + '>' + res.resource.listaBusquedas[i].usuario.usuario + '</option>';
@@ -1392,7 +1392,7 @@ function construyeSelectCategorias(){
         if (res.code != 'BUSQUEDA_CATEGORIA_CORRECTO') {
         	respuestaAjaxKO(res.code);
         }
-        options = '<option selected value=0><label class="OPCION_DEFECTO_CATEGORIA">Selecciona la categoria</label></option>';
+        options = '<option selected value=0><label class=""></label></option>';
         for(var i = 0; i< res.resource.listaBusquedas.length ; i++){
 					options += '<option value=' + res.resource.listaBusquedas[i].categoria.id_categoria + '>' + res.resource.listaBusquedas[i].categoria.nombre_categoria + '</option>';
 				}

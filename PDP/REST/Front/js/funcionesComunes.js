@@ -430,24 +430,6 @@ function construyeFila(entidad, fila) {
                 '</td> <td>' + fila.descripcion_accion;
         break;
 
-        case 'LOG_EXCEPCIONES':
-			atributosFunciones = ["'" + fila.usuario + "'", "'" + fila.tipoExcepcion + "'", "'" + fila.descripcionExcepcion + "'", "'" + fila.fecha + "'"];
-			var fecha = new Date(fila.fecha);
-			filaTabla = '<tr class="impar"> <td>' + fila.usuario + 
-                '</td> <td>' + fila.tipoExcepcion + 
-                '</td> <td>' + fila.descripcionExcepcion +
-                '</td> <td>' +  convertirFecha(fecha.toString());
-        break;
-
-        case 'LOG_ACCIONES':
-			atributosFunciones = ["'" + fila.usuario + "'", "'" + fila.accion + "'", "'" + fila.datos + "'", "'" + fila.fecha + "'"];
-			var fecha = new Date(fila.fecha);
-			filaTabla = '<tr class="impar"> <td>' + fila.usuario + 
-                '</td> <td>' + fila.accion + 
-                '</td> <td>' + fila.datos +
-                '</td> <td>' + convertirFecha(fecha.toString());
-        break;
-
         case 'USUARIO':
 			atributosFunciones = ["'" + fila.usuario.dni_usuario + "'", "'" + fila.usuario.usuario + "'", "'" + fila.usuario.borrado_usuario + "'", "'" + fila.rol.nombre_rol + "'"];
 			var usuarioActivo = "";
@@ -497,9 +479,10 @@ function construyeFila(entidad, fila) {
 				'</td> <td>' + fila.responsable.usuario;
         break;
 
-        case 'RESPUESTA_POSIBLE' :
-        	atributosFunciones = ["'" + fila.textoRespuesta + "'","'" + fila.idRespuesta + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.textoRespuesta;
+        case 'PARAMETRO' :
+        	atributosFunciones = ["'" + fila.parametro.parametro_formula + "'","'" + fila.parametro.descripcion_parametro + "'","'" + fila.proceso.nombre_proceso + "'","'" + fila.parametro.id_parametro + "'"];
+			filaTabla = '<tr class="impar"> <td>' + fila.parametro.parametro_formula +
+					    '</td> <td>' + fila.parametro.descripcion_parametro;
         break;
 
         case 'PLAN':

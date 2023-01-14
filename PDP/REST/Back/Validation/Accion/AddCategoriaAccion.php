@@ -18,10 +18,15 @@ class AddCategoriaAccion extends ValidacionesBase{
         $this->categoria = new CategoriaModel();
 	}
 	function comprobarAddCategoria($datosAddCategoria){
-
 		$this->existeDNIResponsable($datosAddCategoria);
 		$this->existeDNIUsuario($datosAddCategoria);
-        $this->existeIdCategoriaPadre($datosAddCategoria);
+        if($datosAddCategoria['id_padre_categoria'] == "0" || is_null($datosAddCategoria['id_padre_categoria'])){
+            $datosAddCategoria['id_padre_categoria'] = null;
+        }
+        if(!is_null($datosAddCategoria['id_padre_categoria'])){
+            $this->existeIdCategoriaPadre($datosAddCategoria);
+        }
+        $this->existeNombreCategoria($datosAddCategoria);
 	}
 
 function existeDNIResponsable($datosAddCategoria){
@@ -48,21 +53,34 @@ function existeDNIResponsable($datosAddCategoria){
                 return true;
             }else{
                 $this->respuesta = 'DNI_USUARIO_NO_EXISTE';
-                //throw new DNINoExisteException('DNI_NO_EXISTE');
             }}
 		
-           function existeIdCategoriaPadre($datosAddCategoria){
+        function existeIdCategoriaPadre($datosAddCategoria){
 
-                $datoBuscar = array();
-                $datoBuscar['id_padre_categoria'] = $datosAddCategoria['id_padre_categoria'];
-                $resultado = $this->categoria->searchByIdPadre('categoria', $datoBuscar)['resource'];
+            $datoBuscar = array();
+            $datoBuscar['id_padre_categoria'] = $datosAddCategoria['id_padre_categoria'];
+            $resultado = $this->categoria->searchByIdPadre('categoria', $datoBuscar)['resource'];
             
-                if(!sizeof($resultado) == 0 || $datosAddCategoria['id_padre_categoria']=="" || is_null($datosAddCategoria['id_padre_categoria'])) {
-                    return true;
-                }else{
-                    $this->respuesta = 'ID_CATEGORIA_PADRE_NO_EXISTE';
-                    //throw new DNINoExisteException('DNI_NO_EXISTE');
-                }}
+            if(!sizeof($resultado) == 0 || $datosAddCategoria['id_padre_categoria']=="" || is_null($datosAddCategoria['id_padre_categoria'])) {
+                return true;
+            }else{
+                $this->respuesta = 'ID_CATEGORIA_PADRE_NO_EXISTE';
+            }}
+
+
+        function existeNombreCategoria($datosAddCategoria){
+
+            $datoBuscar = array();
+            $datoBuscar['nombre_categoria'] = $datosAddCategoria['nombre_categoria'];
+            
+            $resultado = $this->categoria->getByName('categoria', $datoBuscar)['resource'];
+                
+            if($resultado != null) {
+                $this->respuesta = 'CATEGORIA_YA_EXISTE';
+            }else{
+                return true;
+            }
+        }
             
 		
 

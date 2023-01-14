@@ -75,7 +75,7 @@ class GestionParametrosController extends ControllerBase {
 		$this -> rellenarRespuesta('BUSQUEDA_PARAMETRO_CORRECTO', false, $respuesta);
 		$this -> getRespuesta($respuesta);
     }
-
+	
     function searchByParameters() {
 
 		$this -> parametro_service -> inicializarParametros();

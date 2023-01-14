@@ -13,13 +13,8 @@ class categoriaAtributos extends ValidacionesFormato{
 
 			if($this->respuesta == ''){
 				$this->validar_dni_responsable($atributos['dni_responsable']);
-			}
-
-			
-			
-			
+			}			
 	}
-
 	
 	function validar_nombre_categoria($atributo){
 		$this->respuesta = '';

@@ -57,37 +57,26 @@ class ProcesoMapping extends MappingBase {
 
 
     function delete($datosEliminar) {
-
         $this->query = "UPDATE `proceso` SET `borrado_proceso` = 1 WHERE `id_proceso` ='"
         .$datosEliminar['id_proceso']."'";
         $this->stmt = $this->conexion->prepare($this->query);
 
         $this->execute_single_query();
-        
     }
 
-
-
     function numberFindAll() {
-        
         $this->query = "SELECT COUNT(*) FROM `proceso`";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+    }
+
+    function numberFindDelete() {
+        
+        $this->query = "SELECT COUNT(*) FROM `proceso` WHERE `borrado_proceso`= 1";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
          
     }
-   
-/*
-@NamedQuery(name = "PersonaEntity.findPersona", query = "SELECT p FROM PersonaEntity p WHERE
- LOWER(p.dniP) LIKE LOWER(CONCAT('%', :dniP, '%')) AND
-  LOWER(p.nombreP) LIKE LOWER(CONCAT('%', :nombreP, '%')) AND
-   LOWER(p.apellidosP) LIKE LOWER(CONCAT('%', :apellidosP, '%')) AND
-    p.fechaNacP LIKE CONCAT('%', :fechaNacP, '%') AND
-     LOWER(p.direccionP) LIKE LOWER(CONCAT('%', :direccionP, '%')) AND
-      p.telefonoP LIKE CONCAT('%', :telefonoP, '%') AND 
-      LOWER(p.emailP) LIKE LOWER(CONCAT('%', :emailP, '%')) AND
-       p.borradoP=0"),
-	*/
-    
 
     function searchByParameters($datosSearchParameters, $paginacion) {
             
@@ -125,63 +114,35 @@ class ProcesoMapping extends MappingBase {
 
 
 function search() {
-    
+    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0";
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_results_from_query(); 
+}
+
+function searchAll() {
     $this->query = "SELECT * FROM `proceso`";
     $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query();
-    
+    $this->get_results_from_query(); 
 }
 
 function getProcesosWhitIdCategoria($datosProceso){
-
     $this->query = "SELECT * FROM `proceso` WHERE `id_categoria`=".$datosProceso['id_padre_categoria']."";
     $this->stmt = $this->conexion->prepare($this->query);
     $this->get_results_from_query();
-  
-
 }
 
-/*
-    function searchByIdPadre($datosSearch) {
-            $this->query = "SELECT * FROM `categoria` WHERE `id_categoria`='".$datosSearch['id_padre_categoria']."'";
-            //$foraneas = $datosSearch['foraneas'];
-            $this->stmt = $this->conexion->prepare($this->query);
-            $this->get_one_result_from_query();
-            $respuesta = $this->feedback;
+function searchById($datosSearch) {
+    $this->query = "SELECT * FROM `proceso` WHERE `id_proceso`='".$datosSearch['id_proceso']."'";
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_one_result_from_query();
+    
+    $respuesta = $this->feedback;
 
-            if($respuesta['code'] != 'RECORDSET_VACIO'){
-               
-               // foreach($foraneas as $fk){
-                  //  $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
-                 //   array_push($respuesta['resource'], $result);
-                //} 
-                
-                return $respuesta;
-            }else{
-                return $respuesta;
-            }
+    if($respuesta['code'] != 'RECORDSET_VACIO'){
+        return $respuesta;
+    }else{
+        return $respuesta;
     }
-*/
-
-    function searchById($datosSearch) {
-        $this->query = "SELECT * FROM `proceso` WHERE `id_proceso`='".$datosSearch['id_proceso']."'";
-        //$foraneas = $datosSearch['foraneas'];
-        $this->stmt = $this->conexion->prepare($this->query);
-       
-        $this->get_one_result_from_query();
-        $respuesta = $this->feedback;
-
-        if($respuesta['code'] != 'RECORDSET_VACIO'){
-           
-           // foreach($foraneas as $fk){
-              //  $result = $this->incluirDatosForaneas($respuesta['resource'],$fk, 'id_rol');
-             //   array_push($respuesta['resource'], $result);
-            //} 
-            
-            return $respuesta;
-        }else{
-            return $respuesta;
-        }
 }
     
     

@@ -117,8 +117,8 @@ function escogeTamanho(entidad){
         case 'CATEGORIA' : 
             tamanho = tamanhoPaginaCategoria;
         break;
-        case 'RESPUESTA_POSIBLE' :
-            tamanho = tamanhoPaginaRespuestaPosible;
+        case 'PARAMETRO' :
+            tamanho = tamanhoPaginaParametro;
         break;
         case 'PLAN' :
             tamanho = tamanhoPaginaPlan;
@@ -245,42 +245,6 @@ function escogeEntidadPaginacion(entidad, funcionalidad, parametro){
             }
         break;
 
-        case 'LOG_EXCEPCIONES':
-            switch(funcionalidad){
-                case 'cargarLogExcepciones': 
-                    for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarLogExcepciones(' 
-                            + (i+1) + ',' + tamanhoPaginaLogExcepciones + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
-                    }
-                break;
-
-                case 'buscarLogExcepciones' : 
-                    for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarLogExcepciones(' 
-                            + (i+1) + ',' + tamanhoPaginaLogExcepciones + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
-                    }
-                break;
-            }
-        break;
-
-        case 'LOG_ACCIONES':
-            switch(funcionalidad){
-                case 'cargarLogAcciones': 
-                    for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarLogAcciones(' 
-                            + (i+1) + ',' + tamanhoPaginaLogAcciones + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
-                    }
-                break;
-
-                case 'buscarLogAcciones' : 
-                    for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarLogAcciones(' 
-                            + (i+1) + ',' + tamanhoPaginaLogAcciones + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
-                    }
-                break;
-            }
-        break;
-
         case 'USUARIO':
             switch(funcionalidad){
                 case 'cargarUsuarios': 
@@ -381,24 +345,18 @@ function escogeEntidadPaginacion(entidad, funcionalidad, parametro){
             break;
         }
         break;
-        case 'RESPUESTA_POSIBLE':
+        case 'PARAMETRO':
             switch(funcionalidad){
-                case 'cargarRespuestasPosibles': 
+                case 'cargarParametros': 
                     for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarRespuestasPosibles(' 
-                            + (i+1) + ',' + tamanhoPaginaRespuestaPosible + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
+                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarParametros(' 
+                            + (i+1) + ',' + tamanhoPaginaParametro + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
                     }
                 break;
-                case 'buscarRespuestaPosible' : 
+                case 'buscarParametro' : 
                     for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarRespuestaPosible(' 
-                            + (i+1) + ',' + tamanhoPaginaRespuestaPosible + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
-                    }
-                break;
-                case 'buscarEliminadosRespuestaPosible' :
-                    for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarEliminados(' 
-                            + (i+1) + ',' + tamanhoPaginaRespuestaPosible + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
+                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarParametro(' 
+                            + (i+1) + ',' + tamanhoPaginaParametro + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
                     }
                 break;
         }

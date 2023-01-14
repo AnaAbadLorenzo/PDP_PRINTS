@@ -590,6 +590,8 @@ arrayEN={
 	'PROCEDIMIENTO_EJECUTADO_EDITADO_OK' : 'EXECUTED PROCEDURE MODIFIED CORRECTLY',
 	'PROCEDIMIENTO_USUARIO_MODIFICADO' : 'The execute procedure has been edited correctly',
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCE SAVED CORRECTLY',
-	'EVIDENCIA_GUARDADA' : 'The evidence has been saved correctly'
+	'EVIDENCIA_GUARDADA' : 'The evidence has been saved correctly',
+	'CATEGORIA_YA_EXISTE' : 'The category already exists'
+
 
 }

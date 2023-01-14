@@ -597,7 +597,8 @@ arrayES={
 	'PROCEDIMIENTO_EJECUTADO_EDITADO_OK' : 'PROCEDIMIENTO EJECUTADO MODIFICADO CORRECTAMENTE',
 	'PROCEDIMIENTO_USUARIO_MODIFICADO' : 'El procedimiento ejecutado se ha modificado correctamente',
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GUARDADA CORRECTAMENTE',
-	'EVIDENCIA_GUARDADA' : 'La evidencia se ha guadado correctamente'
+	'EVIDENCIA_GUARDADA' : 'La evidencia se ha guadado correctamente',
+	'CATEGORIA_YA_EXISTE' : 'La categoría ya existe'
 
 
 

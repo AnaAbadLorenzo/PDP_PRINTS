@@ -91,15 +91,22 @@ class ParametroServiceImpl extends ServiceBase implements ParametroService {
 
         $parametro_mapping = new ParametroMapping();
         $parametro_mapping -> search($paginacion);
+        $datosParametro = $parametro_mapping -> search($paginacion);
+        $datosProceso = $this->searchForeignKeys();
 
-        $returnBusquedas = new ReturnBusquedas
-        (
-            $parametro_mapping -> feedback['resource'],
-            '',
-            $this -> numberFindAll()["COUNT(*)"],
-            sizeof($parametro_mapping -> feedback['resource']),
-            $paginacion -> inicio
-        );
+        $datosADevolver = array();
+        $datosProcesoDev = array();
+        foreach($datosProceso as $proceso){
+            foreach($datosParametro as $parametro){
+                if($proceso['id_proceso'] == $parametro['id_proceso']){
+                    $datosUsuarioDev['parametro'] = $parametro;
+                    $datosUsuarioDev['proceso'] = $proceso;
+                    array_push($datosADevolver, $datosUsuarioDev);
+                }
+            }
+        }
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, '',
+                    $this->numberFindAll()["COUNT(*)"],sizeof($datosADevolver), $paginacion->inicio);
 
         return $returnBusquedas;
 
@@ -153,6 +160,12 @@ class ParametroServiceImpl extends ServiceBase implements ParametroService {
         $parametro_mapping = new ParametroMapping();
         $parametro_mapping->numberFindParameters($datos_search);
         return $parametro_mapping->feedback['resource'];
+    }
+
+    function searchForeignKeys() {
+        $proceso_mapping = new ProcesoMapping();
+        $proceso_mapping->searchAll();
+        return $proceso_mapping->feedback['resource'];
     }
 
 }

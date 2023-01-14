@@ -100,6 +100,16 @@ class GestionCategoriasController extends ControllerBase{
 		$this->getRespuesta($respuesta);
     }
 
+	function searchByParametersUser(){
+   
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+		$this->gestionCategoriaService->inicializarParametros('searchByParameters');
+		$respuesta = $this->gestionCategoriaService->searchByParametersUser('BUSQUEDA_CATEGORIA_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_CATEGORIA_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
+
 	function reactivar() {
 
 		$this -> gestionCategoriaService -> inicializarParametros('reactivar');

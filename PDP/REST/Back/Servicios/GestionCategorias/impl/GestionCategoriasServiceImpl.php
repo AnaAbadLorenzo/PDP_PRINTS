@@ -63,7 +63,6 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                 $datosCategoria['dni_responsable'] = $this->categoria->dni_responsable;
                 $datosCategoria['id_padre_categoria'] = $this->categoria->id_padre_categoria;
 
-                //$datosCategoria['dni_usuario'] = $this->categoria->usuario;
                 $datosCategoria['dni_usuario'] = $resultadoUsuario['dni_usuario'];
                 $datosCategoria['borrado_categoria'] = 0;
 
@@ -89,11 +88,11 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                         'dni_usuario' => $resultadoUsuario['dni_usuario'],
                         'borrado_categoria' => 0
                     ];
-                    if ($this->categoria->id_padre_categoria== "" || is_null($this->categoria->id_padre_categoria)){
+                    if ($this->categoria->id_padre_categoria== "" || $this->categoria->id_padre_categoria== "0"|| is_null($this->categoria->id_padre_categoria)){
 
                         $categoriaDatos['id_padre_categoria']= "null";  
-
-                    }else{
+                    }
+                    
                         $categoria_mapping = new CategoriaMapping();
                         $categoria_mapping->add($categoriaDatos);
                         $categoria_mapping->searchByParametersWithoutPagination($categoriaDatos);
@@ -110,12 +109,7 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                             $proceso_mapping->edit($p);
                          }
                         }
-                    }
                     
-                   
-
-                   
-
                     $respuesta = $mensaje;
                     $this->recursos = '';
                 }
@@ -325,12 +319,6 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             }else{
                 $datosSearchParameters['dni_responsable'] = $this->categoria->dni_responsable;
             }
-            if($this->categoria->id_padre_categoria=== null || $this->categoria->id_padre_categoria==='0'){
-                $datosSearchParameters['id_padre_categoria'] = null;
-            }else{
-                $datosSearchParameters['id_padre_categoria'] = $this->categoria->id_padre_categoria;
-            }
-            
             $datosSearchParameters['borrado_categoria'] = 0;
         
         $categoria_mapping= new CategoriaMapping();
@@ -361,6 +349,61 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
         return $returnBusquedas;
         }
 
+        function searchByParametersUser($mensaje, $paginacion){
+          
+            $respuesta = '';
+            
+            $datosSearchParameters = array();
+            if($this->categoria->nombre_categoria===null || $this->categoria->nombre_categoria === ""){
+                $datosSearchParameters['nombre_categoria'] = '';
+            }else{
+                $datosSearchParameters['nombre_categoria'] = $this->categoria->nombre_categoria;
+            }
+            if($this->categoria->descripcion_categoria===null){
+                $datosSearchParameters['descripcion_categoria'] = '';
+            }else{
+                $datosSearchParameters['descripcion_categoria'] = $this->categoria->descripcion_categoria;
+            }
+            if($this->categoria->dni_responsable===null || $this->categoria->dni_responsable==='0'){
+                $datosSearchParameters['dni_responsable'] = '';
+            }else{
+                $datosSearchParameters['dni_responsable'] = $this->categoria->dni_responsable;
+            }
+            if($this->categoria->id_padre_categoria===null || $this->categoria->id_padre_categoria==='0'){
+                $datosSearchParameters['id_padre_categoria'] = '';
+            }else{
+                $datosSearchParameters['id_padre_categoria'] = $this->categoria->id_padre_categoria;
+            }
+            $datosSearchParameters['borrado_categoria'] = 0;
+        
+        $categoria_mapping= new CategoriaMapping();
+        $categoria_mapping->searchByParametersUser($datosSearchParameters, $paginacion);
+        $datosCategoria =  $categoria_mapping->feedback['resource'];
+        $datosUsuario = $this->searchForeignKeys();
+
+            $datosADevolver = array();
+            $datosUsuarioDev = array();
+            foreach($datosUsuario as $usuario){
+                foreach($datosCategoria as $categoria){
+                    if($usuario['dni_usuario'] == $categoria['dni_responsable']){
+                        $datosUsuarioDev['categoria'] = $categoria;
+                        $datosUsuarioDev['responsable'] = $usuario;
+                        $categoria_mapping->searchAll();
+                        $categoriasPadres = $categoria_mapping->feedback['resource'];
+                        foreach($categoriasPadres as $padres){
+                            if($categoria['id_padre_categoria'] != null && $categoria['id_padre_categoria'] == $padres['id_categoria']){
+                                $datosUsuarioDev['categoria_padre'] = $padres;
+                            }
+                        }
+                        array_push($datosADevolver, $datosUsuarioDev);
+                    }
+                }
+            }
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, $datosSearchParameters, $this->numberFindParametersUser($datosSearchParameters)["COUNT(*)"],
+                        sizeof($datosADevolver), $paginacion->inicio);
+        return $returnBusquedas;
+        }
+
         function numberFindAll(){
             $categoria_mapping = new CategoriaMapping();
             $categoria_mapping->numberFindAll();
@@ -376,6 +419,12 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
         function numberFindParameters($datosSearchParameters){
             $categoria_mapping = new CategoriaMapping();
             $categoria_mapping->numberFindParameters($datosSearchParameters);
+            return $categoria_mapping->feedback['resource'];
+        }
+
+        function numberFindParametersUser($datosSearchParameters){
+            $categoria_mapping = new CategoriaMapping();
+            $categoria_mapping->numberFindParametersUser($datosSearchParameters);
             return $categoria_mapping->feedback['resource'];
         }
 
