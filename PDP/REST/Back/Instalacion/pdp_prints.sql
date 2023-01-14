@@ -76,6 +76,17 @@ CREATE TABLE `categoria` (
   PRIMARY KEY (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `descripcion_categoria`, `borrado_categoria`, `dni_responsable`, `id_padre_categoria`, `dni_usuario`) VALUES
+(1, 'Viajes', 'Esta categoría agrupa los procesos sobre la temática de viajes', 0, '45146321N', NULL, '45146321N'),
+(2, 'Reciclaje', 'Esta categoría agrupa los procesos sobre la temática de reciclaje', 0, '45146321N', NULL, '45146321N'),
+(3, 'Tren', 'Esta categoría agrupa los procesos sobre los viajes en tren', 0, '45146319X', 1, '45146321N'),
+(4, 'Coche', 'Esta categoría agrupa los procesos sobre los viajes en coche', 0, '45146321N', 1, '45146321N'),
+(5, 'Avión', 'Esta categoría agrupa los procesos sobre los viajes en avión', 0, '45146321N', 1, '45146321N');
+
 -- --------------------------------------------------------
 
 --
