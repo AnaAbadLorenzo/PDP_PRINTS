@@ -335,7 +335,7 @@ function anadirCategoriaAjaxPromesa(){
         descripcion_categoria : '',
         dni_responsable: '',
         id_padre_categoria: id_categoria,
-        inicio : 0,
+        inicio : calculaInicio(numeroPagina, tamanhoPaginaCategoria),
         tamanhoPagina : tamanhoPaginaCategoria
       }
   
@@ -424,7 +424,7 @@ function anadirCategoriaAjaxPromesa(){
           setLang(getCookie('lang'));
 
           if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarCategoriasUsuario', 'CATEGORIA');
+            paginador(totalResults, 'cargarCategorias', 'CATEGORIA');
           }
 
           if(numeroPagina == 0){

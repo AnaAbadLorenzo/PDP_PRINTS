@@ -34,10 +34,7 @@
 	comprobarTokenUsuario('proceso');
   	await includeTopMenu('proceso');
     await funcionalidadesUsuario();
-    await cargarProcesos(0, tamanhoPaginaProceso, 'PaginadorNo');
-    await cargarRespuestasPosibles();
-    await cargarObjetivos();
-    cambiarTituloGestion('proceso');modalCambioPass();cargarIdioma();includeFooter();setLang('');setCookie('numeroObjNivel', 1);setCookie('numeroProcedimientosOrden', 1)
+    cambiarTituloGestion('proceso');
   })();">  
 	
     <div id="topMenu"></div>
@@ -47,7 +44,7 @@
 
 	<h1 id="gestion" class="gestion"></h1>
 
-	<div id="cabecera" class="cabecera" style="display: none;">
+	<!--<div id="cabecera" class="cabecera" style="display: none;">
 		<div id="divAddProceso" name="btnAdd" value="Añadir" data-toggle="" data-target="" onclick="javascript:showAddProcesos()" class="tooltip6 addIcon">
         <img id="btnAddProceso" class="iconoAdd" src="images/add.png" alt="Añadir" />
         <span class="tooltiptext iconAddObjetivo ICONO_ADD"></span>
@@ -289,6 +286,6 @@
 		</div>
 	</div>
 
-	<div id="footer"></div>
+	<div id="footer"></div>-->
 </body>
 </html>

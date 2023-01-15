@@ -319,6 +319,11 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
             }else{
                 $datosSearchParameters['dni_responsable'] = $this->categoria->dni_responsable;
             }
+            if($this->categoria->id_padre_categoria===null || $this->categoria->id_padre_categoria==='0'){
+                $datosSearchParameters['id_padre_categoria'] = "null";
+            }else{
+                $datosSearchParameters['id_padre_categoria'] = $this->categoria->id_padre_categoria;
+            }
             $datosSearchParameters['borrado_categoria'] = 0;
         
         $categoria_mapping= new CategoriaMapping();

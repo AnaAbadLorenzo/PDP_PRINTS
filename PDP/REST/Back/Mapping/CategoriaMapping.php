@@ -67,19 +67,36 @@ class CategoriaMapping extends MappingBase {
     }
     
     function searchByParameters($datosSearchParameters, $paginacion) {
-            $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+            if($datosSearchParameters['id_padre_categoria'] == "null" || $datosSearchParameters['id_padre_categoria'] == '') {
+                $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
                             LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
-                            LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%'))
+                            LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%')) AND
+                            `id_padre_categoria` IS NULL
                             AND `borrado_categoria` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
+            }else{
+                $this->query = "SELECT * FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+                LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
+                LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%'))
+                AND `borrado_categoria` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
+            }
+            
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }
 
     function numberFindParameters($datosSearchParameters) {
-        $this->query = "SELECT COUNT(*) FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
-                            LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
-                            LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%'))
-                            AND `borrado_categoria` = 0"; 
+        if($datosSearchParameters['id_padre_categoria'] == "null" || $datosSearchParameters['id_padre_categoria'] == '') {
+            $this->query = "SELECT COUNT(*) FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+                                LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
+                                LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%'))
+                                AND  `id_padre_categoria` IS NULL
+                                AND `borrado_categoria` = 0"; 
+        }else{
+            $this->query = "SELECT COUNT(*) FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
+            LOWER(`descripcion_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_categoria']."', '%')) AND
+            LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%'))
+            AND `borrado_categoria` = 0"; 
+        }
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
     }
@@ -90,9 +107,9 @@ class CategoriaMapping extends MappingBase {
                         LOWER(`dni_responsable`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_responsable']."', '%')) AND
                         `id_padre_categoria`=" .$datosSearchParameters['id_padre_categoria']."
                         AND `borrado_categoria` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query();
-}
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
 
 function numberFindParametersUser($datosSearchParameters) {
     $this->query = "SELECT COUNT(*) FROM `categoria` WHERE LOWER(`nombre_categoria`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_categoria']. "', '%')) AND
