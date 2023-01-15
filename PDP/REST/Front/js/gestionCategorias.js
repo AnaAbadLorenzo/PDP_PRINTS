@@ -38,10 +38,15 @@ function anadirCategoriaAjaxPromesa(){
       var token = getCookie('tokenUsuario');
   
       if(accion == "buscarModal"){
-
+        if($('#selectCategoriaPadre').val() == null){
+          var sear = 'all';
+        }else{
+          sear = null;
+        }
         var categoria = {
             controlador: 'GestionCategorias',
             action: 'searchByParameters',
+            search: sear,
             nombre_categoria : $('#nombreCategoria').val(),
             descripcion_categoria : $('#descripcionCategoria').val(),
             dni_responsable: $('#selectUsuarios').val(),
@@ -71,7 +76,7 @@ function anadirCategoriaAjaxPromesa(){
           }
 
           if(getCookie('id_padre_categoria') == null || getCookie('id_padre_categoria') == ""){
-            var idPadreCategoria = "";
+            var idPadreCategoria = null;
           }else{
             var idPadreCategoria = getCookie('id_padre_categoria');
           }
@@ -79,6 +84,7 @@ function anadirCategoriaAjaxPromesa(){
         var categoria = {
             controlador: 'GestionCategorias',
             action: 'searchByParameters',
+            search: 'all',
             nombre_categoria : nombreCat,
             descripcion_categoria : descripCat,
             dni_responsable : dniResponsable,

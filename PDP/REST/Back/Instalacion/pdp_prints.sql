@@ -112,7 +112,8 @@ INSERT INTO `funcionalidad` (`id_funcionalidad`, `nombre_funcionalidad`, `descri
 (6, 'Gestión de procesos ejecutados', 'Permite realizar acciones sobre los procesos ejecutados por los usuarios de la aplicación', 0),
 (7, 'Gestión de respuestas posibles', 'Permite realizar acciones sobre las respuestas posibles de la aplicación', 0),
 (8, 'Gestión de roles', 'Permite realizar acciones sobre los roles de la aplicación', 0),
-(9, 'Gestión de usuarios', 'Permite realizar acciones sobre los usuarios de la aplicación', 0);
+(9, 'Gestión de usuarios', 'Permite realizar acciones sobre los usuarios de la aplicación', 0),
+(10, 'Gestión de categorias', 'Permite realizar acciones sobre las categorías de la aplicación', 0);
 UNLOCK TABLES;
 
 
@@ -267,7 +268,8 @@ CREATE TABLE `rol` (
 LOCK TABLES `rol` WRITE;
 INSERT INTO `rol` (`id_rol`, `nombre_rol`, `descripcion_rol`, `borrado_rol`) VALUES
 (1, 'Administrador', 'Contendrá a todos los responsables de administrar la aplicación', 0),
-(2, 'Usuario', 'Contendrá a todas las personas registradas en la aplicación', 0);
+(2, 'Usuario', 'Contendrá a todas las personas registradas en la aplicación', 0),
+(3, 'Gestor', 'Contendrá a todos los usuarios que sean responsables de una categoría', 0);
 UNLOCK TABLES;
 
 -- --------------------------------------------------------
@@ -323,7 +325,19 @@ INSERT INTO `rol_accion_funcionalidad` (`id_rol`, `id_accion`, `id_funcionalidad
 (2, 4, 4),
 (2, 4, 9),
 (2, 5, 4),
-(2, 5, 9);
+(2, 5, 9),
+(1, 1, 10),
+(1, 2, 10),
+(1, 3, 10),
+(1, 4, 10),
+(1, 5, 10),
+(1, 6, 10),
+(2, 1, 10),
+(2, 2, 10),
+(2, 3, 10),
+(2, 4, 10),
+(2, 5, 10),
+(2, 6, 10);
 UNLOCK TABLES;
 
 -- --------------------------------------------------------

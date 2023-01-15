@@ -12,6 +12,7 @@ class CategoriaModel extends ModelBase{
     public $id_padre_categoria;
     public $usuario;
 	public $mapping;
+	public $search;
 
 	function __construct(){
 		$this->fillfields();
@@ -25,6 +26,7 @@ class CategoriaModel extends ModelBase{
 	  	$this->dni_responsable = '';
         $this->id_padre_categoria = '';
 	  	$this->usuario = '';
+		$this->search = '';
 	  	
 
 		if ($_POST){
@@ -35,6 +37,7 @@ class CategoriaModel extends ModelBase{
 			if(isset($_POST['dni_responsable'])) $this->dni_responsable = $_POST['dni_responsable'];		
             if(isset($_POST['id_padre_categoria'])) $this->id_padre_categoria = $_POST['id_padre_categoria'];
 			if(isset($_POST['usuario'])) $this->usuario = $_POST['usuario'];
+			if(isset($_POST['search'])) $this->search = $_POST['search'];
 		}
 	}
 
