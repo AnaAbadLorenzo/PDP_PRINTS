@@ -75,20 +75,15 @@ class GestionProcesosController extends ControllerBase{
 			$this->rellenarRespuesta('DELETE_PROCESO_COMPLETO', false, '');
 		}
 		$this->getRespuesta($respuesta);
-
-   
     }
 
-
-    function search(){
-       
-        $respuesta = $this->gestionProcesoService->search('BUSQUEDA_PROCESO_CORRECTO');
+    function searchAll(){
+        $respuesta = $this->gestionProcesoService->searchAll('BUSQUEDA_PROCESO_CORRECTO');
 			$this->rellenarRespuesta('BUSQUEDA_PROCESO_CORRECTO', false, $respuesta);
 			$this->getRespuesta($respuesta);
     }
 
     function searchByParameters(){
-   
 		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
 		$this->gestionProcesoService->inicializarParametros('searchByParameters');
 		$respuesta = $this->gestionProcesoService->searchByParameters('BUSQUEDA_PROCESO_CORRECTO', $paginacion);

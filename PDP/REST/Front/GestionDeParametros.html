@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 	<link rel="stylesheet" href="css/bootstrap.min.css" >
 	<link rel="stylesheet" type="text/css" href="css/comun.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="css/gestionRespuestasPosibles.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/gestionParametros.css" media="screen" />
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>	
@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/validaciones.js"></script>
 	<script type="text/javascript" src="js/menu.js"></script>
-	<script type="text/javascript" src="js/gestionRespuestasPosibles.js"></script>
+	<script type="text/javascript" src="js/gestionParametros.js"></script>
 	<script type="text/javascript" src="Locale/idioma.js"></script>
     <script type="text/javascript" src="Locale/Lang_EN.js"></script>
     <script type="text/javascript" src="Locale/Lang_ES.js"></script>
@@ -48,33 +48,21 @@
 	<h1 class="gestion GESTION_PARAMETROS"></h1>
 
 	<div id="cabecera" class="cabecera" style="display: none;">
-        <div id="divListarParametro" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarParametro()" class="tooltip6 searchIcon">
+        <div id="divListarParametros" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscarParametro()" class="tooltip6 searchIcon">
             <img id="btnListarParametros" class="iconoSearch iconSearch" src="images/search.png" alt="Buscar Parámetro" />
             <span class="tooltiptext iconSearch ICONO_SEARCH"></span>
         </div>
-
-        <div id="divSearchDelete" name="btnSearchDelete" value="Buscar Eliminados" onclick="" class="tooltip6 searchDeleteIcon">
-            <img id = "btnSearchDelete" class="iconoSearchDelete iconSearchDelete" src="images/searchDelete4.png" alt="Buscar Parámetros Eliminados" />
-            <span class="tooltiptext iconSearchDelete ICONO_SEARCH_DELETE"></span>
-        </div>
-
+		
         <div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaParametro)" class="tooltip6 refreshIcon">
             <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
             <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
         </div>
 
-        <div name="btnHideShowColumns" value="Buscar" onclick="javascript:hideShowColumnsWindow();" class="tooltip6 hideShowIcon" hidden>
+        <div name="btnHideShowColumns" value="Buscar" onclick="javascript:hideShowColumnsWindow();" class="tooltip6 hideShowIcon">
             <img class="iconoHideShow iconHideShow" src="images/hideTable.png" alt="Ocultar/Mostrar Columnas" />
             <span class="tooltiptext iconHideShow ICON_SHOW_HIDE_COLUMNS"></span>
         </div>     
 	</div>
-
-	<div class = "cabeceraEliminados" id="cabeceraEliminados" style="display: none;">
-		<div id="divVolverAtras" name="btnVolverAtras" value="Volver" onclick="javascript:refrescarTabla(0, tamanhoPaginaParametro)" class="tooltip6 volverAtrasIcon">
-        	<img id="btnVolverAtras" class="iconoVolverAtras" src="images/back3.png" alt="Volver" />
-        	<span class="tooltiptext iconoVolverAtras ICONO_BACK"></span>
-    	</div> 
-    </div>    
 
 	<div class="table-responsive" id="tablaDatos" style="display: none;">
 		<table class="table table-bordered" id="tablaParametros">
@@ -82,7 +70,7 @@
 		    	<tr>
 			      <th scope="col" class="colFirst PARAMETRO_FORMULA_COLUMN">
 			      	<div class="PARAMETRO_FORMULA parametroFormulaColumn"></div>
-                  <div name="btnOrdenar" value="Ordenar" onclick="sortTable(0, 'tablaParametros')" class="tooltip7 ordenarIconParametroFormula">
+                  	<div name="btnOrdenar" value="Ordenar" onclick="sortTable(0, 'tablaParametros')" class="tooltip7 ordenarIconParametroFormula">
                       <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
                       <span class="tooltiptext ORDENAR"></span>
               		</div>
@@ -96,16 +84,24 @@
                     </div>
                   </th>
 
+				  <th scope="col" class="colFirst ID_PROCESO_COLUMN">
+                    <div class="ID_PROCESO idProcesoColumn"></div>
+                    <div name="btnOrdenar" value="Ordenar" onclick="sortTable(2, 'tablaParametros')" class="tooltip7 ordenarIconIdProceso">
+                        <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
+                        <span class="tooltiptext ORDENAR"></span>
+                    </div>
+                  </th>
+
 				  <th scope="col" class="PARAMETRO_ID_COLUMN" hidden>
 					<div class="PARAMETRO_ID idParametroColumn"></div>
-		            <div name="btnOrdenar" value="Ordenar" onclick="sortTable(2, 'tablaParametros')" class="tooltip7 ordenarIconIdParametro">
+		            <div name="btnOrdenar" value="Ordenar" onclick="sortTable(3, 'tablaParametros')" class="tooltip7 ordenarIconIdParametro">
 		                <img class="iconoOrdenar iconOrdenar" src="images/ordenacion.png" alt="Ordenar"/>
 		                <span class="tooltiptext ORDENAR"></span>
 		            </div>
-				  </th>
+				  </th> 
 			  	  <th scope="col" class="colLast ACCIONES"></th>
 		    	</tr>
-		  </thead>
+		  	</thead>
 		  <tbody id="datosParametro" class="bodyGestionParametros"></tbody>
 		</table>
 	</div>
@@ -140,14 +136,14 @@
 
                     	<form name="formularioGenerico" id="formularioGenerico" action="" onsubmit="">
                     	    <label class="labelForm PARAMETRO_FORMULA" id="labelParametroFormula" hidden></label>
-                            <textarea type="text" placeholder="PARAMETRO_FORMULA" name="PARAMETRO_FORMULA" id="parametroFormula" class="PARAMETRO_FORMULA" onblur="" onclick="limpiarTextArea('parametroFormula')"></textarea>
+                            <input type="text" placeholder="PARAMETRO_FORMULA" name="PARAMETRO_FORMULA" id="parametroFormula" class="PARAMETRO_FORMULA" onblur="" onclick="limpiarTextArea('parametroFormula')"></textarea>
 		                    <div class="obligatorio tooltip2" id="obligatorioParametroFormula">*
 	                  			<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
 	              		    </div>
 	              		    <div style="display:none" id="errorFormatoParametroFormula"></div>
                             
                             <label class="labelForm DESCRIPCION_PARAMETRO" id="labelDescripcionParametro" hidden></label>
-                            <textarea type="text" placeholder="DESCRIPCION_PARAMETRO" name="DESCRIPCION_PARAMETRO" id="descripcionParametro" class="DESCRIPCION_PARAMETRO" onblur=""></textarea>
+                            <textarea type="text" placeholder="DESCRIPCION_PARAMETRO" name="DESCRIPCION_PARAMETRO" id="descripcionParametro" class="DESCRIPCION_PARAMETRO" onblur="" onclick="limpiarTextArea('descripcionParametro')"></textarea>
                             <div class="obligatorio tooltip2" id="obligatorioDescripcionParametro">*
                                 <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
                             </div>

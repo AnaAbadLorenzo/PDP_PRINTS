@@ -3,11 +3,9 @@
 include_once './Servicios/ServiceBase.php';
 include_once './Servicios/Comun/ReturnBusquedas.php';
 include_once './Servicios/Parametro/ParametroService.php';
-
 include_once './Mapping/ParametroMapping.php';
-
+include_once './Mapping/ProcesoMapping.php';
 include_once './Modelos/ParametroModel.php';
-
 include_once './Validation/Accion/ParametroAccion.php';
 
 class ParametroServiceImpl extends ServiceBase implements ParametroService {
@@ -126,7 +124,7 @@ class ParametroServiceImpl extends ServiceBase implements ParametroService {
 
         $parametro_mapping = new ParametroMapping();
         $parametro_mapping -> search($paginacion);
-        $datosParametro = $parametro_mapping -> search($paginacion);
+        $datosParametro = $parametro_mapping -> feedback['resource'];
         $datosProceso = $this->searchForeignKeys();
 
         $datosADevolver = array();
@@ -171,15 +169,21 @@ class ParametroServiceImpl extends ServiceBase implements ParametroService {
         
         $parametro_mapping= new ParametroMapping();
         $parametro_mapping -> searchByParameters($datos_search, $paginacion);
+        $datosParametro = $parametro_mapping -> feedback['resource'];
+        $datosProceso = $this->searchForeignKeys();
 
-        $returnBusquedas = new ReturnBusquedas
-        (
-            $parametro_mapping -> feedback['resource'],
-            $datos_search,
-            $this -> numberFindParameters($datos_search)["COUNT(*)"],
-            sizeof($parametro_mapping -> feedback['resource']),
-            $paginacion->inicio
-        );
+        $datosADevolver = array();
+        foreach($datosProceso as $proceso){
+            foreach($datosParametro as $parametro){
+                if($proceso['id_proceso'] == $parametro['id_proceso']){
+                    $datosUsuarioDev['parametro'] = $parametro;
+                    $datosUsuarioDev['proceso'] = $proceso;
+                    array_push($datosADevolver, $datosUsuarioDev);
+                }
+            }
+        }
+        $returnBusquedas = new ReturnBusquedas($datosADevolver, $datos_search,
+                    $this->numberFindParameters( $datos_search)["COUNT(*)"],sizeof($datosADevolver), $paginacion->inicio);
 
         return $returnBusquedas;
 

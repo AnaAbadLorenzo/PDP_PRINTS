@@ -210,10 +210,10 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
             
         }
     
-        function search($mensaje){
+        function searchAll($mensaje){
            
             $proceso_mapping = new ProcesoMapping();
-            $proceso_mapping->search();
+            $proceso_mapping->searchAll();
             return $proceso_mapping->feedback['resource'];
            
         }

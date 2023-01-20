@@ -1543,7 +1543,7 @@ form button[type="button"]:hover {
 .iconoSearchRol, .iconoAddRol, .iconoEditarRol, .iconoSearchUsuario, .iconoEditarRolUsuario,
 .iconoAddPersona, .iconoSearchPersona, .iconoEditarPersona, .iconoAddEmpresa,
 .iconoSearchEmpresa, .iconoEditarEmpresa, .iconoAddCategoria, .iconoSearchCategoria, .iconoEditarCategoria,
-.iconoAddRespuestaPosible, .iconoSearchRespuestaPosible, .iconoEditarRespuestaPosible,
+.iconoSearchParametro, .iconoEditarParametro,
 .iconoAddPlan, .iconoSearchPlan, .iconoEditarPlan,
 .iconoAddProcedimiento, .iconoSearchProcedimiento, .iconoEditarProcedimiento,
 .iconoAddProceso, .iconoEditarProceso, .iconoSearchProceso, .iconoSearchProcedimientoEjecutado {
@@ -1680,7 +1680,8 @@ form button[type="button"]:hover {
 .rolNameColumn, .rolDescriptionColumn, .rolIdColumn,
 .dniUsuarioColumn, .usuarioActivoColumn, .rolColumn, .cifEmpresaColumn,
 .nombreEmpresaColumn, .direccionEmpresaColumn, .telefonoColumn, .idEmpresaColumn, .nombreCategoriaColumn, 
-.descripcionCategoriaColumn, .dniResponsableColumn, .textoRespuestaPosibleColumn, .idRespuestaPosibleColumn,
+.descripcionCategoriaColumn, .dniResponsableColumn, .parametroFormulaColumn,
+.descripcionParametroColumn, .idProcesoColumn, .idParametroColumn,
 .nombrePlanColumn, .descripcionPlanColumn, .fechaPlanColumn, .nombreProcedimientoColumn,
 .descripcionProcedimientoColumn, .fechaProcedimientoColumn, .checkUsuarioColumn, .idProcedimientoColumn,
 .nombreProcesoColumn, .descripcionProcesoColumn, .fechaProcesoColumn, .idProcesoColumn,
@@ -1701,7 +1702,7 @@ form button[type="button"]:hover {
 .ordenarIconDniUsuario, .ordenarIconActivo, .ordenarIconRol, .ordenarIconCifEmpresa,
 .ordenarIconNombreEmpresa, .ordenarIconDireccionEmpresa, .ordenarIconTelefonoEmpresa,
 .ordenarIconIdEmpresa, .ordenarIconNombreCategoria, .ordenarIconDescripcionCategoria, .ordenarIconDniResponsableCategoria
-.ordenarTextoRespuestaPosible, .ordenarIdRespuestaPosible, .ordenarIconNombrePlan,
+.ordenarParametroFormula,.ordenarDescripcionParametro, .ordenarIdProceso, .ordenarIdParametro, .ordenarIconNombrePlan,
 .ordenarIconDescripcionPlan, .ordenarIconFechaPlan, .ordenarIconNombreObjetivo
 .ordenarIconNombreProcedimiento, .ordenarIconDescripcionProcedimiento,
 .ordenarIconFechaProcedimiento, .ordenarIconCheckUsuario, .ordenarIconIdProcedimiento,
