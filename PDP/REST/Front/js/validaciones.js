@@ -1245,7 +1245,8 @@ function comprobarDescripcionCategoria(idElemento, idElementoError, campo){
 /**Función que valida el editar de un objetivo **/
 function comprobarEditCategoria(){
 	if(comprobarNombreCategoria('nombreCategoria', 'errorFormatoNombreCategoria', 'nombreCategoria') &&
-		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria')){
+		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria') &&
+		comprobarSelect('selectUsuarios', "errorFormatoDniResponsable", 'selectUsuarios')){
 		return true;
 	}else{
 		return false;
@@ -1255,7 +1256,8 @@ function comprobarEditCategoria(){
 /**Función que valida el añadir de un objetivo **/
 function comprobarAddCategoria(){
 	if(comprobarNombreCategoria('nombreCategoria', 'errorFormatoNombreCategoria', 'nombreCategoria') &&
-		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria')){
+		comprobarDescripcionCategoria('descripcionCategoria', 'errorFormatoDescripcionCategoria', 'descripcionCategoria') &&
+		comprobarSelect('selectUsuarios', "errorFormatoDniResponsable", 'selectUsuarios')){
 		return true;
 	}else{
 		return false;
@@ -1321,7 +1323,20 @@ function comprobarBuscarCategoria(){
 }
 
 /** Funcion que valida el formato del Texto de la respuesta posible **/
-function comprobarTextoRespuestaPosible(idElemento, idElementoError, campo){
+function comprobarParametroFormula(idElemento, idElementoError, campo){
+	document.getElementById(idElemento).style.borderWidth = "2px";
+
+	if(validaNoVacio(idElemento, idElementoError, campo) && comprobarTextoAlfanumericoSignosPuntuacion(idElemento, idElementoError, campo) && comprobarTamañoMinimo(idElemento, 2, idElementoError, campo)) {
+		validacionOK(idElemento, idElementoError);
+        return true;
+	} else{
+		validacionKO(idElemento, idElementoError);
+        return false;
+	}
+}
+
+/** Funcion que valida el formato del Texto de la respuesta posible **/
+function comprobarDescripcionParametro(idElemento, idElementoError, campo){
 	document.getElementById(idElemento).style.borderWidth = "2px";
 
 	if(validaNoVacio(idElemento, idElementoError, campo) && comprobarTextoAlfanumericoSignosPuntuacion(idElemento, idElementoError, campo) && comprobarTamañoMinimo(idElemento, 2, idElementoError, campo)) {
@@ -1334,8 +1349,10 @@ function comprobarTextoRespuestaPosible(idElemento, idElementoError, campo){
 }
 
 /**Función que valida el editar de la respuesta posible **/
-function comprobarEditRespuestaPosible(){
-	if(comprobarTextoRespuestaPosible('textoRespuestaPosible', 'errorFormatoTextoRespuestaPosible', 'textoRespuestaPosible')){
+function comprobarEditParametro(){
+	if(comprobarParametroFormula('parametroFormula', 'errorFormatoParametroFormula', 'parametroFormula') &&
+		comprobarDescripcionParametro('descripcionParametro', 'errorFormatoDescripcionParametro', 'descripcionParametro') &&
+		comprobarSelect('selectProcesos', 'errorFormatoIdProceso', 'selectProcesos')){
 		return true;
 	}else{
 		return false;
@@ -1343,7 +1360,29 @@ function comprobarEditRespuestaPosible(){
 }
 
 /**Función que valida el texto de la respuesta posible en el buscar*/
-function comprobarTextoRespuestaPosibleSearch(idElemento, idElementoError, campo) {
+function comprobarParametroFormulaSearch(idElemento, idElementoError, campo) {
+
+	document.getElementById(idElemento).style.borderWidth = "2px";
+		
+	if (validaNoVacio(idElemento, idElementoError, campo)) {
+		if (comprobarTextoAlfanumericoSignosPuntuacion(idElemento, idElementoError, campo)) {
+			validacionOK(idElemento, idElementoError);
+			return true;
+		
+		}
+		else {
+			validacionKO(idElemento, idElementoError);
+			return false;
+		}
+	}
+	else {
+		validacionOK(idElemento, idElementoError);
+		return true;
+	}
+}
+
+/**Función que valida el texto de la respuesta posible en el buscar*/
+function comprobarDescripcionParametroSearch(idElemento, idElementoError, campo) {
 
 	document.getElementById(idElemento).style.borderWidth = "2px";
 		
@@ -1365,8 +1404,9 @@ function comprobarTextoRespuestaPosibleSearch(idElemento, idElementoError, campo
 }
 
 /**Función que valida el buscar de la respuesta posible **/
-function comprobarBuscarRespuestaPosible(){
-	if(comprobarTextoRespuestaPosibleSearch('textoRespuestaPosible', 'errorFormatoTextoRespuestaPosible', 'textoRespuestaPosible')){
+function comprobarBuscarParametro(){
+	if(comprobarParametroFormulaSearch('parametroFormula', 'errorFormatoParametroFormula', 'parametroFormula') &&
+		comprobarDescripcionParametroSearch('descripcionParametro', 'errorFormatoDescripcionParametro', 'descripcionParametro')){
 		return true;
 	}else{
 		return false;
@@ -1578,7 +1618,7 @@ function comprobarNombreProceso(idElemento, idElementoError, campo){
 	}
 }
 
-/**Funcion que comprueba el selec de procedimiento **/
+/**Funcion que comprueba el select de procedimiento **/
 function comprobarSelect(idElemento, idElementoError, campo){
 	document.getElementById(idElemento).style.borderWidth = "2px";
 
@@ -2216,20 +2256,20 @@ function validaNoVacio(idElemento, idElementoError, campo) {
 			case 'textoNoticia':
 				codigo = "TEXTO_NOTICIA_VACIO";
 			break; 
-			case 'nombreObjetivo':
-				codigo = "OBJETIVO_NAME_VACIO" ;
+			case 'nombreCategoria':
+				codigo = "CATEGORIA_NAME_VACIO" ;
 			break;
-			case 'descripcionObjetivo':
-				codigo = "OBJETIVO_DESCRIPTION_VACIO";
+			case 'descripcionCategoria':
+				codigo = "CATEGORIA_DESCRIPTION_VACIO";
 			break;
 			case 'textoRespuestaPosible':
 				codigo = "TEXTO_RESPUESTA_VACIO";
 			break;
-			case 'nombrePlan' :
-				codigo = "NOMBRE_PLAN_VACIO";
+			case 'parametroFormula' :
+				codigo = "PARAMETRO_FORMULA_VACIO";
 			break;
-			case 'descripPlan' :
-				codigo = "DESCRIPCION_PLAN_VACIO";
+			case 'descripcionParametro' :
+				codigo = "PARAM_DESCRIPTION_VACIO";
 			break;
 			case 'fechaPlan' :
 				codigo = "FECHA_PLAN_VACIA";
@@ -2360,17 +2400,17 @@ function comprobarTamañoMinimo(idElemento, sizeMin, idElementoError, campo){
 			case "textoNoticia" :
 				codigo = "TEXTO_NOTICIA_MENOR_QUE_3";
 			break;
-			case 'nombreObjetivo':
-				codigo = "OBJETIVO_NAME_MENOR_QUE_3" ;
+			case 'nombreCategoria':
+				codigo = "CATEGORIA_NAME_MENOR_QUE_3" ;
 			break;
-			case 'descripcionObjetivo':
-				codigo = "OBJETIVO_DESCRIPTION_MENOR_QUE_3";
+			case 'descripcionCategoria':
+				codigo = "CATEGORIA_DESCRIPTION_MENOR_QUE_3";
 			break;
 			case 'textoRespuesta' :
 				codigo = "TEXTO_RESPUESTA_MENOR_QUE_2";
 			break;
-			case 'nombrePlan' :
-				codigo = "NOMBRE_PLAN_MENOR_QUE_3";
+			case 'descripcionParametro' :
+				codigo = "PARAM_DESCRIPTION_MENOR_3";
 			break;
 			case 'descripPlan' :
 				codigo = "DESCRIPCION_PLAN_MENOR_QUE_3";
@@ -2478,8 +2518,8 @@ function comprobarTamañoMaximo(idElemento, sizeMax, idElementoError, campo){
 			case 'tituloNoticia' :
 				codigo = "TITULO_NOTICIA_MAYOR_QUE_256";
 			break;
-			case 'nombreObjetivo':
-				codigo = "OBJETIVO_NAME_MAYOR_QUE_48" ;
+			case 'nombreCategoria':
+				codigo = "CATEGORIA_NAME_MAYOR_QUE_128" ;
 			break;
 			case 'nombrePlan' :
 				codigo = "NOMBRE_PLAN_MAYOR_QUE_48";
@@ -2559,11 +2599,11 @@ function comprobarLetrasNumerosEspacios(idElemento, idElementoError, campo) {
 		
 	if (!patron.test(valor)) { 
     	switch(campo) {
-	    	case 'nombreObjetivo' :
-				codigo = "OBJETIVO_NAME_ALFANUMERICO_INCORRECTO";
+	    	case 'nombreCategoria' :
+				codigo = "CATEGORIA_NAME_ALFANUMERICO_INCORRECTO";
 			break;
-			case 'descripcionObjetivo':
-				codigo = "OBJETIVO_DESCRIPTION_ALFANUMERICO_INCORRECTO";
+			case 'descripcionCategoria':
+				codigo = "CATEGORIA_DESCRIPTION_ALFANUMERICO_INCORRECTO";
 			break;
 			case 'nombreProcedimiento' :
 				codigo = "NOMBRE_PROCEDIMIENTO_ALFANUMERICO_INCORRECTO";
@@ -2804,6 +2844,9 @@ function comprobarTextoAlfanumericoSignosPuntuacion(idElemento, idElementoError,
 			case 'textoRespuestaPosible' : 
 				codigo = "TEXTO_RESPUESTA_ALAFANUMERICO_SIGNOS_PUNTUACION_INCORRECTO";
 			break;
+			case 'descripcionParametro' :
+				codigo = 'PARAM_DESCRIPTION_ALFANUMERICO_SIGNOS_PUNTUACION_INCORRECTO';
+			break;
 		}
 		addCodeError(idElementoError, codigo);
         return false;
@@ -2966,8 +3009,8 @@ function validaSelect(idElemento, idElementoError, campo) {
 	    	case 'selectProcedimientos' :
 				codigo = "SELECT_PROCEDIMIENTOS_VACIO";
 			break;
-			case 'selectObjetivos' :
-				codigo = "SELECT_OBJETIVOS_VACIO";
+			case 'selectUsuarios' :
+				codigo = "RELLENA_USUARIO";
 			break;
 		}
 		addCodeError(idElementoError, codigo);
@@ -2984,14 +3027,11 @@ function validaOptionsSelect(idElemento, idElementoError, campo) {
 
 	if ($(select).children("option:selected").val()== "" || $(select).children("option:selected").val()== 0 ||$(select).children("option:selected").val()== null) {
 		switch(campo) {
-	    	case 'selectProcedimientosOptions' :
-				codigo = "RELLENA_PROCEDIMIENTO";
+	    	case 'selectUsuarios' :
+				codigo = "RELLENA_USUARIO";
 			break;
-			case 'selectObjetivosOptions' :
-				codigo = "RELLENA_OBJETIVO";
-			break;
-			case 'selectPlanesOptions' :
-				codigo = "RELLENA_PLAN";
+			case 'selectProcesos' :
+				codigo = "RELLENA_PROCESO";
 			break;
 		}
 		addCodeError(idElementoError, codigo);

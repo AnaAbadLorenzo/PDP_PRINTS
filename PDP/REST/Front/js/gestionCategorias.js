@@ -1056,7 +1056,8 @@ async function cargarCategoriasUsuario(numeroPagina, tamanhoPagina, paginadorCre
   function showAddCategorias() {
     cambiarFormulario('ADD_CATEGORIA', 'javascript:addCategoria();', 'return comprobarAddCategoria();');
     cambiarOnBlurCampos('return comprobarNombreCategoria(\'nombreCategoria\', \'errorFormatoNombreCategoria\', \'nombreCategoria\')', 
-        'return comprobarDescripcionCategoria(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')');
+        'return comprobarDescripcionCategoria(\'descripcionCategoria\', \'errorFormatoDescripcionCategoria\', \'descripcionCategoria\')',
+        'return comprobarSelect(\'selectUsuarios\', \'errorFormatoDniResponsable\', \'selectUsuarios\')');
     cambiarIcono('images/add.png', 'ICONO_ADD', 'iconoAddCategoria', 'Añadir');
   
     $('#subtitulo').attr('hidden', true);
@@ -1232,7 +1233,7 @@ async function cargarCategoriasUsuario(numeroPagina, tamanhoPagina, paginadorCre
   }
   
   /**Función para cambiar onBlur de los campos*/
-  function cambiarOnBlurCampos(onBlurNombreCategoria, onBlurDescripcionCategoria) {
+  function cambiarOnBlurCampos(onBlurNombreCategoria, onBlurDescripcionCategoria,  onBlurSelectUsuarioResponsable) {
   
       if (onBlurNombreCategoria != ''){
           $("#nombreCategoria").attr('onblur', onBlurNombreCategoria);
@@ -1240,6 +1241,10 @@ async function cargarCategoriasUsuario(numeroPagina, tamanhoPagina, paginadorCre
   
       if (onBlurDescripcionCategoria != ''){
           $("#descripcionCategoria").attr('onblur', onBlurDescripcionCategoria);
+      }
+      
+      if (onBlurSelectUsuarioResponsable != ''){
+        $("#selectUsuarios").attr('onblur', onBlurSelectUsuarioResponsable);
       }
   }
   

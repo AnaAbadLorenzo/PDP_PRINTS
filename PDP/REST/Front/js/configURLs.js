@@ -86,3 +86,7 @@ var urlPeticionAjaxListarParametro = urlComun;
 var urlPeticionAjaxDeleteParametro = urlComun;
 var urlPeticionAjaxListadoParametros = urlComun;
 var urlPeticionAjaxListarParametro = urlComun;
+var urlPeticionAjaxEditarParametro = urlComun;
+
+/**Urls de procesos */
+var urlPeticionAjaxListarTodosProcesos = urlComun;

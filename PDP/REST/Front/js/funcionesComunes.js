@@ -404,7 +404,7 @@ function construyeFila(entidad, fila) {
 	let atributosFunciones="";
 	var filaTabla = "";
 
-	if(entidad == 'LOG_EXCEPCIONES' || entidad == 'LOG_ACCIONES'){
+	if(entidad == 'PARAMETRO'){
 	 	document.getElementById('cabecera').style.display = "block";
 	} else {
 	 	document.getElementById('cabecera').style.display = "block";
@@ -480,9 +480,10 @@ function construyeFila(entidad, fila) {
         break;
 
         case 'PARAMETRO' :
-        	atributosFunciones = ["'" + fila.parametro.parametro_formula + "'","'" + fila.parametro.descripcion_parametro + "'","'" + fila.proceso.nombre_proceso + "'","'" + fila.parametro.id_parametro + "'"];
+        	atributosFunciones = ["'" + fila.parametro.parametro_formula + "'","'" + fila.parametro.descripcion_parametro + "'","'" + fila.proceso.id_proceso + "'","'" + fila.proceso.nombre_proceso + "'","'" + fila.parametro.id_parametro + "'"];
 			filaTabla = '<tr class="impar"> <td>' + fila.parametro.parametro_formula +
-					    '</td> <td>' + fila.parametro.descripcion_parametro;
+					    '</td> <td>' + fila.parametro.descripcion_parametro +
+						'</td> <td>' + fila.proceso.nombre_proceso;
         break;
 
         case 'PLAN':
@@ -1043,8 +1044,8 @@ function cargarHref(dato){
 			href="GestionDeCategorias.html";
 		break;
 
-		case 'Gestión de respuestas posibles':
-			href="GestionDeRespuestasPosibles.html";
+		case 'Gestión de parametros':
+			href="GestionDeParametros.html";
 		break;
 
 		case 'Gestión de planes' :
@@ -1113,20 +1114,12 @@ function cargarClass(dato, rol){
 			clase="GESTION_ACCIONES";
 		break; 
 
-		case 'Log de excepciones':
-			clase="GESTION_LOG_EXCEPCIONES";
-		break;
-
-		case 'Log de acciones':
-			clase="GESTION_LOG_ACCIONES";
-		break;
-
 		case 'Gestión de noticias':
 			clase = "GESTION_NOTICIAS";
 		break;
 
-		case 'Gestión de respuestas posibles':
-			clase = "GESTION_RESPUESTAS_POSIBLES";
+		case 'Gestión de parametros':
+			clase = "GESTION_PARAMETROS";
 		break;
 
 		case 'Gestión de respuestas posibles':

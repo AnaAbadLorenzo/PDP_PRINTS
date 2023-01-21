@@ -1,12 +1,55 @@
+function construyeSelect(){
+  var options = "";
+  
+  $('#selectProcesos').html('');
+
+  var token = getCookie('tokenUsuario');
+
+    var data = {
+        controlador : 'GestionProcesos',
+        action :'searchAll'
+    }
+
+    $.ajax({
+      method: "POST",
+      url: urlPeticionAjaxListarTodosProcesos,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
+      headers: {'Authorization': token},
+      }).done(res => {
+        if (res.code != 'BUSQUEDA_PROCESO_CORRECTO') {
+          respuestaAjaxKO(res.code);
+        }
+        options = '<option selected value=0><label class="">Selecciona el proceso</label></option>';
+        for(var i = 0; i< res.resource.length ; i++){
+            options += '<option value=' + res.resource[i].id_proceso + '>' + res.resource[i].nombre_proceso + '</option>';
+        }
+
+        $('#selectProcesos').append(options);
+        
+      }).fail( function( jqXHR ) {
+        errorFailAjax(jqXHR.status);
+      });
+}
+  
   /** Función para buscar respuestas posibles con ajax y promesas **/
   function buscarParametroAjaxPromesa(numeroPagina, tamanhoPagina, accion){
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
       if(accion == "buscarModal"){
+
+        if($('#selectProcesos').val() == 0 || $('#selectProcesos').val() == null ||  $('#selectProcesos').val() == '0'){
+          var idProceso = "";
+        }else{
+          var idProceso = $('#selectProcesos').val();
+        }
         var parametro = {
+          controlador: 'GestionParametros',
+          action: 'searchByParameters',
           parametro_formula : $('#parametroFormula').val(),
           descripcion_parametro : $('#descripcionParametro').val(),
+          id_proceso : idProceso,
           inicio : calculaInicio(numeroPagina, tamanhoPaginaParametro),
           tamanhoPagina : tamanhoPaginaParametro
         }
@@ -25,9 +68,19 @@
             var descripcionParam = getCookie('descripcion_parametro');
         }
 
+        if(getCookie('id_proceso') == null || getCookie('id_proceso') == ""){
+          var idProceso = "";
+        }else{
+          var idProceso = getCookie('id_proceso');
+        }
+
+
         var parametro = {
+          controlador: 'GestionParametros',
+          action: 'searchByParameters',
           parametro_formula : parametro,
           descripcion_parametro : descripcionParam,
+          id_proceso : idProceso,
           inicio : calculaInicio(numeroPagina, tamanhoPaginaParametro),
           tamanhoPagina : tamanhoPaginaParametro
         }
@@ -40,7 +93,7 @@
         data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'BUSQUEDA_PARAMETRO_CORRECTO') {
+          if (res.code != 'BUSQUEDA_PERSONALIZADA_PARAMETRO_CORRECTO') {
             reject(res);
           }
           resolve(res);
@@ -51,7 +104,7 @@
   }
   
   /** Función para recuperar los permisos de un usuario sobre la funcionalidad **/
-  function cargarPermisosFuncRespuestaPosibleAjaxPromesa(){
+  function cargarPermisosFuncParametroAjaxPromesa(){
     return new Promise(function(resolve, reject) {
         var nombreUsuario = getCookie('usuario');
         var token = getCookie('tokenUsuario');
@@ -93,17 +146,17 @@
         id_parametro : $("input[name=idParametro]").val(),
         parametro_formula : $('#parametroFormula').val(),
         descripcion_parametro : $('#descripcionParametro').val(),
-        id_proceso: $('#idProceso').val()
+        id_proceso: $('#selectProcesos').val()
       }
 
         $.ajax({
         method: "POST",
-        url: urlPeticionAjaxEditarRespuestaPosible,
+        url: urlPeticionAjaxEditarParametro,
         contentType : "application/x-www-form-urlencoded; charset=UTF-8",
         data: parametro,  
         headers: {'Authorization': token},
         }).done(res => {
-          if (res.code != 'EDIT_PARAMETRO_COMPLETO') {
+          if (res.code != 'PARAMETRO_EDITADO') {
             reject(res);
           }
           resolve(res);
@@ -119,10 +172,12 @@
       var token = getCookie('tokenUsuario');
   
       var parametro = {
+        controlador: 'GestionParametros',
+        action: 'delete',
         id_parametro : $("input[name=idParametro]").val(),
         parametro_formula : $('#parametroFormula').val(),
         descripcion_parametro : $('#descripcionParametro').val(),
-        id_proceso : $('#idProceso').val()
+        id_proceso : $('#selectProcesos').val()
       }
   
       $.ajax({
@@ -190,12 +245,17 @@
     return new Promise(function(resolve, reject) {
       var token = getCookie('tokenUsuario');
   
+      if($('#selectProcesos').val() == null || $('#selectProcesos').val() == 0 || $('#selectProcesos').val() == '0'){
+        var idProceso = "";
+      }else{
+        var idProceso = $('#selectProcesos').val();
+      }
       var parametro = {
         controlador: 'GestionParametros',
         action: 'searchByParameters',
         parametro_formula: $('#parametroFormula').val(),
         descripcion_parametro: $('#descripcionParametro').val(),
-        id_proceso : $('#idProceso').val(),
+        id_proceso : idProceso,
         inicio : 0,
         tamanhoPagina : 1
       }
@@ -239,13 +299,13 @@
           $('#itemPaginacion').attr('hidden',false);
         }
   
-        $("#datosRespuestaPosible").html("");
+        $("#datosParametro").html("");
         $("#checkboxColumnas").html("");
         $("#paginacion").html("");
   
         for (var i = 0; i < res.resource.listaBusquedas.length; i++){
             var tr = construyeFila('PARAMETRO', res.resource.listaBusquedas[i]);
-            $("#datosRespuestaPosible").append(tr);
+            $("#datosParametro").append(tr);
           }
           $("#paginacion").append(textPaginacion);
           setLang(getCookie('lang'));
@@ -312,6 +372,7 @@
         var datosBusquedas = [];
         datosBusquedas.push('parametro_formula: ' + res.resource.datosBusquedas['parametro_formula']);
         datosBusquedas.push('descripcion_parametro: ' + res.resource.datosBusquedas['descripcion_parametro']);
+        datosBusquedas.push('id_proceso: ' + res.resource.datosBusquedas['id_proceso']);
         guardarParametrosBusqueda(datosBusquedas);
 
         var numResults = res.resource.numResultados + '';
@@ -357,10 +418,10 @@
   
   
     }).catch((res) => {
-        cargarPermisosFuncObjetivo();
+        cargarPermisosFuncParametro();
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["parametroFormula", "descripcionParametro"];
+        let idElementoList = ["parametroFormula", "descripcionParametro", "se"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -375,7 +436,7 @@
     .then((res) => {
         cargarPermisosFuncParametro();
         setCookie('parametro_formula', '');
-        setCookie('ddescripcion_parametro', '');
+        setCookie('descripcion_parametro', '');
         var numResults = res.resource.numResultados + '';
         var totalResults = res.resource.tamanhoTotal + '';
         var inicio = 0;
@@ -450,27 +511,27 @@
     });
   }
   
-  /** Función que edita una respuesta posible **/
-  async function editRespuestaPosible(){
-    await editarRespuestaPosibleAjaxPromesa()
+  /** Función que edita un parámetro **/
+  async function editParametro(){
+    await editarParametroAjaxPromesa()
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      respuestaAjaxOK("RESPUESTA_POSIBLE_EDITADA_OK", res.code);
+      respuestaAjaxOK("PARAMETRO_EDITADO_OK", res.code);
   
-      let idElementoList = ["textoRespuestaPosible"];
+      let idElementoList = ["parametroFormula", "descripcionParametro", "selectProcesos"];
       resetearFormulario("formularioGenerico", idElementoList);
       setLang(getCookie('lang'));
       document.getElementById("modal").style.display = "block";
-      $('#textoRespuestaPosible').val(getCookie('textoRespuesta'));
-      buscarRespuestaPosible(getCookie('numeroPagina'), tamanhoPaginaRespuestaPosible, 'buscarPaginacion', 'PaginadorCreado');
+      $('#parametroFormula').val(getCookie('parametro_formula'));
+      $('#descripcionParametro').val(getCookie('descripcion_parametro'));
+      buscarParametro(getCookie('numeroPagina'), tamanhoPaginaParametro, 'buscarPaginacion', 'PaginadorCreado');
   
     }).catch((res) => {
       $("#form-modal").modal('toggle');
+      respuestaAjaxKO(res.code);
   
-       respuestaAjaxKO(res.code);
-  
-      let idElementoList = ["textoRespuestaPosible"];
+      let idElementoList = ["parametroFormula", "descripcionParametro", "selectProcesos"];
       resetearFormulario("formularioGenerico", idElementoList);
   
       setLang(getCookie('lang'));
@@ -481,27 +542,27 @@
     });
   }
   
-  /** Función que elimina una respuesta posible **/
-  async function deleteRespuestaPosible(){
-    await eliminarRespuestaPosibleAjaxPromesa()
+  /** Función que elimina un parametro **/
+  async function deleteParametro(){
+    await eliminarParametroAjaxPromesa()
     .then((res) => {
       $("#form-modal").modal('toggle');
   
-      respuestaAjaxOK("RESPUESTA_POSIBLE_ELIMINADA_OK", res.code);
+      respuestaAjaxOK("PARAMETRO_ELIMINADO_OK", res.code);
   
-      let idElementoList = ["textoRespuestaPosible"];
+      let idElementoList = ["parametroFormula", "descripcionParametro", "selectProcesos"];
       resetearFormulario("formularioGenerico", idElementoList);
       setLang(getCookie('lang'));
       document.getElementById("modal").style.display = "block";
   
-      refrescarTabla(0, tamanhoPaginaRespuestaPosible);
+      refrescarTabla(0, tamanhoPaginaParametro);
   
     }).catch((res) => {
   
        $("#form-modal").modal('toggle');
         respuestaAjaxKO(res.code);
   
-        let idElementoList = ["textoRespuestaPosible"];
+        let idElementoList = ["parametroFormula, descripcionParametro", "selectProcesos"];
         resetearFormulario("formularioGenerico", idElementoList);
   
         setLang(getCookie('lang'));
@@ -512,69 +573,23 @@
     });
   }
   
-  /*Función que reactiva los eliminados de la tabla de respuestas posibles*/
-  async function reactivarRespuestaPosible(){
-    await reactivarRespuestasPosiblesAjaxPromesa()
-    .then((res) => {
-  
-      cargarPermisosFuncRespuestaPosible();
-      $("#form-modal").modal('toggle');
-  
-      let idElementoList = ["textoRespuestaPosible"];
-      resetearFormulario("formularioGenerico", idElementoList);
-  
-      respuestaAjaxOK("RESPUESTA_POSIBLE_REACTIVADA_OK", res.code);
-  
-      setLang(getCookie('lang'));
-      document.getElementById("modal").style.display = "block";
-  
-      buscarEliminados(0, tamanhoPaginaRespuestaPosible, 'PaginadorNo');
-  
-      }).catch((res) => {
-  
-        $("#form-modal").modal('toggle');
-        let idElementoList = ["textoRespuestaPosible"];
-        resetearFormulario("formularioGenerico", idElementoList);
-        respuestaAjaxKO(res.code);
-        setLang(getCookie('lang'));
-        document.getElementById("modal").style.display = "block";
-    });
-  }
-  
-  /** Funcion para mostrar el formulario para añadir una respuesta posible **/
-  function showAddRespuesta() {
-    var idioma = getCookie('lang');
-    cambiarFormulario('ADD_RESPUESTA_POSIBLE', 'javascript:addRespuestaPosible();', 'return comprobarAddRespuestaPosible();');
-    cambiarOnBlurCampos('return comprobarTextoRespuestaPosible(\'textoRespuestaPosible\', \'errorFormatoTextoRespuestaPosible\', \'textoRespuestaPosible\')');
-    cambiarIcono('images/add.png', 'ICONO_ADD', 'iconoAddRespuestaPosible', 'Añadir');
-    setLang(idioma);
-  
-    $('#subtitulo').attr('hidden', true);
-    $('#labelTextoRespuestaPosible').attr('hidden', true);
-  
-    let campos = ["textoRespuestaPosible"];
-    let obligatorios = ["obligatorioTextoRespuestaPosible"];
-    eliminarReadonly(campos);
-    mostrarObligatorios(obligatorios);
-    habilitaCampos(campos);
-    setLang(getCookie('lang'));
-  
-  }
-  
-  /** Funcion para buscar una respuesta posible **/
-  function showBuscarRespuesta() {
+  /** Funcion para buscar un parametro **/
+  function showBuscarParametro() {
     var idioma = getCookie('lang');
   
-    cambiarFormulario('SEARCH_RESPUESTA_POSIBLE', 'javascript:buscarRespuestaPosible(0,' + tamanhoPaginaRespuestaPosible + ', \'buscarModal\'' + ',\'PaginadorNo\');', 
-      'return comprobarBuscarRespuestaPosible();');
-    cambiarOnBlurCampos('return comprobarTextoRespuestaPosible(\'textoRespuestaPosible\', \'errorFormatoTextoRespuestaPosible\', \'textoRespuestaPosible\')');
-    cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchRespuestaPosible', 'Buscar');
+    cambiarFormulario('SEARCH_PARAMETRO', 'javascript:buscarParametro(0,' + tamanhoPaginaParametro + ', \'buscarModal\'' + ',\'PaginadorNo\');', 
+      'return comprobarBuscarParametro();');
+    cambiarOnBlurCampos('return comprobarParametroFormulaSearch(\'parametroFormula\', \'errorFormatoParametroFormula\', \'parametroFormula\')',
+      'return comprobarDescripcionParametroSearch(\'descripcionParametro\', \'errorFormatoDescripcionParametro\', \'descripcionParametro\')');
+    cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchParametro', 'Buscar');
     setLang(idioma);
   
-    $('#labelTextoRespuestaPosible').attr('hidden', true);
+    $('#labelParametroFormula').attr('hidden', true);
+    $('#labelDescripcionParametro').attr('hidden', true);
+    $('#labelIdProceso').attr('hidden', false);
   
-    let campos = ["textoRespuestaPosible"];
-    let obligatorios = ["obligatorioTextoRespuestaPosible"];
+    let campos = ["parametroFormula, descripcionParametro", "selectProcesos"];
+    let obligatorios = ["obligatorioParametroFormula", "obligatorioDescripcionParametro", "obligatorioIdProceso"];
     eliminarReadonly(campos);
     ocultarObligatorios(obligatorios);
     habilitaCampos(campos);
@@ -582,23 +597,24 @@
   
   }
   
-  /** Funcion para visualizar una respuesta posible **/
-  function showDetalle(textoRespuestaPosible, idRespuestaPosible) {
+  /** Funcion para visualizar un parametro **/
+  function showDetalle(parametroFormula, descripcionParametro, idProceso, nombreProceso, idParametro) {
   
       var idioma = getCookie('lang');
   
-      cambiarFormulario('DETAIL_RESPUESTA_POSIBLE', 'javascript:detalleRespuestaPosible();', '');
+      cambiarFormulario('DETAIL_PARAMETRO', 'javascript:detalleParametro();', '');
       cambiarIcono('images/close2.png', 'ICONO_CERRAR', 'iconoCerrar', 'Detalle');
   
       setLang(idioma);
   
-      $('#labelTextoRespuestaPosible').removeAttr('hidden');
-      $('#subtitulo').attr('hidden', true);
+      $('#labelParametroFormula').attr('hidden', false);
+      $('#labelDescripcionParametro').attr('hidden', false);
+      $('#labelIdProceso').attr('hidden', false);
   
-      rellenarFormulario(textoRespuestaPosible);
+      rellenarFormulario(parametroFormula, descripcionParametro, idProceso, nombreProceso);
   
-      let campos = ["textoRespuestaPosible"];
-      let obligatorios = ["obligatorioTextoRespuestaPosible"];
+      let campos = ["parametroFormula", "descripcionParametro", "selectProcesos"];
+      let obligatorios = ["obligatorioParametroFormula", "obligatorioDescripcionParametro", "obligatorioIdProceso"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
       deshabilitaCampos(campos);
@@ -606,25 +622,30 @@
   
   }
   
-  /** Funcion para editar una respuesta posible **/
-  function showEditar(textoRespuestaPosible, idRespuestaPosible) {
+  /** Funcion para editar un parametro **/
+  function showEditar(parametroFormula, descripcionParametro, idProceso, nombreProceso, idParametro) {
     var idioma = getCookie('lang');
   
-      cambiarFormulario('EDIT_RESPUESTA_POSIBLE', 'javascript:editRespuestaPosible();', 
-        'return comprobarEditRespuestaPosible();');
-      cambiarOnBlurCampos('return comprobarTextoRespuestaPosible(\'textoRespuestaPosible\', \'errorFormatoTextoRespuestaPosible\', \'textoRespuestaPosible\')');
-      cambiarIcono('images/edit.png', 'ICONO_EDIT', 'iconoEditarRespuestaPosible', 'Editar');
+      cambiarFormulario('EDIT_PARAMETRO', 'javascript:editParametro();', 
+        'return comprobarEditParametro();');
+        cambiarOnBlurCampos('return comprobarParametroFormula(\'parametroFormula\', \'errorFormatoParametroFormula\', \'parametroFormula\')',
+        'return comprobarDescripcionParametro(\'descripcionParametro\', \'errorFormatoDescripcionParametro\', \'descripcionParametro\')',
+        'return comprobarSelect(\'selectProcesos\', \'errorFormatoIdProceso\', \'selectProcesos\')');
+      cambiarIcono('images/edit.png', 'ICONO_EDIT', 'iconoEditarParametro', 'Editar');
   
       setLang(idioma);
   
-      $('#subtitulo').attr('hidden', true);
-      $('#labelTextoRespuestaPosible').attr('hidden', true);
+      $('#labelParametroFormula').attr('hidden', true);
+      $('#labelDescripcionParametro').attr('hidden', true);
+      $('#labelIdProceso').attr('hidden', false);
   
-      rellenarFormulario(textoRespuestaPosible);
-      insertacampo(document.formularioGenerico,'idRespuestaPosible', idRespuestaPosible);
+      rellenarFormulario(parametroFormula, descripcionParametro, idProceso, nombreProceso);
+      insertacampo(document.formularioGenerico,'idParametro', idParametro);
   
-      let campos = ["textoRespuestaPosible"];
-      let obligatorios = ["obligatorioTextoRespuestaPosible"];
+      let campos = ["descripcionParametro", "idProceso"];
+      let obligatorios = ["obligatorioParametroFormula", "obligatorioDescripcionParametro", "obligatorioIdProceso"];
+      anadirReadonly(["parametroFormula"]);
+      deshabilitaCampos(["parametroFormula"]);
       eliminarReadonly(campos);
       mostrarObligatorios(obligatorios);
       habilitaCampos(campos);
@@ -632,57 +653,26 @@
   
   }
   
-  /** Función para eliminar una respuesta posible **/
-  function showEliminar(textoRespuestaPosible, idRespuestaPosible) {
+  /** Función para eliminar un parameto **/
+  function showEliminar(parametroFormula, descripcionParametro, idProceso, nombreProceso, idParametro) {
   
       var idioma = getCookie('lang');
   
-      cambiarFormulario('DELETE_RESPUESTA_POSIBLE', 'javascript:deleteRespuestaPosible();', '');
+      cambiarFormulario('DELETE_PARAMETRO', 'javascript:deleteParametro();', '');
       cambiarIcono('images/delete.png', 'ICONO_ELIMINAR', 'iconoEliminar', 'Eliminar');
   
       setLang(idioma);
   
-      $('#labelTextoRespuestaPosible').removeAttr('hidden');
-      $('#subtitulo').removeAttr('class');
-      $('#subtitulo').empty();
-      $('#subtitulo').attr('class', 'SEGURO_ELIMINAR_RESP');
-      $('#subtitulo').attr('hidden', false);
+      $('#labelParametroFormula').attr('hidden', false);
+      $('#labelDescripcionParametro').attr('hidden', false);
+      $('#labelIdProceso').attr('hidden', false);
   
   
-      rellenarFormulario(textoRespuestaPosible);
-      insertacampo(document.formularioGenerico,'idRespuestaPosible', idRespuestaPosible);
+      rellenarFormulario(parametroFormula, descripcionParametro, idProceso, nombreProceso);
+      insertacampo(document.formularioGenerico,'idParametro', idParametro);
   
-      let campos = ["textoRespuestaPosible"];
-      let obligatorios = ["obligatorioTextoRespuestaPosible"];
-      anadirReadonly(campos);
-      ocultarObligatorios(obligatorios);
-      deshabilitaCampos(campos);
-      setLang(getCookie('lang'));
-  
-  }
-  
-  /** Función para reactivar una respuesta posible **/
-  function showReactivar(textoRespuestaPosible, idRespuestaPosible) {
-  
-      var idioma = getCookie('lang');
-  
-      cambiarFormulario('REACTIVATE_RESPUESTA_POSIBLE', 'javascript:reactivarRespuestaPosible();', '');
-      cambiarIcono('images/reactivar2.png', 'ICONO_REACTIVAR', 'iconoReactivar', 'Reactivar');
-  
-      setLang(idioma);
-  
-      $('#labelTextoRespuestaPosible').removeAttr('hidden');
-      $('#subtitulo').removeAttr('class');
-      $('#subtitulo').empty();
-      $('#subtitulo').attr('class', 'SEGURO_REACTIVAR_RESP');
-      $('#subtitulo').attr('hidden', false);
-  
-  
-      rellenarFormulario(textoRespuestaPosible);
-      insertacampo(document.formularioGenerico,'idRespuestaPosible', idRespuestaPosible);
-  
-      let campos = ["textoRespuestaPosible"];
-      let obligatorios = ["obligatorioTextoRespuestaPosible"];
+      let campos = ["parametroFormula, descripcionParametro", "selectProcesos"];
+      let obligatorios = ["obligatorioParametroFormula", "obligatorioDescripcionParametro", "obligatorioIdProceso"];
       anadirReadonly(campos);
       ocultarObligatorios(obligatorios);
       deshabilitaCampos(campos);
@@ -691,35 +681,39 @@
   }
   
   /**Función para cambiar onBlur de los campos*/
-  function cambiarOnBlurCampos(onBlurTextoRespuestaPosible) {
+  function cambiarOnBlurCampos(onBlurParametroFormula, onBlurDescripcionParametro, onBlurProcesos) {
   
-      if (onBlurTextoRespuestaPosible != ''){
-          $("#textoRespuestaPosible").attr('onblur', onBlurTextoRespuestaPosible);
+      if (onBlurParametroFormula != ''){
+          $("#parametroFormula").attr('onblur', onBlurParametroFormula);
+      }
+
+      if (onBlurDescripcionParametro != ''){
+        $("#descripcionParametro").attr('onblur', onBlurDescripcionParametro);
+      }
+
+      if (onBlurProcesos != ''){
+        $("#selectProcesos").attr('onblur', onBlurProcesos);
       }
   }
   
   /**Función que rellenado los datos del formulario*/
-  function rellenarFormulario(textoRespuestaPosible) {
+  function rellenarFormulario(parametroFormula, descripcionParametro, idProceso, nombreProceso) {
   
-      $("#textoRespuestaPosible").val(textoRespuestaPosible);
+      $("#parametroFormula").val(parametroFormula);
+      $('#descripcionParametro').val(descripcionParametro);
+      $('#selectProcesos').val(idProceso);
   
   }
   
   /** Función para gestionar los iconos dependiendo de los permisos de los usuarios **/
-  function gestionarPermisosRespuestaPosible(idElementoList) {
+  function gestionarPermisosParametro(idElementoList) {
     document.getElementById('cabecera').style.display = "none";
     document.getElementById('tablaDatos').style.display = "none";
     document.getElementById('filasTabla').style.display = "none";
     $('#itemPaginacion').attr('hidden', true);
   
     idElementoList.forEach( function (idElemento) {
-      switch(idElemento){
-        case "Añadir":
-          $('#btnAddRespuesta').attr('src', 'images/add3.png');
-          $('#btnAddRespuesta').css("cursor", "pointer");
-          $('#divAddRespuesta').attr("data-toggle", "modal");
-          $('#divAddRespuesta').attr("data-target", "#form-modal");
-        break;
+      switch(idElemento.nombre_accion){
   
         case "Modificar" : 
           $('.editarPermiso').attr('src', 'images/edit3.png');
@@ -736,27 +730,15 @@
         break;
   
         case 'Listar' :
-          $('#btnListarRespuestas').attr('src', 'images/search3.png');
-          $('#btnSearchDelete').attr('src', 'images/searchDelete3.png');
-          $('#btnListarRespuestas').css("cursor", "pointer");
-          $('.iconoSearchDelete').css("cursor", "pointer");
-          $('#divSearchDelete').attr("onclick", "javascript:buscarEliminados(0,\'tamanhoPaginaRespuestaPosible\', \'PaginadorNo\')");
-          $('#divListarRespuestas').attr("data-toggle", "modal");
-          $('#divListarRespuestas').attr("data-target", "#form-modal");
+          $('#btnListarParametros').attr('src', 'images/search3.png');
+          $('#btnListarParametros').css("cursor", "pointer");
+          $('#divListarParametros').attr("data-toggle", "modal");
+          $('#divListarParametros').attr("data-target", "#form-modal");
           document.getElementById('cabecera').style.display = "block";
           document.getElementById('tablaDatos').style.display = "block";
           document.getElementById('filasTabla').style.display = "block";
            $('#itemPaginacion').attr('hidden', false);
   
-          if(document.getElementById('cabeceraEliminados').style.display == "block"){
-             document.getElementById('cabecera').style.display = "none";
-  
-             var texto = document.getElementById('paginacion').innerHTML;
-             if(texto == "0 - 0 total 0"){
-             $('#itemPaginacion').attr('hidden', true);
-            }
-  
-          }
         break;
   
         case "Visualizar" :
@@ -781,9 +763,9 @@
   $(document).ready(function() {
     $("#form-modal").on('hidden.bs.modal', function() {
   
-      let idElementoErrorList = ["errorFormatoTextoRespuestaPosible"];
+      let idElementoErrorList = ["errorFormatoParametroFormula", "errorFormatoDescripcionParametro", "errorFormatoIdProceso"];
   
-      let idElementoList = ["textoRespuestaPosible"];
+      let idElementoList = ["parametroFormula", "descripcionFormula", "selectProcesos"];
   
       limpiarFormulario(idElementoList);
       eliminarMensajesValidacionError(idElementoErrorList, idElementoList);

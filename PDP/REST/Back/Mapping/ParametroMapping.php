@@ -102,8 +102,16 @@ class ParametroMapping extends MappingBase {
     }
 
     function searchByParameters($datos, $paginacion) {
-
-        $this -> query = 
+        if($datos['id_proceso'] == '' || $datos['id_proceso'] == null) {
+            $this -> query = 
+            "SELECT * FROM `parametro`
+            WHERE
+                LOWER(`parametro_formula`) LIKE LOWER(CONCAT('%','" . $datos['parametro_formula'] . "','%')) AND
+                LOWER(`descripcion_parametro`) LIKE LOWER(CONCAT('%','" . $datos['descripcion_parametro'] . "','%'))
+                LIMIT ". $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . ";"
+        ; 
+        }else{
+            $this -> query = 
             "SELECT * FROM `parametro`
             WHERE
                 LOWER(`parametro_formula`) LIKE LOWER(CONCAT('%','" . $datos['parametro_formula'] . "','%')) AND
@@ -112,6 +120,7 @@ class ParametroMapping extends MappingBase {
                 LIMIT ". $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . ";"
         ; 
 
+        }
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
 
@@ -124,14 +133,23 @@ class ParametroMapping extends MappingBase {
     }
 
     function numberFindParameters($datos) {
-
-        $this -> query = 
+        if($datos['id_proceso'] == '' || $datos['id_proceso'] == null) {
+            $this -> query = 
+            "SELECT COUNT(*) FROM `parametro`
+            WHERE
+                LOWER(`parametro_formula`) LIKE LOWER(CONCAT('%','" . $datos['parametro_formula'] . "','%')) AND
+                LOWER(`descripcion_parametro`) LIKE LOWER(CONCAT('%','" . $datos['descripcion_parametro'] . "','%'))"
+        ; 
+        }else{
+            $this -> query = 
             "SELECT COUNT(*) FROM `parametro`
             WHERE
                 LOWER(`parametro_formula`) LIKE LOWER(CONCAT('%','" . $datos['parametro_formula'] . "','%')) AND
                 LOWER(`descripcion_parametro`) LIKE LOWER(CONCAT('%','" . $datos['descripcion_parametro'] . "','%')) AND
                 LOWER(`id_proceso`) LIKE LOWER(CONCAT('%','" . $datos['id_proceso'] . "','%'));"
-        ;
+        ; 
+
+        }
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
     }

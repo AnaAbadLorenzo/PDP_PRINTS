@@ -1,7 +1,7 @@
 <?php
 
 include_once './Mapping/MappingBase.php';
-include_once './Modelos/PersonaModel.php';
+include_once './Modelos/ProcesoModel.php';
 
 class ProcesoMapping extends MappingBase {
     public $conexion;
@@ -113,14 +113,8 @@ class ProcesoMapping extends MappingBase {
     }
 
 
-function search() {
-    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0";
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query(); 
-}
-
 function searchAll() {
-    $this->query = "SELECT * FROM `proceso`";
+    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0";
     $this->stmt = $this->conexion->prepare($this->query);
     $this->get_results_from_query(); 
 }
