@@ -52,6 +52,19 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_VACIO'. " - ". NOMBRE_CATEGORIA_VACIO;
+                        break;
+                        case 'descripcion_categoria':
+                            $mensaje = 'DESCRIPCION_CATEGORIA_VACIO'. " - ". DESCRIPCION_CATEGORIA_VACIO;
+                        break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_VACIO'. " - ". DNI_RESPONSABLE_VACIO;
+                        break;
+                    }
+                break;
                 case 'gestFuncionalidades':
                     switch($nombreAtributo){
                         case 'nombre_funcionalidad':
@@ -126,6 +139,16 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_MENOR_QUE_3'. " - ". NOMBRE_CATEGORIA_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_categoria':
+                            $mensaje = 'DESCRIPCION_CATEGORIA_MENOR_QUE_3'. " - ". DESCRIPCION_CATEGORIA_MENOR_QUE_3;
+                        break;
+                    }
+                break;
                 case 'gestFuncionalidades':
                     switch($nombreAtributo){
                         case 'nombre_funcionalidad':
@@ -195,6 +218,13 @@ class FuncionesComunes {
                     switch($nombreAtributo){
                         case 'nombre_accion':
                             $mensaje = 'NOMBRE_ACCION_MAYOR_QUE_32'. " - ". NOMBRE_ACCION_MAYOR_QUE_32;
+                        break;
+                    }
+                break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_MAYOR_QUE_48'. " - ". NOMBRE_CATEGORIA_MAYOR_QUE_48;
                         break;
                     }
                 break;
@@ -342,6 +372,16 @@ class FuncionesComunes {
                         break;
                         case 'descripcion_accion':
                             $mensaje = 'DESCRIPCION_ACCION_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ACCION_ALFABETICO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_categoria':
+                            $mensaje = 'DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO;
                         break;
                     }
                 break;

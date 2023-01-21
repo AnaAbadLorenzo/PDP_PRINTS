@@ -49,7 +49,6 @@ class ValidacionesFormato{
 		}
 	}
 	function comprobarLetras($string){
-
 		if (preg_match('/^[a-zA-ZÀ-ÿ]/s',$string)){
 			return true;
 		}else{

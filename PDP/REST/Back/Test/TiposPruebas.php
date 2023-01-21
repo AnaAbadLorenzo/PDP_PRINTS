@@ -16,6 +16,7 @@ define('REGISTRO_OK', 'La persona se ha registrado correctamente');
 define('RECUPERAR_PASS_OK', 'La recuperación de contraseña se ha realizado correctamente');
 define('NOMBRE_ACCION_OK', 'Atributo nombre acción correcto');
 define('DESCRIPCION_ACCION_OK', 'Atributo descripción accion correcto');
+define('NOMBRE_CATEGORIA_OK', 'Atributo nombre categoría correcto');
 define('NOMBRE_FUNCIONALIDAD_OK', 'Atributo nombre funcionalidad correcto');
 define('DESCRIPCION_FUNCIONALIDAD_OK', 'Atributo descripción funcionalidad correcto');
 define('NOMBRE_ROL_OK', 'Atributo nombre rol correcto');

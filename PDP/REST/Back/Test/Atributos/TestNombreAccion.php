@@ -27,7 +27,7 @@ class TestNombreAccion extends Test{
         array_push($pruebas, $resultadoTest);
         
         //NOMBRE_ACCION_CONTIENE_CARACTERES_ESPECIALES
-        $_POST['nombre_accion'] = 'Accion###';
+        $_POST['nombre_accion'] = '###Acción';
         $resultadoTest = $this->hacerPruebaNombreAccionCaracteresEspeciales($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -93,7 +93,7 @@ class TestNombreAccion extends Test{
             $resultadoObtenido = $funcionesComunes->comprobarAtributoCorrectoAlfabetico($atributo['nombre_accion']);
             $resultadoEsperado = 'AVANZAR_SIGUIENTE_CAMPO'." - ".AVANZAR_SIGUIENTE_CAMPO;
         
-            return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, NOMBRE_PERSONA_OK, ÉXITO,  $atributo['nombre_accion'], 'nombre_accion');
+            return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, NOMBRE_ACCION_OK, ÉXITO,  $atributo['nombre_accion'], 'nombre_accion');
         }
 
         
