@@ -13,12 +13,12 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
     function validarAdd() {
 
         $proceso_usuario_validation_formato = new ProcesoUsuarioAtributos;
-        $proceso_usuario_validation_accion = new ProcesoUsuarioAccion;
 
         $atributos_validacion = array(
             'fecha_proceso_usuario',
             'calculo_huella_carbono',
             'dni_usuario',
+            'usuario',
             'id_proceso'
         );
         $atributos = $this -> recogerValoresAtributosPeticion($atributos_validacion);
@@ -26,14 +26,11 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
         $proceso_usuario_validation_formato -> validarAtributosAdd($atributos);
         $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
 
-        $this -> respuesta_accion = $proceso_usuario_validation_accion -> comprobarAdd($atributos);
-
     }
 
     function validarEdit() {
 
         $proceso_usuario_validation_formato = new ProcesoUsuarioAtributos;
-        $proceso_usuario_validation_accion = new ProcesoUsuarioAccion;
 
         $atributos_validacion = array(
             'id_proceso_usuario',
@@ -46,9 +43,6 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
 
         $proceso_usuario_validation_formato -> validarAtributosEdit($atributos);
         $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
-
-        $this -> respuesta_accion = $proceso_usuario_validation_accion -> comprobarEdit($atributos);
-
     }
 
     function validarDelete() {
@@ -61,8 +55,6 @@ class ProcesoUsuarioValidation extends ValidacionesBase {
 
         $proceso_usuario_validation_formato -> validarAtributosDelete($atributos);
         $this -> respuesta_formato = $proceso_usuario_validation_formato -> respuesta;
-        
-        $this -> respuesta_accion = $proceso_usuario_validation_accion -> comprobarDelete($atributos);
 
     }
 

@@ -1,6 +1,6 @@
 @media only screen and (min-width: 320px) and (max-width : 415px) {
 
-  .procedimientos { width: 87% !important; top: 26% !important; height: 53% !important;}
+  .procesos { width: 87% !important; top: 26% !important; height: 53% !important;}
 
   .card-body-plan { height: 133px !important; }
 
@@ -57,7 +57,7 @@
 
   #cabecera{ top: 20% !important; left: 8% !important; }
 
-  .procedimientos { width: 87% !important; top: 27% !important; height: 53% !important;}
+  .procesos { width: 87% !important; top: 27% !important; height: 53% !important;}
 
   .procesos { margin-top: -6% !important; }
 
@@ -79,7 +79,7 @@
 
   #cabecera{ top: 20% !important; left: 8% !important; }
 
-  .procedimientos { width: 87% !important; top: 27% !important; height: 53% !important;}
+  .procesos { width: 87% !important; top: 27% !important; height: 53% !important;}
 
   .procesos { margin-top: -6% !important; }
 
@@ -250,7 +250,7 @@ select option:checked{
   padding-top: 1%;
 }
 
-.procedimientos {
+.procesos {
   width: 83%;
   height: 61%;
   position: fixed;
@@ -261,7 +261,7 @@ select option:checked{
   margin-left: 7%;
 }
 
-.procedimientos .card {
+.procesos .card {
   background-color: #4527a0d1;
 }
 

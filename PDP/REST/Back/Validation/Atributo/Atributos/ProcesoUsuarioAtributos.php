@@ -5,15 +5,11 @@ class ProcesoUsuarioAtributos extends ValidacionesFormato {
 	public $respuesta;
 	
 	function validarAtributosAdd($atributos) {
-		$this -> validarFechaProcesoUsuario($atributos['fecha_proceso_usuario']);
-		if ($this -> respuesta != '') {
-			return $this -> respuesta;
-		}
 		$this -> validarCalculoHuellaCarbono($atributos['calculo_huella_carbono']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
-		$this -> validarDniUsuario($atributos['dni_usuario']);
+		$this -> validarUsuario($atributos['usuario']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}
@@ -81,6 +77,23 @@ class ProcesoUsuarioAtributos extends ValidacionesFormato {
 		} else if (strlen($atributo) > 10) {
 			$this -> respuesta = 'DNI_USUARIO_DEMASIADO_LARGO';
 		}
+	}
+
+	function validarUsuario($atributo){
+		if ($atributo === null || $this->Es_Vacio($atributo)===true) {
+			$this->respuesta = 'LOGIN_USUARIO_VACIO';
+		}
+
+		if ($this->Longitud_minima($atributo,3)===false) {
+			$this->respuesta = 'LOGIN_USUARIO_MENOR_QUE_3';
+		}
+
+		if($this->Longitud_maxima($atributo,48)===false){
+			$this->respuesta = 'LOGIN_USUARIO_MAYOR_QUE_48';
+		}
+		if($this->comprobarFormatoLoginContrasena($atributo)===false){
+			$this->respuesta = 'LOGIN_USUARIO_ALFANUMERICO_INCORRECTO';
+		}	
 	}
 
 	function validarDniUsuarioSearch($atributo) {

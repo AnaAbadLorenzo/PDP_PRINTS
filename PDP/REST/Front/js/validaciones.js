@@ -1605,6 +1605,16 @@ function comprobarFechaProcedimiento(idElemento, idElementoError, campo){
 	}
 }
 
+function comprobarFormulaProceso(idElemento,idElementoError,campo){
+	if(validaNoVacio(idElemento, idElementoError,campo) && comprobarTamañoMinimo(idElemento, 3, idElementoError,campo) && comprobarIgual(idElemento, idElementoError,campo)){
+		validacionOK(idElemento, idElementoError); 
+        return true;
+	} else{
+		validacionKO(idElemento, idElementoError);
+        return false;
+	}
+}
+
 /** Funcion que valida el formato del Nombre del proceso **/
 function comprobarNombreProceso(idElemento, idElementoError, campo){
 	document.getElementById(idElemento).style.borderWidth = "2px";
@@ -1714,18 +1724,10 @@ function comprobarAddProceso(){
 	if(comprobarNombreProceso('nombreProceso', 'errorFormatoNombreProceso', 'nombreProceso') && 
 		comprobarDescripcionProceso('descripcionProceso', 'errorFormatoDescripcionProceso', 'descripProceso')
 		&& comprobarFechaProceso('fechaProceso', 'errorFormatoFechaProceso', 'fechaProceso')
-		&& comprobarDivProcedimientoVacio('procedimientosOrden', 'errorFormatoProcedimientos', 'divProcedimiento')
-		&& comprobarDivObjetivoVacio('objetivosNiveles', 'errorFormatoObjetivos', 'divObjetivo')){
-
-		var numeroObjetivosNivel = getCookie('numeroObjNivel');
-		for (var i = 1; i<=numeroObjetivosNivel; i++){
-			if(comprobarNivel('nivel'+i , 'errorFormatoNivel'+i, 'nivel')){
-				var resultado =  true;
-			}else{
-				var resultado =  false;
-			}
-		}
-		return resultado;
+		&& comprobarSelect('selectCategorias', 'errorFormatoIdCategoria', 'selectCategorias')
+		&& validaRadioButton('checkPubli', 'errorFormatoCheckPublicado',  'checkPubli', 'checkPublicado')
+		&& comprobarFormulaProceso('formulaProceso','errorFormatoFormulaProceso', 'formulaProceso')){
+		return true;
 	}else{
 		return false;
 	}
@@ -1736,28 +1738,10 @@ function comprobarEditProceso(){
 	if(comprobarNombreProceso('nombreProceso', 'errorFormatoNombreProceso', 'nombreProceso') && 
 		comprobarDescripcionProceso('descripcionProceso', 'errorFormatoDescripcionProceso', 'descripProceso')
 		&& comprobarFechaProceso('fechaProceso', 'errorFormatoFechaProceso', 'fechaProceso')
-		&& comprobarDivProcedimientoVacio('procedimientosOrden', 'errorFormatoProcedimientos', 'divProcedimiento')
-		&& comprobarDivObjetivoVacio('objetivosNiveles', 'errorFormatoObjetivos', 'divObjetivo')){
-
-		var numeroObjetivosNivel = getCookie('numeroObjNivel');
-		for (var i = 1; i<=numeroObjetivosNivel; i++){
-			if(comprobarNivel('nivel'+i , 'errorFormatoNivel'+i, 'nivel')){
-				var resultado =  true;
-			}else{
-				var resultado =  false;
-			}
-		}
-
-		var orden = getCookie('numeroProcedimientosOrden');
-		for (var i = 1; i<=numeroObjetivosNivel; i++){
-			if(comprobarOrden('ordenProceso'+i , 'errorFormatoOrdenProceso'+i, 'orden')){
-				var resultado =  true;
-			}else{
-				var resultado =  false;
-			}
-		}
-
-		return resultado;
+		&& comprobarSelect('selectCategorias', 'errorFormatoIdCategoria', 'selectCategorias')
+		&& validaRadioButton('checkPubli', 'errorFormatoCheckPublicado',  'checkPubli', 'checkPublicado')
+		&& comprobarFormulaProceso('formulaProceso','errorFormatoFormulaProceso', 'formulaProceso')){
+		return true;
 	}else{
 		return false;
 	}
@@ -2307,6 +2291,9 @@ function validaNoVacio(idElemento, idElementoError, campo) {
 			case 'fechaProcesoEjecutado' :
 				codigo = "FECHA_PROCESO_EJECUTADO_VACIA";
 			break;
+			case 'formulaProceso' :
+				codigo = "FORMULA_PROCESO_VACIA";
+			break;
 
 		}
 		addCodeError(idElementoError, codigo);
@@ -2435,6 +2422,9 @@ function comprobarTamañoMinimo(idElemento, sizeMin, idElementoError, campo){
 			break;
 			case 'fechaProceso' :
 				codigo = "FECHA_PROCESO_MENOR_QUE_8";
+			break;
+			case 'formulaProceso' :
+				codigo = "FORMULA_PROCESO_MENOR_QUE_3"
 			break;
 		}
 		addCodeError(idElementoError, codigo);
@@ -2856,6 +2846,23 @@ function comprobarTextoAlfanumericoSignosPuntuacion(idElemento, idElementoError,
 
 }
 
+function comprobarIgual(idElemento, idElementoError, campo){
+	var patron = /^[a-zA-z]+=(.*?)/g
+	var valor = document.getElementById(idElemento).value;
+
+	if (!patron.test(valor)) { 
+    	switch(campo) {
+			case 'formulaProceso' :
+				codigo = "FORMULA_PROCESO_INCORRECTA";
+			break;
+		}
+		addCodeError(idElementoError, codigo);
+        return false;
+    }
+
+    return true;
+}
+
 
 /**Función que valida las fechas **/
 function comprobarFormatoFechas(idElemento, idElementoError, campo) {
@@ -3033,6 +3040,9 @@ function validaOptionsSelect(idElemento, idElementoError, campo) {
 			case 'selectProcesos' :
 				codigo = "RELLENA_PROCESO";
 			break;
+			case 'selectCategorias' :
+				codigo = 'RELLENA_CATEGORIA';
+			break;
 		}
 		addCodeError(idElementoError, codigo);
 		return false;
@@ -3041,30 +3051,19 @@ function validaOptionsSelect(idElemento, idElementoError, campo) {
     return true;
 }
 
-function validaDivVacio(idElemento, idElementoError, campo) {
-	var codigo = "";
-	var select = $('#' +idElemento);
-
-	if(idElemento == 'procedimientosOrden'){
-		var elemento = 'labelNombreProcedimiento1';
-	}else{
-		var elemento = 'labelNombreObjetivo1';
-	}
-
-	if (!($('#'+elemento).length > 0)){
-		switch(campo) {
-	    	case 'divProcedimiento' :
-				codigo = "SELECT_PROCEDIMIENTOS_VACIO";
-			break;
-			case 'divObjetivo' :
-				codigo = "SELECT_OBJETIVOS_VACIO";
+function validaRadioButton(idElemento, idElementoError, campo, nameCheck){
+	var codigo = '';
+	if(!document.querySelector('input[name=' +nameCheck+ ']:checked')) {
+		switch(campo){
+			case 'checkPublicado':
+				codigo = 'RELLENA_CHECK_PROCESO';
 			break;
 		}
 		addCodeError(idElementoError, codigo);
 		return false;
 	}
 
-    return true;
+	return true;
 }
 
 function validacionOK(idElemento, idElementoError) {

@@ -1684,7 +1684,7 @@ form button[type="button"]:hover {
 .descripcionParametroColumn, .idProcesoColumn, .idParametroColumn,
 .nombrePlanColumn, .descripcionPlanColumn, .fechaPlanColumn, .nombreProcedimientoColumn,
 .descripcionProcedimientoColumn, .fechaProcedimientoColumn, .checkUsuarioColumn, .idProcedimientoColumn,
-.nombreProcesoColumn, .descripcionProcesoColumn, .fechaProcesoColumn, .idProcesoColumn,
+.nombreProcesoColumn, .descripcionProcesoColumn, .responsableProcesoColumn, .fechaProcesoColumn, .idProcesoColumn,
 .estadoProcedimientoEjecutadoColumn, .fechaProcedimientosEjecutadosColumn, .idProcedimientoEjecutadoColumn,
 .fechaProcesosEjecutadosColumn{
   display: inline;
@@ -1707,7 +1707,7 @@ form button[type="button"]:hover {
 .ordenarIconNombreProcedimiento, .ordenarIconDescripcionProcedimiento,
 .ordenarIconFechaProcedimiento, .ordenarIconCheckUsuario, .ordenarIconIdProcedimiento,
 .ordenarIconNombreProceso, .ordenarIconDescripcionProceso, .ordenarIconFechaProceso,
-.ordenarIconIdProceso, .ordenarIconFechaProcedimientosEjecutados, .ordenarEstadoProcedimientoEjecutado,
+.ordenarIconResponsableProceso, .ordenarIconIdProceso, .ordenarIconFechaProcedimientosEjecutados, .ordenarEstadoProcedimientoEjecutado,
 .ordenarIconIdProcedimientoEjecutado, .ordenarIconFechaProcesosEjecutados  {
   margin-left: 2%;
   cursor:  pointer;

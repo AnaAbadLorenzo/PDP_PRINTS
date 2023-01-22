@@ -44,14 +44,9 @@ class ProcesoMapping extends MappingBase {
     }
  
     function getVersion($datosModificar){
-
-
         $this->query = "SELECT version_proceso FROM `proceso` WHERE `id_proceso` = '"
-        .$datosModificar['id_proceso']."'";
+            .$datosModificar['id_proceso']."'";
         $this->stmt = $this->conexion->prepare($this->query);
-        header('Content-type: application/json');
-		echo(json_encode($this->stmt)); 
-		exit();
         $this->get_one_result_from_query();
     }
 
@@ -65,7 +60,7 @@ class ProcesoMapping extends MappingBase {
     }
 
     function numberFindAll() {
-        $this->query = "SELECT COUNT(*) FROM `proceso`";
+        $this->query = "SELECT COUNT(*) FROM `proceso` WHERE `borrado_proceso`= 0";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_one_result_from_query();
     }
@@ -79,34 +74,70 @@ class ProcesoMapping extends MappingBase {
     }
 
     function searchByParameters($datosSearchParameters, $paginacion) {
-            
-        $this->query = "SELECT * FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
-                        LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
-                        LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['fecha_proceso']."', '%')) AND
-                        LOWER(`version_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['version_proceso']."', '%')) AND
-                        LOWER(`check_aprobacion`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['check_aprobacion']."', '%')) AND
-                        LOWER(`formula_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['formula_proceso']."', '%')) AND
-                        LOWER(`id_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['id_categoria']."', '%')) AND
-                        LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']."', '%')) AND
-                        `borrado_persona` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
-
+        if($datosSearchParameters['id_categoria'] == 0 || $datosSearchParameters['id_categoria'] == "0"){
+            $this->query = "SELECT * FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
+                LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
+                LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['fecha_proceso']."', '%')) AND
+                LOWER(`version_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['version_proceso']."', '%')) AND
+                LOWER(`check_aprobacion`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['check_aprobacion']."', '%')) AND
+                LOWER(`formula_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['formula_proceso']."', '%')) AND
+                LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']."', '%')) AND
+                `borrado_proceso` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
+        }else{
+            $this->query = "SELECT * FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
+                LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
+                LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['fecha_proceso']."', '%')) AND
+                LOWER(`version_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['version_proceso']."', '%')) AND
+                LOWER(`check_aprobacion`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['check_aprobacion']."', '%')) AND
+                LOWER(`formula_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['formula_proceso']."', '%')) AND
+                LOWER(`id_categoria`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['id_categoria']."', '%')) AND
+                LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['dni_usuario']."', '%')) AND
+                `borrado_proceso` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
+        }
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
         
     }
 
+    function searchByIdCategoria($datosSearchCategoria, $paginacion) {
+            
+        $this->query = "SELECT * FROM `proceso` WHERE `id_categoria` ="  .$datosSearchCategoria['id_categoria']. " AND
+                        `borrado_proceso` = 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina.""; 
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
+
+    function numberFindByIdCategoria($datosSearchCategoria) {
+        
+        $this->query = "SELECT COUNT(*) FROM `proceso` WHERE `id_categoria` ="  .$datosSearchCategoria['id_categoria']. " AND
+                        `borrado_proceso` = 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+         
+    }
 
     function numberFindParameters($datosSearchParameters) {
-        
-        $this->query = "SELECT COUNT(*) FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
-                        LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
-                        LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_proceso']."', '%')) AND
-                        LOWER(`version_proceso`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['version_proceso']."', '%')) AND
-                        LOWER(`check_aprobacion`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['check_aprobacion']."', '%')) AND
-                        LOWER(`formula_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['formula_proceso']."', '%')) AND
-                        LOWER(`id_categoria`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_categoria']."', '%')) AND
-                        LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_usuario']."', '%')) AND
-                        `borrado_persona` = 0"; 
+        if($datosSearchParameters['id_categoria'] == 0 || $datosSearchParameters['id_categoria'] == "0"){
+            $this->query = "SELECT COUNT(*) FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
+                            LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
+                            LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_proceso']."', '%')) AND
+                            LOWER(`version_proceso`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['version_proceso']."', '%')) AND
+                            LOWER(`check_aprobacion`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['check_aprobacion']."', '%')) AND
+                            LOWER(`formula_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['formula_proceso']."', '%')) AND
+                            LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_usuario']."', '%')) AND
+                            `borrado_proceso` = 0";
+        }else{
+            $this->query = "SELECT COUNT(*) FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
+                LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
+                LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['fecha_proceso']."', '%')) AND
+                LOWER(`version_proceso`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['version_proceso']."', '%')) AND
+                LOWER(`check_aprobacion`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['check_aprobacion']."', '%')) AND
+                LOWER(`formula_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['formula_proceso']."', '%')) AND
+                LOWER(`id_categoria`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['id_categoria']."', '%')) AND
+                LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','".$datosSearchParameters['dni_usuario']."', '%')) AND
+                `borrado_proceso` = 0";
+        }
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
         
@@ -115,6 +146,18 @@ class ProcesoMapping extends MappingBase {
 
 function searchAll() {
     $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0";
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_results_from_query(); 
+}
+
+function search($paginacion) {
+    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0 LIMIT ".$paginacion->inicio. ",". $paginacion->tamanhoPagina;
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_results_from_query(); 
+}
+
+function searchDelete($paginacion) {
+    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 1 LIMIT ".$paginacion->inicio. ",". $paginacion->tamanhoPagina;
     $this->stmt = $this->conexion->prepare($this->query);
     $this->get_results_from_query(); 
 }
@@ -137,6 +180,35 @@ function searchById($datosSearch) {
     }else{
         return $respuesta;
     }
+}
+
+function searchByName($datosSearch) {
+    $this->query = "SELECT * FROM `proceso` WHERE `nombre_proceso`='".$datosSearch['nombre_proceso']."'";
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_one_result_from_query();
+    
+    $respuesta = $this->feedback;
+
+    if($respuesta['code'] != 'RECORDSET_VACIO'){
+        return $respuesta;
+    }else{
+        return $respuesta;
+    }
+}
+
+function reactivar($datos) {
+
+    $this->query = 
+        "UPDATE `proceso`
+        SET `borrado_proceso`=0
+        WHERE `id_proceso`='" . $datos['id_proceso'] . "'";
+
+    $this->stmt = $this->conexion->prepare($this->query);
+    $this->get_one_result_from_query();
+    $respuesta = $this->feedback;
+
+    return $respuesta;
+
 }
     
     

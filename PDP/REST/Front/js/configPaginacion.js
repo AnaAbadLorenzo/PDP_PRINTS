@@ -13,5 +13,5 @@ var tamanhoPaginaPlan = 2;
 var tamanhoPaginaProcedimiento = 2;
 var tamanhoPaginaProcedimientoUsuario = 6;
 var tamanhoPaginaProceso = 4;
-var tamanhoPaginaProcedimientosEjecutados = 2;
+var tamanhoPaginaProcesosUsuario= 2;
 var tamanhoPaginaProcesosEjecutados = 2;

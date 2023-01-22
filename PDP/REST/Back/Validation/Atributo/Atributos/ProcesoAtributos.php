@@ -6,16 +6,13 @@ class procesoAtributos extends ValidacionesFormato{
 			$this->respuesta = '';
 		
 			$this->validar_nombre_proceso($atributos['nombre_proceso']);
-			
-
 		
 			if($this->respuesta == ''){
 				$this->validar_descripcion_proceso($atributos['descripcion_proceso']);
 			}
-
-			
-			
-			
+			if($this->respuesta == ''){
+				$this->validar_formula_proceso($atributos['formula_proceso']);
+			}
 	}
 
 	
@@ -49,6 +46,21 @@ class procesoAtributos extends ValidacionesFormato{
 		}
 		if($this->comprobarLetras($atributo)===false){
 			$this->respuesta = 'DESCRIPCION_PROCESO_ALFABETICO_INCORRECTO';
+		}
+	}
+
+	function validar_formula_proceso($atributo){
+
+		$this->respuesta = '';
+
+		if($atributo === null || $this->Es_Vacio($atributo)===true){
+			$this->respuesta = 'FORMULA_PROCESO_VACIA';
+		}
+		if($this->Longitud_minima($atributo,3)===false){
+			$this->respuesta = 'FORMULA_PROCESO_MENOR_QUE_3';
+		}
+		if($this->comprobarFormatoFormula($atributo)===false){
+			$this->respuesta = 'FORMATO_FORMULA_INCORRECTO';
 		}
 	}
 

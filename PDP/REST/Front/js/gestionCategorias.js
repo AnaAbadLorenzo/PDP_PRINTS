@@ -556,7 +556,7 @@ function anadirCategoriaAjaxPromesa(){
               $("#categorias").append(tr);
             }
           }else{
-            window.location.href = "GestionDeProcesos.html";
+            accederProcesosCategoria(id_categoria);
           }
 
           $("#paginacion").append(textPaginacion);
@@ -1428,3 +1428,9 @@ function construyeSelectCategorias(){
     });
   
   }); 
+
+/**Función para que el usuario acceda a los procesos desde una categoria*/
+function accederProcesosCategoria(idCategoria){
+  setCookie('idCategoria', idCategoria)
+  window.location.href = "GestionDeProcesos.html";
+}

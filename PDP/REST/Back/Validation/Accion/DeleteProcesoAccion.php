@@ -14,10 +14,13 @@ class DeleteProcesoAccion extends ValidacionesBase{
 		$this->proceso = new ProcesoModel();
 	}
 	function comprobarDeleteProceso($datosDeleteProceso){
-
-		
 		$this->existeIdProceso($datosDeleteProceso);
 		
+	}
+
+	function comprobarReactivar($datos) {
+		$this->existeIdProceso($datos);
+		$this -> estaBorradoAUno($datos); //aqui salta un warning si no existe el id a revisar
 	}
 
 function existeIdProceso($datosDeleteProceso){
@@ -31,7 +34,17 @@ function existeIdProceso($datosDeleteProceso){
 		}else{
 			$this->respuesta = 'ID_PROCESO_NO_EXISTE';
 			//throw new DNINoExisteException('DNI_NO_EXISTE');
-		}}
+		}
+}
+
+function estaBorradoAUno($datos) {
+	$resultado = $this -> proceso -> getById('proceso', $datos)['resource'];
+	if ($resultado['borrado_proceso'] === 0) {
+		$this -> respuesta = 'PROCESO_YA_ESTABA_ACTIVADO';
+	} else {
+		return true;
+	}
+}
 		
 	
 		

@@ -554,50 +554,29 @@ function construyeFila(entidad, fila) {
 }
 
 /**Función que construye cada línea que se va a rellenar en la tabla*/
-function construyeFilaProceso(entidad, fila, procedimientos, objetivos, respuestasPosibles, niveles, ordenProceso) {
+function construyeFilaProceso(entidad, fila, parametros) {
 	
 	document.getElementById('cabecera').style.display = "block";
 	document.getElementById('cabeceraEliminados').style.display = "none";
 
 	let atributosFunciones="";
 	var filaTabla = "";
-	var listProcedimientos=[];
-	var listObjetivos = [];
-	var listRespuestasPosibles=[];
-	var listNiveles=[];
-	var listOrdenProcesos = [];
+	var listParametros = [];
 
 	switch(entidad){
         case 'PROCESO':
-        var fechaProceso = new Date(fila.fechaProceso);
+        var fechaProceso = new Date(fila.proceso.fecha_proceso);
 
-        for(var i = 0; i<procedimientos.length; i++){
-        	listProcedimientos.push(procedimientos[i].idProcedimiento);
-        	listProcedimientos.push(procedimientos[i].nombreProcedimiento);
+        for(var i = 0; i<parametros.length; i++){
+        	listParametros.push(parametros[i].parametro.id_parametro);
+        	listParametros.push(parametros[i].parametro.parametro_formula);
         }
 
-        for(var i = 0; i<objetivos.length; i++){
-        	listObjetivos.push(objetivos[i].idObjetivo);
-        	listObjetivos.push(objetivos[i].nombreObjetivo);
-        }
-
-        for(var i = 0; i<respuestasPosibles.length; i++){
-        	listRespuestasPosibles.push(respuestasPosibles[i].idRespuesta);
-        	listRespuestasPosibles.push(respuestasPosibles[i].textoRespuesta);
-        }
-
-        for(var i = 0; i<niveles.length; i++){
-        	listNiveles.push(niveles[i]);
-        }
-
-         for(var i = 0; i<ordenProceso.length; i++){
-        	listOrdenProcesos.push(ordenProceso[i]);
-        }
-
-		atributosFunciones = ["'" + fila.nombreProceso + "'", "'" + fila.descripProceso + "'", "'" + convertirFecha(fechaProceso.toString()) + "'", "'" + fila.idProceso + "'", "'" + listProcedimientos + "'", "'" + listObjetivos +"'", "'" + listRespuestasPosibles + "'", "'" + listNiveles + "'", "'" + listOrdenProcesos + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreProceso + 
-                '</td> <td>' + fila.descripProceso +
-                '</td> <td>' + convertirFecha(fechaProceso.toString());
+		atributosFunciones = ["'" + fila.proceso.nombre_proceso + "'", "'" + fila.proceso.descripcion_proceso + "'", "'" + convertirFecha(fechaProceso.toString()) + "'", "'" + fila.proceso.version_proceso + "'", "'" + fila.proceso.check_aprobacion + "'", "'" + fila.proceso.formula_proceso + "'","'" + fila.categoria.id_categoria + "'","'" + fila.categoria.nombre_categoria + "'","'" + fila.usuario.dni_usuario + "'","'" + fila.usuario.usuario + "'","'" + listParametros + "'","'" + fila.proceso.id_proceso + "'",];
+			filaTabla = '<tr class="impar"> <td>' + fila.proceso.nombre_proceso + 
+                '</td> <td>' + fila.proceso.descripcion_proceso +
+                '</td> <td>' + convertirFecha(fechaProceso.toString()) +
+				'</td> <td>' + fila.usuario.usuario;
          
         break;
 	};
@@ -617,6 +596,48 @@ function construyeFilaProceso(entidad, fila, procedimientos, objetivos, respuest
     	filaTabla = filaTabla + 
                 '</td> <td class="acciones">' + celdaAcciones +  
                 '</td> </tr>';
+    
+
+    setLang(getCookie('lang'));
+
+    return filaTabla;
+}
+
+/**Función que construye cada línea que se va a rellenar en la tabla*/
+function construyeFilaProcesoEliminado(entidad, fila, parametros) {
+	
+	document.getElementById('cabecera').style.display = "none";
+	document.getElementById('cabeceraEliminados').style.display = "block";
+
+	let atributosFunciones="";
+	var filaTabla = "";
+	var listParametros = [];
+
+	switch(entidad){
+        case 'PROCESO':
+        var fechaProceso = new Date(fila.proceso.fecha_proceso);
+
+        for(var i = 0; i<parametros.length; i++){
+        	listParametros.push(parametros[i].parametro.id_parametro);
+        	listParametros.push(parametros[i].parametro.parametro_formula);
+        }
+
+		atributosFunciones = ["'" + fila.proceso.nombre_proceso + "'", "'" + fila.proceso.descripcion_proceso + "'", "'" + convertirFecha(fechaProceso.toString()) + "'", "'" + fila.proceso.version_proceso + "'", "'" + fila.proceso.check_aprobacion + "'", "'" + fila.proceso.formula_proceso + "'","'" + fila.categoria.id_categoria + "'","'" + fila.categoria.nombre_categoria + "'","'" + fila.usuario.dni_usuario + "'","'" + fila.usuario.usuario + "'","'" + listParametros + "'","'" + fila.proceso.id_proceso + "'",];
+			filaTabla = '<tr class="impar"> <td>' + fila.proceso.nombre_proceso + 
+                '</td> <td>' + fila.proceso.descripcion_proceso +
+                '</td> <td>' + convertirFecha(fechaProceso.toString()) +
+				'</td> <td>' + fila.usuario.usuario;
+         
+        break;
+	};
+
+	var reactivar = '<div class="tooltip6"><img class="reactivar reactivarPermiso" src="images/reactivar2.png" data-toggle="" data-target="" onclick="showReactivar(' + atributosFunciones + 
+            ')" alt="Reactivar"/><span class="tooltiptext iconReactivar ICONO_REACTIVAR">Reactivar</span></div>';
+
+   
+    filaTabla = filaTabla + 
+            '</td> <td class="acciones">' + reactivar +  
+            '</td> </tr>';
     
 
     setLang(getCookie('lang'));
@@ -854,69 +875,6 @@ function construyeFilaEliminados(entidad, fila) {
     return filaTabla;
 }
 
-/**Función que construye cada línea que se va a rellenar en la tabla*/
-function construyeFilaProcesoEliminado(entidad, fila, procedimientos, objetivos, respuestasPosibles, niveles, ordenProceso) {
-
-	document.getElementById('cabecera').style.display = "none";
-	document.getElementById('cabeceraEliminados').style.display = "block";
-
-	let atributosFunciones="";
-	var filaTabla = "";
-	var listProcedimientos=[];
-	var listObjetivos = [];
-	var listRespuestasPosibles=[];
-	var listNiveles=[];
-	var listOrdenProcesos = [];
-
-	switch(entidad){
-        case 'PROCESO':
-        var fechaProceso = new Date(fila.fechaProceso);
-
-        for(var i = 0; i<procedimientos.length; i++){
-        	listProcedimientos.push(procedimientos[i].idProcedimiento);
-        	listProcedimientos.push(procedimientos[i].nombreProcedimiento);
-        }
-
-        for(var i = 0; i<objetivos.length; i++){
-        	listObjetivos.push(objetivos[i].idObjetivo);
-        	listObjetivos.push(objetivos[i].nombreObjetivo);
-        }
-
-        for(var i = 0; i<respuestasPosibles.length; i++){
-        	listRespuestasPosibles.push(respuestasPosibles[i].idRespuesta);
-        	listRespuestasPosibles.push(respuestasPosibles[i].textoRespuesta);
-        }
-
-        for(var i = 0; i<niveles.length; i++){
-        	listNiveles.push(niveles[i]);
-        }
-
-         for(var i = 0; i<ordenProceso.length; i++){
-        	listOrdenProcesos.push(ordenProceso[i]);
-        }
-
-		atributosFunciones = ["'" + fila.nombreProceso + "'", "'" + fila.descripProceso + "'", "'" + convertirFecha(fechaProceso.toString()) + "'", "'" + fila.idProceso + "'", "'" + listProcedimientos + "'", "'" + listObjetivos +"'", "'" + listRespuestasPosibles + "'", "'" + listNiveles + "'", "'" + listOrdenProcesos + "'"];
-			filaTabla = '<tr class="impar"> <td>' + fila.nombreProceso + 
-                '</td> <td>' + fila.descripProceso +
-                '</td> <td>' + convertirFecha(fechaProceso.toString());
-         
-        break;
-	};
-
-	
-	var reactivar = '<div class="tooltip6"><img class="reactivar reactivarPermiso" src="images/reactivar2.png" data-toggle="" data-target="" onclick="showReactivar(' + atributosFunciones + 
-                               ')" alt="Reactivar"/><span class="tooltiptext iconReactivar ICONO_REACTIVAR">Reactivar</span></div>';
-    
-
-    filaTabla = filaTabla + 
-                '</td> <td class="acciones">' + reactivar +  
-                '</td> </tr>';
-
-	setLang(getCookie('lang'));
-
-    return filaTabla;
-}
-
 
 
 /**Función que crea según las columnas que le pasemos un div con checkbox para marcar y así ocultar las columnas*/
@@ -1122,8 +1080,8 @@ function cargarClass(dato, rol){
 			clase = "GESTION_PARAMETROS";
 		break;
 
-		case 'Gestión de respuestas posibles':
-			clase = "GESTION_RESPUESTAS_POSIBLES";
+		case 'Gestión de procesos':
+			clase = "GESTION_PROCESOS";
 		break;
 
 		case 'Gestión de categorias':
@@ -1356,13 +1314,13 @@ function respuestaAjaxKO(codigo){
 }
 
 /** Función para mostrar las modales de error **/
-function respuestaAjaxContinuarProcedimiento(identificadorProcedimiento){
+function respuestaAjaxContinuarProceso(identificadorProceso){
 	$("#modal-titleContinuar").removeClass();
     $("#modal-titleContinuar").addClass("ERROR");
     document.getElementById("modal-titleContinuar").style.color = "#a50707";    
     document.getElementById("modal-titleContinuar").style.top = "13%";
     $(".imagenAviso").attr('src', 'images/failed.png');
-    $('#seguir').attr('onclick', 'iniciarProcedimientoUsuario('+ identificadorProcedimiento +', \'volverGuardar\')');
+    $('#seguir').attr('onclick', 'iniciarProcesoUsuario('+ identificadorProceso +', \'volverGuardar\')');
 
     setLang(getCookie('lang'));
 }
@@ -1677,44 +1635,22 @@ function posicionarTitulo(funcionalidad){
 	var idioma = getCookie('lang');
 
 	switch(funcionalidad) {
-		case 'empresa':
-			switch(idioma) {
-				case 'ES':
-					if (rol === 'usuario' || rol === 'gestor') {
-						document.getElementById('gestion').style.top = "104px";
-						document.getElementById('gestion').style.left = "44.5%";
-					}
-				break;
-				case 'EN':
-					if (rol === 'usuario' || rol === 'gestor') {
-						document.getElementById('gestion').style.top = "104px";
-						document.getElementById('gestion').style.left = "44%";
-					}
-				break;
-				case 'GA':
-					if (rol === 'usuario' || rol === 'gestor') {
-						document.getElementById('gestion').style.top = "104px";
-						document.getElementById('gestion').style.left = "42.5%";
-					}
-				break;
-			}
-		break;
 		case 'persona':
 			switch(idioma) {
 				case 'ES':
-					if (rol === 'usuario' || rol === 'gestor') {
+					if (rol === 'Usuario' || rol === 'Gestor') {
 						document.getElementById('gestion').style.top = "104px";
 						document.getElementById('gestion').style.left = "40%";
 					}
 				break;
 				case 'EN':
-					if (rol === 'usuario' || rol === 'gestor') {
+					if (rol === 'Usuario' || rol === 'Gestor') {
 						document.getElementById('gestion').style.top = "104px";
 						document.getElementById('gestion').style.left = "41.7%";
 					}
 				break;
 				case 'GA':
-					if (rol === 'usuario' || rol === 'gestor') {
+					if (rol === 'Usuario' || rol === 'Gestor') {
 						document.getElementById('gestion').style.top = "104px";
 						document.getElementById('gestion').style.left = "38.5%";
 					}
@@ -1724,39 +1660,39 @@ function posicionarTitulo(funcionalidad){
 		case 'usuario':
 			switch(idioma) {
 				case 'ES':
-					if (rol === 'usuario' || rol === 'gestor') {
+					if (rol === 'Usuario' || rol === 'Gestor') {
 						document.getElementById('gestion').style.top = "104px";
 						document.getElementById('gestion').style.left = "40%";
 					}
 				break;
 				case 'EN':
-					if (rol === 'usuario' || rol === 'gestor') {
+					if (rol === 'Usuario' || rol === 'Gestor') {
 						document.getElementById('gestion').style.top = "104px";
 						document.getElementById('gestion').style.left = "43.7%";
 					}
 				break;
 				case 'GA':
-					if (rol === 'usuario' || rol === 'gestor') {
+					if (rol === 'Usuario' || rol === 'Gestor') {
 						document.getElementById('gestion').style.top = "104px";
 						document.getElementById('gestion').style.left = "37.5%";
 					}
 				break;
 			}
 		break;
-		case 'misprocedimiento':
+		case 'misproceso':
 			switch(idioma) {
 				case 'ES':
-					if (rol === 'usuario') {
+					if (rol === 'Usuario') {
 						document.getElementById('gestion').style.left = "41%";
 					}
 				break;
 				case 'EN':
-					if (rol === 'usuario') {
+					if (rol === 'Usuario') {
 						document.getElementById('gestion').style.left = "43%";
 					}
 				break;
 				case 'GA':
-					if (rol === 'usuario') {
+					if (rol === 'Usuario') {
 						document.getElementById('gestion').style.left = "37.5%";
 					}
 				break;

@@ -41,7 +41,6 @@ class ProcesoUsuarioAccion extends ValidacionesBase {
 	}
  
 	function existeDniUsuario($proceso_usuario_datos) {
-
 		$this -> usuario -> getById('Usuario', $proceso_usuario_datos);
 		$resultado = $this -> usuario -> mapping -> resource;
 

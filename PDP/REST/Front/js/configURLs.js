@@ -87,6 +87,17 @@ var urlPeticionAjaxDeleteParametro = urlComun;
 var urlPeticionAjaxListadoParametros = urlComun;
 var urlPeticionAjaxListarParametro = urlComun;
 var urlPeticionAjaxEditarParametro = urlComun;
+var urlPeticionAjaxListarParametrosProceso = urlComun;
 
 /**Urls de procesos */
 var urlPeticionAjaxListarTodosProcesos = urlComun;
+var urlPeticionAjaxListadoProcesosCategoriaByIdCategoria = urlComun;
+var urlPeticionAjaxAddProceso = urlComun;
+var urlPeticionAjaxEditProceso = urlComun;
+var urlPeticionAjaxListarProceso = urlComun;
+var urlPeticionAjaxDeleteProceso = urlComun;
+var urlPeticionAjaxListarProcesosEliminados = urlComun;
+var urlPeticionAjaxReactivarProceso = urlComun;
+
+/** Urls de procedimiento usuario */
+var urlPeticionAjaxAddProcedimientoUsuario = urlComun;

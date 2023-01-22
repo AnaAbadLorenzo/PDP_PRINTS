@@ -14,7 +14,7 @@ class AddProcesoValidation extends ValidacionesBase {
         $this->respuesta = '';
 
         $validacionAddProceso = new ProcesoAtributos();
-        $atributosValidacion = array('nombre_proceso', 'descripcion_proceso');
+        $atributosValidacion = array('nombre_proceso', 'descripcion_proceso','formula_proceso');
         $atributos = $this ->recogerValoresAtributosPeticion($atributosValidacion);
         $validacionAddProceso->validarAtributosProceso($atributos);
 

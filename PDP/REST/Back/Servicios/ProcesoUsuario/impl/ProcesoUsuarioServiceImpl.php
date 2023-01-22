@@ -7,7 +7,7 @@ include_once './Servicios/ProcesoUsuario/ProcesoUsuarioService.php';
 include_once './Mapping/ProcesoUsuarioMapping.php';
 include_once './Mapping/ProcesoUsuarioParametroMapping.php';
 include_once './Mapping/ProcesoMapping.php';
-
+include_once './Mapping/UsuarioMapping.php';
 include_once './Modelos/ProcesoUsuarioModel.php';
 
 include_once './Validation/Accion/ProcesoUsuarioAccion.php';
@@ -26,11 +26,19 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
     }
 
     function add($mensaje) {
+        $datosProcesoUsuario = array();
+        $datosProcesoUsuario = array();
+        $datosProcesoUsuario['usuario'] = $this->proceso_usuario->usuario;
+
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->searchByLogin($datosProcesoUsuario);
+        $resultadoUsuario = $usuario_mapping->feedback['resource'];
 
         $proceso_usuario_datos = [
-            'fecha_proceso_usuario' => $this -> proceso_usuario -> fecha_proceso_usuario,
+            'fecha_proceso_usuario' => date('Y-m-d'),
             'calculo_huella_carbono' => $this -> proceso_usuario -> calculo_huella_carbono,
-            'dni_usuario' => $this -> proceso_usuario -> dni_usuario,
+            'usuario' => $this->proceso_usuario->usuario,
+            'dni_usuario' => $resultadoUsuario['dni_usuario'],
             'id_proceso' => $this -> proceso_usuario -> id_proceso
         ];
     
@@ -46,9 +54,15 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
             return $respuesta;
         }
 
-        //añadir a bd
+        $procesoUsuarioDatos = array(
+            'fecha_proceso_usuario' => date('Y-m-d'),
+            'calculo_huella_carbono' => $this -> proceso_usuario -> calculo_huella_carbono,
+            'dni_usuario' => $resultadoUsuario['dni_usuario'],
+            'id_proceso' => $this -> proceso_usuario -> id_proceso
+        );
+        
         $proceso_usuario_mapping = new ProcesoUsuarioMapping;
-        $proceso_usuario_mapping -> add($proceso_usuario_datos);
+        $proceso_usuario_mapping -> add($procesoUsuarioDatos);
 
         if ($proceso_usuario_mapping -> respuesta == null) {
             $respuesta = $mensaje;
@@ -131,18 +145,53 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
 
         $proceso_usuario_mapping = new ProcesoUsuarioMapping();
         $proceso_usuario_mapping -> search($paginacion);
+        $datosProcesoUsuario = $proceso_usuario_mapping ->feedback['resource'];
+        $datosProceso = $this->searchForeignKeysProceso();
+        $datosUsuario = $this->searchForeignkeysUsuario();
+
+        $datosADevolver = array();
+            $datosUsuarioDev = array();
+            foreach($datosProcesoUsuario as $procesoUsuario){
+                foreach($datosProceso as $proceso){
+                    if($procesoUsuario['id_proceso'] == $proceso['id_proceso']){
+                        $datosUsuarioDev['procesoUsuario'] = $procesoUsuario;
+                        $datosUsuarioDev['proceso'] = $proceso;
+                    }
+                    foreach($datosUsuario as $usuario) {
+                        if(isset($datosUsuarioDev['procesoUsuario'])){
+                            if($usuario['dni_usuario'] == $procesoUsuario['dni_usuario']){
+                                $datosUsuarioDev['usuario'] = $usuario;
+                            }
+                        }
+                    }
+                    
+                }
+                array_push($datosADevolver, $datosUsuarioDev);
+            }
 
         $returnBusquedas = new ReturnBusquedas
         (
-            $proceso_usuario_mapping -> feedback['resource'],
+            $datosADevolver,
             '',
             $this -> numberFindAll()["COUNT(*)"],
-            sizeof($proceso_usuario_mapping -> feedback['resource']),
+            sizeof($datosADevolver),
             $paginacion -> inicio
         );
 
         return $returnBusquedas;
 
+    }
+
+    function searchForeignKeysProceso() {
+        $proceso_mapping = new ProcesoMapping();
+        $proceso_mapping->searchAll();
+        return $proceso_mapping->feedback['resource'];
+    }
+
+    function searchForeignKeysUsuario() {
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->searchAll();
+        return $usuario_mapping->feedback['resource'];
     }
 
     function searchByParameters($paginacion) {

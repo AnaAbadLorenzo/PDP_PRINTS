@@ -8,19 +8,21 @@ class AddProcesoAccion extends ValidacionesBase{
 
 	
     private $proceso;
+    private $categoria;
+    private $persona;
 	public $respuesta;
 
 	function __construct()
 	{
 		$this->categoria = new CategoriaModel();
         $this->persona = new PersonaModel();
-       
+        $this->proceso = new ProcesoModel();
+
 	}
 
 
 	function comprobarAddProceso($datosAddProceso){
-
-		//$this->existeIdProceso($datosAddProceso);
+		$this->existeProceso($datosAddProceso);
 		$this->existeIdCategoria($datosAddProceso);
 		$this->existeDNIUsuario($datosAddProceso);
 	}
@@ -36,35 +38,30 @@ function existeIdCategoria($datosAddProceso){
 			return true;
 		}else{
 			$this->respuesta = 'ID_CATEGORIA_NO_EXISTE';
-			//throw new DNINoExisteException('DNI_NO_EXISTE');
 }}
-/*
-        function existeIdProceso($datosAddProceso){
- 
-            $datoBuscar = array();
-            $datoBuscar['id_proceso'] = $datosAddProceso['id_proceso'];
-            $resultado = $this->proceso->getById('proceso', $datoBuscar)['resource'];
-          
-        
-            if(!sizeof($resultado) == 0) {
-                return true;
-            }else{
-                $this->respuesta = 'ID_PROCESO_NO_EXISTE';
-                //throw new DNINoExisteException('DNI_NO_EXISTE');
-            }}
-*/
-        function existeDNIUsuario($datosAddProceso){
 
-            $datoBuscar = array();
-            $datoBuscar['dni_persona'] = $datosAddProceso['dni_usuario'];
-            $resultado = $this->persona->getByDNI('persona', $datoBuscar)['resource'];
+function existeDNIUsuario($datosAddProceso){
+
+    $datoBuscar = array();
+    $datoBuscar['dni_persona'] = $datosAddProceso['dni_usuario'];
+    $resultado = $this->persona->getByDNI('persona', $datoBuscar)['resource'];
             
-            if(!sizeof($resultado) == 0) {
-                return true;
-            }else{
-                $this->respuesta = 'DNI_USUARIO_NO_EXISTE';
-                //throw new DNINoExisteException('DNI_NO_EXISTE');
+    if(!sizeof($resultado) == 0) {
+        return true;
+    }else{
+        $this->respuesta = 'DNI_USUARIO_NO_EXISTE';
 }}
+
+function existeProceso($datosAddProceso){
+    $datoBuscar = array();
+    $datoBuscar['nombre_proceso'] = $datosAddProceso['nombre_proceso'];
+    $resultado = $this->proceso->getByName('proceso', $datoBuscar)['resource'];
+            
+    if(!sizeof($resultado) == 0) {
+        $this->respuesta = 'PROCESO_YA_EXISTE';
+    }else{
+        return true;
+    }}
 		
         
             

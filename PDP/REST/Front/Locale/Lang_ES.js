@@ -40,6 +40,7 @@ arrayES={
 	'NOMBRE_CATEGORIA' : 'Nombre categoria',
 	'DESCRIPCION_CATEGORIA' : 'Descripción categoria',
 	'RESPONSABLE_CATEGORIA' : 'Responsable categoría',
+	'RESPONSABLE_PROCESO' : 'Responsable proceso',
 	'CATEGORIA_PADRE' : 'Categoría padre',
 	'PARAMETRO_FORMULA' : 'Nombre parámetro',
 	'DESCRIPCION_PARAMETRO' : 'Descripción parámetro (unidades)',
@@ -65,6 +66,10 @@ arrayES={
 	'ESTADO_PROCEDIMIENTO_EJECUTADO' : 'Estado procedimiento',
 	'PUNTUACION_PROCEDIMIENTO_EJECUTADO' : 'Puntuacion procedimiento ejecutado',
 	'EVIDENCIA' : 'Evidencia: ',
+	'ID_CATEGORIA' : 'Categoría',
+	'ESTADO_PROCESO' : 'Estado del proceso',
+	'FORMULA_PROCESO' : 'Fórmula proceso',
+	'VERSION_PROCESO' : 'Versión proceso',
 
 	//Idiomas
 	'ESPAÑOL' : 'Español',
@@ -100,7 +105,7 @@ arrayES={
 	'DAR_PERMISO': 'Dar permiso',
 	'ICON_CATEGORIA' : 'Categoria',
 	'ICON_ACCEDER_CATEGORIAS' : 'Acceder a las categorías',
-	'ICON_INICIAR_PROCEDIMIENTO' : 'Iniciar procedimiento',
+	'ICON_INICIAR_PROCESO' : 'Iniciar proceso',
 	'ICON_CONTINUAR_PROCEDIMIENTO' : 'Continuar procedimiento',
 	'ICON_PROCEDIMIENTO_FINALIZADO' : 'Procedimiento finalizado',
 	'ICON_PLAN': 'Plan',
@@ -167,7 +172,7 @@ arrayES={
 	'RESPUESTA_POSIBLE_VACIA' : 'El texto de la respuesta posible es vacío',
 	'RESPUESTA_POSIBLE_NO_EXISTE_EXCEPTION' : 'La respuesta posible no existe',
 	'RESPUESTA_ASOCIADA_PROCESO_EXCEPTION' : 'La respuesta posible está asociada a un proceso',
-	'MENSAJE_CONTINUAR_PROCEDIMIENTO' : 'Usted ya ha iniciado este procedimiento. ¿Desea continuar?',
+	'MENSAJE_CONTINUAR_PROCESO' : 'Usted ya ha iniciado este proceso. ¿Desea continuar?',
 	'PROCESO_VACIO' : 'El nombre, la descripción, la fecha, los procedimientos, las respuestas posibles y/o los objetivos son vacíos',
 	'PROCESO_YA_EXISTE_EXCEPTION' : 'El proceso ya existe',
 	'PROCESO_NO_EXISTE_EXCEPTION' : 'El proceso no existe',
@@ -305,6 +310,7 @@ arrayES={
 	'RELLENA_USUARIO' : 'Por favor, selecciona un usuario',
 	'RELLENA_CATEGORIA' : 'Por favor, selecciona una categoría',
 	'RELLENA_PROCESO' : 'Por favor, selecciona un proceso',
+	'RELLENA_CHECK_PROCESO' : 'Por favor, selecciona una opción de publicación',
 	'SELECT_PROCEDIMIENTOS_VACIO' : 'Por favor, añade un procedimiento minimo',
 	'SELECT_CATEGORIAS_VACIO' : 'Por favor, añade una categoria minimo',
 	'NIVEL_VACIO' : 'Nivel vacio',
@@ -320,6 +326,9 @@ arrayES={
 	'FECHA_PROCEDIMIENTO_EJCUTADO_NUMERICA_INCORRECTA' : 'La fecha del procedimiento ejecutado solo puede contener números',
 	'FECHA_PROCEDIMIENTO_EJCUTADO_MENOR_QUE_8' : 'La fecha del procedimiento ejecutado tiene menos de 8 caracteres',
 	'FECHA_PROCEDIMIENTO_EJCUTADO_MAYOR_QUE_8' : 'La fecha del procedimiento ejecutado tiene más de 8 caracteres',
+	'FORMULA_PROCESO_VACIA' : 'Fórmula proceso vacía',
+	'FORMULA_PROCESO_MENOR_QUE_3' : 'La fórmula del proceso tiene menos de 3 caracteres',
+	'FORMULA_PROCESO_INCORRECTA' : 'La fórmula del proceso debe tener, al menos, un signo igual',
 
 
 	//Mensajes
@@ -440,6 +449,7 @@ arrayES={
 	'GESTION_PROCESOS_NO_ADMIN' : 'Procesos',
 	'GESTION_PROCEDIMIENTOS_EJECUTADOS' : 'Gestión de procedimientos ejecutados',
 	'GESTION_PROCESOS_EJECUTADOS' : 'Gestión de procesos ejecutados',
+	'MIS_PROCESOS' : 'Mis procesos',
 	'REACTIVATE_PROCEDIMIENTO' : 'REACTIVAR PROCEDIMIENTO',
 	'DELETE_PROCEDIMIENTO' : 'ELIMINAR PROCEDIMIENTO',
 	'EDIT_PROCEDIMIENTO' : 'EDITAR PROCEDIMIENTO',
@@ -575,8 +585,8 @@ arrayES={
 	'PROCEDIMIENTO_USUARIO_MODIFICADO' : 'El procedimiento ejecutado se ha modificado correctamente',
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GUARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'La evidencia se ha guadado correctamente',
-	'CATEGORIA_YA_EXISTE' : 'La categoría ya existe'
-
+	'CATEGORIA_YA_EXISTE' : 'La categoría ya existe',
+	'EXPLICACION_FORMULA' : 'Los parámetros de la fómula deben introducirse entre los símbolos # y, sus unidades, entre |.Por ejemplo: v = #espacio|m|# x #tiempo|sg|#'
 
 
 }

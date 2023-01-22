@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+	<link rel="stylesheet" type="text/css" href="css/comun.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/misProcesos.css" media="screen" />
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/funcionesComunes.js"></script>
+	<script type="text/javascript" src="js/configURLs.js"></script>
+	<script type="text/javascript" src="js/configPaginacion.js"></script>
+	<script type="text/javascript" src="js/paginacion.js"></script>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/validaciones.js"></script>
+	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/misProcesos.js"></script>
+	<script type="text/javascript" src="Locale/idioma.js"></script>
+    <script type="text/javascript" src="Locale/Lang_EN.js"></script>
+    <script type="text/javascript" src="Locale/Lang_ES.js"></script>
+    <script type="text/javascript" src="Locale/Lang_GA.js"></script>	
+    <link rel="shortcut icon" type="image/png" href="images/iconoIndex2.png">
+    <title>Crabon Footprint</title>
+</head>
+
+<body onload="(async ()=>{
+	comprobarTokenUsuario('proceso');
+  	await includeTopMenu('misproceso');
+    await funcionalidadesUsuario();
+    await cargarProcesosUsuarioEjecutados(0,tamanhoPaginaProceso, 'PaginadorNo')
+    posicionarTitulo('misproceso');modalCambioPass();cargarIdioma();includeFooter();setLang('');
+  })();">  
+	<div id="topMenu"></div>
+
+	<div class="modal modal3 fade" id="changePass-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	</div>
+
+	<h1 id="gestion" class="gestion MIS_PROCESOS"></h1>
+
+	<div id="cabecera" class="cabecera" style="display: block;">
+		<div id="divListarProcesoUsuario" name="btnSearch" value="Buscar" data-toggle="modal" data-target="#form-modal" onclick="javascript:showBuscar()" class="tooltip6 searchIcon" style="cursor: pointer">
+	        <img id="btnListarProcesosUsuario" class="iconoSearch iconSearch" src="images/search3.png" alt="Buscar Procesos Usuario" />
+	        <span class="tooltiptext iconSearch ICONO_SEARCH"></span>
+	    </div>
+
+	    <div name="btnRefresh" value="Buscar" onclick="javascript:refrescarTabla(0, tamanhoPaginaProcesosUsuario)" class="tooltip6 refreshIcon">
+	        <img class="iconoRefresh iconRefresh" src="images/refresh3.png" alt="Refrescar Tabla" />
+	        <span class="tooltiptext iconRefresh ICON_REFRECH_TABLE"></span>
+	    </div>
+	</div>
+
+	<div class="listado" id="tablaDatos" style="display:none;">
+		
+	</div>
+
+	<div id="misProcesos" class="procesos overflow-auto" style="display: none;">
+		<div id="procesos" class="row">
+		</div>
+	</div>
+
+	<div class="filasTabla" id="filasTabla" style="display: none;">
+			<div id="paginacion"></div>
+	</div>
+
+	<div id="itemPaginacion" class="paginacion" hidden>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+		  	</ul>
+		</nav>
+	</div>
+
+	<div id="volver" class="volver" style="display: none;">
+		<div name="btnBack" value="Volver" onclick="javascript:volver()" class="tooltip6 backIcon">
+        <img class="iconoBack iconBack" src="images/home2.png" alt="Volver" />
+        <span class="tooltiptext iconBack ICONO_VOLVER">Volver</span>
+    </div>   
+	</div>
+
+	<div id="modal" tabindex="-1" role="dialog" style="display:none">
+		<div class="modal-dialog" role="document" id="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <img src="" name="aviso" class="imagenAviso"/>
+		      <h3 id="modal-title" class="modal-title"></h3>
+		    </div>
+			<div id='modal-mensaje' class="modal-body"></div>
+		  		<div id="modalFooter" class="modal-footer">
+	        		<a id="cerrar" href="#" onclick="cerrarModal('modal')" class="tooltip5">
+		        		<img class="iconCerrar" alt="Cerrar" src="images/close.png"/>
+		                <span class="tooltiptext5 ICONO_CERRAR"></span>
+	        		</a>
+		  		</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal2 fade" id="modalMostrarCategoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+		  <div class="formmodal-container">
+			<div id="formularioMostrarCategoria">
+			  <div id="contenidoFormMostrarCategoria">
+				<div class="formularioComun">
+				  <h1 id="tituloFormsModalMostrarCategoria" class="datos"></h1>
+				  <form name="formularioModalMostrarCategoria" id="formularioModalMostrarCategoria" action="" onsubmit="">
+					<label class="labelForm NOMBRE_CATEGORIA" id="labelNombreCategoriaMostrarCategoria" hidden></label>                            
+					<input type="text" maxlength="128" size="128" placeholder="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" id="nombreCategoria" class="NOMBRE_CATEGORIA" onblur=""/>
+				   
+					<div style="display:none" id="errorFormatoNombreCategoria"></div>
+							  
+					<label class="labelForm DESCRIPCION_CATEGORIA" id="labelDescripcionCategoriaMostrarCategoria" hidden></label>
+					<input type="text" placeholder="DESCRIPCION_CATEGORIA" name="DESCRIPCION_CATEGORIA" id="descripcionCategoriaMostrarCategoria" class="DESCRIPCION_CATEGORIA" onblur=""/>
+					
+					<div style="display:none" id="errorFormatoDescripcionCategoria"></div>
+	
+					<button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAccionesMostrarCategoria">
+						<img class="" src="" alt="" id="iconoAccionesMostrarCategoria" />
+						<span class="tooltiptext" id="spanAccionesMostrarCategoria"></span>
+					</button>
+				  </form>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+    <div class="modal modal2 fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; overflow-y: scroll;">
+    	<div class="modal-dialog">
+			<div class="formmodal-container">
+				<div id="formularioAcciones">
+      				<div id="contenidoForm">
+              			<div class="formularioComun">
+              				<h1 id="tituloForms" class="datos"></h1>
+                    		<form name="formularioGenerico" id="formularioGenerico" action="" onsubmit="">
+                    			<label class="labelForm NOMBRE_PROCESO" id="labelNombreProceso" hidden></label>                            
+		                        <input type="text" maxlength="255" size="255" placeholder="NOMBRE_PROCESO" name="NOMBRE_PROCESO" id="nombreProceso" class="NOMBRE_PROCESO" onblur=""/>
+	                        	<div class="obligatorio tooltip2" id="obligatorioNombreProceso">*
+	                  				<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+	              			  	</div>
+		                        <div style="display:none" id="errorFormatoNombreProceso"></div>
+
+		                        <label class="labelForm DESCRIPCION_PROCESO" id="labelDescripcionProceso" hidden></label>                            
+		                        <input type="text" maxlength="255" size="255" placeholder="DESCRIPCION_PROCESO" name="DESCRIPCION_PROCESO" id="descripcionProceso" class="DESCRIPCION_PROCESO" onblur=""/>
+	                        	<div class="obligatorio tooltip2" id="obligatorioDescripcionProceso">*
+	                  				<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+	              			  	</div>
+		                        <div style="display:none" id="errorFormatoDescripcionProceso"></div>
+
+		                        <label class="labelForm DATE" id="labelFechaProceso" hidden></label>
+                    	  		<input type="date" name="fechaProceso" id="fechaProceso" value="1900-01-01" min="1900-01-01" max="3000-01-01" onblur="">
+                    	  		<div class="obligatorio tooltip2" id="obligatorioFechaProceso">*
+                      				<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+                    	  		</div>
+                    	  		<div style="display:none" id="errorFormatoFechaProceso"></div>
+                    	  		
+								<label class="labelForm ID_CATEGORIA" id="labelIdCategoria" ></label>
+                            	<select id="selectCategorias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
+                            	<div class="obligatorio tooltip2" id="obligatorioIdCategoria">*
+                                	<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+                            	</div>
+                            	<div style="display:none" id="errorFormatoIdCategoria"></div>
+								
+								<div id="checkPubli" class="preguntaCheck" onblur="">
+									<label id='labelCheckProceso' class="ESTADO_PROCESO labelEtiqueta labelForm"></label>
+									 <div class="obligatorio tooltip2" id="obligatorioCheck">*
+									  <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+									</div>
+								  	<div class="form-check-inline">
+										<input class="form-check-input" type="radio" value="publicado" name="checkPublicado" id="checkUsuarioPublicar">
+										<label class="form-check-label PUBLICADO" for="publicado"></label>
+								  	</div>
+								  	<div class="form-check-inline">
+										<input class="form-check-input" type="radio" value="noPublicado" id="checkUsuarioNoPublicar" name="checkPublicado">
+										<label class="form-check-label NO_PUBLICADO" for="noPublicado"></label>
+									</div>
+							  	</div>
+							  	<div style="display:none" id="errorFormatoCheckPublicado"></div>
+
+								<label class="labelForm FORMULA_PROCESO" id="labelFormulaProceso" ></label>
+								<div class=""  id="explicacionCubrirFormula" style="display:none"></div>
+								<textarea type="text" placeholder="FORMULA_PROCESO" name="FORMULA_PROCESO" 
+									id="formulaProceso" class="FORMULA_PROCESO" onblur="" onclick="limpiarTextArea('formulaProceso')"></textarea>
+								<div class="obligatorio tooltip2" id="obligatorioFormulaProceso">*
+									<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+								</div>
+								<div style="display:none" id="errorFormatoFormulaProceso"></div>
+
+								<label class="labelForm VERSION_PROCESO" id="labelVersionProceso" ></label>
+								<input type="text" maxlength="255" size="255" placeholder="VERSION_PROCESO" name="VERSION_PROCESO" 
+									id="versionProceso" class="VERSION_PROCESO"/>
+								<div class="obligatorio tooltip2" id="obligatorioVersionProceso">*
+									<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+								</div>
+								<div style="display:none" id="errorFormatoVersionProceso"></div>
+
+								<label class="labelForm RESPONSABLE_PROCESO" id="labelResponsableProceso" ></label>
+								<input type="text" maxlength="255" size="255" placeholder="RESPONSABLE_PROCESO" name="RESPONSABLE_PROCESO" 
+									id="responsableProceso" class="RESPONSABLE_PROCESO"/>
+								<div class="obligatorio tooltip2" id="obligatorioResponsableProceso">*
+									<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
+								</div>
+								<div style="display:none" id="errorFormatoResponsableProceso"></div>
+
+	                       		<div style="display:none" id="errorFormatoObjetivos"></div> 
+	                          	<button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAcciones">
+	                              	<img class="" src="" alt="" id="iconoAcciones" />
+	                              	<span class="tooltiptext" id="spanAcciones"></span>
+	                          	</button>
+                      		</form>
+                    	</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer"></div>
+</body>
+</html>

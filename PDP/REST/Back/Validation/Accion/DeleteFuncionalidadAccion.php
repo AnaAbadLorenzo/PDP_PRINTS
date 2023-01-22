@@ -30,7 +30,8 @@ class DeleteFuncionalidadAccion extends ValidacionesBase{
 	}
 
 	function funcionalidadNoEstaEnPermisos($datos) {
-
+		$resultado = array();
+		
 		$this -> acl -> searchByFuncionalidad($datos);
 		$resultado = $this -> acl -> resource;
 

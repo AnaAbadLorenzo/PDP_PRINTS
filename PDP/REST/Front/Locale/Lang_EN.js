@@ -39,6 +39,7 @@ arrayEN={
 	'NOMBRE_CATEGORIA' : 'Category name',
 	'DESCRIPCION_CATEGORIA' : 'Category description',
 	'RESPONSABLE_CATEGORIA' : 'Category main user',
+	'RESPONSABLE_PROCESO' : 'Process main user',
 	'CATEGORIA_PADRE' : 'Main Category',
 	'PARAMETRO_FORMULA' : 'Param name',
 	'DESCRIPCION_PARAMETRO' : 'Param description (units)',
@@ -64,6 +65,10 @@ arrayEN={
 	'ESTADO_PROCEDIMIENTO_EJECUTADO' : 'Procedure state',
 	'PUNTUACION_PROCEDIMIENTO_EJECUTADO' : 'Execute procedure puntuaction',
 	'EVIDENCIA' : 'Evidence',
+	'ID_CATEGORIA' : 'Category',
+	'ESTADO_PROCESO' : 'Process state',
+	'FORMULA_PROCESO' : 'Process formula',
+	'VERSION_PROCESO' : 'Process version',
 
 	//Idiomas
 	'ESPAÑOL' : 'Spanish',
@@ -97,7 +102,7 @@ arrayEN={
 	'ICONO_DETALLE' : 'Detail',
 	'ICON_CATEGORIA' : 'Category',
 	'ICON_ACCEDER_CATEGORIAS' : 'Go to categories',
-	'ICON_INICIAR_PROCEDIMIENTO' : 'Start procedure',
+	'ICON_INICIAR_PROCESO' : 'Start process',
 	'ICON_CONTINUAR_PROCEDIMIENTO' : 'Continue procedure',
 	'ICON_PROCEDIMIENTO_FINALIZADO' : 'Procedure completed',
 	'ICON_PLAN': 'Plan',
@@ -165,7 +170,7 @@ arrayEN={
 	'RESPUESTA_POSIBLE_VACIA' : 'The text of the possible answer is empty',
 	'RESPUESTA_POSIBLE_NO_EXISTE_EXCEPTION' : 'The possible answer doesn´t exists',
 	'RESPUESTA_ASOCIADA_PROCESO_EXCEPTION' : 'The possible answer is associated with a process',
-	'MENSAJE_CONTINUAR_PROCEDIMIENTO' : 'You had already started this procedure. Do you want to continue?',
+	'MENSAJE_CONTINUAR_PROCEso' : 'You had already started this process. Do you want to continue?',
 	'PROCESO_VACIO' : 'The name, description, date, procedures, categorys and/or posible answers are empty',
 	'PROCESO_YA_EXISTE_EXCEPTION' : 'The process already exists',
 	'PROCESO_NO_EXISTE_EXCEPTION' : 'The process doesn´t exists',
@@ -302,7 +307,8 @@ arrayEN={
 	'FECHA_PROCESO_MAYOR_QUE_8' : 'Process`s date is bigger than 8 characteres',
 	'RELLENA_USER' : 'Please, select an user',
 	'RELLENA_PROCESO' : 'Please, select a process',
-	'RELLENA_CATEGORIA' : 'Please, select an objetive',
+	'RELLENA_CATEGORIA' : 'Please, select a category',
+	'RELLENA_CHECK_PROCESO' : 'Please, select an option of publication',
 	'SELECT_PROCEDIMIENTOS_VACIO' : 'Please, add one procedure minimum',
 	'SELECT_CATEGORIAS_VACIO' : 'Please, add one category minimum',
 	'NIVEL_VACIO' : 'Level empty',
@@ -318,6 +324,9 @@ arrayEN={
 	'FECHA_PROCEDIMIENTO_EJCUTADO_NUMERICA_INCORRECTA' : 'Execute procedure`s can only contain numbers',
 	'FECHA_PROCEDIMIENTO_EJCUTADO_MENOR_QUE_8' : 'Execute procedure`s is minor than 8 characteres',
 	'FECHA_PROCEDIMIENTO_EJCUTADO_MAYOR_QUE_8' : 'Execute procedure`s is bigger than 8 characteres',
+	'FORMULA_PROCESO_VACIA' : 'Process`s formula empty',
+	'FORMULA_PROCESO_MENOR_QUE_3' : 'Process`s formula size is minor than 3 characteres',
+	'FORMULA_PROCESO_INCORRECTA' : 'Process`s formula has to has an equal sign',
 
 	//Mensajes
 	'OLVIDAR_CONTRASENA' : 'Forgot your password?',
@@ -434,6 +443,7 @@ arrayEN={
 	'GESTION_PROCESOS_NO_ADMIN' : 'Processes',
 	'GESTION_PROCEDIMIENTOS_EJECUTADOS' : 'Executed procedures management',
 	'GESTION_PROCESOS_EJECUTADOS' : 'Executed process management',
+	'MIS_PROCESOS' : 'My process',
 	'REACTIVATE_PROCEDIMIENTO' : 'REACTIVATE PROCEDURE',
 	'DELETE_PROCEDIMIENTO' : 'DELETE PROCEDURE',
 	'EDIT_PROCEDIMIENTO' : 'EDIT PROCEDURE',
@@ -568,7 +578,8 @@ arrayEN={
 	'PROCEDIMIENTO_USUARIO_MODIFICADO' : 'The execute procedure has been edited correctly',
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCE SAVED CORRECTLY',
 	'EVIDENCIA_GUARDADA' : 'The evidence has been saved correctly',
-	'CATEGORIA_YA_EXISTE' : 'The category already exists'
+	'CATEGORIA_YA_EXISTE' : 'The category already exists',
+	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units between |.For example: v = #space|m|# x #time|sg|#'
 
 
 }

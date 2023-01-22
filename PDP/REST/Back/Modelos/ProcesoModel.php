@@ -49,24 +49,7 @@ class ProcesoModel extends ModelBase{
 			if(isset($_POST['dni_usuario'])) $this->dni_usuario = $_POST['dni_usuario'];
 		}
 	}
-/*
-	function getByDNI($tabla, $datosSearch){
-        include_once './Mapping/'.$tabla.'Mapping.php';
-        $map = $tabla.'Mapping';
-        $this->mapping = new $map();
-		//$datosSearch['foraneas'] = $this->clavesForaneas;
-		return $this->mapping->searchByDNI($datosSearch);
-	}
 
-
-    function searchByIdPadre($tabla, $datosSearch){
-        include_once './Mapping/'.$tabla.'Mapping.php';
-        $map = $tabla.'Mapping';
-        $this->mapping = new $map();
-		//$datosSearch['foraneas'] = $this->clavesForaneas;
-		return $this->mapping->searchByIdPadre($datosSearch);
-	}
-*/
     function searchById($tabla, $datosSearch){
 		
         include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
@@ -82,6 +65,13 @@ class ProcesoModel extends ModelBase{
         $map = $tabla.'Mapping';
         $this->mapping = new $map();
 		return $this->mapping->getVersion($datosSearch);
+	}
+
+	function getByName($tabla, $datosSearch){
+        include_once './Mapping/'.ucfirst($tabla).'Mapping.php';
+        $map = ucfirst($tabla).'Mapping';
+        $this->mapping = new $map();
+		return $this->mapping->searchByName($datosSearch);
 	}
 
 }

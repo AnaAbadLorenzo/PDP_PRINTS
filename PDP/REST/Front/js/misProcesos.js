@@ -1,32 +1,32 @@
-function iniciarProcedimientoUsuario(idProcedimiento, idProcedimientoUsuario){
-  var selectorIniciarProc = $('#' + idProcedimientoUsuario + ' #iniciarProcedimiento #iconoIniciarProcedimiento');
+function iniciarProcesoUsuario(idProceso, idProcesoUsuario){
+  var selectorIniciarProc = $('#' + idProcesoUsuario + ' #iniciarProceso #iconoIniciarProceso');
 
   $(selectorIniciarProc).attr('src', 'images/iniciarProcedimiento2.png');
   $(selectorIniciarProc).attr('onclick', '');
 
-  setCookie('idProcedimiento', idProcedimiento)
-  setCookie('idProcedimientoUsuario', idProcedimientoUsuario)
-	window.location.href = "GestionDeProcesos.html?continuar=no&ver=no";
+  setCookie('idProceso', idProceso);
+  setCookie('idProcesoUsuario', idProcesoUsuario)
+	window.location.href = "RespuestaProceso.html?continuar=no&ver=no";
 
 }
 
-function continuarProcedimiento(idProcedimiento, idProcedimientoUsuario){
-   setCookie('idProcedimiento', idProcedimiento)
-   setCookie('idProcedimientoUsuario', idProcedimientoUsuario);
-   window.location.href = "GestionDeProcesos.html?continuar=si&ver=no";
+function continuarProceso(idProceso, idProcesoUsuario){
+    setCookie('idProceso', idProceso);
+    setCookie('idProcesoUsuario', idProcesoUsuario)
+    window.location.href = "RespuestaProceso.html?continuar=si&ver=no";
 }
 
-function verProcedimiento(idProcedimiento, idProcedimientoUsuario){
-   setCookie('idProcedimiento', idProcedimiento)
-   setCookie('idProcedimientoUsuario', idProcedimientoUsuario);
-   window.location.href = "GestionDeProcesos.html?continuar=si&ver=si";
+function verProceso(idProceso, idProcesoUsuario){
+  setCookie('idProceso', idProceso);
+  setCookie('idProcesoUsuario', idProcesoUsuario)
+   window.location.href = "RespuestaProceso.html?continuar=si&ver=si";
 }
 
-function finalizarProcedimiento(idProcedimientoUsuario){
+function finalizarProceso(idProcesoUsuario){
 
-   var selectorIniciarProc = $('#' + idProcedimientoUsuario + ' #iniciarProcedimiento #iconoIniciarProcedimiento');
-   var selectorContinuarProc = $('#' + idProcedimientoUsuario + ' #continuarProcedimiento #iconoContinuarProcedimiento');
-   var selectorFinProc = $('#' + idProcedimientoUsuario + ' #finalizadoProcedimiento #iconoFinalizarProcedimiento');
+   var selectorIniciarProc = $('#' + idProcesoUsuario + ' #iniciarProceso #iconoIniciarProceso');
+   var selectorContinuarProc = $('#' + idProcesoUsuario + ' #continuarProceso #iconoContinuarProceso');
+   var selectorFinProc = $('#' + idProcesoUsuario + ' #finalizadoProceso #iconoFinalizarProceso');
 
    $(selectorIniciarProc).attr('src', 'images/iniciarProcedimiento2.png');
    $(selectorIniciarProc).attr('onclick', '');
@@ -37,37 +37,40 @@ function finalizarProcedimiento(idProcedimientoUsuario){
 
 /** Funcion que refresca los datos de la tabla **/
 async function refrescarTabla(numeroPagina, tamanhoPagina, paginadorCreado){
-  if(getCookie('rolUsuario') == "usuario"){
+  if(getCookie('rolUsuario') == "Usuario"){
     try{
-          const res = await cargarMisProcedimientosAjaxPromesa(numeroPagina, tamanhoPagina);
-          document.getElementById('misProcedimientos').style.display = "block";
-          var numResults = res.data.numResultados + '';
-          var totalResults = res.data.tamanhoTotal + '';
-            var inicio = 0;
-          if(res.data.listaBusquedas.length == 0){
+        const res = await cargarMisProcesosAjaxPromesa(numeroPagina, tamanhoPagina);
+        document.getElementById('misProcesos').style.display = "block";
+        var numResults = res.resource.numResultados + '';
+        var totalResults = res.resource.tamanhoTotal + '';
+        var inicio = 0;
+        
+        if(res.resource.listaBusquedas.length == 0){
             inicio = 0;
-             $('#itemPaginacion').attr('hidden',true);
-          }else{
-            inicio = parseInt(res.data.inicio)+1;
-              $('#itemPaginacion').attr('hidden',false);
-          }
-          var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
-       
-          $('#procedimientos').html('');
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
-            try{
-              const result = await cargarProcesosOfProcedimientoUsuario(res.data.listaBusquedas[i].idProcedimientoUsuario);
-              cargarMisProcedimientosUsuario(res.data.listaBusquedas[i], result.data);
+            $('#itemPaginacion').attr('hidden',true);
+        }else{
+            inicio = parseInt(res.resource.inicio)+1;
+            $('#itemPaginacion').attr('hidden',false);
+        }
+        $('#paginacion').html('');
+        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+        $('#paginacion').append(textPaginacion);
+
+        $('#procesos').html('');
+        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+          try{
+            const result = await cargarParametrosOfProcedimientoUsuario(res.resource.listaBusquedas[i].id_procedimiento_usuario);
+            cargarMisProcesosUsuario(res.resource.listaBusquedas[i], result.data);
             }catch(result) {
               respuestaAjaxKO(result.code);
               document.getElementById("modal").style.display = "block";
             }
        
-          }
+        }
 
-          if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarProcedimientosUsuarioEjecutados', 'PROCEDIMIENTOSUSUARIO');
-          }
+        if(paginadorCreado != 'PaginadorCreado'){
+          paginador(totalResults, 'cargarProcesosUsuarioEjecutados', 'PROCESOSUSUARIO');
+        }
         
         if(numeroPagina == 0){
           $('#itemPaginacion #' + (numeroPagina+1)).addClass("active");
@@ -77,7 +80,6 @@ async function refrescarTabla(numeroPagina, tamanhoPagina, paginadorCreado){
 
         setLang(getCookie('lang'));
 
-
         }catch(res) {
             respuestaAjaxKO(res.code);
             document.getElementById("modal").style.display = "block";
@@ -86,8 +88,8 @@ async function refrescarTabla(numeroPagina, tamanhoPagina, paginadorCreado){
     }
 }
 
-/* Función para obtener los procedimientos de un usuario del sistema*/
-async function cargarProcedimientosUsuarioEjecutados(numeroPagina, tamanhoPagina, paginadorCreado){
+/* Función para obtener los procesos de un usuario del sistema*/
+async function cargarProcesosUsuarioEjecutados(numeroPagina, tamanhoPagina, paginadorCreado){
   if(getCookie('rolUsuario') == "usuario"){
     try{
           const res = await cargarMisProcedimientosAjaxPromesa(numeroPagina, tamanhoPagina);
@@ -138,17 +140,17 @@ async function cargarProcedimientosUsuarioEjecutados(numeroPagina, tamanhoPagina
 }
 
 
-/** Función para obtener los procedimientos de un usuario con ajax y promesas**/
+/** Función para obtener los procesos de un usuario con ajax y promesas**/
 function cargarMisProcedimientosAjaxPromesa(numeroPagina, tamanhoPagina){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
 
-    var procedimiento = null;
-    var usuario = {
-    	dniUsuario : '',
+    var data = {
+      controlador: 'GestionProcesosUsuario',
+      action: 'searchByParameters',
     	usuario : getCookie('usuario'),
-    	passwdUsuario : '',
-    	borradoUsuario : 0
+    	inicio : calculaInicio(numeroPagina, tamanhoPaginaProcesosUsuario),
+      tamanhoPagina: tamanhoPaginaProcesosUsuario
     }
 
     var data = {

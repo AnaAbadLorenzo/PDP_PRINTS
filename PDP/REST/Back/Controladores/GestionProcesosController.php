@@ -29,7 +29,7 @@ class GestionProcesosController extends ControllerBase{
 		}
 		
 		$this->gestionProcesoService->inicializarParametros('add');
-		
+
 		$respuesta = $this->gestionProcesoService->add('ADD_PROCESO_COMPLETO');
 
 		if($respuesta != 'ADD_PROCESO_COMPLETO') {
@@ -64,8 +64,6 @@ class GestionProcesosController extends ControllerBase{
 	}
    
     function delete(){
-   
-
         $this->gestionProcesoService->inicializarParametros('delete');
         $respuesta = $this->gestionProcesoService->delete('DELETE_PROCESO_COMPLETO');
 
@@ -74,6 +72,13 @@ class GestionProcesosController extends ControllerBase{
 		}else{
 			$this->rellenarRespuesta('DELETE_PROCESO_COMPLETO', false, '');
 		}
+		$this->getRespuesta($respuesta);
+    }
+
+	function search(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionProcesoService->search('BUSQUEDA_PROCESO_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_PROCESO_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
 
@@ -90,6 +95,39 @@ class GestionProcesosController extends ControllerBase{
 		$this->rellenarRespuesta('BUSQUEDA_PROCESO_CORRECTO', false, $respuesta);
 		$this->getRespuesta($respuesta);
     }
+
+	function searchDelete(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+        $respuesta = $this->gestionProcesoService->searchDelete('BUSQUEDA_PROCESO_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_PROCESO_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+    }
+
+	function searchByIdCategoria(){
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+		$this->gestionProcesoService->inicializarParametros('searchByIdCategoria');
+		$respuesta = $this->gestionProcesoService->searchByIdCategoria('BUSQUEDA_PROCESO_CORRECTO', $paginacion);
+		$this->rellenarRespuesta('BUSQUEDA_PROCESO_CORRECTO', false, $respuesta);
+		$this->getRespuesta($respuesta);
+	}
+
+	function reactivar() {
+
+		$this -> gestionProcesoService -> inicializarParametros('reactivar');
+		$respuesta = $this -> gestionProcesoService -> reactivar();
+
+		if (!is_array($respuesta)) { //cuando ocurre un error de validacion
+			$this->rellenarRespuesta($respuesta, false, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else if (!$respuesta['ok']) { //error sql
+			$this->rellenarRespuesta('REACTIVAR_PROCESO_FALLIDO', true, $respuesta);
+			$this->getRespuesta($respuesta);
+		} else {
+			$this->rellenarRespuesta('REACTIVAR_PROCESO_CORRECTO', false, $respuesta);
+			$this->getRespuesta($respuesta);
+		}
+
+	}
     
 }
 ?>

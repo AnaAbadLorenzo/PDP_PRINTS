@@ -34,7 +34,7 @@ class GestionCategoriasServiceImpl extends ServiceBase implements GestionCategor
                     $this->categoria = $this->crearModelo('Categoria');
                 break;
                 case 'reactivar':
-                    $this -> categoria = $this -> crearModelo('Funcionalidad');
+                    $this -> categoria = $this -> crearModelo('Categoria');
                     $this -> clase_validacionAccionCategoria = $this -> crearValidacionAccion('DeleteCategoria'); //hago las comprobaciones en este archivo, si tengo que hacer otro archivo a mayores para cada reactivacion de entidad no acabo nunca. besos, miguel
                 break;
                 default:

@@ -39,6 +39,7 @@ arrayGA={
 	'NOMBRE_CATEGORIA' : 'Nome categoría',
 	'DESCRIPCION_CATEGORIA' : 'Descripción categoría',
 	'RESPONSABLE_CATEGORIA' : 'Responsable categroría',
+	'RESPONSABLE_PROCESO' : 'Responsable proceso',
 	'CATEGORIA_PADRE' : 'Categoría padre',
 	'PARAMETRO_FORMULA' : 'Nome parámetro',
 	'DESCRIPCION_PARAMETRO' : 'Descripción parámetro (unidades)',
@@ -63,8 +64,11 @@ arrayGA={
 	'ESTADO_PROCEDIMIENTO_EJECUTADO' : 'Estado procedemento',
 	'PUNTUACION_PROCEDIMIENTO_EJECUTADO' : 'Puntuación procedimiento ejecutado',
 	'EVIDENCIA' : 'Evidencia: ',
+	'ID_CATEGORIA' : 'Categoría',
+	'ESTADO_PROCESO' : 'Estado do proceso',
+	'FORMULA_PROCESO' : 'Fórmula proceso',
+	'VERSION_PROCESO' : 'Versión proceso',
 
-	
 	//Idiomas
 	'ESPAÑOL' : 'Español',
 	'INGLES' : 'Inglés',
@@ -97,7 +101,7 @@ arrayGA={
 	'ICONO_DETALLE' : 'Detalle',
 	'ICON_CATEGORIA' : 'Categoría',
 	'ICON_ACCEDER_CATEGORIA' : 'Acceder a las categorías',
-	'ICON_INICIAR_PROCEDIMIENTO' : 'Iniciar procedemento',
+	'ICON_INICIAR_PROCESO' : 'Iniciar proceso',
 	'ICON_CONTINUAR_PROCEDIMIENTO' : 'Continuar procedemiento',
 	'ICON_PROCEDIMIENTO_FINALIZADO' : 'Procedemiento finalizado',
 	'ICON_PLAN': 'Plan',
@@ -164,7 +168,7 @@ arrayGA={
 	'RESPUESTA_POSIBLE_VACIA' : 'O texto da resposta posible es vacío',
 	'RESPUESTA_POSIBLE_NO_EXISTE_EXCEPTION' : 'A resposta posible posible non existe',
 	'RESPUESTA_ASOCIADA_PROCESO_EXCEPTION' : 'A resposta posible posible está asociada a un proceso',
-	'MENSAJE_CONTINUAR_PROCEDIMIENTO' : 'Usted xa iniciou este procedemento. ¿Desexa continuar?',
+	'MENSAJE_CONTINUAR_PROCESO' : 'Usted xa iniciou este proceso. ¿Desexa continuar?',
 	'PROCESO_VACIO' : 'O nome, a descripción, a data, os procedementos, as respostas posibles e/ou os obxectivos son vacíos',
 	'PROCESO_YA_EXISTE_EXCEPTION' : 'O proceso xa existe',
 	'PROCESO_NO_EXISTE_EXCEPTION' : 'O proceso non existe',
@@ -301,6 +305,8 @@ arrayGA={
 	'RELLENA_USUARIO' : 'Por favor, escolle un usuario',
 	'RELLENA_CATEGORIA' : 'Por favor, selecciona unha categoría',
 	'RELLENA_PROCESO' : 'Por favor, selecciona un proceso',
+	'RELLENA_PROCESO' : 'Por favor, selecciona un proceso',
+	'RELLENA_CHECK_PROCESO' : 'Por favor, selecciona unha opción de publicación',
 	'SELECT_PROCEDIMIENTOS_VACIO' : 'Por favor, engade un procedemento minimo',
 	'SELECT_CATEGORIAS_VACIO' : 'Por favor, engade unha categoría minimo',
 	'NIVEL_VACIO' : 'Nivel vacio',
@@ -316,6 +322,9 @@ arrayGA={
 	'FECHA_PROCEDIMIENTO_EJECUTADO_NUMERICA_INCORRECTA' : 'A data do procedemento executado tan só pode conter números',
 	'FECHA_PROCEDIMIENTO_EJECUTADO_MENOR_QUE_8' : 'A data do procedemento executado ten menos de 8 caracteres',
 	'FECHA_PROCEDIMIENTO_EJECUTADO_MAYOR_QUE_8' : 'A data do procedemento executado ten máis de 8 caracteres',
+	'FORMULA_PROCESO_VACIA' : 'Fórmula proceso vacía',
+	'FORMULA_PROCESO_MENOR_QUE_3' : 'A fórmula do proceso ten menos de 3 caracteres',
+	'FORMULA_PROCESO_INCORRECTA' : 'A fórmula do proceso debe ter, ao menos, un signo igual',
 
 	//Mensajes
 	'OLVIDAR_CONTRASENA' : 'Olvidou o seu contrasinal?',
@@ -431,6 +440,7 @@ arrayGA={
 	'GESTION_PROCESOS_NO_ADMIN' : 'Procesos',
 	'GESTION_PROCEDIMIENTOS_EJECUTADOS' : 'Xestión de procedimientos executados',
 	'GESTION_PROCESOS_EJECUTADOS' : 'Xestión de procesos executados',
+	'MIS_PROCESOS' : 'Os meus procesos',
 	'REACTIVATE_PROCEDIMIENTO' : 'REACTIVAR PROCEDEMENTO',
 	'DELETE_PROCEDEMIENTO' : 'ELIMINAR PROCEDEMENTO',
 	'EDIT_PROCEDIMIENTO' : 'EDITAR PROCEDEMENTO',
@@ -572,7 +582,9 @@ arrayGA={
 	'PROCEDIMIENTO_USUARIO_MODIFICADO' : 'O procedemento executado modificouse correctamente',
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'A evidencia gardouse correctamente',
-	'CATEGORIA_YA_EXISTE' : 'A categoria xa existe'
+	'CATEGORIA_YA_EXISTE' : 'A categoria xa existe',
+	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, entre |.Por exemplo: v = #espazo|m|# x #tempo|sg|#'
+
 
 
 	

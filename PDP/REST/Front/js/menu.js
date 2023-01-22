@@ -178,12 +178,18 @@ function cargarFuncionalidadesUsuario(datos){
 
   var htmlMenu = '';
 
-
     for(i = 0; i<(datos.length) - 1; i++) {
-      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a> <div class="dropdown-divider"></div>';
+      if(rolUsuario == 'Usuario' && datos[i]['nombre_funcionalidad'] != 'Gestión de procesos'){
+        htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a> <div class="dropdown-divider"></div>';
+      }else if(rolUsuario == 'Administrador'){
+        htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a> <div class="dropdown-divider"></div>';
+      }
     }
-
-    htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a>';
+    if(rolUsuario == 'Usuario' && datos[i]['nombre_funcionalidad'] != 'Gestión de procesos'){
+      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a>';
+    }else if(rolUsuario == 'Administrador'){
+      htmlMenu = htmlMenu + '<a class="dropdown-item ' + cargarClass(datos[i], rolUsuario) + '" href="' + cargarHref(datos[i]) + '">' + datos[i] + '</a>';
+    }
 
     if(rolUsuario == "Usuario"){
       document.getElementById('listadoFuncionalidades').style.height = "236px"; 

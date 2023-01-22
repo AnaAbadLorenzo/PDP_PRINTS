@@ -57,6 +57,14 @@ class ValidacionesFormato{
 		}
 	}
 
+	function comprobarFormatoFormula($string){
+		if (preg_match_all('/^[a-zA-z]+=(.*?)/s',$string)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	//comprueba si un string tiene solo letras o números
 	//devuelve true si es corrrecto false en caso contrario
 	function comprobarLetrasNumerosSinEspacios($string){

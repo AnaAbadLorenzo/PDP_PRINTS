@@ -208,7 +208,7 @@ CREATE TABLE `proceso` (
   `descripcion_proceso` text NOT NULL,
   `fecha_proceso` date NOT NULL,
   `borrado_proceso` int(11) NOT NULL,
-  `version_proceso` varchar(4) NOT NULL,
+  `version_proceso` int(11)) NOT NULL,
   `check_aprobacion` int(11) NOT NULL,
   `formula_proceso` varchar(255) NOT NULL,
   `id_categoria` int(11) NOT NULL,
