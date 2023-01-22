@@ -10,7 +10,7 @@ abstract class ControllerBase{
 		}else{
 			$respuesta['ok'] = true;
 		}
-		
+
 		$respuesta['code'] = $mensaje;
 		$respuesta['resource'] = $recursosDevolver;
 		

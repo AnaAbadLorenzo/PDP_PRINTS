@@ -71,7 +71,7 @@ class TestRegistro{
         $_POST['usuario'] = 'pepepepe';
         $_POST['passwd_usuario'] = 'pepe';
         $_POST['borrado_usuario'] = 0;
-        $resultadoTest = $this->hacerPruebaPersonaYaExiste($_POST);
+        $resultadoTest = $this->hacerPruebaPersonaYaExiste($_POST)
         array_push($pruebas, $resultadoTest);
 
         $this->deleteData();

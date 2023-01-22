@@ -52,6 +52,19 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_VACIO'. " - ". NOMBRE_CATEGORIA_VACIO;
+                        break;
+                        case 'descripcion_categoria':
+                            $mensaje = 'DESCRIPCION_CATEGORIA_VACIO'. " - ". DESCRIPCION_CATEGORIA_VACIO;
+                        break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_VACIO'. " - ". DNI_RESPONSABLE_VACIO;
+                        break;
+                    }
+                break;
                 case 'gestFuncionalidades':
                     switch($nombreAtributo){
                         case 'nombre_funcionalidad':
@@ -72,6 +85,58 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_VACIO'. " - ". TITULO_NOTICIA_VACIO;
+                        break;
+                        case 'contenido_noticia':
+                            $mensaje = 'CONTENIDO_NOTICIA_VACIO'. " - ". CONTENIDO_NOTICIA_VACIO;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_VACIO'. " - ". FECHA_NOTICIA_VACIO;
+                        break;
+                    }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_VACIO'. " - ". PARAMETRO_FORUMLA_VACIO;
+                        break; 
+                        case 'descripcion_parametro':
+                            $mensaje = 'DESCRIPCION_PARAMETRO_VACIO'. " - ". DESCRIPCION_PARAMETRO_VACIO;
+                        break;
+
+                    }
+                break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_VACIO'. " - ". NOMBRE_PROCESO_VACIO;
+                        break;
+                        case 'descripcion_proceso':
+                            $mensaje = 'DESCRIPCION_PROCESO_VACIO'. " - ". DESCRIPCION_PROCESO_VACIO;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_VACIO'. " - ". FECHA_PROCESO_USUARIO_VACIO;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_VACIO'. " - ". CALCULO_HUELLA_CARBONO_VACIO;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuarioparametro' :
+                    switch($nombreAtributo){
+                        case 'valor_parametro':
+                            $mensaje = 'VALOR_PARAMETRO_VACIO'. " - ".VALOR_PARAMETRO_VACIO;
+                        break; 
+                    }
+                break;
+                
             }
         }
 
@@ -126,6 +191,19 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_MENOR_QUE_3'. " - ". NOMBRE_CATEGORIA_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_categoria':
+                            $mensaje = 'DESCRIPCION_CATEGORIA_MENOR_QUE_3'. " - ". DESCRIPCION_CATEGORIA_MENOR_QUE_3;
+                        break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_MENOR_QUE_9'. " - ". DNI_RESPONSABLE_MENOR_QUE_9;
+                        break;
+                    }
+                break;
                 case 'gestFuncionalidades':
                     switch($nombreAtributo){
                         case 'nombre_funcionalidad':
@@ -146,6 +224,46 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_MENOR_QUE_3'. " - ". TITULO_NOTICIA_MENOR_QUE_3;
+                        break;
+                        case 'contenido_noticia':
+                            $mensaje = 'CONTENIDO_NOTICIA_MENOR_QUE_3'. " - ". CONTENIDO_NOTICIA_MENOR_QUE_3;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_MENOR_QUE_10'. " - ". FECHA_NOTICIA_MENOR_QUE_10;
+                        break:
+                    }
+                case 'gestParametros':
+                    switch($nombreAtributo){
+                        case 'descripcion_parametro':
+                            $mensaje = 'DESCRIPCION_PARAMETRO_MENOR_QUE_3'. " - ". DESCRIPCION_PARAMETRO_MENOR_QUE_3;
+                        break;
+                    }
+                break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_MENOR_QUE_3'. " - ". NOMBRE_PROCESO_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_proceso':
+                            $mensaje = 'DESCRIPCION_PROCESO_MENOR_QUE_3'. " - ". DESCRIPCION_PROCESO_MENOR_QUE_3;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_MENOR_10'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_MENOR_80'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
+                
             }
         }
 
@@ -198,6 +316,16 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_MAYOR_QUE_48'. " - ". NOMBRE_CATEGORIA_MAYOR_QUE_48;
+                        break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_MAYOR_QUE_9'. " - ". DNI_RESPONSABLE_MAYOR_QUE_9;
+                        break;
+                    }
+                break;
                 case 'gestFuncionalidades':
                     switch($nombreAtributo){
                         case 'nombre_funcionalidad':
@@ -212,6 +340,38 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_MAYOR_QUE_255'. " - ". TITULO_NOTICIA_MAYOR_QUE_255;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_MAYOR_QUE_10'. " - ". FECHA_NOTICIA_MAYOR_QUE_10;
+                        break;
+                    }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_MAYOR_QUE_50'. " - ". PARAMETRO_FORUMLA_MAYOR_QUE_50;
+                        break; 
+                    }
+                break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_MAYOR_QUE_48'. " - ". NOMBRE_PROCESO_MENOR_QUE_3;
+                        break;
+                break;
+            }
+            case 'gestProcesosusuario':
+                switch($nombreAtributo){
+                    case 'fecha_proceso_usuario':
+                        $mensaje = 'FECHA_PROCESO_USUARIO_MAYOR_10'. " - ". FECHA_PROCESO_USUARIO_MAYOR_10;
+                    break;
+                }
+            break;
+                
             }
         }
 
@@ -251,6 +411,46 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias' :
+                    switch($nombreAtributo){
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;   
+                        break;
+                    }
+                break;
+                case 'gestNoticias' :
+                    switch($nombreAtributo){
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
+                        break;
+                    }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                        break; 
+
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuarioparametro' :
+                    switch($nombreAtributo){
+                        case 'valor_parametro':
+                            $mensaje = 'VALOR_PARAMETRO_ALFABETICO_INCORRECTO'. " - ".VALOR_PARAMETRO_ALFABETICO_INCORRECTO;
+                        break; 
+                    }
+                break;
+                
             }
         }
 
@@ -287,6 +487,37 @@ class FuncionesComunes {
                         break;
                         case 'telefono_persona':
                             $mensaje = 'TELEFONO_PERSONA_NUMERICO_INCORRECTO'. " - ". TELEFONO_PERSONA_NUMERICO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestCategorias' :
+                    switch($nombreAtributo){
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;   
+                        break;
+                    }
+                case 'gestNoticias' :
+                    switch($nombreAtributo){
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                        break;
+                        }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                        break; 
+
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
                         break;
                     }
                 break;
@@ -345,6 +576,19 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias':
+                    switch($nombreAtributo){
+                        case 'nombre_categoria':
+                            $mensaje = 'NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_categoria':
+                            $mensaje = 'DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
+                        break;
+                    }
+                break;
                 case 'gestFuncionalidades':
                     switch($nombreAtributo){
                         case 'nombre_funcionalidad':
@@ -365,8 +609,55 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ROL_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_rol':
+                            $mensaje = 'DESCRIPCION_ROL_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ROL_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                        break;
+                    }
+
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                        break; 
+                        case 'descripcion_parametro':
+                            $mensaje = 'DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO'. " - ". DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_ALFANUMERO_INCORRECTO'. " - ". NOMBRE_PROCESO_ALFANUMERO_INCORRECTO;
+                        break;
+                        case 'descripcion_proceso':
+                            $mensaje = 'DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO'. " - ". DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
+            }
+ 
             }
         }
+    }
 
         return $mensaje;
     }
@@ -410,6 +701,15 @@ class FuncionesComunes {
                             break;
                         }
                     break;
+                    case 'gestCategorias':
+                        switch($nombreAtributo){
+                            case 'nombre_categoria':
+                                $mensaje = 'NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO;
+                            break;
+                            case 'dni_responsable':
+                                $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
+                        }
+                    break;
                     case 'gestRoles':
                         switch($nombreAtributo){
                             case 'nombre_rol':
@@ -420,7 +720,32 @@ class FuncionesComunes {
                             break;
                         }
                     break;
+                    case: 'gestNoticias':
+                        switch($nombreAtributo){
+                            case 'fecha_noticia':
+                                $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                            break;
+                            }
+                        }
+                    break;
+                    case 'gestProcesos':
+                        switch($nombreAtributo){
+                            case 'nombre_proceso':
+                                $mensaje = 'NOMBRE_PROCESO_ALFANUMERO_INCORRECTO'. " - ". NOMBRE_PROCESO_ALFANUMERO_INCORRECTO;
+                            break;
+                        }
+                    break;
                 }
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
         }
       
 
