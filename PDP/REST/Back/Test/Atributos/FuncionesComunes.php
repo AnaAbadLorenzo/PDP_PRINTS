@@ -147,6 +147,9 @@ class FuncionesComunes {
                         case 'descripcion_categoria':
                             $mensaje = 'DESCRIPCION_CATEGORIA_MENOR_QUE_3'. " - ". DESCRIPCION_CATEGORIA_MENOR_QUE_3;
                         break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_MENOR_QUE_9'. " - ". DNI_RESPONSABLE_MENOR_QUE_9;
+                        break;
                     }
                 break;
                 case 'gestFuncionalidades':
@@ -226,6 +229,9 @@ class FuncionesComunes {
                         case 'nombre_categoria':
                             $mensaje = 'NOMBRE_CATEGORIA_MAYOR_QUE_48'. " - ". NOMBRE_CATEGORIA_MAYOR_QUE_48;
                         break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_MAYOR_QUE_9'. " - ". DNI_RESPONSABLE_MAYOR_QUE_9;
+                        break;
                     }
                 break;
                 case 'gestFuncionalidades':
@@ -281,6 +287,13 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias' :
+                    switch($nombreAtributo){
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;   
+                        break;
+                    }
+                break;
             }
         }
 
@@ -320,6 +333,12 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestCategorias' :
+                    switch($nombreAtributo){
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;   
+                        break;
+                    }
             }
         }
 
@@ -382,6 +401,9 @@ class FuncionesComunes {
                         break;
                         case 'descripcion_categoria':
                             $mensaje = 'DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'dni_responsable':
+                            $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
                         break;
                     }
                 break;
@@ -448,6 +470,15 @@ class FuncionesComunes {
                             case 'nombre_accion':
                                 $mensaje = 'NOMBRE_ACCION_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ACCION_ALFABETICO_INCORRECTO;
                             break;
+                        }
+                    break;
+                    case 'gestCategorias':
+                        switch($nombreAtributo){
+                            case 'nombre_categoria':
+                                $mensaje = 'NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO;
+                            break;
+                            case 'dni_responsable':
+                                $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
                         }
                     break;
                     case 'gestRoles':

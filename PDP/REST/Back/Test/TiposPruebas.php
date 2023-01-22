@@ -12,13 +12,21 @@ define('FECHA_NAC_PERSONA_OK', 'Atributo fecha nacimiento persona correcto');
 define('DIRECCION_PERSONA_OK', 'Atributo dirección persona correcto');
 define('EMAIL_PERSONA_OK', 'Atributo email persona correcto');
 define('TELEFONO_PERSONA_OK', 'Atributo télefono persona correcto');
+
 define('REGISTRO_OK', 'La persona se ha registrado correctamente');
+
 define('RECUPERAR_PASS_OK', 'La recuperación de contraseña se ha realizado correctamente');
+
 define('NOMBRE_ACCION_OK', 'Atributo nombre acción correcto');
 define('DESCRIPCION_ACCION_OK', 'Atributo descripción accion correcto');
+
 define('NOMBRE_CATEGORIA_OK', 'Atributo nombre categoría correcto');
+define('DESCRIPCION_CATEGORIA_OK', 'Atributo descripcion categoría correcto');
+define('DNI_RESPONSABLE_OK', 'Atributo DNI responsable correcto');
+
 define('NOMBRE_FUNCIONALIDAD_OK', 'Atributo nombre funcionalidad correcto');
 define('DESCRIPCION_FUNCIONALIDAD_OK', 'Atributo descripción funcionalidad correcto');
+
 define('NOMBRE_ROL_OK', 'Atributo nombre rol correcto');
 define('DESCRIPCION_ROL_OK', 'Atributo descripción rol correcto');
 

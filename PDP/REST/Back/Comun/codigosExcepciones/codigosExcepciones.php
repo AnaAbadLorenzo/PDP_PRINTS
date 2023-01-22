@@ -111,4 +111,19 @@ define('ACCION_NO_EXISTE', 'La acción no existe');
 define('DELETE_ACCION_COMPLETO', 'La acción se ha eliminado correctamente');
 define('REACTIVAR_ACCION_CORRECTO', 'La acción se ha reactivado correctamente');
 define('ACCION_TIENE_PERMISOS_ASOCIADOS', 'La acción está asociada a un usuario y a una funcionalidad');
+
+define('NOMBRE_CATEGORIA_VACIO', 'El nombre de la categoria no puede ser vacío');
+define('NOMBRE_CATEGORIA_MENOR_QUE_3', 'El nombre de la categoria no puede tener menos de 3 caracteres');
+define('NOMBRE_CATEGORIA_MAYOR_QUE_48', 'El nombre de la categoria no puede tener más de 48 caracteres');
+define('NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO', 'El nombre de la categoria sólo puede contener letras');
+
+define('DESCRIPCION_CATEGORIA_VACIO', 'La descripción  de la categoria no puede ser vacía');
+define('DESCRIPCION_CATEGORIA_MENOR_QUE_3', 'La descripción de la categoria no puede tener menos de 3 caracteres');
+define('DESCRIPCION_CATEGORIA_ALFABETICO_INCORRECTO', 'La descripción de la categoria sólo puede contener letras, acentos y espacios');
+
+define('DNI_RESPONSABLE_VACIO', 'El DNI de la persona responsable no puede ser vacío');
+define('DNI_RESPONSABLE_MENOR_QUE_9', 'El DNI de la persona responsable no puede tener menos de 9 caracteres');
+define('DNI_RESPONSABLE_MAYOR_QUE_9', 'El DNI de la persona responsable no puede tener más de 9 caracteres');
+define('DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO', 'El DNI de la persona responsable solo puede tener números y una letra');
+DEFINE('DNI_RESPONSABLE_LETRA_INCORRECTO', 'La letra del DNI es incorrecta');
 ?>
