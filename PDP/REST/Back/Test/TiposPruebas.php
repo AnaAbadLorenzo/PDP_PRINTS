@@ -37,6 +37,14 @@ define('FECHA_NOTICIA_OK', 'Atributo fecha noticia correcto');
 define('PARAMETRO_FORMULA_OK', 'Atributo parametro formula correcto');
 define('DESCRIPCION_PARAMETRO_OK', 'Atributo descripcion parametro correcto');
 
+define('NOMBRE_PROCESO_OK', 'Atributo nombre proceso correcto');
+define('DESCRIPCION_PROCESO_OK', 'Atributo descripción proceso correcto');
+
+define('FECHA_PROCESO_USUARIO_OK', 'Atributo fecha proceso usuario correcto');
+define('CALCULO_HUELLA_CARBONO_OK', 'Atributo calculo huella carbono correcto');
+
+define('CALCULO_PARAMETRO_OK', 'Atributo parametro correcto');
+
 define('VACIO', 'Vacío');
 define('LONGITUD_MINIMA_ERRONEA', 'Atributo no alcanza la longitud mínima');
 define('LONGITUD_MAXIMA_ERRONEA', 'Atributo supera la longitud máxima');

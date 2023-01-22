@@ -109,6 +109,33 @@ class FuncionesComunes {
 
                     }
                 break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_VACIO'. " - ". NOMBRE_PROCESO_VACIO;
+                        break;
+                        case 'descripcion_proceso':
+                            $mensaje = 'DESCRIPCION_PROCESO_VACIO'. " - ". DESCRIPCION_PROCESO_VACIO;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_VACIO'. " - ". FECHA_PROCESO_USUARIO_VACIO;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_VACIO'. " - ". CALCULO_HUELLA_CARBONO_VACIO;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuarioparametro' :
+                    switch($nombreAtributo){
+                        case 'valor_parametro':
+                            $mensaje = 'VALOR_PARAMETRO_VACIO'. " - ".VALOR_PARAMETRO_VACIO;
+                        break; 
+                    }
+                break;
                 
             }
         }
@@ -216,6 +243,27 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_MENOR_QUE_3'. " - ". NOMBRE_PROCESO_MENOR_QUE_3;
+                        break;
+                        case 'descripcion_proceso':
+                            $mensaje = 'DESCRIPCION_PROCESO_MENOR_QUE_3'. " - ". DESCRIPCION_PROCESO_MENOR_QUE_3;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_MENOR_10'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_MENOR_80'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
+                
             }
         }
 
@@ -309,6 +357,21 @@ class FuncionesComunes {
                         break; 
                     }
                 break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_MAYOR_QUE_48'. " - ". NOMBRE_PROCESO_MENOR_QUE_3;
+                        break;
+                break;
+            }
+            case 'gestProcesosusuario':
+                switch($nombreAtributo){
+                    case 'fecha_proceso_usuario':
+                        $mensaje = 'FECHA_PROCESO_USUARIO_MAYOR_10'. " - ". FECHA_PROCESO_USUARIO_MAYOR_10;
+                    break;
+                }
+            break;
+                
             }
         }
 
@@ -370,6 +433,24 @@ class FuncionesComunes {
 
                     }
                 break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuarioparametro' :
+                    switch($nombreAtributo){
+                        case 'valor_parametro':
+                            $mensaje = 'VALOR_PARAMETRO_ALFABETICO_INCORRECTO'. " - ".VALOR_PARAMETRO_ALFABETICO_INCORRECTO;
+                        break; 
+                    }
+                break;
+                
             }
         }
 
@@ -428,6 +509,16 @@ class FuncionesComunes {
                             $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
                         break; 
 
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
                     }
                 break;
             }
@@ -542,6 +633,27 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestProcesos':
+                    switch($nombreAtributo){
+                        case 'nombre_proceso':
+                            $mensaje = 'NOMBRE_PROCESO_ALFANUMERO_INCORRECTO'. " - ". NOMBRE_PROCESO_ALFANUMERO_INCORRECTO;
+                        break;
+                        case 'descripcion_proceso':
+                            $mensaje = 'DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO'. " - ". DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO;
+                        break;
+                    }
+                break;
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
+            }
  
             }
         }
@@ -616,7 +728,24 @@ class FuncionesComunes {
                             }
                         }
                     break;
+                    case 'gestProcesos':
+                        switch($nombreAtributo){
+                            case 'nombre_proceso':
+                                $mensaje = 'NOMBRE_PROCESO_ALFANUMERO_INCORRECTO'. " - ". NOMBRE_PROCESO_ALFANUMERO_INCORRECTO;
+                            break;
+                        }
+                    break;
                 }
+                case 'gestProcesosusuario':
+                    switch($nombreAtributo){
+                        case 'fecha_proceso_usuario':
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                        break;
+                        case 'calculo_huella_carbono':
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                        break;
+                    }
+                break;
         }
       
 
