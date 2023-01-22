@@ -30,6 +30,13 @@ define('DESCRIPCION_FUNCIONALIDAD_OK', 'Atributo descripción funcionalidad corr
 define('NOMBRE_ROL_OK', 'Atributo nombre rol correcto');
 define('DESCRIPCION_ROL_OK', 'Atributo descripción rol correcto');
 
+define('TITULO_NOTICIA_OK', 'Atributo titulo noticia correcto');
+define('CONTENIDO_NOTICIA_OK', 'Atributo contenido noticia correcto');
+define('FECHA_NOTICIA_OK', 'Atributo fecha noticia correcto');
+
+define('PARAMETRO_FORMULA_OK', 'Atributo parametro formula correcto');
+define('DESCRIPCION_PARAMETRO_OK', 'Atributo descripcion parametro correcto');
+
 define('VACIO', 'Vacío');
 define('LONGITUD_MINIMA_ERRONEA', 'Atributo no alcanza la longitud mínima');
 define('LONGITUD_MAXIMA_ERRONEA', 'Atributo supera la longitud máxima');

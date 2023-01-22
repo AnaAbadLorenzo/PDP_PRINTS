@@ -85,6 +85,31 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_VACIO'. " - ". TITULO_NOTICIA_VACIO;
+                        break;
+                        case 'contenido_noticia':
+                            $mensaje = 'CONTENIDO_NOTICIA_VACIO'. " - ". CONTENIDO_NOTICIA_VACIO;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_VACIO'. " - ". FECHA_NOTICIA_VACIO;
+                        break;
+                    }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_VACIO'. " - ". PARAMETRO_FORUMLA_VACIO;
+                        break; 
+                        case 'descripcion_parametro':
+                            $mensaje = 'DESCRIPCION_PARAMETRO_VACIO'. " - ". DESCRIPCION_PARAMETRO_VACIO;
+                        break;
+
+                    }
+                break;
+                
             }
         }
 
@@ -172,6 +197,25 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_MENOR_QUE_3'. " - ". TITULO_NOTICIA_MENOR_QUE_3;
+                        break;
+                        case 'contenido_noticia':
+                            $mensaje = 'CONTENIDO_NOTICIA_MENOR_QUE_3'. " - ". CONTENIDO_NOTICIA_MENOR_QUE_3;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_MENOR_QUE_10'. " - ". FECHA_NOTICIA_MENOR_QUE_10;
+                        break:
+                    }
+                case 'gestParametros':
+                    switch($nombreAtributo){
+                        case 'descripcion_parametro':
+                            $mensaje = 'DESCRIPCION_PARAMETRO_MENOR_QUE_3'. " - ". DESCRIPCION_PARAMETRO_MENOR_QUE_3;
+                        break;
+                    }
+                break;
             }
         }
 
@@ -248,6 +292,23 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_MAYOR_QUE_255'. " - ". TITULO_NOTICIA_MAYOR_QUE_255;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_MAYOR_QUE_10'. " - ". FECHA_NOTICIA_MAYOR_QUE_10;
+                        break;
+                    }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_MAYOR_QUE_50'. " - ". PARAMETRO_FORUMLA_MAYOR_QUE_50;
+                        break; 
+                    }
+                break;
             }
         }
 
@@ -292,6 +353,21 @@ class FuncionesComunes {
                         case 'dni_responsable':
                             $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;   
                         break;
+                    }
+                break;
+                case 'gestNoticias' :
+                    switch($nombreAtributo){
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
+                        break;
+                    }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                        break; 
+
                     }
                 break;
             }
@@ -339,6 +415,21 @@ class FuncionesComunes {
                             $mensaje = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'. " - ". DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;   
                         break;
                     }
+                case 'gestNoticias' :
+                    switch($nombreAtributo){
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                        break;
+                        }
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                        break; 
+
+                    }
+                break;
             }
         }
 
@@ -427,8 +518,34 @@ class FuncionesComunes {
                         break;
                     }
                 break;
+                case 'gestNoticias':
+                    switch($nombreAtributo){
+                        case 'titulo_noticia':
+                            $mensaje = 'TITULO_NOTICIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ROL_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'descripcion_rol':
+                            $mensaje = 'DESCRIPCION_ROL_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ROL_ALFABETICO_INCORRECTO;
+                        break;
+                        case 'fecha_noticia':
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                        break;
+                    }
+
+                break;
+                case: 'gestParametros':
+                    switch($nombreAtributo){
+                        case: 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                        break; 
+                        case 'descripcion_parametro':
+                            $mensaje = 'DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO'. " - ". DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO;
+                        break;
+                    }
+                break;
+ 
             }
         }
+    }
 
         return $mensaje;
     }
@@ -489,6 +606,14 @@ class FuncionesComunes {
                             case 'descripcion_funcionalidad':
                                 $mensaje = 'DESCRIPCION_ROL_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ROL_ALFABETICO_INCORRECTO;
                             break;
+                        }
+                    break;
+                    case: 'gestNoticias':
+                        switch($nombreAtributo){
+                            case 'fecha_noticia':
+                                $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                            break;
+                            }
                         }
                     break;
                 }

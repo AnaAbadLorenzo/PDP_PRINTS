@@ -7,7 +7,7 @@ include_once './Test/TiposPruebas.php';
 $funcionesComunes = new FuncionesComunes();
 
 class TestDescripcionCategoria extends Test{
-    function testAtributoNombreCategoria() {
+    function testAtributoDescripcionCategoria() {
         $pruebas = array();
 
         //DESCRIPCION_CATEGORIA_VACIO
@@ -18,23 +18,23 @@ class TestDescripcionCategoria extends Test{
 
         //DESCRIPCION_CATEGORIA_MENOR_QUE_3
         $_POST['descripcion_categoria'] = 'ca';
-        $resultadoTest = $this->hacerPruebaNombreCategoriaMenor3($_POST);
+        $resultadoTest = $this->hacerPruebaDescripcionCategoriaMenor3($_POST);
         array_push($pruebas, $resultadoTest);
 
         //DESCRIPCION_CATEGORIA_CARACTERES_ESPECIALES
         $_POST['descripcion_categoria'] = '###Ananita';
-        $resultadoTest = $this->hacerPruebaNombreCategoriaCaracteresEspeciales($_POST);
+        $resultadoTest = $this->hacerPruebaNombreDescripcionCaracteresEspeciales($_POST);
         array_push($pruebas, $resultadoTest);
 
         //DESCRIPCION_CATEGORIA_CORRECTO
         $_POST['descripcion_categoria'] = 'Categoria';
-        $resultadoTest = $this->hacerPruebaNombreCorrecto($_POST);
+        $resultadoTest = $this->hacerPruebaDescripcionCorrecto($_POST);
         array_push($pruebas, $resultadoTest);
 
         return $pruebas;
     }
 
-    function hacerPruebaNombreCategoriaVacio($atributo){
+    function hacerPruebaDescripcionCategoriaVacio($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoBlank($atributo['descripcion_categoria'], 'gestCategorias', 'descripcion_categoria');
         $resultadoEsperado = 'DESCRIPCION_CATEGORIA_VACIO'." - ".DESCRIPCION_CATEGORIA_VACIO;
