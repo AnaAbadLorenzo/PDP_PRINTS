@@ -6,6 +6,7 @@ include_once './Servicios/ProcesoUsuario/ProcesoUsuarioService.php';
 
 include_once './Mapping/ProcesoUsuarioMapping.php';
 include_once './Mapping/ProcesoUsuarioParametroMapping.php';
+include_once './Mapping/ParametroMapping.php';
 include_once './Mapping/ProcesoMapping.php';
 include_once './Mapping/UsuarioMapping.php';
 include_once './Modelos/ProcesoUsuarioModel.php';
@@ -262,6 +263,11 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
         return $proceso_usuario_mapping->feedback['resource'];
     }
 
+    //id_proceso_usuario
+    //parametros
+    //  id_parametro1 => valor_parametro1
+    //  id_parametro2 => valor_parametro2
+    //  ...
     function calcular($mensaje) {
 
         $calculo_datos = [
@@ -341,8 +347,8 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
 
         // Guardo el resultado en BD
         $datos_a_bd = [
-            'id_proceso_usuario' =>     $calculo_datos['id_proceso_usuario'],
-            'calculo_huella_carbono' => $resultado_calculo
+            'id_proceso_usuario'        => $calculo_datos['id_proceso_usuario'],
+            'calculo_huella_carbono'    => $resultado_calculo
         ];
         $proceso_usuario_mapping -> anadirResultado($datos_a_bd);
 
@@ -350,13 +356,26 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
 
     function ponerValoresEnFormula($formula, $parametros) {
 
+        $parametro_mapping = new ParametroMapping;
+
+        header('Content-type: application/json');
+        echo(json_encode($formula));
+
         foreach ($parametros as $id_parametro => $valor_parametro) {
+
+            $parametro_temp = $parametro_mapping -> searchById(['id_parametro' => $id_parametro])['resource'];
+
             $formula = str_replace(
-                "#" . $id_parametro . "#",
+                "#" . $parametro_temp['parametro_formula'] . "|" . $parametro_temp['descripcion_parametro'] . "#",
                 $valor_parametro,
                 $formula
             );
+            
         }
+
+        header('Content-type: application/json');
+        echo(json_encode($formula));
+        exit;
 
         return $formula;
 
