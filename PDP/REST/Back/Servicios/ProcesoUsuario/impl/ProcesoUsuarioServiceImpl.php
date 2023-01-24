@@ -358,9 +358,6 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
 
         $parametro_mapping = new ParametroMapping;
 
-        header('Content-type: application/json');
-        echo(json_encode($formula));
-
         foreach ($parametros as $id_parametro => $valor_parametro) {
 
             $parametro_temp = $parametro_mapping -> searchById(['id_parametro' => $id_parametro])['resource'];
@@ -370,12 +367,8 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
                 $valor_parametro,
                 $formula
             );
-            
-        }
 
-        header('Content-type: application/json');
-        echo(json_encode($formula));
-        exit;
+        }
 
         return $formula;
 
