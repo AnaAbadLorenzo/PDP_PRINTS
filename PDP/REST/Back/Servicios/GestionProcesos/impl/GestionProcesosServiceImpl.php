@@ -9,6 +9,8 @@ include_once './Mapping/UsuarioMapping.php';
 include_once './Mapping/CategoriaMapping.php';
 include_once './Mapping/NoticiaMapping.php';
 include_once './Mapping/ParametroMapping.php';
+include_once './Mapping/ProcesoUsuarioMapping.php';
+include_once './Mapping/ProcesoUsuarioParametroMapping.php';
 
 class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosService {
 
@@ -314,11 +316,21 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                 'dni_usuario' => $categoria['dni_responsable'],
                 'borrado_proceso' => 0
             ];
+
+            // logica de formula
+
+            // conseguimos el valor de la forumla en bd para ver si cambió
+            $formula_anterior = $proceso_mapping -> searchById($procesoDatos)['resource']['formula_proceso'];
+            $formula_entrante = $this -> proceso -> formula_proceso;
+
+            if (strcmp($formula_anterior, $formula_entrante) != 0) // si la formula en bd y la que llega no son iguales, gestionamos cambios de parametro
+            {
+                $this -> eliminarProcesoUsuarioParametroAsociados($procesoDatos);
+                $this -> eliminarParametrosAsociados($procesoDatos);
+                $this -> procesarParametrosFormulaEditar($this -> proceso -> id_proceso);
+            }
             
             $proceso_mapping -> edit($procesoDatos);
-
-            $this -> eliminarParametrosAsociados($procesoDatos);
-            $this -> procesarParametrosFormulaEditar($this -> proceso -> id_proceso);
 
             if(intval($antiguoProceso['check_aprobacion']) == 0 && $this->proceso->check_aprobacion == 1) {
                 $noticia_mapping = new NoticiaMapping();
@@ -334,7 +346,6 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
             $this->recursos = '';
         }
         
-        
         return $respuesta;
 
     }
@@ -342,6 +353,27 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
     function eliminarParametrosAsociados($datos_proceso) {
         $parametro_mapping = new ParametroMapping;
         $parametro_mapping -> deleteAsociados($datos_proceso);
+    }
+
+    function eliminarProcesoUsuarioParametroAsociados($datos_proceso) {
+
+        $proceso_usuario_mapping = new ProcesoUsuarioMapping;
+        $proceso_usuario_parametro_mapping = new ProcesoUsuarioParametroMapping;
+
+        // conseguimos los ids proceso usuario para eliminar los valores de sus parametros
+        $respuesta = $proceso_usuario_mapping -> conseguirIdsAsociadosAProceso($datos_proceso)['resource'];
+        $ids_proceso_usuario = [];
+        foreach ($respuesta as $id_proceso_usuario) {
+            array_push($ids_proceso_usuario, $id_proceso_usuario['id_proceso_usuario']);
+        }
+
+        // eliminar los valores de sus parametros
+        foreach ($ids_proceso_usuario as $id_proceso_usuario) {
+            $proceso_usuario_parametro_mapping -> deleteByProcesoUsuario(
+                ['id_proceso_usuario' => $id_proceso_usuario]
+            );
+        }
+
     }
 
     function delete($mensaje) {
