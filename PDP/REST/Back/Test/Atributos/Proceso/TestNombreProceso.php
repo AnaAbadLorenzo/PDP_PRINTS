@@ -67,7 +67,7 @@ class TestNombreProceso extends Test{
     function hacerPruebaNombreProcesoCaracteresEspeciales($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['nombre_proceso'], 'gestProcesos', 'nombre_proceso');
-        $resultadoEsperado = 'NOMBRE_PROCESO_ALFABETICO_INCORRECTO'." - ".NOMBRE_PROCESO_ALFABETICO_INCORRECTO;
+        $resultadoEsperado = 'NOMBRE_PROCESO_ALFANUMERO_INCORRECTO'." - ".NOMBRE_PROCESO_ALFANUMERO_INCORRECTO;
 
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, CARACTERES_ESPECIALES, ERROR, $atributo['nombre_proceso'], 'nombre_proceso');
     }

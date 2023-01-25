@@ -53,7 +53,7 @@ class TestDescripcionProceso extends Test{
     function hacerPruebaDescripcionProcesoCaracteresEspeciales($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['descripcion_proceso'], 'gestProcesos', 'descripcion_proceso');
-        $resultadoEsperado = 'DESCRIPCION_PROCESO_ALFABETICO_INCORRECTO'." - ".DESCRIPCION_PROCESO_ALFABETICO_INCORRECTO;
+        $resultadoEsperado = 'DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO'." - ".DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO;
 
             return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, CARACTERES_ESPECIALES, ERROR, $atributo['descripcion_proceso'], 'descripcion_proceso');
         }

@@ -101,7 +101,7 @@ class FuncionesComunes {
                 case: 'gestParametros':
                     switch($nombreAtributo){
                         case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORUMLA_VACIO'. " - ". PARAMETRO_FORUMLA_VACIO;
+                            $mensaje = 'PARAMETRO_FORMULA_VACIO'. " - ". PARAMETRO_FORUMLA_VACIO;
                         break; 
                         case 'descripcion_parametro':
                             $mensaje = 'DESCRIPCION_PARAMETRO_VACIO'. " - ". DESCRIPCION_PARAMETRO_VACIO;
@@ -258,9 +258,6 @@ class FuncionesComunes {
                         case 'fecha_proceso_usuario':
                             $mensaje = 'FECHA_PROCESO_USUARIO_MENOR_10'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
                         break;
-                        case 'calculo_huella_carbono':
-                            $mensaje = 'CALCULO_HUELLA_CARBONO_MENOR_80'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
-                        break;
                     }
                 break;
                 
@@ -353,7 +350,7 @@ class FuncionesComunes {
                 case: 'gestParametros':
                     switch($nombreAtributo){
                         case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORUMLA_MAYOR_QUE_50'. " - ". PARAMETRO_FORUMLA_MAYOR_QUE_50;
+                            $mensaje = 'PARAMETRO_FORMULA_MAYOR_QUE_50'. " - ". PARAMETRO_FORUMLA_MAYOR_QUE_50;
                         break; 
                     }
                 break;
@@ -368,6 +365,9 @@ class FuncionesComunes {
                 switch($nombreAtributo){
                     case 'fecha_proceso_usuario':
                         $mensaje = 'FECHA_PROCESO_USUARIO_MAYOR_10'. " - ". FECHA_PROCESO_USUARIO_MAYOR_10;
+                    break;
+                    case 'calculo_huella_carbono':
+                        $mensaje = 'CALCULO_HUELLA_CARBONO_MAYOR_QUE_80'. " - ". CALCULO_HUELLA_CARBONO_MAYOR_QUE_80;
                     break;
                 }
             break;
@@ -428,7 +428,7 @@ class FuncionesComunes {
                 case: 'gestParametros':
                     switch($nombreAtributo){
                         case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                            $mensaje = 'PARAMETRO_FORMULA_INCORRECTO'. " - ". PARAMETRO_FORMULA_INCORRECTO;
                         break; 
 
                     }
@@ -436,10 +436,10 @@ class FuncionesComunes {
                 case 'gestProcesosusuario':
                     switch($nombreAtributo){
                         case 'fecha_proceso_usuario':
-                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_FECHA_INCORRECTO;
                         break;
                         case 'calculo_huella_carbono':
-                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_INCORRECTO;
                         break;
                     }
                 break;
@@ -506,7 +506,7 @@ class FuncionesComunes {
                 case: 'gestParametros':
                     switch($nombreAtributo){
                         case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                            $mensaje = 'PARAMETRO_FORMULA_INCORRECTO'. " - ". PARAMETRO_FORMULA_INCORRECTO;
                         break; 
 
                     }
@@ -514,10 +514,10 @@ class FuncionesComunes {
                 case 'gestProcesosusuario':
                     switch($nombreAtributo){
                         case 'fecha_proceso_usuario':
-                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_FECHA_INCORRECTO;
                         break;
                         case 'calculo_huella_carbono':
-                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_INCORRECTO;
                         break;
                     }
                 break;
@@ -626,7 +626,7 @@ class FuncionesComunes {
                 case: 'gestParametros':
                     switch($nombreAtributo){
                         case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORUMLA_INCORRECTO'. " - ". PARAMETRO_FORUMLA_INCORRECTO;
+                            $mensaje = 'PARAMETRO_FORMULA_INCORRECTO'. " - ". PARAMETRO_FORMULA_INCORRECTO;
                         break; 
                         case 'descripcion_parametro':
                             $mensaje = 'DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO'. " - ". DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO;
@@ -646,10 +646,10 @@ class FuncionesComunes {
                 case 'gestProcesosusuario':
                     switch($nombreAtributo){
                         case 'fecha_proceso_usuario':
-                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_FECHA_INCORRECTO;
                         break;
                         case 'calculo_huella_carbono':
-                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_INCORRECTO;
                         break;
                     }
                 break;
@@ -739,10 +739,10 @@ class FuncionesComunes {
                 case 'gestProcesosusuario':
                     switch($nombreAtributo){
                         case 'fecha_proceso_usuario':
-                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_MENOR_10;
+                            $mensaje = 'FECHA_PROCESO_USUARIO_FECHA_INCORRECTO'. " - ". FECHA_PROCESO_USUARIO_FECHA_INCORRECTO;
                         break;
                         case 'calculo_huella_carbono':
-                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_MENOR_80;
+                            $mensaje = 'CALCULO_HUELLA_CARBONO_INCORRECTO'. " - ". CALCULO_HUELLA_CARBONO_INCORRECTO;
                         break;
                     }
                 break;
