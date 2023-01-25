@@ -9,6 +9,8 @@ class EditProcesoAccion extends ValidacionesBase{
 	
 	private $persona;
 	public $respuesta;
+    public $proceso;
+    public $categoria;
 
 	function __construct()
 	{

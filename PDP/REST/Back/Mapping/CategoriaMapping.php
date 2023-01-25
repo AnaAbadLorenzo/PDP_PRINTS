@@ -211,6 +211,35 @@ function searchAll() {
 
         return $respuesta;
     }
+
+    
+    function buscarPorIdPadre($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `categoria`
+            WHERE
+                `id_padre_categoria`='" . $datos['id_categoria'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
+     
+    function buscarPorDNIUsuario($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `categoria`
+            WHERE
+                `dni_usuario`='" . $datos['dni_usuario'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
     
     
 }

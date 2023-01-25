@@ -148,6 +148,19 @@ class ProcesoUsuarioParametroMapping extends MappingBase {
         $this -> get_one_result_from_query();
 
     }
-    
+      
+    function buscarPorIdParametro($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `proceso_usuario_parametro`
+            WHERE
+                `id_parametro`='" . $datos['id_parametro'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
 }
 ?>

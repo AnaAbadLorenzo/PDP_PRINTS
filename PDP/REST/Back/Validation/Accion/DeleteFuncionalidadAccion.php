@@ -33,7 +33,7 @@ class DeleteFuncionalidadAccion extends ValidacionesBase{
 		$resultado = array();
 		
 		$this -> acl -> searchByFuncionalidad($datos);
-		$resultado = $this -> acl -> resource;
+		$resultado = $this -> acl -> feedback['resource'];
 
 		if (sizeof($resultado) == 0) {
 			return true;

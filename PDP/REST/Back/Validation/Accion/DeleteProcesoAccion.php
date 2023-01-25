@@ -8,13 +8,19 @@ class DeleteProcesoAccion extends ValidacionesBase{
 	
 	private $proceso;
 	public $respuesta;
+	public $parametro_mapping;
+	public $proceso_usuario_mapping;
 
 	function __construct()
 	{
 		$this->proceso = new ProcesoModel();
+		$this->parametro_mapping = new ParametroMapping();
+		$this->proceso_usuario_mapping = new ProcesoUsuarioMapping();
 	}
 	function comprobarDeleteProceso($datosDeleteProceso){
 		$this->existeIdProceso($datosDeleteProceso);
+		$this->procesoEstaAsociadoAUsuario($datosDeleteProceso);
+		$this->procesoTieneParametros($datosDeleteProceso);
 		
 	}
 
@@ -45,7 +51,29 @@ function estaBorradoAUno($datos) {
 		return true;
 	}
 }
-		
+function procesoTieneParametros($datos){
+	$resultado = array();
+	$this -> parametro_mapping -> buscarPorIdProceso($datos);
+	$resultado = $this -> parametro_mapping -> feedback['resource'];
+
+	if (sizeof($resultado) == 0) {
+		return true;
+	} else {
+		$this -> respuesta = 'PROCESO_TIENE_PARAMETROS';
+	}
+}
+
+function procesoEstaAsociadoAUsuario($datos){
+	$resultado = array();
+	$this -> proceso_usuario_mapping -> buscarPorIdProceso($datos);
+	$resultado = $this -> proceso_usuario_mapping -> feedback['resource'];
+
+	if (sizeof($resultado) == 0) {
+		return true;
+	} else {
+		$this -> respuesta = 'PROCESO_ESTA_ASOCIADO_A_USUARIO';
+	}
+}	
 	
 		
 
