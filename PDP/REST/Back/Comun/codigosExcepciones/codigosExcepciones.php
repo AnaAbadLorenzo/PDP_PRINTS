@@ -183,6 +183,11 @@ define('DELETE_ACCION_COMPLETO', 'La acción se ha eliminado correctamente');
 define('REACTIVAR_ACCION_CORRECTO', 'La acción se ha reactivado correctamente');
 define('ACCION_TIENE_PERMISOS_ASOCIADOS', 'La acción está asociada a un usuario y a una funcionalidad');
 
+define('ADD_NOTICIA_COMPLETO', 'La noticia se ha insertado correctamente');
+define('NOTICIA_YA_EXISTE', 'La noticia ya existe');
+define('EDIT_NOTICIA_COMPLETO', 'La noticia se ha editado correctamente');
+define('NOTICIA_NO_EXISTE', 'La noticia no existe');
+define('DELETE_NOTICIA_COMPLETO', 'La noticia se ha eliminado correctamente');
 
 
 ?>
