@@ -4,6 +4,7 @@ include_once './Mapping/MappingBase.php';
 include_once './Modelos/ProcesoModel.php';
 
 class ProcesoMapping extends MappingBase {
+
     public $conexion;
 
     public function __construct(){
@@ -153,74 +154,112 @@ class ProcesoMapping extends MappingBase {
         
     }
 
-
-function searchAll() {
-    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0";
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query(); 
-}
-
-function search($paginacion) {
-    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0 LIMIT ".$paginacion->inicio. ",". $paginacion->tamanhoPagina;
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query(); 
-}
-
-function searchDelete($paginacion) {
-    $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 1 LIMIT ".$paginacion->inicio. ",". $paginacion->tamanhoPagina;
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query(); 
-}
-
-function getProcesosWhitIdCategoria($datosProceso){
-    $this->query = "SELECT * FROM `proceso` WHERE `id_categoria`=".$datosProceso['id_padre_categoria']."";
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_results_from_query();
-}
-
-function searchById($datosSearch) {
-    $this->query = "SELECT * FROM `proceso` WHERE `id_proceso`='".$datosSearch['id_proceso']."'";
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_one_result_from_query();
-    
-    $respuesta = $this->feedback;
-
-    if($respuesta['code'] != 'RECORDSET_VACIO'){
-        return $respuesta;
-    }else{
-        return $respuesta;
+    function searchAll() {
+        $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query(); 
     }
-}
 
-function searchByName($datosSearch) {
-    $this->query = "SELECT * FROM `proceso` WHERE `nombre_proceso`='".$datosSearch['nombre_proceso']."'";
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_one_result_from_query();
-    
-    $respuesta = $this->feedback;
-
-    if($respuesta['code'] != 'RECORDSET_VACIO'){
-        return $respuesta;
-    }else{
-        return $respuesta;
+    function search($paginacion) {
+        $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 0 LIMIT ".$paginacion->inicio. ",". $paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query(); 
     }
-}
 
-function reactivar($datos) {
+    function searchDelete($paginacion) {
+        $this->query = "SELECT * FROM `proceso` WHERE `borrado_proceso`= 1 LIMIT ".$paginacion->inicio. ",". $paginacion->tamanhoPagina;
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query(); 
+    }
 
-    $this->query = 
-        "UPDATE `proceso`
-        SET `borrado_proceso`=0
-        WHERE `id_proceso`='" . $datos['id_proceso'] . "'";
+    function getProcesosWhitIdCategoria($datosProceso){
+        $this->query = "SELECT * FROM `proceso` WHERE `id_categoria`=".$datosProceso['id_padre_categoria']."";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+    }
 
-    $this->stmt = $this->conexion->prepare($this->query);
-    $this->get_one_result_from_query();
-    $respuesta = $this->feedback;
+    function searchById($datosSearch) {
+        $this->query = "SELECT * FROM `proceso` WHERE `id_proceso`='".$datosSearch['id_proceso']."'";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        
+        $respuesta = $this->feedback;
 
-    return $respuesta;
+        if($respuesta['code'] != 'RECORDSET_VACIO'){
+            return $respuesta;
+        }else{
+            return $respuesta;
+        }
+    }
 
-}
+    function searchByName($datosSearch) {
+        $this->query = "SELECT * FROM `proceso` WHERE `nombre_proceso`='".$datosSearch['nombre_proceso']."'";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        
+        $respuesta = $this->feedback;
+
+        if($respuesta['code'] != 'RECORDSET_VACIO'){
+            return $respuesta;
+        }else{
+            return $respuesta;
+        }
+    }
+
+    function reactivar($datos) {
+
+        $this->query = 
+            "UPDATE `proceso`
+            SET `borrado_proceso`=0
+            WHERE `id_proceso`='" . $datos['id_proceso'] . "'";
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
+    }
+
+    function conseguirUltimoId() {
+
+        $this -> query = 
+            "SELECT MAX(`id_proceso`)
+            FROM `proceso`"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_one_result_from_query();
+        $respuesta = $this->feedback;
+
+        return $respuesta;
+
+    }
     
-    
+    function buscarPorIdCategoria($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `proceso`
+            WHERE
+                `id_categoria`='" . $datos['id_categoria'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
+    function buscarPorDNIUsuario($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `proceso`
+            WHERE
+                `dni_usuario`='" . $datos['dni_usuario'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
 }
 ?>

@@ -66,6 +66,20 @@ class ProcesoUsuarioParametroMapping extends MappingBase {
 
     }
 
+    function deleteByProcesoUsuario($datos) {
+
+        $this -> query =
+            "DELETE FROM `proceso_usuario_parametro`
+            WHERE
+                `id_proceso_usuario`='" .   $datos['id_proceso_usuario']    . "'
+            ;"
+        ;
+
+        $this -> stmt = $this -> conexion -> prepare($this -> query);
+        $this -> execute_single_query();
+
+    }
+
     function search($paginacion) {
 
         $this -> query = 
@@ -145,6 +159,19 @@ class ProcesoUsuarioParametroMapping extends MappingBase {
         $this -> get_one_result_from_query();
 
     }
-    
+      
+    function buscarPorIdParametro($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `proceso_usuario_parametro`
+            WHERE
+                `id_parametro`='" . $datos['id_parametro'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
 }
 ?>

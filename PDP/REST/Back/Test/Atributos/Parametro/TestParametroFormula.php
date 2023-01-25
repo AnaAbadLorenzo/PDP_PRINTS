@@ -55,7 +55,7 @@ class TestParametroFormula extends Test{
         function hacerPruebaParametroFormulaCaracteresEspeciales($atributo){
             $funcionesComunes = new FuncionesComunes();
             $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['parametro_formula'], 'gestParametros', 'parametro_formula');
-                $resultadoEsperado = 'PARAMETRO_FORMULA_ALFABETICO_INCORRECTO'." - ".PARAMETRO_FORMULA_ALFABETICO_INCORRECTO;
+                $resultadoEsperado = 'PARAMETRO_FORMULA_INCORRECTO'." - ".PARAMETRO_FORMULA_INCORRECTO;
         
             return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, CARACTERES_ESPECIALES, ERROR, $atributo['parametro_formula'], 'parametro_formula');
         }

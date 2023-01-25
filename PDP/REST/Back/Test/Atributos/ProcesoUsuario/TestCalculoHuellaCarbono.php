@@ -59,18 +59,11 @@ class TestCalculoHuellaCarbono extends Test{
         
     }
         
-    function hacerPruebaCalculoHuellaCarbonoMenor80($atributo){
+
+    function hacerPruebaCalculoHuellaCarbonoMayor80($atributo){
         $funcionesComunes = new FuncionesComunes();
-        $resultadoObtenido = $funcionesComunes->comprobarAtributosLongitudMenor($atributo['calculo_huella_carbono'], 'gestProcesosusuario', 'calculo_huella_carbono', 80);
-        $resultadoEsperado = 'CALCULO_HUELLA_CARBONO_MENOR_QUE_10'. " - ".CALCULO_HUELLA_CARBONO_MENOR_QUE_10;
-        
-        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, LONGITUD_MINIMA_ERRONEA, ERROR, $atributo['calculo_huella_carbono'], 'calculo_huella_carbono');
-    }
-        
-    function hacerPruebaCalculoHuellaCarbonoMayor10($atributo){
-        $funcionesComunes = new FuncionesComunes();
-        $resultadoObtenido = $funcionesComunes->comprobarAtributosLongitudMayor($atributo['calculo_huella_carbono'], 'gestProcesosusuario', 'calculo_huella_carbono', 10);
-        $resultadoEsperado = 'CALCULO_HUELLA_CARBONO_MAYOR_QUE_10'." - ".CALCULO_HUELLA_CARBONO_MAYOR_QUE_10;
+        $resultadoObtenido = $funcionesComunes->comprobarAtributosLongitudMayor($atributo['calculo_huella_carbono'], 'gestProcesosusuario', 'calculo_huella_carbono', 80);
+        $resultadoEsperado = 'CALCULO_HUELLA_CARBONO_MAYOR_QUE_80'." - ".CALCULO_HUELLA_CARBONO_MAYOR_QUE_80;
         
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, LONGITUD_MAXIMA_ERRONEA, ERROR, $atributo['calculo_huella_carbono'], 'calculo_huella_carbono');
         

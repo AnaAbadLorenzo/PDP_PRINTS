@@ -15,6 +15,7 @@ class TestValorParametro extends Test{
         $_POST['valor_parametro'] = '';
         $resultadoTest = $this->hacerPruebaValorParametroVacio($_POST);
         array_push($pruebas, $resultadoTest);
+        
         //VALOR_PARAMETRO_INICIA_CARACTERES_ESPECIALES
         $_POST['valor_parametro'] = '###Ananita';
         $resultadoTest = $this->hacerPruebaValorParametroCaracteresEspeciales($_POST);

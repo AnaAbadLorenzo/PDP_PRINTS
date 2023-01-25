@@ -24,6 +24,9 @@ define('CONEXION_BD_KO', 'No se ha podido establecer conexión con la BD');
 define('SQL_KO', 'La sentencia SQL ha fallado');
 define('TEST_FALLIDOS', 'Los test han fallado');
 
+
+//CODIGOS_EXCEPCIONES_ATRIBUTOS 
+
 define('LOGIN_USUARIO_VACIO', 'El login del usuario no puede ser vacío');
 define('LOGIN_USUARIO_MENOR_QUE_3', 'El login del usuario no puede tener menos de 3 caracteres');
 define('LOGIN_USUARIO_MAYOR_QUE_48', 'El login del usuario no puede tener más de 48 caracteres');
@@ -104,14 +107,6 @@ define('DESCRIPCION_ROL_VACIO', 'La descripción del rol no puede ser vacía');
 define('DESCRIPCION_ROL_MENOR_QUE_3', 'La descripción del rol no puede tener menos de 3 caracteres');
 define('DESCRIPCION_ROL_ALFABETICO_INCORRECTO', 'La descripción del rol sólo puede contener letras, acentos y espacios');
 
-define('ADD_ACCION_COMPLETO', 'La acción se ha insertado correctamente');
-define('ACCION_YA_EXISTE', 'La acción ya existe');
-define('EDIT_ACCION_COMPLETO', 'La acción se ha editado correctamente');
-define('ACCION_NO_EXISTE', 'La acción no existe');
-define('DELETE_ACCION_COMPLETO', 'La acción se ha eliminado correctamente');
-define('REACTIVAR_ACCION_CORRECTO', 'La acción se ha reactivado correctamente');
-define('ACCION_TIENE_PERMISOS_ASOCIADOS', 'La acción está asociada a un usuario y a una funcionalidad');
-
 define('NOMBRE_CATEGORIA_VACIO', 'El nombre de la categoria no puede ser vacío');
 define('NOMBRE_CATEGORIA_MENOR_QUE_3', 'El nombre de la categoria no puede tener menos de 3 caracteres');
 define('NOMBRE_CATEGORIA_MAYOR_QUE_48', 'El nombre de la categoria no puede tener más de 48 caracteres');
@@ -126,4 +121,88 @@ define('DNI_RESPONSABLE_MENOR_QUE_9', 'El DNI de la persona responsable no puede
 define('DNI_RESPONSABLE_MAYOR_QUE_9', 'El DNI de la persona responsable no puede tener más de 9 caracteres');
 define('DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO', 'El DNI de la persona responsable solo puede tener números y una letra');
 DEFINE('DNI_RESPONSABLE_LETRA_INCORRECTO', 'La letra del DNI es incorrecta');
+
+define('DESCRIPCION_FUNCIONALIDAD_VACIO', 'La descripción  de la funcionalidad no puede ser vacía');
+define('DESCRIPCION_FUNCIONALIDAD_MENOR_QUE_3', 'La descripción de la funcionalidad no puede tener menos de 3 caracteres');
+define('DESCRIPCION_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'La descripción de la funcionalidad sólo puede contener letras, acentos y espacios');
+
+define('NOMBRE_FUNCIONALIDAD_VACIO', 'El nombre de la funcionalidad no puede ser vacío');
+define('NOMBRE_FUNCIONALIDAD_MENOR_QUE_3', 'El nombre de la funcionalidad no puede tener menos de 3 caracteres');
+define('NOMBRE_FUNCIONALIDAD_MAYOR_QUE_128', 'El nombre de la funcionalidad no puede tener más de 128 caracteres');
+define('NOMBRE_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'El nombre de la funcionalidad sólo puede contener letras');
+
+define('CONTENIDO_NOTICIA_VACIO', 'El contenido de la noticia no puede ser vací0');
+define('CONTENIDO_NOTICIA_MENOR_QUE_3', 'El contenido de la noticia no puede tener menos de 3 caracteres');
+
+define('FECHA_NOTICIA_VACIO', 'La fecha de la noticia no puede ser vacía');
+define('FECHA_NOTICIA_MENOR_QUE_10', 'La fecha de la noticia no puede tener menos de 10 caracteres');
+define('FECHA_NOTICIA_MAYOR_QUE_10', 'La fecha de la noticia no puede tener más de 8 caracteres');
+define('FECHA_NOTICIA_INCORRECTO', 'La fecha de la noticia solo puede tener números y dos /');
+
+define('TITULO_NOTICIA_VACIO', 'El titulo de la noticia no puede ser vacío');
+define('TITULO_NOTICIA_MENOR_QUE_3', 'El titulo de la noticia no puede tener menos de 3 caracteres');
+define('TITULO_NOTICIA_MAYOR_QUE_255', 'El titulo de la noticia no puede tener más de 255 caracteres');
+define('TITULO_NOTICIA_ALFABETICO_INCORRECTO', 'El titulo de la noticia sólo puede contener letras');
+
+define('DESCRIPCION_PARAMETRO_VACIO', 'La descripción  del parametro no puede ser vacía');
+define('DESCRIPCION_PARAMETRO_MENOR_QUE_3', 'La descripción del parametro no puede tener menos de 3 caracteres');
+define('DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO', 'La descripción del parametro sólo puede contener letras, acentos y espacios');
+
+define('PARAMETRO_FORMULA_VACIO', 'El parametro de la formula no puede ser vacía');
+define('PARAMETRO_FORMULA_MAYOR_QUE_50', 'El parametro de la formula no puede ser mayor de 50');
+define('PARAMETRO_FORMULA_INCORRECTO', 'Los parametros de la formula no aceptan cualquier tipo de caracter');
+
+define('DESCRIPCION_PROCESO_VACIO', 'La descripción  del proceso no puede ser vacía');
+define('DESCRIPCION_PROCESO_MENOR_QUE_3', 'La descripción del proceso no puede tener menos de 3 caracteres');
+define('DESCRIPCION_PROCESO_ALFANUMERO_INCORRECTO', 'La descripcion del proceso no acepta cualquier tipo de caracter');
+
+define('NOMBRE_PROCESO_VACIO', 'El nombre del proceso no puede ser vacío');
+define('NOMBRE_PROCESO_MENOR_QUE_3', 'El nombre del proceso no puede tener menos de 3 caracteres');
+define('NOMBRE_PROCESO_MAYOR_QUE_48', 'El nombre del proceso no puede tener más de 48 caracteres');
+define('NOMBRE_PROCESO_ALFANUMERO_INCORRECTO', 'El nombre de la funcionalidadno acepta cualquier tipo de caracter');
+
+define('HUELLA_DE_CARBONO_VACIO', 'La huella de carbono no puede ser vacía');
+define('CALCULO_HUELLA_CARBONO_MAYOR_QUE_80', 'El  calculo de la huella no puede tener más de 80 caracteres');
+define('CALCULO_HUELLA_CARBONO_INCORRECTO', 'El calculo de la huella de carbono no acepta cualquier tipo de caracter');
+
+
+define('FECHA_PROCESO_USUARIO_VACIO', 'La fecha del proceso de usuario no puede ser vacía');
+define('FECHA_PROCESO_USUARIO_MENOR_QUE_10', 'La fecha del proceso usuario no puede tener menos de 10 caracteres');
+define('FECHA_PROCESO_USUARIO_MAYOR_QUE_10', 'La fecha del proceso usuario no puede tener más de 10 caracteres');
+define('FECHA_PROCESO_USUARIO_FECHA_INCORRECTO', 'La fecha del proceso usuario solo puede tener números y dos /');
+
+define('VALOR_PARAMETRO_VACIO', 'El valor del parametro no puede ser vacía');
+define('VALOR_PARAMETRO_ALFABETICO_INCORRECTO', 'El valor del parametro de carbono no acepta cualquier tipo de caracter');
+
+//CODIGOS_EXCEPCIONES_ACCIONES
+define('ADD_ACCION_COMPLETO', 'La acción se ha insertado correctamente');
+define('ACCION_YA_EXISTE', 'La acción ya existe');
+define('EDIT_ACCION_COMPLETO', 'La acción se ha editado correctamente');
+define('ACCION_NO_EXISTE', 'La acción no existe');
+define('DELETE_ACCION_COMPLETO', 'La acción se ha eliminado correctamente');
+define('REACTIVAR_ACCION_CORRECTO', 'La acción se ha reactivado correctamente');
+define('ACCION_TIENE_PERMISOS_ASOCIADOS', 'La acción está asociada a un usuario y a una funcionalidad');
+
+define('ADD_NOTICIA_COMPLETO', 'La noticia se ha insertado correctamente');
+define('NOTICIA_YA_EXISTE', 'La noticia ya existe');
+define('EDIT_NOTICIA_COMPLETO', 'La noticia se ha editado correctamente');
+define('NOTICIA_NO_EXISTE', 'La noticia no existe');
+define('DELETE_NOTICIA_COMPLETO', 'La noticia se ha eliminado correctamente');
+
+define('ADD_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha insertado correctamente');
+define('FUNCIONALIDAD_YA_EXISTE', 'La funcionalidad ya existe');
+define('EDIT_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha editado correctamente');
+define('FUNCIONALIDAD_NO_EXISTE', 'La funcionalidad no existe');
+define('DELETE_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha eliminado correctamente');
+
+define('ADD_ROL_COMPLETO', 'El rol se ha insertado correctamente');
+define('ROL_YA_EXISTE', 'El rol ya existe');
+define('EDIT_ROL_COMPLETO', 'El rol se ha editado correctamente');
+define('ROL_NO_EXISTE', 'El rol no existe');
+define('DELETE_ROL_COMPLETO', 'El rol se ha eliminado correctamente');
+
+define('ADD_PERSONA_COMPLETO', 'La persona se ha insertado correctamente');
+define('EDIT_PERSONA_COMPLETO', 'La persona se ha editado correctamente');
+define('PERSONA_NO_EXISTE', 'La persona no existe');
+define('DELETE_PERSONA_COMPLETO', 'La persona se ha eliminado correctamente');
 ?>

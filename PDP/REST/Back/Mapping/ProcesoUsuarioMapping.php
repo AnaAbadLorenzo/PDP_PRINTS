@@ -104,6 +104,21 @@ class ProcesoUsuarioMapping extends MappingBase {
 
     }
 
+    function conseguirIdsAsociadosAProceso($datos) {
+
+        $this -> query = 
+            "SELECT `id_proceso_usuario` FROM `proceso_usuario`
+            WHERE `id_proceso`='" . $datos['id_proceso'] . "';"
+        ;
+
+        $this -> stmt = $this -> conexion -> prepare($this -> query);
+        $this -> get_results_from_query();
+        $respuesta = $this -> feedback;
+
+        return $respuesta;
+
+    }
+
     function searchById($datos) {
 
         $this -> query = 
@@ -160,6 +175,34 @@ class ProcesoUsuarioMapping extends MappingBase {
         $this -> get_one_result_from_query();
 
     }
+
+      
+    function buscarPorIdProceso($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `proceso_usuario`
+            WHERE
+                `id_proceso`='" . $datos['id_proceso'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
+    function buscarPorDNIUsuario($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `proceso_usuario`
+            WHERE
+                `dni_usuario`='" . $datos['dni_usuario'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
     
 }
 ?>

@@ -18,17 +18,17 @@ class TestDescripcionParametro extends Test{
 
         //DESCRIPCION_PARAMETRO_MENOR_QUE_3
         $_POST['descripcion_parametro'] = 'ca';
-        $resultadoTest = $this->hacerPruebaDescipcionCategoriaMenor3($_POST);
+        $resultadoTest = $this->hacerPruebaDescipcionParametroMenor3($_POST);
         array_push($pruebas, $resultadoTest);
 
         //DESCRIPCION_PARAMETRO_CARACTERES_ESPECIALES
         $_POST['descripcion_parametro'] = '###Ananita';
-        $resultadoTest = $this->hacerPruebaDescipcionCategoriaCaracteresEspeciales($_POST);
+        $resultadoTest = $this->hacerPruebaDescipcionParametroCaracteresEspeciales($_POST);
         array_push($pruebas, $resultadoTest);
 
         //DESCRIPCION_PARAMETRO_CORRECTO
         $_POST['descripcion_parametro'] = 'Categoria';
-        $resultadoTest = $this->hacerPruebaDescipcionCategoriaCorrecto($_POST);
+        $resultadoTest = $this->hacerPruebaDescipcionParametroCorrecto($_POST);
         array_push($pruebas, $resultadoTest);
 
         return $pruebas;
@@ -37,7 +37,7 @@ class TestDescripcionParametro extends Test{
     function hacerPruebaDescipcionParametroVacio($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoBlank($atributo['descripcion_parametro'], 'gestParametros', 'descripcion_parametro');
-        $resultadoEsperado = 'DESCRIPCION_CATEGORIA_VACIO'." - ".DESCRIPCION_CATEGORIA_VACIO;
+        $resultadoEsperado = 'DESCRIPCION_PARAMETRO_VACIO'." - ".DESCRIPCION_PARAMETRO_VACIO;
 
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, VACIO, ERROR, $atributo['descripcion_parametro'], 'descripcion_parametro');
 
@@ -54,7 +54,7 @@ class TestDescripcionParametro extends Test{
     function hacerPruebaDescripcionParametroCaracteresEspeciales($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['descripcion_parametro'], 'gestParametros', 'descripcion_parametro');
-        $resultadoEsperado = 'DESCRIPCION_PARAMETRO_ALFABETICO_INCORRECTO'." - ".DESCRIPCION_PARAMETRO_ALFABETICO_INCORRECTO;
+        $resultadoEsperado = 'DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO'." - ".DESCRIPCION_PARAMETRO_ALFANUMERICO_INCORRECTO;
 
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, CARACTERES_ESPECIALES, ERROR, $atributo['descripcion_parametro'], 'descripcion_parametro');
     }

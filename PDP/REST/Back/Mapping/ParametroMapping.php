@@ -62,6 +62,19 @@ class ParametroMapping extends MappingBase {
 
     }
 
+    function deleteAsociados($datos) {
+
+        $this -> query =
+            "DELETE FROM `parametro`
+            WHERE
+                `id_proceso`='". $datos['id_proceso'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->execute_single_query();
+
+    }
+
     function search($paginacion) {
 
         $this -> query = 
@@ -153,6 +166,19 @@ class ParametroMapping extends MappingBase {
         $this->stmt = $this->conexion->prepare($this->query); 
         $this->get_one_result_from_query();
     }
-    
+      
+    function buscarPorIdProceso($datos) {
+        
+        $this -> query = 
+            "SELECT * FROM `parametro`
+            WHERE
+                `id_proceso`='" . $datos['id_proceso'] . "';"
+        ;
+
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this -> get_results_from_query();
+
+    }
+
 }
 ?>
