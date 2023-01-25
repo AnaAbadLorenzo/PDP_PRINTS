@@ -1350,7 +1350,7 @@ function anadirAccionAjaxPromesa(){
         var nombre = (datos[i]['nombre_funcionalidad']).split(" ");
         if((datos[i]['nombre_funcionalidad']) == "Log de acciones" ){
           var nombreCollapse = nombre[0] + nombre[1] + nombre[2];
-        }else if((datos[i]['nombre_funcionalidad']) == "Gestión de procedimientos ejecutados" || (datos[i].nombreFuncionalidad) == "Gestión de procesos ejecutados"){
+        }else if((datos[i]['nombre_funcionalidad']) == "Gestión de procedimientos ejecutados" || (datos[i]['nombre_funcionalidad']) == "Gestión de procesos ejecutados"){
           var nombreCollapse = nombre[1] + nombre[2] + nombre[3];
         }else{
           var nombreCollapse = nombre[1] + nombre[2];

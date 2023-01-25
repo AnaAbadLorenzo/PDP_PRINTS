@@ -135,7 +135,7 @@ function escogeTamanho(entidad){
         case 'PROCEDIMIENTOSUSUARIO' :
                 tamanho = tamanhoPaginaProcedimientoUsuario;
         break;
-        case 'PROCESOSEJECUTADOS' :
+        case 'PROCESOSUSUARIOEJECUTADOS' :
                 tamanho = tamanhoPaginaProcesosEjecutados;
         break;
     }
@@ -447,18 +447,18 @@ function escogeEntidadPaginacion(entidad, funcionalidad, parametro){
         }
         break;
 
-        case 'PROCEDIMIENTOSEJECUTADOS' :
+        case 'PROCESOSUSUARIOEJECUTADOS' :
             switch(funcionalidad){
-                case 'cargarProcedimientosEjecutados': 
+                case 'cargarProcesosUsuarioEjecutados': 
                     for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarProcedimientosEjecutados(' 
-                            + (i+1) + ',' + tamanhoPaginaProcedimientosEjecutados + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
+                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="cargarProcesosUsuarioEjecutados(' 
+                            + (i+1) + ',' + tamanhoPaginaProcesosEjecutados + ', \'PaginadorNo\' ); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
                     }
                 break;
-                case 'buscarProcedimientoEjecutado' : 
+                case 'buscarProcesosEjecutados' : 
                     for(var i = 0; i< 3; i++){
-                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarProcedimientoEjecutado(' 
-                            + (i+1) + ',' + tamanhoPaginaProcedimientosEjecutados + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
+                        paginas += '<li id="' + (i+1) + '" class="page-item boton' + (i+1) + '" style="display:block"><a class="page-link" href="#" onclick="buscarProcesosEjecutados(' 
+                            + (i+1) + ',' + tamanhoPaginaProcesosEjecutados + ", \'buscarPaginacion\'" + '); activarElemento(' + (i+1) +'); cargarPermisosSegunEntidad(getCookie(\'entidad\')); comprobarOcultos()">' + (i+1) + '</a></li>';
                     }
                 break;
             }

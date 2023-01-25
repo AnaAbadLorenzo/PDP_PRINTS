@@ -103,8 +103,8 @@ arrayEN={
 	'ICON_CATEGORIA' : 'Category',
 	'ICON_ACCEDER_CATEGORIAS' : 'Go to categories',
 	'ICON_INICIAR_PROCESO' : 'Start process',
-	'ICON_CONTINUAR_PROCEDIMIENTO' : 'Continue procedure',
-	'ICON_PROCEDIMIENTO_FINALIZADO' : 'Procedure completed',
+	'ICON_CONTINUAR_PROCESO' : 'Continue process',
+	'ICON_PROCESO_FINALIZADO' : 'Process completed',
 	'ICON_PLAN': 'Plan',
 	'ICONO_UPLOAD' : 'Upload request',
 	'ICONO_SEGUIR' : 'Continue',
@@ -441,7 +441,7 @@ arrayEN={
 	'GESTION_PROCEDIMIENTOS_DESDE_PLAN' : 'Available procedures',
 	'GESTION_PROCESOS' : 'Process  management',
 	'GESTION_PROCESOS_NO_ADMIN' : 'Processes',
-	'GESTION_PROCEDIMIENTOS_EJECUTADOS' : 'Executed procedures management',
+	'GESTION_PROCESOS_EJECUTADOS' : 'Executed process management',
 	'GESTION_PROCESOS_EJECUTADOS' : 'Executed process management',
 	'MIS_PROCESOS' : 'My process',
 	'REACTIVATE_PROCEDIMIENTO' : 'REACTIVATE PROCEDURE',
@@ -579,7 +579,12 @@ arrayEN={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCE SAVED CORRECTLY',
 	'EVIDENCIA_GUARDADA' : 'The evidence has been saved correctly',
 	'CATEGORIA_YA_EXISTE' : 'The category already exists',
-	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units between |.For example: v = #space|m|# x #time|sg|#'
+	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units between |.For example: v = #space|m|# x #time|sg|#',
+	'CALCULAR_HUELLA_CARBONO': 'CALCULATE YOUR CARBON FOOTPRINT',
+	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Data has been completed correctly',
+	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Data has been modified correctly',
+	'PROCESO_USUARIO_PARAMETRO_GUARDADO_OK' : 'PARAMS SAVED CORRECTLY',
+	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMS MODIFIED CORRECTLY'
 
 
 }

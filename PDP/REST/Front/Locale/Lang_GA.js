@@ -102,8 +102,8 @@ arrayGA={
 	'ICON_CATEGORIA' : 'Categoría',
 	'ICON_ACCEDER_CATEGORIA' : 'Acceder a las categorías',
 	'ICON_INICIAR_PROCESO' : 'Iniciar proceso',
-	'ICON_CONTINUAR_PROCEDIMIENTO' : 'Continuar procedemiento',
-	'ICON_PROCEDIMIENTO_FINALIZADO' : 'Procedemiento finalizado',
+	'ICON_CONTINUAR_PROCESO' : 'Continuar proceso',
+	'ICON_PROCESO_FINALIZADO' : 'Proceso finalizado',
 	'ICON_PLAN': 'Plan',
 	'ICONO_UPLOAD' : 'Enviar resposta',
 	'ICONO_SEGUIR' : 'Continuar',
@@ -438,7 +438,7 @@ arrayGA={
 	'GESTION_PROCEDIMIENTOS_DESDE_PLAN' : 'Procedementos dispoñibles',
 	'GESTION_PROCESOS' : 'Xestión de procesos',
 	'GESTION_PROCESOS_NO_ADMIN' : 'Procesos',
-	'GESTION_PROCEDIMIENTOS_EJECUTADOS' : 'Xestión de procedimientos executados',
+	'GESTION_PROCESOS_EJECUTADOS' : 'Xestión de procesos executados',
 	'GESTION_PROCESOS_EJECUTADOS' : 'Xestión de procesos executados',
 	'MIS_PROCESOS' : 'Os meus procesos',
 	'REACTIVATE_PROCEDIMIENTO' : 'REACTIVAR PROCEDEMENTO',
@@ -583,7 +583,12 @@ arrayGA={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'A evidencia gardouse correctamente',
 	'CATEGORIA_YA_EXISTE' : 'A categoria xa existe',
-	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, entre |.Por exemplo: v = #espazo|m|# x #tempo|sg|#'
+	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, entre |.Por exemplo: v = #espazo|m|# x #tempo|sg|#',
+	'CALCULAR_HUELLA_CARBONO': 'CALCULA A TÚA PEGADA DE CARBONO',
+	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Os datos completáronse correctamente',
+	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Os datos modificáronse correctamente',
+	'PROCESO_USUARIO_PARAMETRO_GUARDADO_OK' : 'PARAMETROS GARDADOS CORRECTAMENTE',
+	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMETROS MODIFICADOS CORRECTAMENTE'
 
 
 

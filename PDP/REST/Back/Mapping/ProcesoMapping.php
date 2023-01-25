@@ -99,6 +99,16 @@ class ProcesoMapping extends MappingBase {
         
     }
 
+    function searchByBasicParameters($datosSearchParameters, $paginacion) {
+            $this->query = "SELECT * FROM `proceso` WHERE LOWER(`nombre_proceso`) like LOWER(CONCAT('%','" .$datosSearchParameters['nombre_proceso']. "', '%')) AND
+                LOWER(`descripcion_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['descripcion_proceso']."', '%')) AND
+                LOWER(`fecha_proceso`) LIKE LOWER(CONCAT('%','" .$datosSearchParameters['fecha_proceso']."', '%')) AND
+                `borrado_proceso`= 0 LIMIT ".$paginacion->inicio.",".$paginacion->tamanhoPagina."";
+        $this->stmt = $this->conexion->prepare($this->query);
+        $this->get_results_from_query();
+        
+    }
+
     function searchByIdCategoria($datosSearchCategoria, $paginacion) {
             
         $this->query = "SELECT * FROM `proceso` WHERE `id_categoria` ="  .$datosSearchCategoria['id_categoria']. " AND

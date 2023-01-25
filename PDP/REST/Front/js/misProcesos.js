@@ -1,25 +1,228 @@
-function iniciarProcesoUsuario(idProceso, idProcesoUsuario){
+function iniciarProcesoUsuario(idProcesoUsuario){
   var selectorIniciarProc = $('#' + idProcesoUsuario + ' #iniciarProceso #iconoIniciarProceso');
 
   $(selectorIniciarProc).attr('src', 'images/iniciarProcedimiento2.png');
   $(selectorIniciarProc).attr('onclick', '');
-
-  setCookie('idProceso', idProceso);
-  setCookie('idProcesoUsuario', idProcesoUsuario)
-	window.location.href = "RespuestaProceso.html?continuar=no&ver=no";
-
+  construyeProcesoUsuarioInicio(idProcesoUsuario);
+  cambiarFormularioProcesoUsuario('javascript:addProcesoUsuarioParametro(' + idProcesoUsuario+ ');', '');
+  cambiarIconoProcesoUsuario('images/add.png', 'ICONO_ADD', 'iconoAddPersona', 'Añadir');
 }
 
-function continuarProceso(idProceso, idProcesoUsuario){
-    setCookie('idProceso', idProceso);
-    setCookie('idProcesoUsuario', idProcesoUsuario)
-    window.location.href = "RespuestaProceso.html?continuar=si&ver=no";
+async function addProcesoUsuarioParametro(idProcesoUsuario){
+  var inputs = $('input[type=number]');
+  var code = '';
+  for(var i = 0; i<inputs.length; i++){
+    var idElemento = inputs[i].id;
+    var valor = inputs[i].value;
+    if(valor != ""){
+      try{
+        const res = await addProcesoUsuarioParametroAjaxPromesa(idProcesoUsuario, idElemento, valor);
+        code = res.code;
+      }catch(res){
+        $("#modalMostrarProcesoUsuario").modal('toggle');
+        respuestaAjaxKO(res.code);
+        setLang(getCookie('lang'));
+        document.getElementById("modal").style.display = "block";
+      }
+    }
+  }
+  $("#modalMostrarProcesoUsuario").modal('toggle');
+  try{
+    const resultado = await refrescarTabla(0, tamanhoPaginaProcesosUsuario, 'PaginadorNo');
+    respuestaAjaxOK("PROCESO_USUARIO_PARAMETRO_GUARDADO_OK", code);
+    document.getElementById("modal").style.display = "block";
+    setLang(getCookie('lang'));
+  }catch(resultado){};
 }
 
-function verProceso(idProceso, idProcesoUsuario){
-  setCookie('idProceso', idProceso);
-  setCookie('idProcesoUsuario', idProcesoUsuario)
-   window.location.href = "RespuestaProceso.html?continuar=si&ver=si";
+function addProcesoUsuarioParametroAjaxPromesa(idProcesoUsuario, id, valor){
+  return new Promise(function(resolve, reject) {
+    var token = getCookie('tokenUsuario');
+
+    var data = {
+      controlador: 'GestionProcesosUsuarioParametro',
+      action: 'add',
+      id_proceso_usuario : idProcesoUsuario,
+      id_parametro: id,
+      valor_parametro: valor
+    }
+
+  	$.ajax({
+      method: "POST",
+      url: urlPeticionAjaxAddProcedimientoUsuarioParametro,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,  
+      headers: {'Authorization': token},
+      }).done(res => {
+        if (res.code != 'PROCESO_USUARIO_PARAMETRO_CREADO') {
+          reject(res);
+        }
+        resolve(res);
+      }).fail( function( jqXHR ) {
+        errorFailAjax(jqXHR.status);
+      });
+  });
+}
+
+async function continuarProceso(idProceso, idProcesoUsuario){
+  try{
+    const res = await cargarParametrosOfProcesoUsuario(idProcesoUsuario);
+    var parametrosValor = res.resource;
+
+    try{
+      const result = await cargarNumeroParametrosProcesoAjaxPromesa(idProceso, 0, 99999999);
+      var parametros = result.resource.listaBusquedas;
+      var arrayPintados = [];
+      $('#formularioModalMostrarProcesoUsuario').html('');
+      for(var j = 0; j<parametros.length; j++){
+        for(var i = 0; i<parametrosValor.length; i++){
+          if(parametros[j]['parametro']['id_parametro'] == parametrosValor[i]['id_parametro']){
+            arrayPintados.push(parametros[j]['parametro']['id_parametro']);
+            var tr = construyeProcesoUsuarioContinuar(parametrosValor[i]['valor_parametro'], parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'],'No');
+            $('#formularioModalMostrarProcesoUsuario').append(tr);
+          }
+        }
+        for(var z= 0 ; z<arrayPintados.length; z++){
+            if(arrayPintados[z] != parametros[j]['parametro']['id_parametro']){
+              var pintar = true;
+            }else{
+              var pintar = false;
+            }
+          }
+          if(pintar){
+            var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'], 'No');
+            $('#formularioModalMostrarProcesoUsuario').append(tr);
+          }
+      }
+      formularioFin = '<button type="submit" name="btnAccionesMostrarProcesoUsuario" value="" class="tooltip6" id="btnAccionesMostrarProcesoUsuario">' +
+      '<img class="" src="" alt="" id="iconoAccionesMostrarProcesoUsuario" />' +
+      '<span class="tooltiptext" id="spanAccionesMostrarProcesoUsuario"></span>' +
+      '</button>' +
+      '</form>' +
+      '</div></div></div></div></div></div>';
+      $('#formularioModalMostrarProcesoUsuario').append(formularioFin);     
+
+      cambiarFormularioProcesoUsuario('javascript:editProcesoUsuarioParametro('+ idProcesoUsuario +');', '');
+      cambiarIconoProcesoUsuario('images/edit.png', 'ICONO_EDIT', 'iconoEditarRol', 'Editar');
+    
+    }catch(result) {
+      respuestaAjaxKO(res.code);
+      document.getElementById("modal").style.display = "block";
+    };
+
+  }catch(res) {
+    respuestaAjaxKO(res.code);
+    document.getElementById("modal").style.display = "block";
+  };  
+}
+
+async function editProcesoUsuarioParametro(idProcesoUsuario){
+  var inputs = $('input[type=number]');
+  var code = '';
+  for(var i = 0; i<inputs.length; i++){
+    var idElemento = inputs[i].id;
+    var valor = inputs[i].value;
+    if(valor != ""){
+      try{
+        const res = await editProcesoUsuarioParametroAjaxPromesa(idProcesoUsuario, idElemento, valor);
+        code = res.code;
+      }catch(res){
+        $("#modalMostrarProcesoUsuario").modal('toggle');
+        respuestaAjaxKO(res.code);
+        setLang(getCookie('lang'));
+        document.getElementById("modal").style.display = "block";
+      }
+    }
+  }
+  $("#modalMostrarProcesoUsuario").modal('toggle');
+  try{
+    const resultado = await refrescarTabla(0, tamanhoPaginaProcesosUsuario, 'PaginadorNo');
+    respuestaAjaxOK("PROCESO_USUARIO_PARAMETRO_EDITADO_OK", code);
+    document.getElementById("modal").style.display = "block";
+    setLang(getCookie('lang'));
+  }catch(resultado){};
+}
+
+function editProcesoUsuarioParametroAjaxPromesa(idProcesoUsuario, id, valor){
+  return new Promise(function(resolve, reject) {
+    var token = getCookie('tokenUsuario');
+
+    var data = {
+      controlador: 'GestionProcesosUsuarioParametro',
+      action: 'edit',
+      id_proceso_usuario : idProcesoUsuario,
+      id_parametro: id,
+      valor_parametro: valor
+    }
+
+  	$.ajax({
+      method: "POST",
+      url: urlPeticionAjaxEditProcedimientoUsuarioParametro,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,  
+      headers: {'Authorization': token},
+      }).done(res => {
+        if (res.code != 'PROCESO_USUARIO_PARAMETRO_EDITADO') {
+          reject(res);
+        }
+        resolve(res);
+      }).fail( function( jqXHR ) {
+        errorFailAjax(jqXHR.status);
+      });
+  });
+}
+
+async function verProceso(idProceso, idProcesoUsuario){
+  try{
+    const res = await cargarParametrosOfProcesoUsuario(idProcesoUsuario);
+    var parametrosValor = res.resource;
+
+    try{
+      const result = await cargarNumeroParametrosProcesoAjaxPromesa(idProceso, 0, 99999999);
+      var parametros = result.resource.listaBusquedas;
+      var arrayPintados = [];
+      $('#formularioModalMostrarProcesoUsuario').html('');
+      for(var j = 0; j<parametros.length; j++){
+        for(var i = 0; i<parametrosValor.length; i++){
+          if(parametros[j]['parametro']['id_parametro'] == parametrosValor[i]['id_parametro']){
+            arrayPintados.push(parametros[j]['parametro']['id_parametro']);
+            var tr = construyeProcesoUsuarioContinuar(parametrosValor[i]['valor_parametro'], parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'],'Si');
+            $('#formularioModalMostrarProcesoUsuario').append(tr);
+          }
+        }
+        for(var z= 0 ; z<arrayPintados.length; z++){
+            if(arrayPintados[z] != parametros[j]['parametro']['id_parametro']){
+              var pintar = true;
+            }else{
+              var pintar = false;
+            }
+          }
+          if(pintar){
+            var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'], 'Si');
+            $('#formularioModalMostrarProcesoUsuario').append(tr);
+          }
+      }
+      formularioFin = '<button type="submit" name="btnAccionesMostrarProcesoUsuario" value="" class="tooltip6" id="btnAccionesMostrarProcesoUsuario">' +
+      '<img class="" src="" alt="" id="iconoAccionesMostrarProcesoUsuario" />' +
+      '<span class="tooltiptext" id="spanAccionesMostrarProcesoUsuario"></span>' +
+      '</button>' +
+      '</form>' +
+      '</div></div></div></div></div></div>';
+      $('#formularioModalMostrarProcesoUsuario').append(formularioFin);     
+
+      cambiarFormularioProcesoUsuario('', '');
+      cambiarIconoProcesoUsuario('images/close2.png', 'ICONO_DETALLE', 'iconoCerrar', 'Detalle');
+    
+    }catch(result) {
+      respuestaAjaxKO(res.code);
+      document.getElementById("modal").style.display = "block";
+    };
+
+  }catch(result) {
+    respuestaAjaxKO(res.code);
+    document.getElementById("modal").style.display = "block";
+  };  
+  
 }
 
 function finalizarProceso(idProcesoUsuario){
@@ -35,42 +238,84 @@ function finalizarProceso(idProcesoUsuario){
    $(selectorFinProc).attr('src', 'images/procedimientoFinalizado2.png');
 }
 
-/** Funcion que refresca los datos de la tabla **/
+function construyeProcesoUsuarioInicio(idProcesoUsuario){
+  $('#formularioModalMostrarProcesoUsuario').html('');
+  listParametros = JSON.parse(getCookie('params'));
+  for(var i = 0; i<listParametros.length; i++){
+    parametro = '<label class="labelForm" id="'+listParametros[i]['parametro']['parametro_formula'] +'">' +(listParametros[i]['parametro']['parametro_formula']).charAt(0).toUpperCase() + (listParametros[i]['parametro']['parametro_formula']).slice(1)+'</label>' +
+                '<input type="number" max="9999999999999999999999999999" name="" id="' + listParametros[i]['parametro']['id_parametro'] +'" class="" onblur="">';
+    $('#formularioModalMostrarProcesoUsuario').append(parametro);
+  }
+
+  formularioFin = '<button type="submit" name="btnAccionesMostrarProcesoUsuario" value="" class="tooltip6" id="btnAccionesMostrarProcesoUsuario">' +
+                    '<img class="" src="" alt="" id="iconoAccionesMostrarProcesoUsuario" />' +
+                    '<span class="tooltiptext" id="spanAccionesMostrarProcesoUsuario"></span>' +
+                  '</button>' +
+                '</form>' +
+                '</div></div></div></div></div></div>';
+  $('#formularioModalMostrarProcesoUsuario').append(formularioFin);              
+}
+
+function construyeProcesoUsuarioContinuar(valor, nombre, id, visualizar){
+if(valor != ''){
+  if(visualizar == 'Si'){
+    parametro = '<label class="labelForm" id="label'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
+    '<input type="number" max="9999999999999999999999999999" name="' + nombre+'" id="' + id +'" class="" value="'+valor+'" onblur="" disabled>';
+  }else{
+    parametro = '<label class="labelForm" id="label'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
+    '<input type="number" max="9999999999999999999999999999" name="' + nombre+'" id="' + id +'" class="" value="'+valor+'" onblur="">';
+  }
+ 
+}else{
+  if(visualizar == 'Si'){
+    parametro = '<label class="labelForm" id="'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
+    '<input type="number" max="9999999999999999999999999999" name="' + nombre+'" id="' + id +'" class="" onblur="" disabled>';
+  }else{
+    parametro = '<label class="labelForm" id="'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
+    '<input type="number" max="9999999999999999999999999999" name="' + nombre+'" id="' + id +'" class="" onblur="">';
+  }
+ 
+}
+
+return parametro;
+}
+
+
+/* Función para obtener los procesos de un usuario del sistema*/
 async function refrescarTabla(numeroPagina, tamanhoPagina, paginadorCreado){
   if(getCookie('rolUsuario') == "Usuario"){
     try{
-        const res = await cargarMisProcesosAjaxPromesa(numeroPagina, tamanhoPagina);
-        document.getElementById('misProcesos').style.display = "block";
-        var numResults = res.resource.numResultados + '';
-        var totalResults = res.resource.tamanhoTotal + '';
-        var inicio = 0;
-        
-        if(res.resource.listaBusquedas.length == 0){
+          const res = await cargarMisProcesosAjaxPromesa(numeroPagina, tamanhoPagina);
+          document.getElementById('misProcesos').style.display = "block";
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
+          var inicio = 0;
+          if(res.resource.listaBusquedas.length == 0){
             inicio = 0;
             $('#itemPaginacion').attr('hidden',true);
-        }else{
+          }else{
             inicio = parseInt(res.resource.inicio)+1;
             $('#itemPaginacion').attr('hidden',false);
-        }
-        $('#paginacion').html('');
-        var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
-        $('#paginacion').append(textPaginacion);
+          }
+          $('#paginacion').html('');
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+          $('#paginacion').append(textPaginacion);
 
-        $('#procesos').html('');
-        for (var i = 0; i < res.resource.listaBusquedas.length; i++){
-          try{
-            const result = await cargarParametrosOfProcedimientoUsuario(res.resource.listaBusquedas[i].id_procedimiento_usuario);
-            cargarMisProcesosUsuario(res.resource.listaBusquedas[i], result.data);
+          $('#procesos').html('');
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
+            try{
+              const result = await cargarParametrosOfProcesoUsuario(res.resource.listaBusquedas[i].procesoUsuario.id_proceso_usuario);
+          	  cargarMisProcesosUsuario(res.resource.listaBusquedas[i], result.resource);
             }catch(result) {
               respuestaAjaxKO(result.code);
               document.getElementById("modal").style.display = "block";
             }
        
-        }
+          }
 
-        if(paginadorCreado != 'PaginadorCreado'){
-          paginador(totalResults, 'cargarProcesosUsuarioEjecutados', 'PROCESOSUSUARIO');
-        }
+          if(paginadorCreado != 'PaginadorCreado'){
+            paginador(totalResults, 'cargarProcesosUsuarioEjecutados', 'PROCESOSUSUARIOEJECUTADOS');
+        	}
         
         if(numeroPagina == 0){
           $('#itemPaginacion #' + (numeroPagina+1)).addClass("active");
@@ -80,37 +325,41 @@ async function refrescarTabla(numeroPagina, tamanhoPagina, paginadorCreado){
 
         setLang(getCookie('lang'));
 
+
         }catch(res) {
             respuestaAjaxKO(res.code);
             document.getElementById("modal").style.display = "block";
         };
     
-    }
+  	}
 }
+
 
 /* Función para obtener los procesos de un usuario del sistema*/
 async function cargarProcesosUsuarioEjecutados(numeroPagina, tamanhoPagina, paginadorCreado){
-  if(getCookie('rolUsuario') == "usuario"){
+  if(getCookie('rolUsuario') == "Usuario"){
     try{
-          const res = await cargarMisProcedimientosAjaxPromesa(numeroPagina, tamanhoPagina);
-          document.getElementById('misProcedimientos').style.display = "block";
-          var numResults = res.data.numResultados + '';
-          var totalResults = res.data.tamanhoTotal + '';
-            var inicio = 0;
-          if(res.data.listaBusquedas.length == 0){
+          const res = await cargarMisProcesosAjaxPromesa(numeroPagina, tamanhoPagina);
+          document.getElementById('misProcesos').style.display = "block";
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
+          var inicio = 0;
+          if(res.resource.listaBusquedas.length == 0){
             inicio = 0;
-             $('#itemPaginacion').attr('hidden',true);
+            $('#itemPaginacion').attr('hidden',true);
           }else{
-            inicio = parseInt(res.data.inicio)+1;
-              $('#itemPaginacion').attr('hidden',false);
+            inicio = parseInt(res.resource.inicio)+1;
+            $('#itemPaginacion').attr('hidden',false);
           }
-          var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
-       
-          $('#procedimientos').html('');
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
+          $('#paginacion').html('');
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+          $('#paginacion').append(textPaginacion);
+
+          $('#procesos').html('');
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
             try{
-              const result = await cargarProcesosOfProcedimientoUsuario(res.data.listaBusquedas[i].idProcedimientoUsuario);
-          	  cargarMisProcedimientosUsuario(res.data.listaBusquedas[i], result.data);
+              const result = await cargarParametrosOfProcesoUsuario(res.resource.listaBusquedas[i].procesoUsuario.id_proceso_usuario);
+          	  cargarMisProcesosUsuario(res.resource.listaBusquedas[i], result.resource);
             }catch(result) {
               respuestaAjaxKO(result.code);
               document.getElementById("modal").style.display = "block";
@@ -119,7 +368,7 @@ async function cargarProcesosUsuarioEjecutados(numeroPagina, tamanhoPagina, pagi
           }
 
           if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarProcedimientosUsuarioEjecutados', 'PROCEDIMIENTOSUSUARIO');
+            paginador(totalResults, 'cargarProcesosUsuarioEjecutados', 'PROCESOSUSUARIOEJECUTADOS');
         	}
         
         if(numeroPagina == 0){
@@ -141,7 +390,7 @@ async function cargarProcesosUsuarioEjecutados(numeroPagina, tamanhoPagina, pagi
 
 
 /** Función para obtener los procesos de un usuario con ajax y promesas**/
-function cargarMisProcedimientosAjaxPromesa(numeroPagina, tamanhoPagina){
+function cargarMisProcesosAjaxPromesa(numeroPagina, tamanhoPagina){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
 
@@ -153,24 +402,44 @@ function cargarMisProcedimientosAjaxPromesa(numeroPagina, tamanhoPagina){
       tamanhoPagina: tamanhoPaginaProcesosUsuario
     }
 
+  	$.ajax({
+      method: "POST",
+      url: urlPeticionAjaxListarProcedimientoUsuario,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,  
+      headers: {'Authorization': token},
+      }).done(res => {
+        if (res.code != 'BUSQUEDA_PERSONALIZADA_PROCESO_USUARIO_CORRECTO') {
+          reject(res);
+        }
+        resolve(res);
+      }).fail( function( jqXHR ) {
+        errorFailAjax(jqXHR.status);
+      });
+  });
+}
+
+/** Función para obtener los procesos de un usuario con ajax y promesas**/
+function cargarNumeroParametrosProcesoAjaxPromesa(idProceso, numeroPagina, tamanhoPagina){
+  return new Promise(function(resolve, reject) {
+    var token = getCookie('tokenUsuario');
+
     var data = {
-    	puntuacionProcedimientoUsuario : '',
-    	fechaProcedimientoUsuario : '',
-    	usuario: usuario,
-    	procedimiento : procedimiento,
-    	inicio: calculaInicio(numeroPagina, tamanhoPaginaProcedimientoUsuario),
-    	tamanhoPagina : tamanhoPaginaProcedimientoUsuario
+      controlador: 'GestionParametros',
+      action: 'searchByParameters',
+    	id_proceso: idProceso,
+    	inicio : calculaInicio(numeroPagina, tamanhoPagina),
+      tamanhoPagina: tamanhoPagina
     }
 
   	$.ajax({
       method: "POST",
-      url: urlPeticionAjaxListarProcedimientoUsuario,
-      contentType : "application/json",
-      data: JSON.stringify(data),  
-      dataType : 'json',
+      url: urlPeticionAjaxListarParametro,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'PROCEDIMIENTOS_USUARIO_LISTADOS') {
+        if (res.code != 'BUSQUEDA_PERSONALIZADA_PARAMETRO_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -228,48 +497,26 @@ async function eliminarProcedimiento(idProcedimientoUsuario){
   
 }
 
-/** Función para obtener el número de procesos asociados al procedimiento **/
-function cargarNumeroProcesosProcedimientos(idProcedimiento, idProceso){
-	return new Promise(function(resolve, reject) {
-    var token = getCookie('tokenUsuario');
-
-   	var data = {
-   		idProceso : idProceso,
-   		idProcedimiento : idProcedimiento
-   	}
-
-  	$.ajax({
-      method: "POST",
-      url: urlPeticionAjaxListadoProcesosProcedimiento,
-      contentType : "application/json",
-      data: JSON.stringify(data),  
-      dataType : 'json',
-      headers: {'Authorization': token},
-      }).done(res => {
-        if (res.code != 'PROCESOS_PROCEDIMIENTOS_LISTADOS') {
-          reject(res);
-        }
-        resolve(res);
-      }).fail( function( jqXHR ) {
-        errorFailAjax(jqXHR.status);
-      });
-  });
-}
-
 /** Función para obtener los procedimientos de un usuario con ajax y promesas**/
-function cargarProcesosOfProcedimientoUsuario(idProcedimientoUsuario){
+function cargarParametrosOfProcesoUsuario(idProcesoUsuario){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
 
+    var data = {
+      controlador : 'GestionProcesosUsuarioParametro',
+      action : 'searchByIdProcesoUsuario',
+      id_proceso_usuario : idProcesoUsuario,
+      inicio : 0,
+      tamanhoPagina: 9999999999
+    }
     $.ajax({
       method: "POST",
-      url: urlPeticionAjaxListarProcedimientoUsuarioProcesoOfProcedimientoUsuario,
-      contentType : "application/json",
-      data: idProcedimientoUsuario.toString(),  
-      dataType : 'json',
+      url: urlPeticionAjaxListarProcesoUsuarioParametroOfProcesoUsuario,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'PROCEDIMIENTOS_USUARIOS_PROCESOS_LISTADOS') {
+        if (res.code != 'BUSQUEDA_PROCESO_USUARIO_PARAMETRO_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -305,127 +552,123 @@ function showPlan(nombrePlan, descripPlan){
 }
 
 /** Función para construir la pantalla de procedimientos - usuario **/
-async function cargarMisProcedimientosUsuario(procedimientosUsuario, procesosProcedimientoUsuario){
-	var procedimientoUsuario = "";
-	await cargarNumeroProcesosProcedimientos(procedimientosUsuario.procedimiento.idProcedimiento, '')
+async function cargarMisProcesosUsuario(procesosUsuario, parametrosProcesosUsuario){
+	var procesoUsuario = "";
+	await cargarNumeroParametrosProcesoAjaxPromesa(procesosUsuario.proceso.id_proceso, 0, 99999999999999)
 		.then((res) =>{
-				var atributosFunciones = ["'" + procedimientosUsuario.procedimiento.plan.nombrePlan + "'", "'" + procedimientosUsuario.procedimiento.plan.descripPlan + "'"]; 
-				if(res.data.listaBusquedas.length == 0){
-					numeroProcesos = 0;
+				if(res.resource.listaBusquedas.length == 0){
+					numeroParametros = 0;
+          var params_str = JSON.stringify(res.resource.listaBusquedas);
+          setCookie('params', params_str);
 				}else{
-					numeroProcesos = res.data.tamanhoTotal;
+					numeroParametros = res.resource.tamanhoTotal;
+          var params_str = JSON.stringify(res.resource.listaBusquedas);
+          setCookie('params', params_str);
 				}
 
-        var numeroProcesosEjecutados = procesosProcedimientoUsuario.procesos.length;
+        var numeroParametrosCubiertos = parametrosProcesosUsuario.length;
 
-				var fechaProcedimientoUsuario = new Date(procedimientosUsuario.fechaProcedimientoUsuario);
-				var fecha = convertirFecha(fechaProcedimientoUsuario.toString());
-				procedimientoUsuario = '<div class="col-md-12 col-lg-12 col-xl-12 mb-12 paddingTop">' + 
-								'<div id=' + procedimientosUsuario.idProcedimientoUsuario + ' class="card">' + 
+				var fechaProcesoUsuario = new Date(procesosUsuario.procesoUsuario.fecha_proceso_usuario);
+				var fecha = convertirFecha(fechaProcesoUsuario.toString());
+				procesoUsuario = '<div class="col-md-12 col-lg-12 col-xl-12 mb-12 paddingTop">' + 
+								'<div id=' + procesosUsuario.procesoUsuario.id_proceso_usuario + ' class="card">' + 
 									'<div class="card-body-plan">' + 
-										'<div class="card-title">' + procedimientosUsuario.procedimiento.nombreProcedimiento + '</div>' + 
-										'<div class="card-text">' + procedimientosUsuario.procedimiento.descripProcedimiento + '</div>' +
-										'<div class="procesos">' + numeroProcesosEjecutados + '/' + numeroProcesos + '</div>' + 
-										'<div class="puntuacion">Puntuación: ' + procedimientosUsuario.puntuacionProcedimientoUsuario +'%</div>' +
+										'<div class="card-title">' + procesosUsuario.proceso.nombre_proceso + '</div>' + 
+										'<div class="card-text">' + procesosUsuario.proceso.descripcion_proceso + '</div>' +
+										'<div class="parametros">' + numeroParametrosCubiertos + '/' + numeroParametros + '</div>' + 
+										'<div class="puntuacion">Huella carbono: ' + procesosUsuario.procesoUsuario.calculo_huella_carbono +'%</div>' +
 										'<div class="fecha">' + fecha + '</div>';
 
-                    if(numeroProcesosEjecutados == 0){
+                    if(numeroParametrosCubiertos == 0){
 
-                      var iconos = '<div id="iniciarProcedimiento" class="tooltip10 procedimientoIcon" style="cursor: pointer;">' + 
-                                      '<img id="iconoIniciarProcedimiento" class="iconoProcedimiento iconProcedimiento" src="images/iniciarProcedimiento.png" alt="Iniciar procedimiento" onclick=";"/>' + 
-                                      '<span class="tooltiptext iconProcedimiento ICON_INICIAR_PROCEDIMIENTO"></span>' + 
+                      var iconos = '<div id="iniciarProceso" class="tooltip10 procedimientoIcon" data-toggle="modal" data-target="#modalMostrarProcesoUsuario" onclick="iniciarProcesoUsuario('+procesosUsuario.procesoUsuario.id_proceso_usuario+')" style="cursor: pointer;">' + 
+                                      '<img id="iconoIniciarProceso" class="iconoProceso iconProceso" src="images/iniciarProcedimiento.png" alt="Iniciar procedimiento" onclick=";"/>' + 
+                                      '<span class="tooltiptext iconProceso ICON_INICIAR_PROCESO"></span>' + 
                                     '</div>' + 
-                                    '<div id="continuarProcedimiento" class="tooltip11 continuarIcon" style="cursor: not-allowed;">' + 
-                                          '<img id="iconoContinuarProcedimiento" class="iconoContinuar iconContinuar" src="images/continuarProcedimiento2.png" alt="Continuar procedimiento" onclick="" style="cursor: not-allowed;"/>' + 
-                                          '<span class="tooltiptext iconContinuar ICON_CONTINUAR_PROCEDIMIENTO"></span>' + 
+                                    '<div id="continuarProceso" class="tooltip11 continuarIcon" style="cursor: not-allowed;">' + 
+                                          '<img id="iconoContinuarProceso" class="iconoContinuar iconContinuar" src="images/continuarProcedimiento2.png" alt="Continuar procedimiento" onclick="" style="cursor: not-allowed;"/>' + 
+                                          '<span class="tooltiptext iconContinuar ICON_CONTINUAR_PROCESO"></span>' + 
                                     '</div>' +
-                                    '<div id="finalizadoProcedimiento" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
-                                          '<img id="iconoFinalizarProcedimiento" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado2.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
-                                          '<span class="tooltiptext iconFinalizado ICON_PROCEDIMIENTO_FINALIZADO"></span>' + 
+                                    '<div id="finalizadoProceso" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
+                                          '<img id="iconoFinalizarProceso" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado2.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
+                                          '<span class="tooltiptext iconFinalizado ICON_PROCESO_FINALIZADO"></span>' + 
                                     '</div>' + 
-                                    '<div id="eliminarProcedimiento" class="tooltip14 procedimientoIcon" style="cursor: pointer;">' + 
-                                      '<img id="iconoEliminarProcedimiento" class="iconoProcedimiento iconEliminarProcedimiento" src="images/delete3.png" alt="Eliminar procedimiento" onclick="eliminarProcedimiento('+ procedimientosUsuario.idProcedimientoUsuario +');"/>' + 
-                                      '<span class="tooltiptext iconProcedimiento ICONO_ELIMINAR"></span>' + 
+                                    '<div id="eliminarProceso" class="tooltip14 procedimientoIcon" style="cursor: pointer;">' + 
+                                      '<img id="iconoEliminarProceso" class="iconoProcso iconEliminarProceso" src="images/delete3.png" alt="Eliminar procedimiento" onclick="eliminarProcedimiento('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');"/>' + 
+                                      '<span class="tooltiptext iconProceso ICONO_ELIMINAR"></span>' + 
                                     '</div>' + 
-                                     '<div id="verProcedimiento" class="tooltip14 procedimientoIcon" style="cursor: pointer;">' + 
-                                      '<img id="iconoverProcedimiento" class="iconoProcedimiento iconVerProcedimiento" src="images/detail3.png" alt="Ver procedimiento" onclick="verProcedimiento('+ procedimientosUsuario.idProcedimientoUsuario +');"/>' + 
-                                      '<span class="tooltiptext iconProcedimiento ICONO_ELIMINAR"></span>' + 
+                                     '<div id="verProceso" class="tooltip14 procedimientoIcon" data-toggle="modal" data-target="#modalMostrarProcesoUsuario" onclick="verProceso('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');" style="cursor: pointer;">' + 
+                                      '<img id="iconoVerProceso" class="iconoProceso iconVerProceso" src="images/detail3.png" alt="Ver proceso"/>' + 
+                                      '<span class="tooltiptext iconProceso ICONO_DETALLE"></span>' + 
                                     '</div>' + 
                                   '</div>';
                     
-                    }else if(numeroProcesosEjecutados > 0 && numeroProcesosEjecutados < numeroProcesos){
-                      var arrayProcesos = [];
+                    }else if(numeroParametrosCubiertos > 0 && numeroParametrosCubiertos < numeroParametros){
+                      var arrayParametros = [];
 
-                      for(var i = 0; i<procesosProcedimientoUsuario.procesos.length; i++){
-                        arrayProcesos.push(procesosProcedimientoUsuario.procesos);
+                      for(var i = 0; i<parametrosProcesosUsuario.length; i++){
+                        arrayParametros.push(parametrosProcesosUsuario);
                       }
 
-                       var iconos = '<div id="iniciarProcedimiento" class="tooltip10 procedimientoIcon" style="cursor: not-allowed;">' + 
-                                      '<img id="iconoIniciarProcedimiento" class="iconoProcedimiento iconProcedimiento" src="images/iniciarProcedimiento2.png" alt="Iniciar procedimiento" onclick=";" style="cursor: not-allowed;"/>' + 
-                                      '<span class="tooltiptext ICON_INICIAR_PROCEDIMIENTO"></span>' + 
+                       var iconos = '<div id="iniciarProceso" class="tooltip10 procedimientoIcon" style="cursor: not-allowed;">' + 
+                                      '<img id="iconoIniciarProceso" class="iconoProceso iconProceso" src="images/iniciarProcedimiento2.png" alt="Iniciar procedimiento" onclick=";" style="cursor: not-allowed;"/>' + 
+                                      '<span class="tooltiptext ICON_INICIAR_PROCESO"></span>' + 
                                     '</div>' + 
-                                    '<div id="continuarProcedimiento" class="tooltip11 continuarIcon" style="cursor: pointer;">' + 
-                                          '<img id="iconoContinuarProcedimiento" class="iconoContinuar iconContinuar" src="images/continuarProcedimiento.png" alt="Continuar procedimiento" onclick="continuarProcedimiento(' + procedimientosUsuario.procedimiento.idProcedimiento + ',' + procedimientosUsuario.idProcedimientoUsuario + ')"/>' + 
-                                          '<span class="tooltiptext ICON_CONTINUAR_PROCEDIMIENTO"></span>' + 
+                                    '<div id="continuarProceso" class="tooltip11 continuarIcon" data-toggle="modal" data-target="#modalMostrarProcesoUsuario" onclick="continuarProceso(' + procesosUsuario.proceso.id_proceso + ',' + procesosUsuario.procesoUsuario.id_proceso_usuario + ')" style="cursor: pointer;">' + 
+                                          '<img id="iconoContinuarProceso" class="iconoContinuar iconContinuar" src="images/continuarProcedimiento.png" alt="Continuar procedimiento"/>' + 
+                                          '<span class="tooltiptext ICON_CONTINUAR_PROCESO"></span>' + 
                                     '</div>' +
-                                    '<div id="finalizadoProcedimiento" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
-                                          '<img id="iconoFinalizarProcedimiento" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado2.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
-                                          '<span class="tooltiptext ICON_PROCEDIMIENTO_FINALIZADO"></span>' + 
+                                    '<div id="finalizadoProceso" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
+                                          '<img id="iconoFinalizarProceso" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado2.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
+                                          '<span class="tooltiptext ICON_PROCESO_FINALIZADO"></span>' + 
                                     '</div>' + 
-                                    '<div id="eliminarProcedimiento" class="tooltip14 procedimientoIcon" style="cursor: not-allowed;">' + 
-                                      '<img id="iconoEliminarProcedimiento" class="iconoProcedimiento iconEliminarProcedimiento" src="images/delete.png" alt="Eliminar procedimiento" onclick="eliminarProcedimiento('+ procedimientosUsuario.idProcedimientoUsuario +');" style="cursor: not-allowed;"/>' + 
+                                    '<div id="eliminarProceso" class="tooltip14 procedimientoIcon" style="cursor: not-allowed;">' + 
+                                      '<img id="iconoEliminarProceso" class="iconoProceso iconEliminarProceso" src="images/delete.png" alt="Eliminar procedimiento" onclick="eliminarProceso('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');" style="cursor: not-allowed;"/>' + 
                                       '<span class="tooltiptext ICONO_ELIMINAR"></span>' + 
                                     '</div>' + 
-                                       '<div id="verProcedimiento" class="tooltip14 procedimientoIcon" style="cursor: pointer;">' + 
-                                      '<img id="iconoverProcedimiento" class="iconoProcedimiento iconVerProcedimiento" src="images/detail3.png" alt="Ver procedimiento" onclick="verProcedimiento('+ procedimientosUsuario.procedimiento.idProcedimiento + ',' + procedimientosUsuario.idProcedimientoUsuario + ');"/>' + 
+                                       '<div id="verProceso" class="tooltip14 procedimientoIcon" data-toggle="modal" data-target="#modalMostrarProcesoUsuario" onclick="verProceso('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');" style="cursor: pointer;">' + 
+                                      '<img id="iconoverProceso" class="iconoProceso iconVerProceso" src="images/detail3.png" alt="Ver procedimiento" onclick="verProceso('+ procesosUsuario.proceso.id_proceso + ',' + procesosUsuario.procesoUsuario.id_proceso_usuario+ ');"/>' + 
                                       '<span class="tooltiptext ICONO_DETALLE"></span>' + 
                                     '</div>' +
                                   '</div>';
 
                     }else{
-                       var iconos = '<div id="iniciarProcedimiento" class="tooltip10 procedimientoIcon" style="cursor: not-allowed;">' + 
-                                      '<img id="iconoIniciarProcedimiento" class="iconoProcedimiento iconProcedimiento" src="images/iniciarProcedimiento2.png" alt="Iniciar procedimiento" onclick=";" style="cursor: not-allowed;"/>' + 
+                       var iconos = '<div id="iniciarProceso" class="tooltip10 procedimientoIcon" style="cursor: not-allowed;">' + 
+                                      '<img id="iconoIniciarProceso" class="iconoProceso iconProceso" src="images/iniciarProcedimiento2.png" alt="Iniciar procedimiento" onclick=";" style="cursor: not-allowed;"/>' + 
                                       '<span class="tooltiptext ICON_INICIAR_PROCEDIMIENTO"></span>' + 
                                     '</div>' + 
-                                    '<div id="continuarProcedimiento" class="tooltip11 continuarIcon" style="cursor: not-allowed;">' + 
-                                          '<img id="iconoContinuarProcedimiento" class="iconoContinuar iconContinuar" src="images/continuarProcedimiento2.png" alt="Continuar procedimiento" onclick="" style="cursor: not-allowed;"/>' + 
-                                          '<span class="tooltiptext ICON_CONTINUAR_PROCEDIMIENTO"></span>' + 
+                                    '<div id="continuarProceso" class="tooltip11 continuarIcon" style="cursor: not-allowed;">' + 
+                                          '<img id="iconoContinuarProceso" class="iconoContinuar iconContinuar" src="images/continuarProcedimiento2.png" alt="Continuar procedimiento" onclick="" style="cursor: not-allowed;"/>' + 
+                                          '<span class="tooltiptext ICON_CONTINUAR_PROCESO"></span>' + 
                                     '</div>' +
-                                    '<div id="finalizadoProcedimiento" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
-                                          '<img id="iconoFinalizarProcedimiento" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
-                                          '<span class="tooltiptext ICON_PROCEDIMIENTO_FINALIZADO"></span>' + 
+                                    '<div id="finalizadoProceso" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
+                                          '<img id="iconoFinalizarProceso" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
+                                          '<span class="tooltiptext ICON_PROCESO_FINALIZADO"></span>' + 
                                     '</div>' + 
-                                    '<div id="eliminarProcedimiento" class="tooltip14 procedimientoIcon" style="cursor: not-allowed;">' + 
-                                      '<img id="iconoEliminarProcedimiento" class="iconoProcedimiento iconEliminarProcedimiento" src="images/delete.png" alt="Eliminar procedimiento" onclick="eliminarProcedimiento('+ procedimientosUsuario.idProcedimientoUsuario +');" style="cursor: not-allowed;"/>' + 
+                                    '<div id="eliminarProceso" class="tooltip14 procedimientoIcon" style="cursor: not-allowed;">' + 
+                                      '<img id="iconoEliminarProceso" class="iconoProceso iconEliminarProceso" src="images/delete.png" alt="Eliminar procedimiento" onclick="eliminarProceso('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');" style="cursor: not-allowed;"/>' + 
                                       '<span class="tooltiptext ICONO_ELIMINAR"></span>' + 
                                     '</div>' +
-                                       '<div id="verProcedimiento" class="tooltip14 procedimientoIcon" style="cursor: pointer;">' + 
-                                      '<img id="iconoverProcedimiento" class="iconoProcedimiento iconVerProcedimiento" src="images/detail3.png" alt="Ver procedimiento" onclick="verProcedimiento('+ procedimientosUsuario.procedimiento.idProcedimiento + ',' + procedimientosUsuario.idProcedimientoUsuario + ');"/>' + 
+                                       '<div id="verProceso" class="tooltip14 procedimientoIcon" data-toggle="modal" data-target="#modalMostrarProcesoUsuario" onclick="verProceso('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');" style="cursor: pointer;">' + 
+                                      '<img id="iconoverProceso" class="iconoProceso iconVerProceso" src="images/detail3.png" alt="Ver procedimiento" onclick="verProcedimiento('+ procesosUsuario.proceso.id_proceso + ',' + procesosUsuario.procesoUsuario.id_proceso_usuario+ ');"/>' + 
                                       '<span class="tooltiptext ICONO_DETALLE"></span>' + 
                                     '</div>' + 
                                   '</div>';
                     }
 
-                    procedimientoUsuario += iconos;
+                    procesoUsuario += iconos;
 										 
-	              var procedimientoUsuario2 =   '<div class="card-footer">' + 
-                          	                    '<div class="tooltip8 planIcon">' + 
-                          	                    		'<img class="iconoPlan iconPlan" src="images/plan.png" alt="Plan" data-toggle="modal" data-target="#modalMostrarPlan" onclick="showPlan(' + atributosFunciones + ')"/>' + 
-                          	                    		'<span class="tooltiptext iconPlan ICON_PLAN"></span>' + 
-                          	                    '</div>' + 
-                          	                    '<div class="card-title-plan">Plan: ' + procedimientosUsuario.procedimiento.plan.nombrePlan  + '</div>' ;
-                          	               '</div>' + 
-                                          '</div>' + 
+	              var procesoUsuario2 =   '<div class="card-footer">' + 
                                         '</div>';
 
-            procedimientoUsuario += procedimientoUsuario2;
+            procesoUsuario += procesoUsuario2;
 
-         $('#procedimientos').append(procedimientoUsuario);
+         $('#procesos').append(procesoUsuario);
 
-         if(numeroProcesosEjecutados == 0){
-             var selectorIniciarProc = $('#' + procedimientosUsuario.idProcedimientoUsuario + ' #iniciarProcedimiento #iconoIniciarProcedimiento');
+         if(numeroParametrosCubiertos == 0){
+             var selectorIniciarProc = $('#' + procesosUsuario.procesoUsuario.id_proceso_usuario + ' #iniciarProceso #iconoIniciarProceso');
 
-              $(selectorIniciarProc).attr('onclick', 'iniciarProcedimientoUsuario('+ procedimientosUsuario.procedimiento.idProcedimiento + ', '+ procedimientosUsuario.idProcedimientoUsuario+')');
+              $(selectorIniciarProc).attr('onclick', 'iniciarProcesoUsuario('+ procesosUsuario.proceso.id_proceso + ', '+ procesosUsuario.procesoUsuario.id_proceso_usuario+')');
          }
          setLang(getCookie('lang'));
          
@@ -439,17 +682,19 @@ async function cargarMisProcedimientosUsuario(procedimientosUsuario, procesosPro
 function showBuscar() {
   var idioma = getCookie('lang');
 
-  cambiarFormulario('SEARCH_PROCEDIMIENTO_EJECUTADO', 'javascript:buscarProcedimientoEjecutado(0,' + tamanhoPaginaProcedimiento + ', \'buscarModal\'' + ',\'PaginadorNo\');', 'return comprobarBuscarProcedimientoUsuario();');
-  cambiarOnBlurCampos('return comprobarNombreProcedimientoSearch(\'nombreProcedimiento\', \'errorFormatoNombreProcedimiento\', \'nombreProcedimiento\')', 
-      'return comprobarDescripcionProcedimientoSearch(\'descripProcedimiento\', \'errorFormatoDescripcionProcedimiento\', \'descripProcedimiento\')');
+  cambiarFormulario('SEARCH_PROCESO_EJECUTADO', 'javascript:buscarProcesosEjecutados(0,' + tamanhoPaginaProcesosUsuario + ', \'buscarModal\'' + ',\'PaginadorNo\');', 'return comprobarBuscarProceso();');
+  cambiarOnBlurCampos('return comprobarNombreProcesoSearch(\'nombreProceso\', \'errorFormatoNombreProceso\', \'nombreProceso\')', 
+  'return comprobarDescripcionProcesoSearch(\'descripcionProceso\', \'errorFormatoDescripcionProceso\', \'descripcionProceso\')',
+  'return comprobarFechaProcesoSearch(\'fechaProceso\', \'errorFormatoFechaProceso\', \'fechaProceso\')');
   cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchProcedimientoEjecutado', 'Buscar');
   setLang(idioma);
 
-  $('#labelNombreProcedimiento').attr('hidden', true);
-  $('#labelDescripcionProcedimiento').attr('hidden', true);
+  $('#labelNombreProceso').attr('hidden', true);
+  $('#labelDescripcionProceso').attr('hidden', true);
+  $('#labelFechaProceso').attr('hidden', true);
  
-  let idElementoList = ["nombreProcedimiento", "descripProcedimiento"];
-  let obligatorios = ["obligatorioNombreProcedimiento", "obligatorioDescripcionProcedimiento"];
+  let idElementoList = ["nombreProceso", "descripcionProceso", "fechaProceso"];
+  let obligatorios = ["obligatorioNombreProceso", "obligatorioDescripcionProceso", "obligatorioFechaProceso"];
   
   eliminarReadonly(idElementoList);
   ocultarObligatorios(obligatorios);
@@ -458,32 +703,38 @@ function showBuscar() {
 }
 
 /** Funcion buscar proceso **/
-async function buscarProcedimientoEjecutado(numeroPagina, tamanhoPagina, accion, paginadorCreado){
+async function buscarProcesosEjecutados(numeroPagina, tamanhoPagina, accion, paginadorCreado){
     try {
         if($('#form-modal').is(':visible')) {
           $("#form-modal").modal('toggle');
         };
-      const res = await buscarProcedimientoEjecutadoAjaxPromesa(numeroPagina, tamanhoPagina, accion);
-      guardarParametrosBusqueda(res.data.datosBusqueda);
+      const res = await buscarProcesoEjecutadoAjaxPromesa(numeroPagina, tamanhoPagina, accion);
+      var datosBusquedas = [];
+      datosBusquedas.push('nombre_proceso: ' + res.resource.datosBusquedas['nombre_proceso']);
+      datosBusquedas.push('descripcion_proceso: ' + res.resource.datosBusquedas['descripcion_proceso']);
+      datosBusquedas.push('fecha_proceso: ' + res.resource.datosBusquedas['fecha_proceso']);
+      guardarParametrosBusqueda(datosBusquedas);
     
-      document.getElementById('misProcedimientos').style.display = "block";
-          var numResults = res.data.numResultados + '';
-          var totalResults = res.data.tamanhoTotal + '';
+      document.getElementById('misProcesos').style.display = "block";
+          var numResults = res.resource.numResultados + '';
+          var totalResults = res.resource.tamanhoTotal + '';
             var inicio = 0;
-          if(res.data.listaBusquedas.length == 0){
+          if(res.resource.listaBusquedas.length == 0){
             inicio = 0;
              $('#itemPaginacion').attr('hidden',true);
           }else{
-            inicio = parseInt(res.data.inicio)+1;
+            inicio = parseInt(res.resource.inicio)+1;
               $('#itemPaginacion').attr('hidden',false);
           }
-          var textPaginacion = inicio + " - " + (parseInt(res.data.inicio)+parseInt(numResults))  + " total " + totalResults;
+          $('#paginacion').html('')
+          var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
+          $('#paginacion').html(textPaginacion);
        
-          $('#procedimientos').html('');
-          for (var i = 0; i < res.data.listaBusquedas.length; i++){
+          $('#procesos').html('');
+          for (var i = 0; i < res.resource.listaBusquedas.length; i++){
             try{
-              const result = await cargarProcesosOfProcedimientoUsuario(res.data.listaBusquedas[i].idProcedimientoUsuario);
-              cargarMisProcedimientosUsuario(res.data.listaBusquedas[i], result.data);
+              const result = await cargarParametrosOfProcesoUsuario(res.resource.listaBusquedas[i].procesoUsuario.id_proceso_usuario);
+              cargarMisProcesosUsuario(res.resource.listaBusquedas[i], result.resource);
             }catch(result) {
               respuestaAjaxKO(result.code);
               document.getElementById("modal").style.display = "block";
@@ -492,7 +743,7 @@ async function buscarProcedimientoEjecutado(numeroPagina, tamanhoPagina, accion,
           }
 
           if(paginadorCreado != 'PaginadorCreado'){
-            paginador(totalResults, 'cargarProcedimientosUsuarioEjecutados', 'PROCEDIMIENTOSUSUARIO');
+            paginador(totalResults, 'buscarProcesosEjecutados', 'PROCESOSUSUARIOEJECUTADOS');
           }
         
         if(numeroPagina == 0){
@@ -510,61 +761,72 @@ async function buscarProcedimientoEjecutado(numeroPagina, tamanhoPagina, accion,
         };
 }
 
-/**Función para recuperar un procedimientoEjecutado en base a parámetros con ajax y promesas*/
-function buscarProcedimientoEjecutadoAjaxPromesa(numeroPagina, tamanhoPagina, accion){
+/**Función para recuperar un proceso ejecutado en base a parámetros con ajax y promesas*/
+function buscarProcesoEjecutadoAjaxPromesa(numeroPagina, tamanhoPagina, accion){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
+    if($('#fechaProceso').val() == "1900-01-01"){
+      var fechaP = '';
+  }else{
+      var fechaP = $('#fechaProceso').val();
+  }
 
     if(accion == "buscarModal"){
-
-       var procedimiento = {
-        idProcedimiento: '',
-        nombreProcedimiento : $('#nombreProcedimiento').val(),
-        descripProcedimiento : $('#descripProcedimiento').val(),
-        fechaProcedimiento : '',
-        checkUsuario : '',
-        plan : {
-          idPlan : '',
-          nombrePlan : '',
-          descripPlan : '',
-          fechaPlan : '',
-          borradoPlan : '',
-          objetivo : {
-            idObjetivo : '',
-            nombreObjetivo : '',
-            descripObjetivo : '',
-            borradoObjetivo : ''
-          }
-        },
-        borradoProcedimiento : ''
-      }
-
-      var usuario = {
-        dniUsuario : '',
-        usuario : getCookie('usuario'),
-        passwdUsuario : '',
-        borradoUsuario : '',
-      }
-
         var data = {
-         fechaProcedimientoUsuario : '',
-         procedimiento : procedimiento,
-         usuario : usuario,
+         controlador: 'GestionProcesosUsuario',
+         action: 'searchByParametersUsuario',
+         nombre_proceso : $('#nombreProceso').val(),
+         descripcion_proceso : $('#descripcionProceso').val(),
+         fecha_proceso : fechaP,
+         usuario : getCookie('usuario'),
          inicio: calculaInicio(numeroPagina, tamanhoPaginaProcedimientoUsuario),
          tamanhoPagina: tamanhoPaginaProcedimientoUsuario
         }
+    }
+    
+    if(accion == "buscarPaginacion"){
+        if(getCookie('nombre_proceso') == null || getCookie('nombre_proceso') == ""){
+          var nombre = "";
+        }else{
+          var nombre = getCookie('nombre_proceso');
+        }
+  
+        if(getCookie('descripcion_proceso') == null || getCookie('descripcion_proceso') == ""){
+          var des = "";
+        }else{
+          var des = getCookie('descripcion_proceso');
+        }
+  
+  
+        if(getCookie('fecha_proceso') == null || getCookie('fecha_proceso') == "null" || getCookie('fecha_proceso') == "" || getCookie('fecha_proceso') == "1900-01-01" ){
+          var fecha = "";
+          var fechaString = "";
+        }else{
+          var fecha = getCookie('fecha_proceso');
+          var fechaString = convierteFecha(fecha);
+        }
+      
+      var data = {
+        controlador: 'GestionProcesosUsuario',
+        action: 'searchByParametersUsuario',
+        nombre_proceso : nombre,
+        descripcion_proceso :des,
+        fecha_proceso : fechaString,
+        usuario : getCookie('usuario'),
+        inicio: calculaInicio(numeroPagina, tamanhoPaginaProcedimientoUsuario),
+        tamanhoPagina: tamanhoPaginaProcedimientoUsuario
+       }
     }
 
 
     $.ajax({
       method: "POST",
       url: urlPeticionAjaxListarProcedimientoUsuario,
-      contentType : "application/json",
-      data: JSON.stringify(data),  
-      dataType : 'json',
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'PROCEDIMIENTOS_USUARIO_LISTADOS') {
+        if (res.code != 'BUSQUEDA_PERSONALIZADA_PROCESO_USUARIO_CORRECTO') {
           reject(res);
         }
         resolve(res);

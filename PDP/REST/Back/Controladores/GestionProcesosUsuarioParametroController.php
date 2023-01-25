@@ -45,11 +45,13 @@ class GestionProcesosUsuarioParametroController extends ControllerBase {
 		$this -> proceso_usuario_parametro_validation -> validarEdit();
 		if (!empty($this -> proceso_usuario_parametro_validation -> respuesta_formato)) {
 			$this -> rellenarRespuesta($this -> proceso_usuario_parametro_validation -> respuesta_formato, true, '');
-
-		} else if (!empty($this -> proceso_usuario_parametro_validation -> respuesta_accion)) {
-			$this -> rellenarRespuesta($this -> proceso_usuario_parametro_validation -> respuesta_accion, true, '');
+			
 
 		} else {
+			if(!empty($this -> proceso_usuario_parametro_validation -> respuesta_accion) &&
+					$this -> proceso_usuario_parametro_validation -> respuesta_accion != 'PROCESO_USUARIO_PARAMETRO_NO_EXISTE') {
+				$this -> rellenarRespuesta($this -> proceso_usuario_parametro_validation -> respuesta_accion, true, '');	
+			}
 			$this -> proceso_usuario_parametro_service -> inicializarParametros();
 	
 			$respuesta = $this -> proceso_usuario_parametro_service -> edit('PROCESO_USUARIO_PARAMETRO_EDITADO');
@@ -110,6 +112,14 @@ class GestionProcesosUsuarioParametroController extends ControllerBase {
 		$this -> getRespuesta($respuesta);
 
     }
+
+	function searchByIdProcesoUsuario(){
+		$this -> proceso_usuario_parametro_service -> inicializarParametros();
+		$respuesta = $this -> proceso_usuario_parametro_service -> searchByIdProcesoUsuario();
+
+		$this -> rellenarRespuesta('BUSQUEDA_PROCESO_USUARIO_PARAMETRO_CORRECTO', false, $respuesta);
+		$this -> getRespuesta($respuesta);
+	}
 
 }
 

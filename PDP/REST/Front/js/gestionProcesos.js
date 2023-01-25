@@ -1305,7 +1305,7 @@ function showBuscarProceso() {
     var idioma = getCookie('lang');
   
     cambiarFormulario('SEARCH_PROCESO', 'javascript:buscarProceso(0,' + tamanhoPaginaProceso + ', \'buscarModal\'' + ',\'PaginadorNo\');', 'return comprobarBuscarProceso();');
-     cambiarOnBlurCampos('return comprobarNombreProcesoSearch(\'nombreProceso\', \'errorFormatoNombreProceso\', \'nombreProceso\')', 
+    cambiarOnBlurCampos('return comprobarNombreProcesoSearch(\'nombreProceso\', \'errorFormatoNombreProceso\', \'nombreProceso\')', 
     'return comprobarDescripcionProcesoSearch(\'descripcionProceso\', \'errorFormatoDescripcionProceso\', \'descripcionProceso\')',
     'return comprobarFechaProcesoSearch(\'fechaProceso\', \'errorFormatoFechaProceso\', \'fechaProceso\')');
     cambiarIcono('images/search.png', 'ICONO_SEARCH', 'iconoSearchProceso', 'Buscar');

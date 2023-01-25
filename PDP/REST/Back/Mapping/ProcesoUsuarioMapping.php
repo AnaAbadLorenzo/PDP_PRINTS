@@ -122,7 +122,6 @@ class ProcesoUsuarioMapping extends MappingBase {
     }
 
     function searchByParameters($datos, $paginacion) {
-
         $this -> query = 
             "SELECT * FROM `proceso_usuario`
             WHERE
@@ -130,8 +129,7 @@ class ProcesoUsuarioMapping extends MappingBase {
                 LOWER(`calculo_huella_carbono`) LIKE LOWER(CONCAT('%','" .  $datos['calculo_huella_carbono']    . "','%')) AND
                 LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .             $datos['dni_usuario']               . "','%')) AND
                 LOWER(`id_proceso`) LIKE LOWER(CONCAT('%','" .              $datos['id_proceso']                . "','%')) AND
-                LOWER(`borrado_proceso_usuario`) LIKE LOWER(CONCAT('%','" . $datos['borrado_proceso_usuario']   . "','%'))
-            LIMIT ". $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . "
+                `borrado_proceso_usuario`= 0 LIMIT ". $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . "
             ;"
         ; 
 
@@ -155,8 +153,7 @@ class ProcesoUsuarioMapping extends MappingBase {
                 LOWER(`calculo_huella_carbono`) LIKE LOWER(CONCAT('%','" .  $datos['calculo_huella_carbono']    . "','%')) AND
                 LOWER(`dni_usuario`) LIKE LOWER(CONCAT('%','" .             $datos['dni_usuario']               . "','%')) AND
                 LOWER(`id_proceso`) LIKE LOWER(CONCAT('%','" .              $datos['id_proceso']                . "','%')) AND
-                LOWER(`borrado_proceso_usuario`) LIKE LOWER(CONCAT('%','" . $datos['borrado_proceso_usuario']   . "','%'))
-            ;"
+                `borrado_proceso_usuario`= 0;"
         ;
 
         $this -> stmt = $this -> conexion -> prepare($this -> query); 

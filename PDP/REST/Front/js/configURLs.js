@@ -1,5 +1,5 @@
 /** Url común a todas*/
-var urlComun = "http://localhost/PDP_PRINTS/PDP_PRINTS/PDP/REST/Back/index.php";
+var urlComun = "http://localhost/PDP_PRINTS/PDP/REST/Back/index.php";
 
 
 /** Urls Login*/
@@ -99,5 +99,11 @@ var urlPeticionAjaxDeleteProceso = urlComun;
 var urlPeticionAjaxListarProcesosEliminados = urlComun;
 var urlPeticionAjaxReactivarProceso = urlComun;
 
-/** Urls de procedimiento usuario */
+/** Urls de proceso usuario */
 var urlPeticionAjaxAddProcedimientoUsuario = urlComun;
+var urlPeticionAjaxListarProcedimientoUsuario = urlComun;
+
+/** Urls de proceso usuario parametro */
+var urlPeticionAjaxListarProcesoUsuarioParametroOfProcesoUsuario = urlComun;
+var urlPeticionAjaxAddProcedimientoUsuarioParametro = urlComun;
+var urlPeticionAjaxEditProcedimientoUsuarioParametro = urlComun;

@@ -41,7 +41,7 @@ function setLang(lang =''){
         var inputs = document.getElementsByTagName('input');
         var imgs = document.getElementsByTagName('img');
         var options = document.getElementsByTagName('option');
-         var textAreas = document.getElementsByTagName('textarea');
+        var textAreas = document.getElementsByTagName('textarea');
 
         for (var elem in elementos) {
             elementos[elem].innerHTML = traduccion[clave];

@@ -106,8 +106,8 @@ arrayES={
 	'ICON_CATEGORIA' : 'Categoria',
 	'ICON_ACCEDER_CATEGORIAS' : 'Acceder a las categorías',
 	'ICON_INICIAR_PROCESO' : 'Iniciar proceso',
-	'ICON_CONTINUAR_PROCEDIMIENTO' : 'Continuar procedimiento',
-	'ICON_PROCEDIMIENTO_FINALIZADO' : 'Procedimiento finalizado',
+	'ICON_CONTINUAR_PROCESO' : 'Continuar proceso',
+	'ICON_PROCESO_FINALIZADO' : 'Proceso finalizado',
 	'ICON_PLAN': 'Plan',
 	'ICONO_UPLOAD' : 'Enviar respuesta',
 	'ICONO_SEGUIR' : 'Continuar',
@@ -447,7 +447,7 @@ arrayES={
 	'GESTION_PROCEDIMIENTOS_DESDE_PLAN' : 'Procedimientos disponibles',
 	'GESTION_PROCESOS' : 'Gestión de procesos',
 	'GESTION_PROCESOS_NO_ADMIN' : 'Procesos',
-	'GESTION_PROCEDIMIENTOS_EJECUTADOS' : 'Gestión de procedimientos ejecutados',
+	'GESTION_PROCESOS_EJECUTADOS' : 'Gestión de procesos ejecutados',
 	'GESTION_PROCESOS_EJECUTADOS' : 'Gestión de procesos ejecutados',
 	'MIS_PROCESOS' : 'Mis procesos',
 	'REACTIVATE_PROCEDIMIENTO' : 'REACTIVAR PROCEDIMIENTO',
@@ -586,7 +586,12 @@ arrayES={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GUARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'La evidencia se ha guadado correctamente',
 	'CATEGORIA_YA_EXISTE' : 'La categoría ya existe',
-	'EXPLICACION_FORMULA' : 'Los parámetros de la fómula deben introducirse entre los símbolos # y, sus unidades, entre |.Por ejemplo: v = #espacio|m|# x #tiempo|sg|#'
+	'EXPLICACION_FORMULA' : 'Los parámetros de la fómula deben introducirse entre los símbolos # y, sus unidades, entre |.Por ejemplo: v = #espacio|m|# x #tiempo|sg|#',
+	'CALCULAR_HUELLA_CARBONO': 'CALCULA TU HUELLA DE CARBONO',
+	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Los datos se han completado correctamente',
+	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Los datos se han modificado correctamente',
+	'PROCESO_USUARIO_PARAMETRO_GUARDADO_OK' : 'PARAMETROS GUARDADOS CORRECTAMENTE',
+	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMETROS MODIFICADOS CORRECTAMENTE'
 
 
 }

@@ -74,7 +74,16 @@ class ProcesoUsuarioParametroServiceImpl extends ServiceBase implements ProcesoU
         $this -> validacion_accion -> comprobarEdit($proceso_usuario_parametro_datos);
         $respuesta = $this -> validacion_accion -> respuesta;
         if ($respuesta != null) {
-            return $respuesta;
+            if($this -> proceso_usuario_parametro -> id_proceso_usuario != null &&
+                $this -> proceso_usuario_parametro -> id_parametro != null && 
+                $this -> proceso_usuario_parametro -> valor_parametro != null) {
+                    $proceso_usuario_parametro_mapping = new ProcesoUsuarioParametroMapping;
+                    $proceso_usuario_parametro_mapping -> add($proceso_usuario_parametro_datos);
+                    $respuesta = $mensaje;
+                    return $respuesta;
+                }else{
+                    return $respuesta;
+                }
         }
 
         //añadir a bd
@@ -176,6 +185,23 @@ class ProcesoUsuarioParametroServiceImpl extends ServiceBase implements ProcesoU
         );
 
         return $returnBusquedas;
+
+    }
+
+    function searchByIdProcesoUsuario() {
+
+        $datos_search = array();
+        
+        if ($this -> proceso_usuario_parametro -> id_proceso_usuario == null) {
+            $datos_search['id_proceso_usuario'] = '';
+        } else {
+            $datos_search['id_proceso_usuario'] = $this -> proceso_usuario_parametro -> id_proceso_usuario;
+        }
+       
+        $proceso_usuario_parametro_mapping= new ProcesoUsuarioParametroMapping();
+        $proceso_usuario_parametro_mapping -> searchByIdProcesoUsuario($datos_search);
+
+        return $proceso_usuario_parametro_mapping -> feedback['resource'];
 
     }
     

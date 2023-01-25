@@ -1010,24 +1010,16 @@ function cargarHref(dato){
 			href = "GestionDePlanes.html";
 		break;
 
-		case 'Gestión de procedimientos' :
-			if (rol !== 'Administardor' && rol !== 'gestor'){
-				href = "MisProcedimientos.html";
+		case 'Gestión de procesos ejecutados' :
+			if (rol == 'Administrador' && rol == 'Gestor'){
+				href = "GestionDeProcesosEjecutados.html";
 			} else {
-				href = "GestionDeProcedimientos.html";
+				href = "MisProcesos.html";
 			}
 		break;
 
 		case 'Gestión de procesos' :
 			href = "GestionDeProcesos.html";
-		break;
-
-		case 'Gestión de procedimientos ejecutados' : 
-			href = "GestionDeProcedimientosEjecutados.html";
-		break;
-
-		case 'Gestión de procesos ejecutados' : 
-			href = "GestionDeProcesosEjecutados.html";
 		break;
 	}
 
@@ -1089,6 +1081,14 @@ function cargarClass(dato, rol){
 				clase = "CONSULTA_CATEGORIAS";
 			} else {
 				clase="GESTION_CATEGORIAS";
+			}
+		break;
+
+		case 'Gestión de procesos ejecutados':
+			if (rol == 'Administrador' || rol == 'Gestor'){
+				clase = "GESTION_PROCESOS_EJECUTADOS";
+			} else {
+				clase="MIS_PROCESOS";
 			}
 		break;
 	}
@@ -1170,8 +1170,19 @@ function cambiarFormulario(tituloForm, action, onsubmit) {
 
     if (onsubmit != '') {
         $("#formularioGenerico").attr('onsubmit', onsubmit);
+    } 
+}
+
+/**Función para cambiar valores del formulario*/
+function cambiarFormularioProcesoUsuario(action, onsubmit) {
+
+    if (action != '') {
+        $("#formularioModalMostrarProcesoUsuario").attr('action', action);
     }
-    
+
+    if (onsubmit != '') {
+        $("#formularioModalMostrarProcesoUsuario").attr('onsubmit', onsubmit);
+    } 
 }
 
 /**Función para cambiar valores del icono **/
@@ -1185,6 +1196,19 @@ function cambiarIcono(ruta, nombreIcono, estiloIcono, valorIcono) {
     $("#spanAcciones").addClass('tooltiptext');
     $("#spanAcciones").addClass(nombreIcono);
     $("#btnAcciones").attr('value', valorIcono);
+}
+
+/**Función para cambiar valores del icono **/
+function cambiarIconoProcesoUsuario(ruta, nombreIcono, estiloIcono, valorIcono) {
+
+    $("#iconoAccionesMostrarProcesoUsuario").attr('src', ruta);
+    $("#iconoAccionesMostrarProcesoUsuario").removeClass();
+    $("#iconoAccionesMostrarProcesoUsuario").addClass(nombreIcono);
+    $("#iconoAccionesMostrarProcesoUsuario").addClass(estiloIcono);
+    $("#spanAccionesMostrarProcesoUsuario").removeClass();
+    $("#spanAccionesMostrarProcesoUsuario").addClass('tooltiptext');
+    $("#spanAccionesMostrarProcesoUsuario").addClass(nombreIcono);
+    $("#btnAccionesMostrarProcesoUsuario").attr('value', valorIcono);
 }
 
 /**Función para volver al menu **/

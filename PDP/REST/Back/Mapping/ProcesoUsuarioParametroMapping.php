@@ -97,7 +97,7 @@ class ProcesoUsuarioParametroMapping extends MappingBase {
     }
 
     function searchByParameters($datos, $paginacion) {
-
+        
         $this -> query = 
             "SELECT * FROM `proceso_usuario_parametro`
             WHERE
@@ -107,6 +107,17 @@ class ProcesoUsuarioParametroMapping extends MappingBase {
             LIMIT ". $paginacion -> inicio . "," . $paginacion -> tamanhoPagina . "
             ;"
         ; 
+
+        $this -> stmt = $this -> conexion -> prepare($this -> query);
+        $this -> get_results_from_query();
+
+    }
+
+    function searchByIdProcesoUsuario($datos) {
+
+        $this -> query = 
+            "SELECT * FROM `proceso_usuario_parametro`
+            WHERE `id_proceso_usuario` = " .  $datos['id_proceso_usuario'].  ";";
 
         $this -> stmt = $this -> conexion -> prepare($this -> query);
         $this -> get_results_from_query();

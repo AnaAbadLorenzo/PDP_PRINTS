@@ -27,7 +27,7 @@
     <script type="text/javascript" src="Locale/Lang_ES.js"></script>
     <script type="text/javascript" src="Locale/Lang_GA.js"></script>	
     <link rel="shortcut icon" type="image/png" href="images/iconoIndex2.png">
-    <title>Crabon Footprint</title>
+    <title>Carbon Footprint</title>
 </head>
 
 <body onload="(async ()=>{
@@ -100,37 +100,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="modal modal2 fade" id="modalMostrarCategoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-		<div class="modal-dialog">
-		  <div class="formmodal-container">
-			<div id="formularioMostrarCategoria">
-			  <div id="contenidoFormMostrarCategoria">
-				<div class="formularioComun">
-				  <h1 id="tituloFormsModalMostrarCategoria" class="datos"></h1>
-				  <form name="formularioModalMostrarCategoria" id="formularioModalMostrarCategoria" action="" onsubmit="">
-					<label class="labelForm NOMBRE_CATEGORIA" id="labelNombreCategoriaMostrarCategoria" hidden></label>                            
-					<input type="text" maxlength="128" size="128" placeholder="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" id="nombreCategoria" class="NOMBRE_CATEGORIA" onblur=""/>
-				   
-					<div style="display:none" id="errorFormatoNombreCategoria"></div>
-							  
-					<label class="labelForm DESCRIPCION_CATEGORIA" id="labelDescripcionCategoriaMostrarCategoria" hidden></label>
-					<input type="text" placeholder="DESCRIPCION_CATEGORIA" name="DESCRIPCION_CATEGORIA" id="descripcionCategoriaMostrarCategoria" class="DESCRIPCION_CATEGORIA" onblur=""/>
-					
-					<div style="display:none" id="errorFormatoDescripcionCategoria"></div>
-	
-					<button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAccionesMostrarCategoria">
-						<img class="" src="" alt="" id="iconoAccionesMostrarCategoria" />
-						<span class="tooltiptext" id="spanAccionesMostrarCategoria"></span>
-					</button>
-				  </form>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
     <div class="modal modal2 fade" id="form-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; overflow-y: scroll;">
     	<div class="modal-dialog">
 			<div class="formmodal-container">
@@ -138,7 +107,7 @@
       				<div id="contenidoForm">
               			<div class="formularioComun">
               				<h1 id="tituloForms" class="datos"></h1>
-                    		<form name="formularioGenerico" id="formularioGenerico" action="" onsubmit="">
+                    		<form name="formularioGenerico" id="formularioGenericoPro" action="" onsubmit="">
                     			<label class="labelForm NOMBRE_PROCESO" id="labelNombreProceso" hidden></label>                            
 		                        <input type="text" maxlength="255" size="255" placeholder="NOMBRE_PROCESO" name="NOMBRE_PROCESO" id="nombreProceso" class="NOMBRE_PROCESO" onblur=""/>
 	                        	<div class="obligatorio tooltip2" id="obligatorioNombreProceso">*
@@ -159,55 +128,7 @@
                       				<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
                     	  		</div>
                     	  		<div style="display:none" id="errorFormatoFechaProceso"></div>
-                    	  		
-								<label class="labelForm ID_CATEGORIA" id="labelIdCategoria" ></label>
-                            	<select id="selectCategorias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"></select>
-                            	<div class="obligatorio tooltip2" id="obligatorioIdCategoria">*
-                                	<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-                            	</div>
-                            	<div style="display:none" id="errorFormatoIdCategoria"></div>
-								
-								<div id="checkPubli" class="preguntaCheck" onblur="">
-									<label id='labelCheckProceso' class="ESTADO_PROCESO labelEtiqueta labelForm"></label>
-									 <div class="obligatorio tooltip2" id="obligatorioCheck">*
-									  <span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-									</div>
-								  	<div class="form-check-inline">
-										<input class="form-check-input" type="radio" value="publicado" name="checkPublicado" id="checkUsuarioPublicar">
-										<label class="form-check-label PUBLICADO" for="publicado"></label>
-								  	</div>
-								  	<div class="form-check-inline">
-										<input class="form-check-input" type="radio" value="noPublicado" id="checkUsuarioNoPublicar" name="checkPublicado">
-										<label class="form-check-label NO_PUBLICADO" for="noPublicado"></label>
-									</div>
-							  	</div>
-							  	<div style="display:none" id="errorFormatoCheckPublicado"></div>
-
-								<label class="labelForm FORMULA_PROCESO" id="labelFormulaProceso" ></label>
-								<div class=""  id="explicacionCubrirFormula" style="display:none"></div>
-								<textarea type="text" placeholder="FORMULA_PROCESO" name="FORMULA_PROCESO" 
-									id="formulaProceso" class="FORMULA_PROCESO" onblur="" onclick="limpiarTextArea('formulaProceso')"></textarea>
-								<div class="obligatorio tooltip2" id="obligatorioFormulaProceso">*
-									<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-								</div>
-								<div style="display:none" id="errorFormatoFormulaProceso"></div>
-
-								<label class="labelForm VERSION_PROCESO" id="labelVersionProceso" ></label>
-								<input type="text" maxlength="255" size="255" placeholder="VERSION_PROCESO" name="VERSION_PROCESO" 
-									id="versionProceso" class="VERSION_PROCESO"/>
-								<div class="obligatorio tooltip2" id="obligatorioVersionProceso">*
-									<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-								</div>
-								<div style="display:none" id="errorFormatoVersionProceso"></div>
-
-								<label class="labelForm RESPONSABLE_PROCESO" id="labelResponsableProceso" ></label>
-								<input type="text" maxlength="255" size="255" placeholder="RESPONSABLE_PROCESO" name="RESPONSABLE_PROCESO" 
-									id="responsableProceso" class="RESPONSABLE_PROCESO"/>
-								<div class="obligatorio tooltip2" id="obligatorioResponsableProceso">*
-									<span class="tooltiptext2 campoObligatorio CAMPO_OBLIGATORIO">Campo obligatorio</span>
-								</div>
-								<div style="display:none" id="errorFormatoResponsableProceso"></div>
-
+                    	
 	                       		<div style="display:none" id="errorFormatoObjetivos"></div> 
 	                          	<button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAcciones">
 	                              	<img class="" src="" alt="" id="iconoAcciones" />
@@ -219,6 +140,36 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="modal modal2 fade" id="modalMostrarProcesoUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+		  <div class="formmodal-container">
+			<div id="formularioMostrarProcesoUsuario">
+			  <div id="contenidoFormMostrarProcesoUsuario">
+				<div class="formularioComun">
+				  <h1 id="tituloFormsModalMostrarProcesoUsuario" class="datos">CALCULADORA</h1>
+				  <form name="formularioModalMostrarProcesoUsuario" id="formularioModalMostrarProcesoUsuario" action="" onsubmit="">
+					<label class="labelForm NOMBRE_CATEGORIA" id="labelNombreCategoriaMostrarCategoria" hidden></label>                            
+					<input type="text" maxlength="128" size="128" placeholder="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" id="nombreCategoria" class="NOMBRE_CATEGORIA" onblur=""/>
+				   
+					<div style="display:none" id="errorFormatoNombreCategoria"></div>
+							  
+					<label class="labelForm DESCRIPCION_CATEGORIA" id="labelDescripcionCategoriaMostrarCategoria" hidden></label>
+					<input type="text" placeholder="DESCRIPCION_CATEGORIA" name="DESCRIPCION_CATEGORIA" id="descripcionCategoriaMostrarCategoria" class="DESCRIPCION_CATEGORIA" onblur=""/>
+					
+					<div style="display:none" id="errorFormatoDescripcionCategoria"></div>
+	
+					<button type="submit" name="btnAcciones" value="" class="tooltip6" id="btnAccionesMostrarCategoria">
+						<img class="" src="" alt="" id="iconoAccionesMostrarCategoria" />
+						<span class="tooltiptext" id="spanAccionesMostrarCategoria"></span>
+					</button>
+				  </form>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
 	</div>
 
 	<div id="footer"></div>

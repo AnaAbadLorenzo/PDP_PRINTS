@@ -111,6 +111,17 @@ class GestionProcesosUsuarioController extends ControllerBase {
 
     }
 
+	function searchByParametersUsuario() {
+
+		$this -> proceso_usuario_service -> inicializarParametros();
+		$paginacion = new Paginacion($_POST['inicio'], $_POST['tamanhoPagina']);
+		$respuesta = $this -> proceso_usuario_service -> searchByParametersUsuario($paginacion);
+
+		$this -> rellenarRespuesta('BUSQUEDA_PERSONALIZADA_PROCESO_USUARIO_CORRECTO', false, $respuesta);
+		$this -> getRespuesta($respuesta);
+
+    }
+
 
 	/*
 	Recibe:

@@ -6,9 +6,9 @@
 
   .card-title { font-size: 21px !important; }
 
-  .card-text, .procesos, .puntuacion, .fecha {  font-size: 16px !important; width: 82% !important; }
+  .card-text, .parametros, .puntuacion, .fecha {  font-size: 16px !important; width: 82% !important; }
 
-  .procesos, .puntuacion, .fecha { margin-left: 2% !important; margin-top: 0% !important; }
+  .parametros, .puntuacion, .fecha { margin-left: 2% !important; margin-top: 0% !important; }
 
   .card-title-plan { margin-left: -85% !important; font-size: 16px !important; }
 
@@ -18,23 +18,23 @@
 
   .paddingTop { padding-bottom: 1% !important; }
 
-  .iconEliminarProcedimiento, .iconVerProcedimiento { width: 252% !important; }
+  .iconEliminarProceso, .iconVerProceso { width: 252% !important; }
 
-  #eliminarProcedimiento { margin-left: 84% !important; margin-top: -26% !important; }
+  #eliminarProceso { margin-left: 84% !important; margin-top: -26% !important; }
 
-  #verProcedimiento { margin-left: 84% !important; margin-top: -39% !important; }
+  #verProceso { margin-left: 84% !important; margin-top: -39% !important; }
 
-  .iconProcedimiento { width: 255% !important; }
+  .iconProceso { width: 255% !important; }
 
-  #iniciarProcedimiento { margin-top: -13% !important;}
+  #iniciarProceso { margin-top: -13% !important;}
 
   .iconContinuar { width: 250% !important; }
 
-  #continuarProcedimiento { margin-left: 84% !important; margin-top: -1% !important; z-index: 2500 !important;}
+  #continuarProceso { margin-left: 84% !important; margin-top: -1% !important; z-index: 2500 !important;}
 
   .iconFinalizado { width: 296% !important; }
 
-  #finalizadoProcedimiento { margin-left: 83% !important; margin-top: 9% !important; }
+  #finalizadoProceso { margin-left: 83% !important; margin-top: 9% !important; }
 
   .tooltip14 .tooltiptext { width: 80px !important; font-size: 10pt !important; bottom: -8% !important; left: -332.2% !important; margin-left: -52px !important; }
 
@@ -59,11 +59,11 @@
 
   .procesos { width: 87% !important; top: 27% !important; height: 53% !important;}
 
-  .procesos { margin-top: -6% !important; }
+  .parametros { margin-top: -6% !important; }
 
   .puntuacion, .fecha { margin-top: -3% !important; }
 
-  #verProcedimiento, #eliminarProcedimiento, #iniciarProcedimiento, #finalizadoProcedimiento, #continuarProcedimiento { margin-top: -1% !important; }
+  #verProceso, #eliminarProceso, #iniciarProceso, #finalizadoProceso, #continuarProceso { margin-top: -1% !important; }
 
   .tooltip14 .tooltiptext { bottom: -127% !important; left: -1.2% !important; }
 
@@ -81,11 +81,11 @@
 
   .procesos { width: 87% !important; top: 27% !important; height: 53% !important;}
 
-  .procesos { margin-top: -6% !important; }
+  .parametros { margin-top: -6% !important; }
 
   .puntuacion, .fecha { margin-top: -3% !important; }
 
-  #verProcedimiento, #eliminarProcedimiento, #iniciarProcedimiento, #finalizadoProcedimiento, #continuarProcedimiento { margin-top: -1% !important; }
+  #verProceso, #eliminarProceso, #iniciarProceso, #finalizadoProceso, #continuarProceso { margin-top: -1% !important; }
 
   .tooltip14 .tooltiptext { bottom: -127% !important; left: -1.2% !important; }
 
@@ -118,7 +118,27 @@
   -moz-box-sizing: border-box;
 }
 
+.datos{
+  display: flex !important;
+  justify-content: center;
+  margin-left: 4rem !important;
+}
+
 .formmodal-container input[type=date] {
+  height: 30px;
+  font-size: 14px;
+  width: 36%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #D1C4E9;
+  border-top: 2px solid #B39DDB;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.formmodal-container input[type=number] {
   height: 30px;
   font-size: 14px;
   width: 36%;
@@ -146,36 +166,36 @@ select option:checked{
 
 /********* ICONOS ***********/
 
-#iniciarProcedimiento, #continuarProcedimiento, #finalizadoProcedimiento,
-#eliminarProcedimiento, #verProcedimiento {
+#iniciarProceso, #continuarProceso, #finalizadoProceso,
+#eliminarProceso, #verProceso {
   width: 4%;
   position: absolute;
 }
 
-#iniciarProcedimiento {
+#iniciarProceso {
   margin-left: 83.5%;
   margin-top: -2%;
 }
 
-#continuarProcedimiento {
+#continuarProceso {
   margin-left: 88%;
   margin-top: -2%;
 
 }
 
-#finalizadoProcedimiento {
+#finalizadoProceso {
   margin-left: 93%;
   margin-top: -2%;
 
 }
 
-#eliminarProcedimiento {
+#eliminarProceso {
   margin-left: 79%;
   margin-top: -2%;
 
 }
 
-#verProcedimiento {
+#verProceso {
   margin-left: 74.5%;
   margin-top: -2%;
 
@@ -206,7 +226,7 @@ select option:checked{
   margin-left: 75%;
 }
 
-.iconProcedimiento {
+.iconProceso {
   width: 85%;
   cursor: pointer;
   display: inline;
@@ -224,13 +244,13 @@ select option:checked{
   display: inline;
 }
 
-.iconEliminarProcedimiento {
+.iconEliminarProceso {
   width: 85%;
   cursor: pointer;
   display: inline;
 }
 
-.iconVerProcedimiento {
+.iconVerProceso {
   width: 85%;
   cursor: pointer;
   display: inline;
@@ -306,11 +326,12 @@ select option:checked{
   height: 55px;
 }
 
-.procesos {
+.parametros {
   font-family: Roboto;
   font-size: 21px;
   margin-left: 26%;
   margin-top: -4%;
+  padding-top: 0.5rem;
 }
 
 .puntuacion {
@@ -318,6 +339,7 @@ select option:checked{
   font-size: 21px;
   margin-left: 43%;
   margin-top: -2%;
+
 }
 
 .fecha {

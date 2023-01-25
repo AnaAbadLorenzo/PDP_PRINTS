@@ -74,6 +74,7 @@ function anadirNoticiaAjaxPromesa(){
   
         if(getCookie('fecha_noticia') == null || getCookie('fecha_noticia') == "null" || getCookie('fecha_noticia') == "" || getCookie('fecha_noticia') == "1900-01-01" ){
           var fecha = "";
+          var fechaString = "";
         }else{
           var fecha = getCookie('fecha_noticia');
           var fechaString = convierteFecha(fecha);

@@ -197,6 +197,11 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
     function searchByParameters($paginacion) {
 
         $datos_search = array();
+        $datosUsuario['usuario'] = $this->proceso_usuario->usuario;
+
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->searchByLogin($datosUsuario);
+        $resultadoUsuario = $usuario_mapping->feedback['resource'];
         
         if ($this -> proceso_usuario -> id_proceso_usuario == null) {
             $datos_search['id_proceso_usuario'] = '';
@@ -216,12 +221,8 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
             $datos_search['calculo_huella_carbono'] = $this -> proceso_usuario -> calculo_huella_carbono;
         }
        
-        if ($this -> proceso_usuario -> dni_usuario == null) {
-            $datos_search['dni_usuario'] = '';
-        } else {
-            $datos_search['dni_usuario'] = $this -> proceso_usuario -> dni_usuario;
-        }
-       
+        $datos_search['dni_usuario'] = $resultadoUsuario['dni_usuario'];
+        
         if ($this -> proceso_usuario -> id_proceso == null) {
             $datos_search['id_proceso'] = '';
         } else {
@@ -236,17 +237,129 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
         
         $proceso_usuario_mapping= new ProcesoUsuarioMapping();
         $proceso_usuario_mapping -> searchByParameters($datos_search, $paginacion);
+        $datosProcesoUsuario = $proceso_usuario_mapping->feedback['resource'];
+        $datosProceso = $this->searchForeignKeysProceso();
+        $datosUsuario = $this->searchForeignkeysUsuario();
+
+        $datosADevolver = array();
+            $datosUsuarioDev = array();
+            foreach($datosProcesoUsuario as $procesoUsuario){
+                foreach($datosProceso as $proceso){
+                    if($procesoUsuario['id_proceso'] == $proceso['id_proceso']){
+                        $datosUsuarioDev['procesoUsuario'] = $procesoUsuario;
+                        $datosUsuarioDev['proceso'] = $proceso;
+                    }
+                    foreach($datosUsuario as $usuario) {
+                        if(isset($datosUsuarioDev['procesoUsuario'])){
+                            if($usuario['dni_usuario'] == $procesoUsuario['dni_usuario']){
+                                $datosUsuarioDev['usuario'] = $usuario;
+                            }
+                        }
+                    }
+                    
+                }
+                array_push($datosADevolver, $datosUsuarioDev);
+            }
 
         $returnBusquedas = new ReturnBusquedas
         (
-            $proceso_usuario_mapping -> feedback['resource'],
+            $datosADevolver,
             $datos_search,
             $this -> numberFindParameters($datos_search)["COUNT(*)"],
-            sizeof($proceso_usuario_mapping -> feedback['resource']),
+            sizeof($datosADevolver),
             $paginacion->inicio
         );
 
         return $returnBusquedas;
+
+    }
+
+    function searchByParametersUsuario($paginacion) {
+
+        $datos_search = array();
+        $datosUsuario['usuario'] = $this->proceso_usuario->usuario;
+
+        $usuario_mapping = new UsuarioMapping();
+        $usuario_mapping->searchByLogin($datosUsuario);
+        $resultadoUsuario = $usuario_mapping->feedback['resource'];
+        
+        if ($this -> proceso_usuario -> nombre_proceso == null) {
+            $datos_search['nombre_proceso'] = '';
+        } else {
+            $datos_search['nombre_proceso'] = $this -> proceso_usuario -> nombre_proceso;
+        }
+        
+        if ($this -> proceso_usuario -> descripcion_proceso == null) {
+            $datos_search['descripcion_proceso'] = '';
+        } else {
+            $datos_search['descripcion_proceso'] = $this -> proceso_usuario -> descripcion_proceso;
+        }
+       
+        if ($this -> proceso_usuario -> fecha_proceso == null) {
+            $datos_search['fecha_proceso'] = '';
+        } else {
+            $datos_search['fecha_proceso'] = $this -> proceso_usuario -> fecha_proceso;
+        }
+
+        $proceso_mapping = new ProcesoMapping();
+        $proceso_mapping-> searchByBasicParameters($datos_search, $paginacion);
+        $proc = $proceso_mapping->feedback['resource'];
+
+        if(!empty($proc)){
+            $datos_search_proceso_usuario['fecha_proceso_usuario'] = '';
+            $datos_search_proceso_usuario['calculo_huella_carbono'] = '';
+            $datos_search_proceso_usuario['dni_usuario'] = $resultadoUsuario['dni_usuario'];
+            $datos_search_proceso_usuario['id_proceso'] = $proc[0]['id_proceso'];
+            
+            $proceso_usuario_mapping= new ProcesoUsuarioMapping();
+            $proceso_usuario_mapping -> searchByParameters($datos_search_proceso_usuario, $paginacion);
+            $datosProcesoUsuario = $proceso_usuario_mapping->feedback['resource'];
+            $datosProceso = $this->searchForeignKeysProceso();
+            $datosUsuario = $this->searchForeignkeysUsuario();
+    
+            $datosADevolver = array();
+                $datosUsuarioDev = array();
+                foreach($datosProcesoUsuario as $procesoUsuario){
+                    foreach($datosProceso as $proceso){
+                        if($procesoUsuario['id_proceso'] == $proceso['id_proceso']){
+                            $datosUsuarioDev['procesoUsuario'] = $procesoUsuario;
+                            $datosUsuarioDev['proceso'] = $proceso;
+                        }
+                        foreach($datosUsuario as $usuario) {
+                            if(isset($datosUsuarioDev['procesoUsuario'])){
+                                if($usuario['dni_usuario'] == $procesoUsuario['dni_usuario']){
+                                    $datosUsuarioDev['usuario'] = $usuario;
+                                }
+                            }
+                        }
+                        
+                    }
+                    array_push($datosADevolver, $datosUsuarioDev);
+                }
+    
+            $returnBusquedas = new ReturnBusquedas
+            (
+                $datosADevolver,
+                $datos_search,
+                $this -> numberFindParameters($datos_search_proceso_usuario)["COUNT(*)"],
+                sizeof($datosADevolver),
+                $paginacion->inicio
+            );
+    
+            return $returnBusquedas;
+        }else{
+            $returnBusquedas = new ReturnBusquedas
+            (
+                array(),
+                $datos_search,
+                0,
+                0,
+                $paginacion->inicio
+            );
+    
+            return $returnBusquedas;
+        }
+       
 
     }
     
