@@ -3,7 +3,7 @@
 include_once './Test/Test.php';
 include_once './Test/Accion/ConexionesBDTest.php';
 
-class TestGestionAcciones{
+class TestGestionNoticias{
     private $test;
     private $conexionesBDTest;
 

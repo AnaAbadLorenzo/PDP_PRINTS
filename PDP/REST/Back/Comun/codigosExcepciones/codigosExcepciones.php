@@ -200,4 +200,9 @@ define('ROL_YA_EXISTE', 'El rol ya existe');
 define('EDIT_ROL_COMPLETO', 'El rol se ha editado correctamente');
 define('ROL_NO_EXISTE', 'El rol no existe');
 define('DELETE_ROL_COMPLETO', 'El rol se ha eliminado correctamente');
+
+define('ADD_PERSONA_COMPLETO', 'La persona se ha insertado correctamente');
+define('EDIT_PERSONA_COMPLETO', 'La persona se ha editado correctamente');
+define('PERSONA_NO_EXISTE', 'La persona no existe');
+define('DELETE_PERSONA_COMPLETO', 'La persona se ha eliminado correctamente');
 ?>

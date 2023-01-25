@@ -1,5 +1,5 @@
 <?php
-noticia
+
 include_once './Test/Test.php';
 include_once './Test/Accion/ConexionesBDTest.php';
 
