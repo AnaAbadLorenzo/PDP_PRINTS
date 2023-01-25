@@ -3,7 +3,7 @@
 include_once './Test/Test.php';
 include_once './Test/Accion/ConexionesBDTest.php';
 
-class TestGestionAcciones{
+class TestGestionFuncionalidades{
     private $test;
     private $conexionesBDTest;
 
@@ -12,9 +12,9 @@ class TestGestionAcciones{
         $this->test = new Test();
         $this->conexionesBDTest = new ConexionesBDTest();
     }
-    function testFUNCIONALIDADsGestionFUNCIONALIDADs() {
+    function testFuncionalidadesGestionFuncionalidad() {
         $pruebas = array();
-        $controlador = 'GestionFUNCIONALIDADs';
+        $controlador = 'GestionFuncionalidades';
         $action = 'add';
 
        //AÑADIR_FUNCIONALIDAD_OK
@@ -33,8 +33,7 @@ class TestGestionAcciones{
         $_POST['action'] = $action;
         $_POST['nombre_funcionalidad'] = 'FUNCIONALIDADprueba';
         $_POST['descripcion_funcionalidad'] = 'Descripcion de la funcionalidad';
-        $_POST['borrado_funcionalidad'] = 0;
-        $resultadoTest = $this->hacerPruebaAñadirFUNCIONALIDADYaExiste($_POST);
+        $resultadoTest = $this->hacerPruebaAñadirFuncionalidadYaExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
         //MODIFICAR_FUNCIONALIDAD_OK
@@ -43,10 +42,9 @@ class TestGestionAcciones{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 2;
-        $_POST['titulo_FUNCIONALIDAD'] = 'FUNCIONALIDADprueba';
-        $_POST['contenido_FUNCIONALIDAD'] = 'Esto es una descripcion modificada para pruebas';
-        $_POST['fecha_FUNCIONALIDAD'] = '01/01/2023';
+        $_POST['id_funcionalidad'] = 3;
+        $_POST['nombre_funcionalidad'] = 'FUNCIONALIDADprueba';
+        $_POST['descripcion_funcionalidad'] = 'Descripcion de la funcionalidad';
         $resultadoTest = $this->hacerPruebaModificarFUNCIONALIDADOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -54,11 +52,10 @@ class TestGestionAcciones{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 1;
-        $_POST['titulo_FUNCIONALIDAD'] = 'FUNCIONALIDADInexistente';
-        $_POST['contenido_FUNCIONALIDAD'] = 'Esto es una descripcion modificada para pruebas';
-        $_POST['fecha_FUNCIONALIDAD'] = '01/01/2023';
-        $resultadoTest = $this->hacerPruebaModificarFUNCIONALIDADNoExiste($_POST);
+        $_POST['id_funcionalidad'] = 1;
+        $_POST['nombre_funcionalidad'] = 'Gestión de noticias';
+        $_POST['descripcion_funcionalidad'] = 'Permite realizar acciones sobre las noticias de la aplicación actual';
+        $resultadoTest = $this->hacerPruebaModificarFuncionalidadNoExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
          //DELETE_FUNCIONALIDAD_OK
@@ -67,11 +64,10 @@ class TestGestionAcciones{
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 2;
-         $_POST['titulo_FUNCIONALIDAD'] = 'FUNCIONALIDADprueba';
-         $_POST['contenido_FUNCIONALIDAD'] = 'Esto es una descripcion modificada para pruebas';
-         $_POST['fecha_FUNCIONALIDAD'] = '01/01/2023';
-         $resultadoTest = $this->hacerPruebaDeleteFUNCIONALIDADOK($_POST);
+         $_POST['id_funcionalidad'] = 11;
+         $_POST['nombre_funcionalidad'] = 'FUNCIONALIDADprueba';
+         $_POST['descripcion_funcionalidad'] = 'Descripcion de la funcionalidad';
+         $resultadoTest = $this->hacerPruebaDeleteFuncionalidadOK($_POST);
          array_push($pruebas, $resultadoTest);
 
          //DELETE_FUNCIONALIDAD_NO_EXISTE
@@ -79,19 +75,18 @@ class TestGestionAcciones{
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 1;
-         $_POST['titulo_FUNCIONALIDAD'] = 'FUNCIONALIDADInexistente';
-         $_POST['contenido_FUNCIONALIDAD'] = 'Esto es una descripcion modificada para pruebas';
-         $_POST['fecha_FUNCIONALIDAD'] = '01/01/2023';
-         $resultadoTest = $this->hacerPruebaDeleteFUNCIONALIDADNoExiste($_POST);
+         $_POST['id_funcionalidad'] = 1;
+         $_POST['nombre_funcionalidad'] = 'Funcionalidad de gestion inexistente';
+         $_POST['descripcion_funcionalidad'] = 'Esto es una descripcion modificada para pruebas';
+         $resultadoTest = $this->hacerPruebaDeleteFuncionalidadNoExiste($_POST);
          array_push($pruebas, $resultadoTest);
          
-        $this->deleteData('titulo_FUNCIONALIDAD', 'FUNCIONALIDADprueba');
+        $this->deleteData('nombre_funcionalidad', 'FUNCIONALIDADprueba');
         return $pruebas;
 
     }
 
-    function hacerPruebaAñadirFUNCIONALIDADOK($atributo){
+    function hacerPruebaAñadirFuncionalidadDOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'ADD_FUNCIONALIDAD_COMPLETO'." - ". ADD_FUNCIONALIDAD_COMPLETO;
         $resultadoObtenido = '';
@@ -99,14 +94,13 @@ class TestGestionAcciones{
             $resultadoObtenido = 'ADD_FUNCIONALIDAD_COMPLETO'." - ". ADD_FUNCIONALIDAD_COMPLETO;
         }
         $datosValores = array(
-            'titulo_FUNCIONALIDAD' => $atributo['titulo_FUNCIONALIDAD'],
-            'contenido_FUNCIONALIDAD' => $atributo['contenido_FUNCIONALIDAD']
-            'fecha_FUNCIONALIDAD' => $atributo['fecha_FUNCIONALIDAD']
+            'nombre_funcionalidad' => $atributo['nombre_funcionalidad'],
+            'descripcion_funcionalidad' => $atributo['descripcion_funcionalidad']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ADD_FUNCIONALIDAD_COMPLETO , ÉXITO, $datosValores);
     }
 
-    function hacerPruebaAñadirFUNCIONALIDADYaExiste($atributo){
+    function hacerPruebaAñadirFuncionalidadYaExiste($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'FUNCIONALIDAD_YA_EXISTE'." - ". FUNCIONALIDAD_YA_EXISTE;
         $resultadoObtenido = '';
@@ -116,15 +110,14 @@ class TestGestionAcciones{
         }
 
         $datosValores = array(
-            'titulo_FUNCIONALIDAD' => $atributo['titulo_FUNCIONALIDAD'],
-            'contenido_FUNCIONALIDAD' => $atributo['contenido_FUNCIONALIDAD']
-            'fecha_FUNCIONALIDAD' => $atributo['fecha_FUNCIONALIDAD']
+            'nombre_funcionalidad' => $atributo['nombre_funcionalidad'],
+            'descripcion_funcionalidad' => $atributo['descripcion_funcionalidad']
         );
 
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, FUNCIONALIDAD_YA_EXISTE , ERROR, $datosValores);
     }
 
-    function hacerPruebaModificarFUNCIONALIDADOK($atributo){
+    function hacerPruebaModificarFuncionalidadOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'EDIT_FUNCIONALIDAD_COMPLETO'." - ". EDIT_FUNCIONALIDAD_COMPLETO;
         $resultadoObtenido = '';
@@ -132,14 +125,13 @@ class TestGestionAcciones{
             $resultadoObtenido = 'EDIT_FUNCIONALIDAD_COMPLETO'." - ". EDIT_FUNCIONALIDAD_COMPLETO;
         }
         $datosValores = array(
-            'titulo_FUNCIONALIDAD' => $atributo['titulo_FUNCIONALIDAD'],
-            'contenido_FUNCIONALIDAD' => $atributo['contenido_FUNCIONALIDAD']
-            'fecha_FUNCIONALIDAD' => $atributo['fecha_FUNCIONALIDAD']
+            'nombre_funcionalidad' => $atributo['nombre_funcionalidad'],
+            'descripcion_funcionalidad' => $atributo['descripcion_funcionalidad']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, EDIT_FUNCIONALIDAD_COMPLETO , ÉXITO, $datosValores);
     }
 
-    function hacerPruebaModificarFUNCIONALIDADNoExiste($atributo){
+    function hacerPruebaModificarFuncionalidadNoExiste($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'FUNCIONALIDAD_NO_EXISTE'." - ". FUNCIONALIDAD_NO_EXISTE;
         $resultadoObtenido = '';
@@ -147,14 +139,13 @@ class TestGestionAcciones{
             $resultadoObtenido = 'FUNCIONALIDAD_NO_EXISTE'." - ". FUNCIONALIDAD_NO_EXISTE;
         }
         $datosValores = array(
-            'titulo_FUNCIONALIDAD' => $atributo['titulo_FUNCIONALIDAD'],
-            'contenido_FUNCIONALIDAD' => $atributo['contenido_FUNCIONALIDAD']
-            'fecha_FUNCIONALIDAD' => $atributo['fecha_FUNCIONALIDAD']
+            'nombre_funcionalidad' => $atributo['nombre_funcionalidad'],
+            'descripcion_funcionalidad' => $atributo['descripcion_funcionalidad']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, FUNCIONALIDAD_NO_EXISTE , ERROR, $datosValores);
     }
 
-    function hacerPruebaDeleteFUNCIONALIDADOK($atributo){
+    function hacerPruebaDeleteFuncionalidadOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'DELETE_FUNCIONALIDAD_COMPLETO'." - ". DELETE_FUNCIONALIDAD_COMPLETO;
         $resultadoObtenido = '';
@@ -162,14 +153,13 @@ class TestGestionAcciones{
             $resultadoObtenido = 'DELETE_FUNCIONALIDAD_COMPLETO'." - ". DELETE_FUNCIONALIDAD_COMPLETO;
         }
         $datosValores = array(
-            'titulo_FUNCIONALIDAD' => $atributo['titulo_FUNCIONALIDAD'],
-            'contenido_FUNCIONALIDAD' => $atributo['contenido_FUNCIONALIDAD']
-            'fecha_FUNCIONALIDAD' => $atributo['fecha_FUNCIONALIDAD']
+            'nombre_funcionalidad' => $atributo['nombre_funcionalidad'],
+            'descripcion_funcionalidad' => $atributo['descripcion_funcionalidad']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_FUNCIONALIDAD_COMPLETO , ERROR, $datosValores);
     }
 
-    function hacerPruebaDeleteFUNCIONALIDADNoExiste($atributo){
+    function hacerPruebaDeleteFuncionalidadNoExiste($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'FUNCIONALIDAD_NO_EXISTE'." - ". FUNCIONALIDAD_NO_EXISTE;
         $resultadoObtenido = '';
@@ -177,8 +167,8 @@ class TestGestionAcciones{
             $resultadoObtenido = 'FUNCIONALIDAD_NO_EXISTE'." - ". FUNCIONALIDAD_NO_EXISTE;
         }
         $datosValores = array(
-            'nombre_accion' => $atributo['nombre_accion'],
-            'descripcion_accion' => $atributo['descripcion_accion']
+            'nombre_funcionalidad' => $atributo['nombre_funcionalidad'],
+            'descripcion_funcionalidad' => $atributo['descripcion_funcionalidad']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, FUNCIONALIDAD_NO_EXISTE , ERROR, $datosValores);
     }

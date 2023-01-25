@@ -189,5 +189,15 @@ define('EDIT_NOTICIA_COMPLETO', 'La noticia se ha editado correctamente');
 define('NOTICIA_NO_EXISTE', 'La noticia no existe');
 define('DELETE_NOTICIA_COMPLETO', 'La noticia se ha eliminado correctamente');
 
+define('ADD_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha insertado correctamente');
+define('FUNCIONALIDAD_YA_EXISTE', 'La funcionalidad ya existe');
+define('EDIT_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha editado correctamente');
+define('FUNCIONALIDAD_NO_EXISTE', 'La funcionalidad no existe');
+define('DELETE_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha eliminado correctamente');
 
+define('ADD_ROL_COMPLETO', 'El rol se ha insertado correctamente');
+define('ROL_YA_EXISTE', 'El rol ya existe');
+define('EDIT_ROL_COMPLETO', 'El rol se ha editado correctamente');
+define('ROL_NO_EXISTE', 'El rol no existe');
+define('DELETE_ROL_COMPLETO', 'El rol se ha eliminado correctamente');
 ?>
