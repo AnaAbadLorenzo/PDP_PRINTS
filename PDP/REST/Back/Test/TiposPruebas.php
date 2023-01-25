@@ -5,6 +5,7 @@ define('ÉXITO', 'Éxito');
 
 define('LOGIN_OK', 'Atributo usuario correcto');
 define('PASSWD_USUARIO_OK', 'Atributo password correcto');
+
 define('LOGIN_ACCION_OK', 'La acción de login se ha realizado correctamente');
 define('DNI_PERSONA_OK', 'Atributo DNI correcto');
 define('NOMBRE_PERSONA_OK', 'Atributo nombre persona correcto');
