@@ -586,7 +586,7 @@ arrayES={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GUARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'La evidencia se ha guadado correctamente',
 	'CATEGORIA_YA_EXISTE' : 'La categoría ya existe',
-	'EXPLICACION_FORMULA' : 'Los parámetros de la fómula deben introducirse entre los símbolos # y, sus unidades, entre |.Por ejemplo: v = #espacio|m|# x #tiempo|sg|#',
+	'EXPLICACION_FORMULA' : 'Los parámetros de la fómula deben introducirse entre los símbolos # y, sus unidades, con una | al principio.Por ejemplo: v = #espacio|m# x #tiempo|sg#',
 	'CALCULAR_HUELLA_CARBONO': 'CALCULA TU HUELLA DE CARBONO',
 	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Los datos se han completado correctamente',
 	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Los datos se han modificado correctamente',

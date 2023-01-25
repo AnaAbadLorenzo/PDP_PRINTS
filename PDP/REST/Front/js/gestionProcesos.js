@@ -383,27 +383,28 @@ async function cargarProcesos(numeroPagina, tamanhoPagina, paginadorCreado){
 function cargarProcesosCategoria(proceso){
 
     var atributosFunciones = ["'" + proceso.categoria.nombre_categoria + "'", "'" + proceso.categoria.descripcion_categoria + "'"]; 
-  
-    var procesos= '<div class="col-md-12 col-lg-12 col-xl-12 mb-12 paddingTop">' + 
-                          '<div class="card">' + 
-                            '<div class="card-body-plan">' + 
-                              '<div class="card-title">' + proceso.proceso.nombre_proceso + '</div>' + 
-                              '<div class="card-text">' + proceso.proceso.descripcion_proceso + '</div>' +
-                              '<div id="iniciarProcedimiento" class="tooltip13 procedimientoIcon">' +
-                                '<img id="iconoIniciarProcedimiento" class="iconoProcedimiento iconProcedimiento" src="images/iniciarProcedimiento.png" alt="Iniciar procedimiento" onclick="iniciarProcesoUsuario(' + proceso.proceso.id_proceso + ', \'primero\')"/>' +
-                                '<span class="tooltiptext iconProcedimiento ICON_INICIAR_PROCESO"></span>' + 
-                              '</div>' + 
-                            '</div>'+
-                            '<div class="card-footer">' + 
-                              '<div class="tooltip8 planIcon">' + 
-                                '<img class="iconoPlan iconPlan" src="images/plan.png" alt="Plan" data-toggle="modal" data-target="#modalMostrarCategoria" onclick="showCategoria(' + atributosFunciones + ')"/>' + 
-                                '<span class="tooltiptext iconPlan ICON_CATEGORIA"></span>' + 
-                              '</div>' + 
-                            '<div class="card-title-plan">Categoria: ' + proceso.categoria.nombre_categoria + '</div>' + 
-                          '</div>' +
-                        '</div>' + 
-                      '</div>';
-  
+    
+    if(proceso.proceso.borrado_proceso == 0){
+        var procesos= '<div class="col-md-12 col-lg-12 col-xl-12 mb-12 paddingTop">' + 
+            '<div class="card">' + 
+            '<div class="card-body-plan">' + 
+                '<div class="card-title">' + proceso.proceso.nombre_proceso + '</div>' + 
+                '<div class="card-text">' + proceso.proceso.descripcion_proceso + '</div>' +
+                '<div id="iniciarProcedimiento" class="tooltip13 procedimientoIcon">' +
+                '<img id="iconoIniciarProcedimiento" class="iconoProcedimiento iconProcedimiento" src="images/iniciarProcedimiento.png" alt="Iniciar procedimiento" onclick="iniciarProcesoUsuario(' + proceso.proceso.id_proceso + ', \'primero\')"/>' +
+                '<span class="tooltiptext iconProcedimiento ICON_INICIAR_PROCESO"></span>' + 
+                '</div>' + 
+            '</div>'+
+            '<div class="card-footer">' + 
+                '<div class="tooltip8 planIcon">' + 
+                '<img class="iconoPlan iconPlan" src="images/plan.png" alt="Plan" data-toggle="modal" data-target="#modalMostrarCategoria" onclick="showCategoria(' + atributosFunciones + ')"/>' + 
+                '<span class="tooltiptext iconPlan ICON_CATEGORIA"></span>' + 
+                '</div>' + 
+            '<div class="card-title-plan">Categoria: ' + proceso.categoria.nombre_categoria + '</div>' + 
+            '</div>' +
+        '</div>' + 
+        '</div>';
+    }
     $('#procesos').append(procesos);
   
     setLang(getCookie('lang'));
@@ -1373,7 +1374,7 @@ function showDetalle(nombreProceso, descripcionProceso, fechaProceso,versionProc
    
     rellenarFormulario(nombreProceso, descripcionProceso, fechaProceso,versionProceso, checkAprobacion, formulaProceso, idCategoria, nombreCategiria, dniUsuario, usuario, listParametros);
 
-	let campos = ["nombreProceso", "descripcionProceso", "fechaProceso", "selectCategorias", "checkPublicado", "versionProceso", "responsableProceso"];
+	let campos = ["nombreProceso", "descripcionProceso", "fechaProceso", "selectCategorias", "checkPublicado", "versionProceso", "responsableProceso", "formulaProceso"];
 	let obligatorios = ["obligatorioNombreProceso", "obligatorioDescripcionProceso", "obligatorioFechaProceso","obligatorioCheckPublicado", "obligatorioVersionProceso", "obligatorioResponsableProceso"];
     
     anadirReadonly(campos);

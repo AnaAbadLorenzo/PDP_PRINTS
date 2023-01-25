@@ -583,7 +583,7 @@ arrayGA={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'A evidencia gardouse correctamente',
 	'CATEGORIA_YA_EXISTE' : 'A categoria xa existe',
-	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, entre |.Por exemplo: v = #espazo|m|# x #tempo|sg|#',
+	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, con una | ao comezo. Por exemplo: v = #espazo|m# x #tempo|sg#',
 	'CALCULAR_HUELLA_CARBONO': 'CALCULA A TÚA PEGADA DE CARBONO',
 	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Os datos completáronse correctamente',
 	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Os datos modificáronse correctamente',

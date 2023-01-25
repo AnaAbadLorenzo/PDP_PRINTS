@@ -579,7 +579,7 @@ arrayEN={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCE SAVED CORRECTLY',
 	'EVIDENCIA_GUARDADA' : 'The evidence has been saved correctly',
 	'CATEGORIA_YA_EXISTE' : 'The category already exists',
-	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units between |.For example: v = #space|m|# x #time|sg|#',
+	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units with a | at the begining.For example: v = #space|m# x #time|sg#',
 	'CALCULAR_HUELLA_CARBONO': 'CALCULATE YOUR CARBON FOOTPRINT',
 	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Data has been completed correctly',
 	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Data has been modified correctly',
