@@ -127,7 +127,7 @@ arrayGA={
 	'ERR_CONNECTION_REFUSED' : 'Erro interno da aplicación. Conexión denegada. Contacte co administrador ou intente acceder nuns minutos.',
 	'ROL_YA_EXISTE' : 'O rol ya existe. Comproba tamén a táboa de roles eliminados',
 	'ROL_NO_EXISTE' : 'O rol non existe',
-	'ROL_ASOCIADO_ACCION_FUNCIONALIDAD_EXCEPTION' : 'O rol está asociado a unha funcionalidade e a unha acción',
+	'ROL_TIENE_PERMISOS_ASOCIADOS' : 'O rol está asociado a unha funcionalidade e a unha acción',
 	'ROL_ASOCIADO_USUARIO' : 'O rol está asociado a un usuario',
 	'TEST_ATRIBUTOS_LOGIN_KO' : 'Produciuse un erro ó executar os tests de atributos para o login',
 	'FUNCIONALIDAD_VACIA' : 'O nome e/ou a descripción da funcionalidade están vacíos',
@@ -583,12 +583,26 @@ arrayGA={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCIA GARDADA CORRECTAMENTE',
 	'EVIDENCIA_GUARDADA' : 'A evidencia gardouse correctamente',
 	'CATEGORIA_YA_EXISTE' : 'A categoria xa existe',
-	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, con una | ao comezo. Por exemplo: v = #espazo|m# x #tempo|sg#',
+	'EXPLICACION_FORMULA' : 'O parámetros da fórmula deben introducirse entre os símbolos # e, as súas unidades, con una | ao comezo. Por exemplo: #espazo|m# x #tempo|sg#',
 	'CALCULAR_HUELLA_CARBONO': 'CALCULA A TÚA PEGADA DE CARBONO',
 	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Os datos completáronse correctamente',
 	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Os datos modificáronse correctamente',
 	'PROCESO_USUARIO_PARAMETRO_GUARDADO_OK' : 'PARAMETROS GARDADOS CORRECTAMENTE',
-	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMETROS MODIFICADOS CORRECTAMENTE'
+	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMETROS MODIFICADOS CORRECTAMENTE',
+	'PROCESO_USUARIO_ELIMINADO_OK' : 'PROCESO ELIMINADO CORRECTAMENTE',
+	'PROCESO_USUARIO_ELIMINADO' : 'O proceso eliminouse correctamente',
+	'ACCION_TIENE_PERMISOS_ASOCIADOS' : 'A acción non pode eliminarse porque ten permisos asociados',
+	'CATEGORIA_TIENE_PROCESOS' : 'A categoría non pode eliminarse porque ten procesos asociados',
+	'FUNCIONALIDAD_TIENE_PERMISOS_ASOCIADOS' : 'A funcionalidade non pode eliminarse porque ten permisos asociados',
+	'PARAMETRO_ESTA_ASOCIADO_A_PROCESO' : 'O parámetro non pode eliminarse porque ten procesos asociados',
+	'PERSONA_TIENE_USUARIO' : 'A persoa non pode eliminarse porque ten un usuario asociado',
+	'PROCESO_TIENE_PARAMETROS' : 'O proceso non pode eliminarse porque ten parámetros asociados',
+	'PROCESO_USUARIO_ASOCIADO_PARAMETRO' : 'O proceso non pode eliminarse porque ten parámetros asociados',
+	'USUARIO_TIENE_CATEGORIA' : 'O usuario non pode eliminarse porque ten categorías asociadas',
+	'USUARIO_TIENE_PROCESO' : 'O usuario non pode eliminarse porque ten procesos asociadas',
+	'USUARIO_TIENE_PROCESO_USUARIO' : 'O usuario non pode eliminarse porque ten procesos asociadas',
+	'ADD_PROCESO_COMPLETO' : 'O proceso gardouse correctamente',
+	'EDIT_PROCESO_COMPLETO' : 'O proceso editouse correctamente'
 
 
 

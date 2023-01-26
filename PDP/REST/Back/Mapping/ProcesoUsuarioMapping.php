@@ -203,6 +203,20 @@ class ProcesoUsuarioMapping extends MappingBase {
 
     }
 
+    function limpiarHuellaCarbono($datos) {
+        $this -> query =
+        "UPDATE `proceso_usuario`
+        SET
+            `calculo_huella_carbono`=0
+        WHERE
+            `id_proceso_usuario`='" . $datos['id_proceso_usuario'] . "'
+        ;"
+    ;
+
+    $this -> stmt = $this -> conexion -> prepare($this -> query);
+    $this -> execute_single_query();
+    }
+
     
 }
 ?>

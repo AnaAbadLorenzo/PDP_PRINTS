@@ -122,15 +122,6 @@ class GestionProcesosUsuarioController extends ControllerBase {
 
     }
 
-
-	/*
-	Recibe:
-	- 'id_proceso_usuario'
-	- 'parametros' (array/mapa)
-		- 'id_parametro' => 'valor_parametro'
-		- 'id_parametro' => 'valor_parametro'
-		...
-	*/
 	function calcular() {
 
 		// $this -> proceso_usuario_validation -> validarCalcular();

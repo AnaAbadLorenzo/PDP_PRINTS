@@ -59,9 +59,7 @@ class procesoAtributos extends ValidacionesFormato{
 		if($this->Longitud_minima($atributo,3)===false){
 			$this->respuesta = 'FORMULA_PROCESO_MENOR_QUE_3';
 		}
-		// if($this->comprobarFormatoFormula($atributo)===false){
-		// 	$this->respuesta = 'FORMATO_FORMULA_INCORRECTO';
-		// }
+		
 	}
 
     

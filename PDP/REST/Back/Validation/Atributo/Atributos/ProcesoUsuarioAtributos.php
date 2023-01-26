@@ -43,7 +43,7 @@ class ProcesoUsuarioAtributos extends ValidacionesFormato {
 	}
 	
 	function validarAtributosDelete($atributos) {
-		$this -> validarIdProcesoUsuario($atributos['id_parametro']);
+		$this -> validarIdProcesoUsuario($atributos['id_proceso_usuario']);
 		if ($this -> respuesta != '') {
 			return $this -> respuesta;
 		}

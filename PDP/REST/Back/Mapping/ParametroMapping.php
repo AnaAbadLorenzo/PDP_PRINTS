@@ -87,7 +87,6 @@ class ParametroMapping extends MappingBase {
     }
 
     function searchById($datos) {
-
         $this -> query = 
             "SELECT * FROM `parametro`
             WHERE

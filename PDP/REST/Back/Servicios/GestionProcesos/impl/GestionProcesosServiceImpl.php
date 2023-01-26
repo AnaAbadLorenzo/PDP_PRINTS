@@ -104,7 +104,7 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                     'dni_usuario' => $categoria['dni_responsable'],
                     'borrado_proceso' => 0
                 ];
-                
+
                 $proceso_mapping = new ProcesoMapping();
                 $proceso_mapping->add($procesoDatos);
 
@@ -276,7 +276,7 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
         $categoria_mapping = new CategoriaMapping();
         $categoria_mapping->searchById($datosCategoria);
         $categoria = $categoria_mapping->feedback['resource'];
-        
+
         $respuesta = '';
         $datosEditProceso = array();
         $datosEditProceso['id_proceso'] = $this->proceso->id_proceso;
@@ -317,15 +317,13 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                 'borrado_proceso' => 0
             ];
 
-            // logica de formula
-
-            // conseguimos el valor de la forumla en bd para ver si cambió
             $formula_anterior = $proceso_mapping -> searchById($procesoDatos)['resource']['formula_proceso'];
             $formula_entrante = $this -> proceso -> formula_proceso;
 
             if (strcmp($formula_anterior, $formula_entrante) != 0) // si la formula en bd y la que llega no son iguales, gestionamos cambios de parametro
             {
                 $this -> eliminarProcesoUsuarioParametroAsociados($procesoDatos);
+                $this-> limpiarHuellaCarbono($procesoDatos);
                 $this -> eliminarParametrosAsociados($procesoDatos);
                 $this -> procesarParametrosFormulaEditar($this -> proceso -> id_proceso);
             }
@@ -374,6 +372,17 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
             );
         }
 
+    }
+
+    function limpiarHuellaCarbono($datos_proceso) {
+
+        $proceso_usuario_mapping = new ProcesoUsuarioMapping;
+
+        $respuesta = $proceso_usuario_mapping -> conseguirIdsAsociadosAProceso($datos_proceso)['resource'];
+        $ids_proceso_usuario = [];
+        foreach ($respuesta as $id_proceso_usuario) {
+            $proceso_usuario_mapping->limpiarHuellaCarbono(['id_proceso_usuario'=>$id_proceso_usuario]);
+        }
     }
 
     function delete($mensaje) {

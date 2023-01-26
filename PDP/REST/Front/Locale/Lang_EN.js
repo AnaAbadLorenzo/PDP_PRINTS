@@ -128,7 +128,7 @@ arrayEN={
 	'ERR_CONNECTION_REFUSED' : 'Internal server error. Connection refused. Contact the administrator or try to log in in a few minutes.',
 	'ROL_YA_EXISTE' : 'Role already exists. Check also the table of deleted roles',
 	'ROL_NO_EXISTE' : 'Role doesn´t exists',
-	'ROL_ASOCIADO_ACCION_FUNCIONALIDAD_EXCEPTION' : 'Role associated with a funcionality and an action',
+	'ROL_TIENE_PERMISOS_ASOCIADOS' : 'Role associated with a funcionality and an action',
 	'ROL_ASOCIADO_USUARIO': 'Role associated with an user',
 	'TEST_ATRIBUTOS_LOGIN_KO' : 'An error occurred when running the attribute tests for login',
 	'FUNCIONALIDAD_VACIA' : 'The name and/or description of the funcionality are empty',
@@ -579,12 +579,27 @@ arrayEN={
 	'EVIDENCIA_GUARDADA_OK' : 'EVIDENCE SAVED CORRECTLY',
 	'EVIDENCIA_GUARDADA' : 'The evidence has been saved correctly',
 	'CATEGORIA_YA_EXISTE' : 'The category already exists',
-	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units with a | at the begining.For example: v = #space|m# x #time|sg#',
+	'EXPLICACION_FORMULA' : 'The formula parameters must be entered between the symbols # and their units with a | at the begining.For example: #space|m# x #time|sg#',
 	'CALCULAR_HUELLA_CARBONO': 'CALCULATE YOUR CARBON FOOTPRINT',
 	'PROCESO_USUARIO_PARAMETRO_CREADO' : 'Data has been completed correctly',
 	'PROCESO_USUARIO_PARAMETRO_EDITADO' : 'Data has been modified correctly',
 	'PROCESO_USUARIO_PARAMETRO_GUARDADO_OK' : 'PARAMS SAVED CORRECTLY',
-	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMS MODIFIED CORRECTLY'
+	'PROCESO_USUARIO_PARAMETRO_EDITADO_OK' : 'PARAMS MODIFIED CORRECTLY',
+	'PROCESO_USUARIO_ELIMINADO_OK' : 'PROCESS DELETED CORRECTLY',
+	'PROCESO_USUARIO_ELIMINADO' : 'The process has been deleted correctly',
+	'ACCION_TIENE_PERMISOS_ASOCIADOS' : 'The action can be deleted because it has associated permissions',
+	'CATEGORIA_TIENE_PROCESOS' : 'The category can be deleted because it has associated permissions',
+	'FUNCIONALIDAD_TIENE_PERMISOS_ASOCIADOS' : 'The funcionality can be deleted because it has associated permissions',
+	'PARAMETRO_ESTA_ASOCIADO_A_PROCESO' : 'The param can not be deleted because it has associate process',
+	'PERSONA_TIENE_USUARIO' : 'The person can not be deleted because it has an associated user',
+	'PROCESO_ESTA_ASOCIADO_A_USUARIO': 'The process can not be deleted because it has associated users',
+	'PROCESO_TIENE_PARAMETROS' : 'The process can not be deleted because it has associated params',
+	'PROCESO_USUARIO_ASOCIADO_PARAMETRO' : 'The process can not be deleted because it has associated params',
+	'USUARIO_TIENE_CATEGORIA' : 'The user can not be deleted because it has associated categories',
+	'USUARIO_TIENE_PROCESO' : 'The user can not be deleted because it has associated process',
+	'USUARIO_TIENE_PROCESO_USUARIO' : 'The user can not be deleted because it has associated process',
+	'ADD_PROCESO_COMPLETO' : 'The process has been saved correctly',
+	'EDIT_PROCESO_COMPLETO' : 'The process has been modified correctly'
 
 
 }

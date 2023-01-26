@@ -384,7 +384,7 @@ function cargarProcesosCategoria(proceso){
 
     var atributosFunciones = ["'" + proceso.categoria.nombre_categoria + "'", "'" + proceso.categoria.descripcion_categoria + "'"]; 
     
-    if(proceso.proceso.borrado_proceso == 0){
+    if(proceso.proceso.check_aprobacion == 1){
         var procesos= '<div class="col-md-12 col-lg-12 col-xl-12 mb-12 paddingTop">' + 
             '<div class="card">' + 
             '<div class="card-body-plan">' + 
@@ -641,7 +641,7 @@ function editarProcesoAjaxPromesa(){
         var data = {
             controlador: 'GestionProcesos',
             action: 'edit',
-            id_proceso : "",
+            id_proceso : $('#idProceso').val(),
             nombre_proceso : $('#nombreProceso').val(),
             descripcion_proceso : $('#descripcionProceso').val(),
             fecha_proceso : $('#fechaProceso').val(),
@@ -674,6 +674,7 @@ function editarProcesoAjaxPromesa(){
 async function editProceso(){
     await editarProcesoAjaxPromesa()
     .then((res) => {
+      cargarParametrosProceso();
       $("#form-modal").modal('toggle');
   
       respuestaAjaxOK("PROCESO_EDITADO_OK", res.code);

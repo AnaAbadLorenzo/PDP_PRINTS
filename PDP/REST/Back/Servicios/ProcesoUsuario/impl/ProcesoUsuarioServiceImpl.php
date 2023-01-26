@@ -384,8 +384,7 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
     function calcular($mensaje) {
 
         $calculo_datos = [
-            'id_proceso_usuario'    => $_POST['id_proceso_usuario'],
-            'parametros'            => $_POST['parametros']
+            'id_proceso_usuario'    => $_POST['id_proceso_usuario']
         ];
     
         // Validar formato datos
@@ -402,7 +401,7 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
         //     return $respuesta;
         // }
 
-        $this -> actualizarParametrosBD($calculo_datos);    // Plasmo en BD todo lo que recibo
+        // $this -> actualizarParametrosBD($calculo_datos);    // Plasmo en BD todo lo que recibo
         $this -> calcularYGuardarHuella($calculo_datos);
 
         return $mensaje;
@@ -442,8 +441,9 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
 
     function calcularYGuardarHuella($calculo_datos) {
 
-        $proceso_mapping = new ProcesoMapping;
-        $proceso_usuario_mapping = new ProcesoUsuarioMapping;
+        $proceso_mapping = new ProcesoMapping();
+        $proceso_usuario_mapping = new ProcesoUsuarioMapping();
+        $proceso_usuario_parametro_mapping = new ProcesoUsuarioParametroMapping();
 
         // Obtengo el proceso sobre el que tengo que conseguir la formula
         $proceso_usuario_obtenido = $proceso_usuario_mapping -> searchById($calculo_datos)['resource'];
@@ -452,8 +452,20 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
         $proceso_obtenido = $proceso_mapping -> searchById($proceso_usuario_obtenido)['resource'];
         $formula = $proceso_obtenido['formula_proceso'];
 
+        // Obtenemos los parametros y valores
+        $proceso_usuario_parametro_mapping->searchByIdProcesoUsuario($calculo_datos);
+        $parametros = $proceso_usuario_parametro_mapping->feedback['resource'];
+
+        $params = array();
+        foreach($parametros as $parametro){
+            array_push($params, array(
+                'id_parametro' => $parametro['id_parametro'],
+                'valor_parametro' => $parametro['valor_parametro']
+            ));
+        }
+
         // Sustituyo el texto que representa los parametros por sus valores
-        $formula_rellenada = $this -> ponerValoresEnFormula($formula, $calculo_datos['parametros']);
+        $formula_rellenada = $this -> ponerValoresEnFormula($formula, $params);
 
         // Realizo el cálculo
         $resultado_calculo = eval("return " . $formula_rellenada . ";");
@@ -468,21 +480,18 @@ class ProcesoUsuarioServiceImpl extends ServiceBase implements ProcesoUsuarioSer
     }
 
     function ponerValoresEnFormula($formula, $parametros) {
-
         $parametro_mapping = new ParametroMapping;
 
-        foreach ($parametros as $id_parametro => $valor_parametro) {
-
-            $parametro_temp = $parametro_mapping -> searchById(['id_parametro' => $id_parametro])['resource'];
-
+        foreach ($parametros as $param) {
+            $parametro_temp = $parametro_mapping -> searchById(['id_parametro' => $param['id_parametro']])['resource'];
+           
             $formula = str_replace(
                 "#" . $parametro_temp['parametro_formula'] . "|" . $parametro_temp['descripcion_parametro'] . "#",
-                $valor_parametro,
+                $param['valor_parametro'],
                 $formula
             );
 
         }
-
         return $formula;
 
     }

@@ -111,7 +111,7 @@ class RolAccion extends ValidacionesBase {
 	}
 
 	function rolNoEstaEnPermisos($rol_datos) {
-
+		$resultado = array();
 		$this -> acl -> searchByRol($rol_datos);
 		$resultado = $this -> acl -> resource;
 

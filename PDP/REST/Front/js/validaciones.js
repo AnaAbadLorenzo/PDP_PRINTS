@@ -1606,7 +1606,7 @@ function comprobarFechaProcedimiento(idElemento, idElementoError, campo){
 }
 
 function comprobarFormulaProceso(idElemento,idElementoError,campo){
-	if(validaNoVacio(idElemento, idElementoError,campo) && comprobarTamañoMinimo(idElemento, 3, idElementoError,campo) && comprobarIgual(idElemento, idElementoError,campo)){
+	if(validaNoVacio(idElemento, idElementoError,campo) && comprobarTamañoMinimo(idElemento, 3, idElementoError,campo)){
 		validacionOK(idElemento, idElementoError); 
         return true;
 	} else{

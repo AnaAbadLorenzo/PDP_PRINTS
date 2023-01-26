@@ -13,6 +13,7 @@ class ProcesoUsuarioAccion extends ValidacionesBase {
 	private $proceso_usuario;
 	private $proceso;
 	private $usuario;
+	private $proceso_usuario_parametro_mapping;
 
 	public $respuesta;
 
@@ -20,6 +21,7 @@ class ProcesoUsuarioAccion extends ValidacionesBase {
 		$this -> proceso_usuario = new ProcesoUsuarioModel;
 		$this -> proceso = new ProcesoModel;
 		$this -> usuario = new UsuarioModel;
+		$this -> proceso_usuario_parametro_mapping  = new ProcesoUsuarioParametroMapping;
 	}
 
 	function comprobarAdd($proceso_usuario_datos){
@@ -37,6 +39,7 @@ class ProcesoUsuarioAccion extends ValidacionesBase {
 
 	function comprobarDelete($proceso_usuario_datos){
 		$this -> existeProcesoUsuario($proceso_usuario_datos);
+		$this -> procesoUsuarioNoTieneParametrosCubiertos($proceso_usuario_datos);
 		return $this -> respuesta;
 	}
  
@@ -89,6 +92,20 @@ class ProcesoUsuarioAccion extends ValidacionesBase {
 			$this -> respuesta = 'PROCESO_USUARIO_YA_EXISTE';
 		}
 		
+	}
+
+	function procesoUsuarioNoTieneParametrosCubiertos($datos) {
+		$resultado = array();
+		
+		$this -> proceso_usuario_parametro_mapping -> searchByIdProcesoUsuario($datos);
+		$resultado = $this -> proceso_usuario_parametro_mapping -> feedback['resource'];
+
+		if (sizeof($resultado) == 0) {
+			return true;
+		} else {
+			$this -> respuesta = 'PROCESO_USUARIO_ASOCIADO_PARAMETRO';
+		}
+
 	}
 
 }
