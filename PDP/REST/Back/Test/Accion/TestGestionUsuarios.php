@@ -12,176 +12,178 @@ class TestGestionusuarios{
         $this->test = new Test();
         $this->conexionesBDTest = new ConexionesBDTest();
     }
-    function testusuariosGestionusuarios() {
+    function testUsuariosGestionUsuarios() {
         $pruebas = array();
-        $controlador = 'Gestionusuarios';
+        $controlador = 'GestionUsuarios';
         $action = 'add';
 
-       //AÑADIR_usuario_OK
+       //AÑADIR_USUARIO_OK
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['titulo_usuario'] = 'usuarioprueba';
-        $_POST['contenido_usuario'] = 'Esto es un posible contenido de la usuario';
-        $_POST['fecha_usuario'] = '01/01/2023';
-        $resultadoTest = $this->hacerPruebaAñadirusuarioOK($_POST);
+        $_POST['dni_usuario'] = '99999999R';
+        $_POST['usuario'] = 'usuarioprueba';
+        $_POST['passwd_usuario'] = 'usuarioprueba';
+        $_POST['borrado_usuario'] = 0;
+        $_POST['id_rol'] = 2;
+        $resultadoTest = $this->hacerPruebaAñadirUsuarioOK($_POST);
         array_push($pruebas, $resultadoTest);
 
-        //AÑADIR_usuario_YA_EXISTE
+        //AÑADIR_USUARIO_YA_EXISTE
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['titulo_usuario'] = 'usuarioprueba';
-        $_POST['contenido_usuario'] = 'Esto es un posible contenido de la usuario';
-        $_POST['fecha_usuario'] = '01/01/2023';
-        $resultadoTest = $this->hacerPruebaAñadirusuarioYaExiste($_POST);
+        $_POST['dni_usuario'] = '45146319X';
+        $_POST['usuario'] = 'fatima';
+        $_POST['passwd_usuario'] = 'b5d5f67b30809413156655abdda382a3';
+        $_POST['borrado_usuario'] = 0;
+        $_POST['id_rol'] = 2;
+        $resultadoTest = $this->hacerPruebaAñadirUsuarioYaExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
-        //MODIFICAR_usuario_OK
+        //MODIFICAR_USUARIO_OK
         $action = 'edit';
 
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 2;
-        $_POST['titulo_usuario'] = 'usuarioprueba';
-        $_POST['contenido_usuario'] = 'Esto es una descripcion modificada para pruebas';
-        $_POST['fecha_usuario'] = '01/01/2023';
-        $resultadoTest = $this->hacerPruebaModificarusuarioOK($_POST);
+        $_POST['dni_usuario'] = '99999999R';
+        $_POST['usuario'] = 'usuariopruebaMod';
+        $_POST['passwd_usuario'] = 'usuarioprueba';
+        $_POST['borrado_usuario'] = 0;
+        $_POST['id_rol'] = 2;
+        $resultadoTest = $this->hacerPruebaModificarUsuarioOK($_POST);
         array_push($pruebas, $resultadoTest);
 
-        //MODIFICAR_usuario_NO_EXISTE
+        //MODIFICAR_USUARIO_NO_EXISTE
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 1;
-        $_POST['titulo_usuario'] = 'usuarioInexistente';
-        $_POST['contenido_usuario'] = 'Esto es una descripcion modificada para pruebas';
-        $_POST['fecha_usuario'] = '01/01/2023';
-        $resultadoTest = $this->hacerPruebaModificarusuarioNoExiste($_POST);
+        $_POST['dni_usuario'] = '45146319X';
+        $_POST['usuario'] = 'josefa';
+        $_POST['passwd_usuario'] = 'b5d5f67b30809413156655abdda382a3';
+        $_POST['borrado_usuario'] = 0;
+        $_POST['id_rol'] = 2;
+        $resultadoTest = $this->hacerPruebaModificaruUuarioNoExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
-         //DELETE_usuario_OK
+         //DELETE_USUARIO_OK
          $action = 'delete';
 
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 2;
-         $_POST['titulo_usuario'] = 'usuarioprueba';
-         $_POST['contenido_usuario'] = 'Esto es una descripcion modificada para pruebas';
-         $_POST['fecha_usuario'] = '01/01/2023';
-         $resultadoTest = $this->hacerPruebaDeleteusuarioOK($_POST);
+         $_POST['dni_usuario'] = '99999999R';
+         $_POST['usuario'] = 'usuariopruebaMod';
+         $_POST['passwd_usuario'] = 'usuarioprueba';
+         $_POST['borrado_usuario'] = 0;
+         $_POST['id_rol'] = 2;
+         $resultadoTest = $this->hacerPruebaDeleteUsuarioOK($_POST);
          array_push($pruebas, $resultadoTest);
 
-         //DELETE_usuario_NO_EXISTE
+         //DELETE_USUARIO_NO_EXISTE
          $action = 'delete';
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 1;
-         $_POST['titulo_usuario'] = 'usuarioInexistente';
-         $_POST['contenido_usuario'] = 'Esto es una descripcion modificada para pruebas';
-         $_POST['fecha_usuario'] = '01/01/2023';
-         $resultadoTest = $this->hacerPruebaDeleteusuarioNoExiste($_POST);
+         $_POST['dni_usuario'] = '99999999R';
+         $_POST['usuario'] = 'usuariopruebaMod';
+         $_POST['passwd_usuario'] = 'usuarioprueba';
+         $_POST['borrado_usuario'] = 0;
+         $_POST['id_rol'] = 2;
+         $resultadoTest = $this->hacerPruebaDeleteUsuarioNoExiste($_POST);
          array_push($pruebas, $resultadoTest);
          
-        $this->deleteData('titulo_usuario', 'usuarioprueba');
+        $this->deleteData();
         return $pruebas;
 
     }
 
-    function hacerPruebaAñadirusuarioOK($atributo){
+    function hacerPruebaAñadirUsuarioOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'ADD_usuario_COMPLETO'." - ". ADD_usuario_COMPLETO;
+        $resultadoEsperado = 'ADD_USUARIO_COMPLETO'." - ". ADD_USUARIO_COMPLETO;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'ADD_usuario_COMPLETO'){
-            $resultadoObtenido = 'ADD_usuario_COMPLETO'." - ". ADD_usuario_COMPLETO;
+        if(!empty($resultado) && $resultado['code'] == 'ADD_USUARIO_COMPLETO'){
+            $resultadoObtenido = 'ADD_USUARIO_COMPLETO'." - ". ADD_USUARIO_COMPLETO;
         }
         $datosValores = array(
-            'titulo_usuario' => $atributo['titulo_usuario'],
-            'contenido_usuario' => $atributo['contenido_usuario']
-            'fecha_usuario' => $atributo['fecha_usuario']
+            'usuario' => $atributo['usuario'],
+            'passwd_usuario' => $atributo['passwd_usuario']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ADD_usuario_COMPLETO , ÉXITO, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ADD_USUARIO_COMPLETO , ÉXITO, $datosValores);
     }
 
-    function hacerPruebaAñadirusuarioYaExiste($atributo){
+    function hacerPruebaAñadirUsuarioYaExiste($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'usuario_YA_EXISTE'." - ". usuario_YA_EXISTE;
+        $resultadoEsperado = 'USUARIO_YA_EXISTE'." - ". USUARIO_YA_EXISTE;
         $resultadoObtenido = '';
     
-        if(!empty($resultado) && $resultado['code'] == 'usuario_YA_EXISTE'){
-            $resultadoObtenido = 'usuario_YA_EXISTE'." - ". usuario_YA_EXISTE;
+        if(!empty($resultado) && $resultado['code'] == 'USUARIO_YA_EXISTE'){
+            $resultadoObtenido = 'USUARIO_YA_EXISTE'." - ". USUARIO_YA_EXISTE;
         }
 
         $datosValores = array(
-            'titulo_usuario' => $atributo['titulo_usuario'],
-            'contenido_usuario' => $atributo['contenido_usuario']
-            'fecha_usuario' => $atributo['fecha_usuario']
+            'usuario' => $atributo['usuario'],
+            'passwd_usuario' => $atributo['passwd_usuario']
         );
 
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, usuario_YA_EXISTE , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, USUARIO_YA_EXISTE , ERROR, $datosValores);
     }
 
-    function hacerPruebaModificarusuarioOK($atributo){
+    function hacerPruebaModificarUsuarioOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'EDIT_usuario_COMPLETO'." - ". EDIT_usuario_COMPLETO;
+        $resultadoEsperado = 'EDIT_USUARIO_COMPLETO'." - ". EDIT_USUARIO_COMPLETO;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'EDIT_usuario_COMPLETO'){
-            $resultadoObtenido = 'EDIT_usuario_COMPLETO'." - ". EDIT_usuario_COMPLETO;
+        if(!empty($resultado) && $resultado['code'] == 'EDIT_USUARIO_COMPLETO'){
+            $resultadoObtenido = 'EDIT_USUARIO_COMPLETO'." - ". EDIT_USUARIO_COMPLETO;
         }
         $datosValores = array(
-            'titulo_usuario' => $atributo['titulo_usuario'],
-            'contenido_usuario' => $atributo['contenido_usuario']
-            'fecha_usuario' => $atributo['fecha_usuario']
+            'usuario' => $atributo['usuario'],
+            'passwd_usuario' => $atributo['passwd_usuario']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, EDIT_usuario_COMPLETO , ÉXITO, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, EDIT_USUARIO_COMPLETO , ÉXITO, $datosValores);
     }
 
-    function hacerPruebaModificarusuarioNoExiste($atributo){
+    function hacerPruebaModificarUsuarioNoExiste($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'usuario_NO_EXISTE'." - ". usuario_NO_EXISTE;
+        $resultadoEsperado = 'USUARIO_NO_EXISTE'." - ". USUARIO_NO_EXISTE;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'usuario_NO_EXISTE'){
-            $resultadoObtenido = 'usuario_NO_EXISTE'." - ". usuario_NO_EXISTE;
+        if(!empty($resultado) && $resultado['code'] == 'USUARIO_NO_EXISTE'){
+            $resultadoObtenido = 'USUARIO_NO_EXISTE'." - ". USUARIO_NO_EXISTE;
         }
         $datosValores = array(
-            'titulo_usuario' => $atributo['titulo_usuario'],
-            'contenido_usuario' => $atributo['contenido_usuario']
-            'fecha_usuario' => $atributo['fecha_usuario']
+            'usuario' => $atributo['usuario'],
+            'passwd_usuario' => $atributo['passwd_usuario']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, usuario_NO_EXISTE , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, USUARIO_NO_EXISTE , ERROR, $datosValores);
     }
 
-    function hacerPruebaDeleteusuarioOK($atributo){
+    function hacerPruebaDeleteUsuarioOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'DELETE_usuario_COMPLETO'." - ". DELETE_usuario_COMPLETO;
+        $resultadoEsperado = 'DELETE_USUARIO_COMPLETO'." - ". DELETE_USUARIO_COMPLETO;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'DELETE_usuario_COMPLETO'){
-            $resultadoObtenido = 'DELETE_usuario_COMPLETO'." - ". DELETE_usuario_COMPLETO;
+        if(!empty($resultado) && $resultado['code'] == 'DELETE_USUARIO_COMPLETO'){
+            $resultadoObtenido = 'DELETE_USUARIO_COMPLETO'." - ". DELETE_USUARIO_COMPLETO;
         }
         $datosValores = array(
-            'titulo_usuario' => $atributo['titulo_usuario'],
-            'contenido_usuario' => $atributo['contenido_usuario']
-            'fecha_usuario' => $atributo['fecha_usuario']
+            'usuario' => $atributo['usuario'],
+            'passwd_usuario' => $atributo['passwd_usuario']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_usuario_COMPLETO , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_USUARIO_COMPLETO , ERROR, $datosValores);
     }
 
-    function hacerPruebaDeleteusuarioNoExiste($atributo){
+    function hacerPruebaDeleteUsuarioNoExiste($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'usuario_NO_EXISTE'." - ". usuario_NO_EXISTE;
+        $resultadoEsperado = 'USUARIO_NO_EXISTE'." - ". USUARIO_NO_EXISTE;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'usuario_NO_EXISTE'){
-            $resultadoObtenido = 'usuario_NO_EXISTE'." - ". usuario_NO_EXISTE;
+        if(!empty($resultado) && $resultado['code'] == 'USUARIO_NO_EXISTE'){
+            $resultadoObtenido = 'USUARIO_NO_EXISTE'." - ". USUARIO_NO_EXISTE;
         }
         $datosValores = array(
-            'titulo_usuario' => $atributo['titulo_usuario'],
-            'contenido_usuario' => $atributo['contenido_usuario']
-            'fecha_usuario' => $atributo['fecha_usuario']
+            'usuario' => $atributo['usuario'],
+            'passwd_usuario' => $atributo['passwd_usuario']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, usuario_NO_EXISTE , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, USUARIO_NO_EXISTE , ERROR, $datosValores);
     }
 
     function deleteData($clave, $valor) {
