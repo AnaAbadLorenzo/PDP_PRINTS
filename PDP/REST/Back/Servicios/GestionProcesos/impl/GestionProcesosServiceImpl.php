@@ -108,13 +108,12 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
                 $proceso_mapping = new ProcesoMapping();
                 $proceso_mapping->add($procesoDatos);
 
-                $this -> procesarParametrosFormula(); // <-- Aquí procesamos la formula !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+                $this -> procesarParametrosFormula();
                 if($this->proceso->check_aprobacion == 1) {
                     $noticia_mapping = new NoticiaMapping();
                     $datosNoticia = array(
                         'titulo_noticia' => 'Publicación de proceso',
-                        'contenido_noticia' => 'Se ha publicado un nuevo proceso con nombre ' + $this->proceso->nombre_proceso,
+                        'contenido_noticia' => 'Se ha publicado un nuevo proceso con nombre '.$this->proceso->nombre_proceso,
                         'fecha_noticia' => date('Y-m-d')
                     );
                     $noticia_mapping->add($datosNoticia);

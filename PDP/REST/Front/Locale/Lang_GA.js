@@ -331,7 +331,7 @@ arrayGA={
 	'RELLENAR_FORM_PASS' : 'Enche o formulario para recuperala',
 	'RECUPERAR_PASS' : 'Recuperar contrasinal',
 	'ACCEDER_CUENTA' : 'Accede coa túa conta',
-	'MENSAJE_BIENVENIDA' : 'Benvido a Carboon Footprint',
+	'MENSAJE_BIENVENIDA' : 'Benvido a Carbon Footprint',
 	'DATOS_PERSONALES' : 'Datos Persoales',
 	'DATOS_USUARIO' : 'Datos Usuario',
 	'DATOS_EMPRESA' : 'Datos Empresa',

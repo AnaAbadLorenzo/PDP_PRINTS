@@ -336,7 +336,7 @@ arrayES={
 	'RELLENAR_FORM_PASS' : 'Rellene el formulario para recuperarla',
 	'RECUPERAR_PASS' : 'Recuperar contraseña',
 	'ACCEDER_CUENTA' : 'Accede con tu cuenta',
-	'MENSAJE_BIENVENIDA' : 'Bienvenido a Carboon Footprint',
+	'MENSAJE_BIENVENIDA' : 'Bienvenido a Carbon Footprint',
 	'DATOS_PERSONALES' : 'Datos Personales',
 	'DATOS_USUARIO' : 'Datos Usuario',
 	'DATOS_EMPRESA' : 'Datos Empresa',

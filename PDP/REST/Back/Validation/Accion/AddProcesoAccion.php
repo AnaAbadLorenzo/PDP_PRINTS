@@ -20,7 +20,6 @@ class AddProcesoAccion extends ValidacionesBase{
 
 	}
 
-
 	function comprobarAddProceso($datosAddProceso){
 		$this->existeProceso($datosAddProceso);
 		$this->existeIdCategoria($datosAddProceso);

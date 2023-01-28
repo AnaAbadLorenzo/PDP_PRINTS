@@ -3,6 +3,10 @@
     usuario: anita1312
     passwd_usuario: anita
 
+     -- Gestor --
+    usuario: miguel
+    passwd_usuario: miguel 
+
     -- Usuario --
     usuario: fatima
     passwd_usuario: fatima 

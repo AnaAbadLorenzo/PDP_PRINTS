@@ -333,7 +333,7 @@ arrayEN={
 	'RELLENAR_FORM_PASS' : 'Fill the form to recover it',
 	'RECUPERAR_PASS' : 'Recovery password',
 	'ACCEDER_CUENTA' : 'Access with you account',
-	'MENSAJE_BIENVENIDA' : 'Welcome to Carboon Footprint',
+	'MENSAJE_BIENVENIDA' : 'Welcome to Carbon Footprint',
 	'DATOS_PERSONALES' : 'Personal information',
 	'DATOS_USUARIO' : 'User information',
 	'DATOS_EMPRESA' : 'Enterprise information',

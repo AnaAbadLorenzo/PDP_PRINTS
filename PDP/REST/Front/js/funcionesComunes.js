@@ -1422,8 +1422,8 @@ function cargarPermisosSegunEntidad(entidad){
 			cargarPermisosFuncCategoria();
 		break;
 
-		case 'RESPUESTA_POSIBLE' :
-			cargarPermisosFuncRespuestaPosible();
+		case 'PARAMETRO' :
+			cargarPermisosFuncParametro();
 		break;
 
 		case 'PLAN' :

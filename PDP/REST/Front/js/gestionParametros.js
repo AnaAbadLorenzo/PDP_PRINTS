@@ -307,6 +307,8 @@ function construyeSelect(){
             var tr = construyeFila('PARAMETRO', res.resource.listaBusquedas[i]);
             $("#datosParametro").append(tr);
           }
+          var div = createHideShowColumnsWindow({DESCRIPCION_PARAMETRO_COLUMN:2});
+            $("#checkboxColumnas").append(div);
           $("#paginacion").append(textPaginacion);
           setLang(getCookie('lang'));
   
@@ -460,7 +462,8 @@ function construyeSelect(){
             var tr = construyeFila('PARAMETRO', res.resource.listaBusquedas[i]);
             $("#datosParametro").append(tr);
           }
-  
+        var div = createHideShowColumnsWindow({DESCRIPCION_PARAMETRO_COLUMN:2});
+        $("#checkboxColumnas").append(div);
         $("#paginacion").append(textPaginacion);
         setLang(getCookie('lang'));
 
