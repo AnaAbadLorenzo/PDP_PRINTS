@@ -51,12 +51,23 @@ sudo systemctl restart apache2
 echo "Hecho."
 echo ""
 
-echo "--------- Instalando base de datos... ---------"
+echo "--------- Instalando base de datos primaria... ---------"
 echo ""
 
 read -p "Introduce tu usuario MySQL: " usuario
 echo "A continuación se te pedirá la contraseña del usuario especificado."
 sudo mysql -u $usuario -p < /var/www/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints.sql
+echo ""
+
+echo "Hecho."
+echo ""
+
+echo "--------- Instalando base de datos de test... ---------"
+echo ""
+
+read -p "Introduce tu usuario MySQL: " usuario
+echo "A continuación se te pedirá la contraseña del usuario especificado."
+sudo mysql -u $usuario -p < /var/www/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints_test.sql
 echo ""
 
 echo "Hecho."
