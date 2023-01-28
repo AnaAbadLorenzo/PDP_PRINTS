@@ -11,6 +11,7 @@ define('TEST_ATRIBUTOS_RECUPERAR_PASS_OK', 'Los test de atributos para la recupe
 define('TEST_ACCIONES_RECUPERAR_PASS_OK', 'Los test de acciones para para la recuperación de contraseña se han ejecutado correctamente');
 define('TEST_ATRIBUTOS_GESTION_ACCIONES_OK', 'Los test de atributos para la gestión de acciones se han ejecutado correctamente');
 define('TEST_ATRIBUTOS_GESTION_FUNCIONALIDADES_OK', 'Los test de atributos para la gestión de funcionalidades se han ejecutado correctamente');
+define('TEST_ATRIBUTOS_GESTION_NOTICIAS_OK', 'Los test de atributos para la gestión de noticias se han ejecutado correctamente');
 define('TEST_ACCIONES_GESTION_ACCIONES_PASS_OK', 'Los test de acciones para para la gestión de acciones se han ejecutado correctamente');
 
 define('TOKEN_CLAVE_VACIA', 'La clave del token no puede ser vacía');
@@ -23,6 +24,7 @@ define('TOKEN_FALLO_VERIFICACION_SIGN', 'No se ha podido verificar la firma del 
 define('CONEXION_BD_KO', 'No se ha podido establecer conexión con la BD');
 define('SQL_KO', 'La sentencia SQL ha fallado');
 define('TEST_FALLIDOS', 'Los test han fallado');
+
 
 
 //CODIGOS_EXCEPCIONES_ATRIBUTOS 
@@ -94,6 +96,15 @@ define('NOMBRE_ACCION_ALFABETICO_INCORRECTO', 'El nombre de la acción sólo pue
 define('DESCRIPCION_ACCION_VACIO', 'La descripción  de la acción no puede ser vacía');
 define('DESCRIPCION_ACCION_MENOR_QUE_3', 'La descripción de la acción no puede tener menos de 3 caracteres');
 define('DESCRIPCION_ACCION_ALFABETICO_INCORRECTO', 'La descripción de la acción sólo puede contener letras, acentos y espacios');
+
+define('NOMBRE_FUNCIONALIDAD_VACIO', 'El nombre de la funcionalidad no puede ser vacío');
+define('NOMBRE_FUNCIONALIDAD_MENOR_QUE_3', 'El nombre de la funcionalidad no puede tener menos de 3 caracteres');
+define('NOMBRE_FUNCIONALIDAD_MAYOR_QUE_128', 'El nombre de la funcionalidad no puede tener más de 128 caracteres');
+define('NOMBRE_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'El nombre de la funcionalidad sólo puede contener letras');
+
+define('DESCRIPCION_FUNCIONALIDAD_VACIO', 'La descripción  de la funcionalidad no puede ser vacía');
+define('DESCRIPCION_FUNCIONALIDAD_MENOR_QUE_3', 'La descripción de la funcionalidad no puede tener menos de 3 caracteres');
+define('DESCRIPCION_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'La descripción de la funcionalidad sólo puede contener letras, acentos y espacios');
 
 define('NOMBRE_ROL_VACIO', 'El nombre del rol no puede ser vacío');
 define('NOMBRE_ROL_MENOR_QUE_3', 'El nombre del rol no puede tener menos de 3 caracteres');
@@ -206,4 +217,10 @@ define('ADD_PERSONA_COMPLETO', 'La persona se ha insertado correctamente');
 define('EDIT_PERSONA_COMPLETO', 'La persona se ha editado correctamente');
 define('PERSONA_NO_EXISTE', 'La persona no existe');
 define('DELETE_PERSONA_COMPLETO', 'La persona se ha eliminado correctamente');
+
+
+define('ADD_USUARIO_COMPLETO', 'El usuario se ha insertado correctamente');
+define('EDIT_USUARIO_COMPLETO', 'El usuario se ha editado correctamente');
+define('USUARIO_NO_EXISTE', 'El usuario no existe');
+define('DELETE_USUARIO_COMPLETO', 'El usuario se ha eliminado correctamente');
 ?>
