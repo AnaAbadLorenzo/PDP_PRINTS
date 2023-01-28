@@ -29,8 +29,7 @@ function existeDNI($datosEditPersona){
 		if(!sizeof($resultado) == 0) {
 			return true;
 		}else{
-			$this->respuesta = 'DNI_NO_EXISTE';
-			//throw new DNINoExisteException('DNI_NO_EXISTE');
+			$this->respuesta = 'PERSONA_NO_EXISTE';
 		}}
 		
 	

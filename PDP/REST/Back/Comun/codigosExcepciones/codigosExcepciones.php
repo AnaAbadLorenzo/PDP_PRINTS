@@ -76,9 +76,15 @@ define('TELEFONO_PERSONA_NUMERICO_INCORRECTO', 'El teléfono de la persona solo 
 define('USUARIO_NO_ENCONTRADO', 'El usuario no existe');
 define('PASSWD_USUARIO_NO_COINCIDE', 'La contraseña introducida no coincide con la del usuario');
 
+define('ADD_USUARIO_COMPLETO', 'El usuario se ha insertado correctamente');
+define('EDIT_PASS_USUARIO_COMPLETO', 'La contraseña del usuario se ha editado correctamente');
+define('EDIT_USUARIO_COMPLETO', 'El rol del usuario se ha editado correctamente');
+define('USUARIO_NO_EXISTE', 'El usuario no existe');
 define('USUARIO_YA_EXISTE', 'El usuario ya existe');
+define('DELETE_USUARIO_COMPLETO', 'El usuario ha sido eliminado correctamente');
 define('PERSONA_YA_EXISTE', 'La persona ya existe');
 define('DNI_NO_EXISTE', 'El DNI no existe');
+define('REACTIVAR_USUARIO_CORRECTO', 'El usuario se ha reactivado correctamente');
 
 define('NOMBRE_ACCION_VACIO', 'El nombre de la acción no puede ser vacío');
 define('NOMBRE_ACCION_MENOR_QUE_3', 'El nombre de la acción no puede tener menos de 3 caracteres');
@@ -100,7 +106,7 @@ define('DESCRIPCION_ROL_ALFABETICO_INCORRECTO', 'La descripción del rol sólo p
 
 define('NOMBRE_CATEGORIA_VACIO', 'El nombre de la categoria no puede ser vacío');
 define('NOMBRE_CATEGORIA_MENOR_QUE_3', 'El nombre de la categoria no puede tener menos de 3 caracteres');
-define('NOMBRE_CATEGORIA_MAYOR_QUE_48', 'El nombre de la categoria no puede tener más de 48 caracteres');
+define('NOMBRE_CATEGORIA_MAYOR_QUE_128', 'El nombre de la categoria no puede tener más de 128 caracteres');
 define('NOMBRE_CATEGORIA_ALFABETICO_INCORRECTO', 'El nombre de la categoria sólo puede contener letras');
 
 define('DESCRIPCION_CATEGORIA_VACIO', 'La descripción  de la categoria no puede ser vacía');
@@ -152,13 +158,13 @@ define('NOMBRE_PROCESO_MENOR_QUE_3', 'El nombre del proceso no puede tener menos
 define('NOMBRE_PROCESO_MAYOR_QUE_48', 'El nombre del proceso no puede tener más de 48 caracteres');
 define('NOMBRE_PROCESO_ALFANUMERO_INCORRECTO', 'El nombre de la funcionalidadno acepta cualquier tipo de caracter');
 
-define('HUELLA_DE_CARBONO_VACIO', 'La huella de carbono no puede ser vacía');
+define('CALCULO_HUELLA_CARBONO_VACIO', 'La huella de carbono no puede ser vacía');
 define('CALCULO_HUELLA_CARBONO_MAYOR_QUE_80', 'El  calculo de la huella no puede tener más de 80 caracteres');
 define('CALCULO_HUELLA_CARBONO_INCORRECTO', 'El calculo de la huella de carbono no acepta cualquier tipo de caracter');
 
 
 define('FECHA_PROCESO_USUARIO_VACIO', 'La fecha del proceso de usuario no puede ser vacía');
-define('FECHA_PROCESO_USUARIO_MENOR_QUE_10', 'La fecha del proceso usuario no puede tener menos de 10 caracteres');
+define('FECHA_PROCESO_USUARIO_MENOR_10', 'La fecha del proceso usuario no puede tener menos de 10 caracteres');
 define('FECHA_PROCESO_USUARIO_MAYOR_QUE_10', 'La fecha del proceso usuario no puede tener más de 10 caracteres');
 define('FECHA_PROCESO_USUARIO_FECHA_INCORRECTO', 'La fecha del proceso usuario solo puede tener números y dos /');
 
@@ -185,12 +191,16 @@ define('FUNCIONALIDAD_YA_EXISTE', 'La funcionalidad ya existe');
 define('EDIT_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha editado correctamente');
 define('FUNCIONALIDAD_NO_EXISTE', 'La funcionalidad no existe');
 define('DELETE_FUNCIONALIDAD_COMPLETO', 'La funcionalidad se ha eliminado correctamente');
+define('REACTIVAR_FUNCIONALIDAD_CORRECTO', 'La funcionalidad se ha reactivado correctamente');
+define('FUNCIONALIDAD_TIENE_PERMISOS_ASOCIADOS', 'La funcionalidad no puede eliminarse porque tiene permisos asociados');
 
 define('ADD_ROL_COMPLETO', 'El rol se ha insertado correctamente');
 define('ROL_YA_EXISTE', 'El rol ya existe');
 define('EDIT_ROL_COMPLETO', 'El rol se ha editado correctamente');
 define('ROL_NO_EXISTE', 'El rol no existe');
 define('DELETE_ROL_COMPLETO', 'El rol se ha eliminado correctamente');
+define('REACTIVAR_ROL_CORRECTO', 'El rol se ha reactivado correctamente');
+define('ROL_TIENE_PERMISOS_ASOCIADOS', 'El rol no se puede borrar porque está asociado a una acción y a una funcionalidad');
 
 define('ADD_PERSONA_COMPLETO', 'La persona se ha insertado correctamente');
 define('EDIT_PERSONA_COMPLETO', 'La persona se ha editado correctamente');

@@ -264,6 +264,7 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
 
         $proceso_mapping = new ProcesoMapping();
         $proceso_mapping->getVersion($procesoV);
+        
         $version = $proceso_mapping->feedback['resource']['version_proceso'];
 
         $proceso_mapping->searchById($procesoV);
@@ -379,9 +380,9 @@ class GestionProcesosServiceImpl extends ServiceBase implements GestionProcesosS
         $proceso_usuario_mapping = new ProcesoUsuarioMapping;
 
         $respuesta = $proceso_usuario_mapping -> conseguirIdsAsociadosAProceso($datos_proceso)['resource'];
-        $ids_proceso_usuario = [];
+
         foreach ($respuesta as $id_proceso_usuario) {
-            $proceso_usuario_mapping->limpiarHuellaCarbono(['id_proceso_usuario'=>$id_proceso_usuario]);
+            $proceso_usuario_mapping->limpiarHuellaCarbono($id_proceso_usuario);
         }
     }
 

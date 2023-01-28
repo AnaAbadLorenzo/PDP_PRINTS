@@ -24,6 +24,7 @@ class TestGestionRoles{
         $_POST['nombre_rol'] = 'rolprueba';
         $_POST['descripcion_rol'] = 'Descripcion del rol';
         $_POST['borrado_rol'] = 0;
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaAñadirRolOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -33,18 +34,20 @@ class TestGestionRoles{
         $_POST['action'] = $action;
         $_POST['nombre_rol'] = 'rolprueba';
         $_POST['descripcion_rol'] = 'Descripcion del rol';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaAñadirRolYaExiste($_POST);
         array_push($pruebas, $resultadoTest);
-
+        
         //MODIFICAR_ROL_OK
         $action = 'edit';
 
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_rol'] = 4;
-        $_POST['nombre_rol'] = 'rolprueba';
+        $_POST['id_rol'] = 3;
+        $_POST['nombre_rol'] = 'rolModificar';
         $_POST['descripcion_rol'] = 'Descripcion del rol modificada';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaModificarRolOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -52,9 +55,10 @@ class TestGestionRoles{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_rol'] = 1;
+        $_POST['id_rol'] = 9999999;
         $_POST['nombre_rol'] = 'Externo';
         $_POST['descripcion_rol'] = 'Existe';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaModificarRolNoExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -64,29 +68,49 @@ class TestGestionRoles{
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_rol'] = 4;
-         $_POST['nombre_rol'] = 'rolprueba';
+         $_POST['id_rol'] = 3;
+         $_POST['nombre_rol'] = 'rolModificar';
          $_POST['descripcion_rol'] = 'Descripcion del rol modificada';
+         $_POST['test'] = 'testing';
          $resultadoTest = $this->hacerPruebaDeleteRolOK($_POST);
          array_push($pruebas, $resultadoTest);
 
-         //DELETE_ROL_NO_EXISTE
+         //DELETE_ROL_ASOCIADO_PERMISOS
          $action = 'delete';
+
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 1;
-         $_POST['nombre_rol'] = 'Externo';
-         $_POST['descripcion_rol'] = 'Existe';
-         $resultadoTest = $this->hacerPruebaDeleteRolNoExiste($_POST);
+         $_POST['id_rol'] = 4;
+         $_POST['nombre_rol'] = 'rolPermisos';
+         $_POST['descripcion_rol'] = 'Descripcion del rol asociado a permisos';
+         $_POST['test'] = 'testing';
+         $resultadoTest = $this->hacerPruebaDeleteRolAsociadoPermisos($_POST);
          array_push($pruebas, $resultadoTest);
-         
+
+
+
+        //REACTIVAR_ROL_OK
+        $action = 'reactivar';
+
+         $_POST = NULL;
+         $_POST['controlador'] = $controlador;
+         $_POST['action'] = $action;
+         $_POST['id_rol'] = 3;
+         $_POST['nombre_rol'] = 'rolModificar';
+         $_POST['descripcion_rol'] = 'Descripcion del rol modificada';
+         $_POST['test'] = 'testing';
+         $resultadoTest = $this->hacerPruebaReactivarRolOK($_POST);
+         array_push($pruebas, $resultadoTest);
+
+
         $this->deleteData('nombre_rol', 'rolprueba');
         return $pruebas;
 
+
     }
 
-    function hacerPruebaAñadirRolDOK($atributo){
+    function hacerPruebaAñadirRolOK($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
         $resultadoEsperado = 'ADD_ROL_COMPLETO'." - ". ADD_ROL_COMPLETO;
         $resultadoObtenido = '';
@@ -159,25 +183,40 @@ class TestGestionRoles{
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_ROL_COMPLETO , ERROR, $datosValores);
     }
 
-    function hacerPruebaDeletRrolNoExiste($atributo){
+    function hacerPruebaDeleteRolAsociadoPermisos($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'ROL_NO_EXISTE'." - ". ROL_NO_EXISTE;
+        $resultadoEsperado = 'ROL_TIENE_PERMISOS_ASOCIADOS'." - ". ROL_TIENE_PERMISOS_ASOCIADOS;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'ROL_NO_EXISTE'){
-            $resultadoObtenido = 'ROL_NO_EXISTE'." - ". ROL_NO_EXISTE;
+        if(!empty($resultado) && $resultado['code'] == 'ROL_TIENE_PERMISOS_ASOCIADOS'){
+            $resultadoObtenido = 'ROL_TIENE_PERMISOS_ASOCIADOS'." - ". ROL_TIENE_PERMISOS_ASOCIADOS;
         }
         $datosValores = array(
             'nombre_rol' => $atributo['nombre_rol'],
             'descripcion_rol' => $atributo['descripcion_rol']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ROL_NO_EXISTE , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ROL_TIENE_PERMISOS_ASOCIADOS , ERROR, $datosValores);
+    }
+
+    function hacerPruebaReactivarRolOK($atributo){
+        $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
+        $resultadoEsperado = 'REACTIVAR_ROL_CORRECTO'." - ". REACTIVAR_ROL_CORRECTO;
+        $resultadoObtenido = '';
+        if(!empty($resultado) && $resultado['code'] == 'REACTIVAR_ROL_CORRECTO'){
+            $resultadoObtenido = 'REACTIVAR_ROL_CORRECTO'." - ". REACTIVAR_ROL_CORRECTO;
+        }
+        $datosValores = array(
+            'nombre_rol' => $atributo['nombre_rol'],
+            'descripcion_rol' => $atributo['descripcion_rol']
+        );
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, REACTIVAR_ROL_CORRECTO , ERROR, $datosValores);
     }
 
     function deleteData($clave, $valor) {
         $_POST = NULL;
-        $_POST['tabla'] = 'accion';
+        $_POST['tabla'] = 'rol';
         $_POST['clave'] = $clave;
         $_POST['valor'] = $valor;
+        $_POST['test'] = 'testing';
         
         $this->conexionesBDTest->pruebaTesting('delete', $_POST);
     }

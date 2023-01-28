@@ -27,17 +27,17 @@ class ConexionesBDTest extends MappingBase {
     }
 
     function HTTPResponse($cliente, $parametrosPeticion) {
-    
         curl_setopt($cliente, CURLOPT_URL, urlRest);
         curl_setopt($cliente, CURLOPT_HEADER, false);
         curl_setopt($cliente, CURLOPT_HTTPHEADER, $this->token);
         curl_setopt($cliente, CURLOPT_POST, true);
         curl_setopt($cliente, CURLOPT_POSTFIELDS, $parametrosPeticion);
         curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
 
         $resultado = curl_exec($cliente);
         $codigoHTTP = curl_getinfo($cliente, CURLINFO_HTTP_CODE);
-
+      
         if (curl_errno($cliente)) { 
             print curl_error($cliente); 
          } 
@@ -75,6 +75,9 @@ class ConexionesBDTest extends MappingBase {
             break;
             case 'delete':
                 $respuesta = $this->deleteFromTest($peticion);
+            break;
+            case 'search':
+                $respuesta = $this->searchFromTest($peticion);
             break;
             default:
                 $respuesta = $this->HTTPResponse($this->conexion, $peticion);

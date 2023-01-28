@@ -7,6 +7,7 @@ class ServiceBase{
 
 	protected $modelo;
 	protected $clase_validacion;
+	protected $entidad;
 
 	protected $log_excepciones;
 
@@ -68,11 +69,9 @@ class ServiceBase{
 	}
 
 	function verificarToken(){
-        $tokenUsuario = '';	
         $requestHeaders = apache_request_headers();
-        $tokenUsuario = $requestHeaders['Authorization'];
        
-        if(!empty($tokenUsuario)){
+        if(isset($requestHeaders['Authorization']) && !empty($requestHeaders['Authorization'])){
             return true;
         }else{
             return 'TOKEN_USUARIO_INCORRECTO';

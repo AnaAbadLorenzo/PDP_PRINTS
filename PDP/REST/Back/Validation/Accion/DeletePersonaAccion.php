@@ -29,7 +29,7 @@ function existeDNI($datosDeletePersona){
 		if(!sizeof($resultado) == 0) {
 			return true;
 		}else{
-			$this->respuesta = 'DNI_NO_EXISTE';
+			$this->respuesta = 'PERSONA_NO_EXISTE';
 }}
 
 function personaNoTieneUsuario($datos) {

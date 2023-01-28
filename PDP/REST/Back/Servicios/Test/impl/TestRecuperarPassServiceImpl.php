@@ -1,7 +1,7 @@
 <?php
 
-include_once './Test/Atributos/TestUsuario.php';
-include_once './Test/Atributos/TestEmailPersona.php';
+include_once './Test/Atributos/Usuario/TestUsuario.php';
+include_once './Test/Atributos/Persona/TestEmailPersona.php';
 include_once './Test/Accion/TestRecuperarPass.php';
 include_once './Servicios/Test/TestRecuperarPassService.php';
 

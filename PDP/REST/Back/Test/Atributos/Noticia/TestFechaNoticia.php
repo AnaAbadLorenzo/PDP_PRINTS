@@ -42,7 +42,7 @@ class TestFechaNoticia extends Test{
         array_push($pruebas, $resultadoTest);
     
         //FECHA_NOTICIA_CONTIENE_ESPACIOS
-        $_POST['fecha_noticia'] = '10/ /1985';
+        $_POST['fecha_noticia'] = ' //1985';
         $resultadoTest = $this->hacerPruebaFechaNoticiaEspacios($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -84,31 +84,31 @@ class TestFechaNoticia extends Test{
     function hacerPruebaFechaNoticiaEnhe($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoEnhe($atributo['fecha_noticia'], 'gestNoticias', 'fecha_noticia');
-        $resultadoEsperado = 'FECHA_NOTICIA_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
+        $resultadoEsperado = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
         
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, FECHA_NOTICIA_INCORRECTO, ÉXITO,  $atributo['fecha_noticia'], 'fecha_noticia');
     }
 
     function hacerPruebaFechaNoticiaAcentos($atributo){
         $funcionesComunes = new FuncionesComunes();
-        $resultadoObtenido = $funcionesComunes->comprobarAtributoAcentos($atributo['fecha_noticia'], 'gest_noticias', 'fecha_noticia');
-        $resultadoEsperado = 'FECHA_NOTICIA_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoAcentos($atributo['fecha_noticia'], 'gestNoticias', 'fecha_noticia');
+        $resultadoEsperado = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
     
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, ACENTOS, ERROR, $atributo['fecha_noticia'], 'fecha_noticia');
     }
     
     function hacerPruebaFechaNoticiaCaracteresEspeciales($atributo){
         $funcionesComunes = new FuncionesComunes();
-        $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['fecha_noticia'], 'gest_noticias', 'fecha_noticia');
-        $resultadoEsperado = 'FECHA_NOTICIA_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['fecha_noticia'], 'gestNoticias', 'fecha_noticia');
+        $resultadoEsperado = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
     
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, CARACTERES_ESPECIALES, ERROR, $atributo['fecha_noticia'], 'fecha_noticia');
     }
     
     function hacerPruebaFechaNoticiaEspacios($atributo){
         $funcionesComunes = new FuncionesComunes();
-        $resultadoObtenido = $funcionesComunes->comprobarAtributoEspacios($atributo['fecha_noticia'], 'gest_noticias', 'fecha_noticia');
-        $resultadoEsperado = 'FECHA_NOTICIA_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoEspacios($atributo['fecha_noticia'], 'gestNoticias', 'fecha_noticia');
+        $resultadoEsperado = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'." - ".FECHA_NOTICIA_INCORRECTO;
     
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, ESPACIOS, ERROR,  $atributo['fecha_noticia'], 'fecha_noticia');
     }

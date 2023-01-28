@@ -157,6 +157,14 @@ abstract class MappingBase{
         $this->execute_single_query();
 	}
 
+	function searchFromTest($peticion) {
+		$this->connection();
+		$this->query = "SELECT MAX(id_noticia) FROM `".$peticion['tabla']. "`";
+		$this->stmt = $this->conn->prepare($this->query);
+        $this->get_one_result_from_query();
+		return $this->feedback;
+	}
+
 	function obtenerDatosClaveForanea($tabla){
 		$this->query = "SELECT * FROM ".$tabla;
 		$this->stmt = $this->conn->prepare($this->query);

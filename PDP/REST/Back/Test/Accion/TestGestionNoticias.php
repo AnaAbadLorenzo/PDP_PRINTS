@@ -23,7 +23,8 @@ class TestGestionNoticias{
         $_POST['action'] = $action;
         $_POST['titulo_noticia'] = 'noticiaprueba';
         $_POST['contenido_noticia'] = 'Esto es un posible contenido de la noticia';
-        $_POST['fecha_noticia'] = '01/01/2023';
+        $_POST['fecha_noticia'] = '2023-01-O1';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaAñadirNoticiaOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -33,7 +34,8 @@ class TestGestionNoticias{
         $_POST['action'] = $action;
         $_POST['titulo_noticia'] = 'noticiaprueba';
         $_POST['contenido_noticia'] = 'Esto es un posible contenido de la noticia';
-        $_POST['fecha_noticia'] = '01/01/2023';
+        $_POST['fecha_noticia'] = '2023-01-O1';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaAñadirNoticiaYaExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -43,10 +45,11 @@ class TestGestionNoticias{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 2;
-        $_POST['titulo_noticia'] = 'noticiaprueba';
+        $_POST['id_noticia'] = 2;
+        $_POST['titulo_noticia'] = 'noticiaModificar';
         $_POST['contenido_noticia'] = 'Esto es una descripcion modificada para pruebas';
-        $_POST['fecha_noticia'] = '01/01/2023';
+        $_POST['fecha_noticia'] = '2023-01-O1';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaModificarNoticiaOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -54,41 +57,31 @@ class TestGestionNoticias{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 1;
+        $_POST['id_noticia'] = 9999;
         $_POST['titulo_noticia'] = 'noticiaInexistente';
         $_POST['contenido_noticia'] = 'Esto es una descripcion modificada para pruebas';
-        $_POST['fecha_noticia'] = '01/01/2023';
+        $_POST['fecha_noticia'] = '2023-01-O1';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaModificarNoticiaNoExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
+        $id = $this->searchId();
          //DELETE_NOTICIA_OK
          $action = 'delete';
 
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 2;
+         $_POST['id_noticia'] = $id;
          $_POST['titulo_noticia'] = 'noticiaprueba';
-         $_POST['contenido_noticia'] = 'Esto es una descripcion modificada para pruebas';
-         $_POST['fecha_noticia'] = '01/01/2023';
+         $_POST['contenido_noticia'] = 'Esto es un posible contenido de la noticia';
+         $_POST['fecha_noticia'] = '2023-01-O1';
+         $_POST['test'] = 'testing';
          $resultadoTest = $this->hacerPruebaDeleteNoticiaOK($_POST);
          array_push($pruebas, $resultadoTest);
 
-         //DELETE_NOTICIA_NO_EXISTE
-         $action = 'delete';
-         $_POST = NULL;
-         $_POST['controlador'] = $controlador;
-         $_POST['action'] = $action;
-         $_POST['id_accion'] = 1;
-         $_POST['titulo_noticia'] = 'noticiaInexistente';
-         $_POST['contenido_noticia'] = 'Esto es una descripcion modificada para pruebas';
-         $_POST['fecha_noticia'] = '01/01/2023';
-         $resultadoTest = $this->hacerPruebaDeleteNoticiaNoExiste($_POST);
-         array_push($pruebas, $resultadoTest);
-         
-        $this->deleteData('titulo_noticia', 'noticiaprueba');
-        return $pruebas;
-
+         $this->deleteData('titulo_noticia', 'noticiaprueba');
+         return $pruebas;
     }
 
     function hacerPruebaAñadirNoticiaOK($atributo){
@@ -100,7 +93,7 @@ class TestGestionNoticias{
         }
         $datosValores = array(
             'titulo_noticia' => $atributo['titulo_noticia'],
-            'contenido_noticia' => $atributo['contenido_noticia']
+            'contenido_noticia' => $atributo['contenido_noticia'],
             'fecha_noticia' => $atributo['fecha_noticia']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ADD_NOTICIA_COMPLETO , ÉXITO, $datosValores);
@@ -117,7 +110,7 @@ class TestGestionNoticias{
 
         $datosValores = array(
             'titulo_noticia' => $atributo['titulo_noticia'],
-            'contenido_noticia' => $atributo['contenido_noticia']
+            'contenido_noticia' => $atributo['contenido_noticia'],
             'fecha_noticia' => $atributo['fecha_noticia']
         );
 
@@ -133,7 +126,7 @@ class TestGestionNoticias{
         }
         $datosValores = array(
             'titulo_noticia' => $atributo['titulo_noticia'],
-            'contenido_noticia' => $atributo['contenido_noticia']
+            'contenido_noticia' => $atributo['contenido_noticia'],
             'fecha_noticia' => $atributo['fecha_noticia']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, EDIT_NOTICIA_COMPLETO , ÉXITO, $datosValores);
@@ -148,7 +141,7 @@ class TestGestionNoticias{
         }
         $datosValores = array(
             'titulo_noticia' => $atributo['titulo_noticia'],
-            'contenido_noticia' => $atributo['contenido_noticia']
+            'contenido_noticia' => $atributo['contenido_noticia'],
             'fecha_noticia' => $atributo['fecha_noticia']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, NOTICIA_NO_EXISTE , ERROR, $datosValores);
@@ -163,10 +156,10 @@ class TestGestionNoticias{
         }
         $datosValores = array(
             'titulo_noticia' => $atributo['titulo_noticia'],
-            'contenido_noticia' => $atributo['contenido_noticia']
+            'contenido_noticia' => $atributo['contenido_noticia'],
             'fecha_noticia' => $atributo['fecha_noticia']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_NOTICIA_COMPLETO , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_NOTICIA_COMPLETO , ÉXITO, $datosValores);
     }
 
     function hacerPruebaDeleteNoticiaNoExiste($atributo){
@@ -178,7 +171,7 @@ class TestGestionNoticias{
         }
         $datosValores = array(
             'titulo_noticia' => $atributo['titulo_noticia'],
-            'contenido_noticia' => $atributo['contenido_noticia']
+            'contenido_noticia' => $atributo['contenido_noticia'],
             'fecha_noticia' => $atributo['fecha_noticia']
         );
         return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, NOTICIA_NO_EXISTE , ERROR, $datosValores);
@@ -186,11 +179,21 @@ class TestGestionNoticias{
 
     function deleteData($clave, $valor) {
         $_POST = NULL;
-        $_POST['tabla'] = 'accion';
+        $_POST['tabla'] = 'funcionalidad';
         $_POST['clave'] = $clave;
         $_POST['valor'] = $valor;
-        
+        $_POST['test'] = 'testing';
+
         $this->conexionesBDTest->pruebaTesting('delete', $_POST);
+    }
+
+    function searchId() {
+        $_POST = NULL;
+        $_POST['tabla'] = 'noticia';
+        $_POST['test'] = 'testing';
+
+        $result = $this->conexionesBDTest->pruebaTesting('search', $_POST);
+        return $result['resource']['MAX(id_noticia)'];
     }
 }
 

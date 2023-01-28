@@ -73,74 +73,60 @@ function obtenerValor(valor, atributos, entidad){
 
 		switch(entidad){
 			case 'Login':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.usuario) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.passwdUsuario) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.usuario) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.passwd_usuario) +  '"';
 			break;
 			case 'RecuperarPass':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.emailP) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.usuario) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.email_usuario) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.usuario) +  '"';
 			break;
 			case 'Registrar':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombreP) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.apellidosP) 
-				      + '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.fechaNacP) + '", "' + atributos[3] + '" : "' + convertirCaracteres(valor.telefonoEmpresa)
-				      + '", "' + atributos[4] + '" : "' + convertirCaracteres(valor.nombreEmpresa) + '", "' + atributos[5] + '" : "' + convertirCaracteres(valor.direccionP) 
-							+ '", "' + atributos[6] + '" : "' + convertirCaracteres(valor.emailP) + '", "' + atributos[7] + '" : "' + convertirCaracteres(valor.cifEmpresa) 
-							+ '", "' + atributos[8] + '" : "' + convertirCaracteres(valor.direccionEmpresa)	+ '", "' + atributos[9] + '" : "' + convertirCaracteres(valor.seleccionarEmpresa)
-							+ '", "' + atributos[10] + '" : "' + convertirCaracteres(valor.telefonoP) + '", "' + atributos[11] + '" : "' + convertirCaracteres(valor.usuario)
-							+ '", "' + atributos[12] + '" : "' + convertirCaracteres(valor.dniP) + '", "' + atributos[13] + '" : "' + convertirCaracteres(valor.passwdUsuario)
-							+ '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombre_persona) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.apellidos_persona) 
+				      		+ '", "' + atributos[2] + '" : "' + valor.fecha_nac_persona + '", "' + atributos[3] + '" : "' + convertirCaracteres(valor.direccion_persona) 
+							+ '", "' + atributos[4] + '" : "' + convertirCaracteres(valor.email_persona) + '", "' + atributos[5] + '" : "' + valor.telefono_persona
+							+ '", "' + atributos[6] + '" : "' + convertirCaracteres(valor.usuario)+ '", "' + atributos[7] + '" : "' + convertirCaracteres(valor.dni_persona) 
+							+ '", "' + atributos[8] + '" : "' + convertirCaracteres(valor.passwd_usuario) + '"';
 			break;
 			case 'Rol':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.rolDescription) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.rolName) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.descripcion_rol) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombre_rol) +  '"';
 			break;
 
 			case 'Funcionalidad':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.descripFuncionalidad) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombreFuncionalidad) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.descripcion_funcionalidad) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombre_funcionalidad) +  '"';
 			break;
 
 			case 'Accion':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.descripAccion) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombreAccion) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.descripcion_accion) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombre_accion) +  '"';
 			break;
 
 			case 'Usuario':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.dniUsuario) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.usuario) +  '"' 
-				      + '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.passwdUsuario) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.usuario) +  '"' 
+				      + '", "' + atributos[1] + '" : "' + valor.passwd_usuario +  '"';
 			break;
 
 			case 'Noticia':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.tituloNoticia) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.textoNoticia) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.titulo_noticia) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.contenido_noticia) +  '"';
 			break;
 
 			case 'Persona':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.dniP) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombreP) 
-							+ '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.apellidosP) + '", "' + atributos[3] + '" : "' + convertirCaracteres(valor.fechaNacP)
-							+ '", "' + atributos[4] + '" : "' + convertirCaracteres(valor.direccionP) +  '", "' + atributos[4] + '" : "' + convertirCaracteres(valor.emailP) 
-							+ '", "' + atributos[5] + '" : "' + convertirCaracteres(valor.telefonoP) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.dni_persona) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombre_persona) 
+							+ '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.apellidos_persona) + '", "' + atributos[3] + '" : "' + convertirCaracteres(valor.fecha_nac_persona)
+							+ '", "' + atributos[4] + '" : "' + convertirCaracteres(valor.direccion_persona) +  '", "' + atributos[5] + '" : "' + convertirCaracteres(valor.email_persona) 
+							+ '", "' + atributos[6] + '" : "' + valor.telefono_persona +  '"';
 			break;
 
-			case 'Empresa':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.cifEmpresa) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.nombreEmpresa) 
-				      +  '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.direccionEmpresa) + '", "' + atributos[3] + '" : "' + convertirCaracteres(valor.telefonoEmpresa) + '"';
+			case 'Categoria':
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombre_categoria) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.descripcion_categoria) +  '"'
+								+ atributos[2] + '" : "' + convertirCaracteres(valor.dni_responsable) +  '"'  + atributos[3] + '" : "' + convertirCaracteres(valor.id_padre_categoria) +  '"'
+								+ atributos[4] + '" : "' + convertirCaracteres(valor.dni_usuario) +  '"';
 			break;
 
-			case 'Objetivo':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombreObjetivo) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.descripObjetivo) +  '"';
+			case 'Parametro':
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.parametro__formula) +  '"'  + atributos[1] + '" : "' + convertirCaracteres(valor.descripcion_parametro) +  '"';
 			break;
 
-			case 'Respuestas Posibles':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.textoRespuesta) +  '"';
-			break;
-
-			case 'Plan':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombrePlan) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.descripPlan) +  '"' 
-				      + '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.fechaPlan) +  '"';
-			break;
-			case 'Procedimiento':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombreProcedimiento) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.descripProcedimiento) +  '"' 
-				      + '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.fechaProcedimiento) + '", "' + atributos[3] + '" : "' + convertirCaracteres(valor.checkUsuario) + '"';
-			break;
 
 			case 'Proceso':
-				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombreProceso) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.descripProceso) +  '"' 
-				      + '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.fechaProceso) +  '"';
+				resultadoValor = '"' + atributos[0] + '" : "' + convertirCaracteres(valor.nombre_proceso) + '", "' + atributos[1] + '" : "' + convertirCaracteres(valor.descripcion_proceso) +  '"' 
+				      + '", "' + atributos[2] + '" : "' + convertirCaracteres(valor.fecha_proceso) +  '"';
 			break;
 		}
 
@@ -178,8 +164,11 @@ function cargarTablasTest(datos, idCabecera, idCuerpo, tipoTest, atributosValor,
 			trCabecera = cabeceraTablaAtributosTest();
 
 			for (var i = 0; i < datos.length; i++){
-				var tr = cuerpoTablaAtributosTest(datos[i]);
-				$("#" + idCuerpo).append(tr);
+				var arrayDato = datos[i]
+				for(var j = 0; j<arrayDato.length; j++){
+					var tr = cuerpoTablaAtributosTest(arrayDato[j]);
+					$("#" + idCuerpo).append(tr);
+				}
 			} 
 		break;
 	}

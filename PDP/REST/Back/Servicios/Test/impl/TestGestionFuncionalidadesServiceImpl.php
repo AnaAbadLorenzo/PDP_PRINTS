@@ -1,8 +1,8 @@
 <?php
 
-include_once './Test/Atributos/TestNombreFuncionalidad.php';
-include_once './Test/Atributos/TestDescripcionFuncionalidad.php';
-include_once './Test/Accion/TestLogin.php';
+include_once './Test/Atributos/Funcionalidad/TestNombreFuncionalidad.php';
+include_once './Test/Atributos/Funcionalidad/TestDescripcionFuncionalidad.php';
+include_once './Test/Accion/TestGestionFuncionalidades.php';
 include_once './Servicios/Test/TestGestionFuncionalidadesService.php';
 
 class TestGestionFuncionalidadesServiceImpl implements TestGestionFuncionalidadesService {
@@ -15,6 +15,7 @@ class TestGestionFuncionalidadesServiceImpl implements TestGestionFuncionalidade
     {
         $this->testNombreFuncionalidad = new TestNombreFuncionalidad();
         $this->testDescripcionFuncionalidad = new TestDescripcionFuncionalidad();
+        $this->testFuncionalidad = new TestGestionFuncionalidades();
     }
     function testAtributoNombreFuncionalidad() {
         $respuesta = '';
@@ -29,6 +30,16 @@ class TestGestionFuncionalidadesServiceImpl implements TestGestionFuncionalidade
     function testAtributoDescripcionFuncionalidad(){
         $respuesta = '';
         $respuesta = $this->testDescripcionFuncionalidad->testAtributoDescripcionFuncionalidad();
+
+        if(empty($respuesta)){
+            $respuesta = 'TEST_FALLIDOS';
+        }
+        return $respuesta;
+    }
+
+    function testAccionGestionFuncionalidades(){
+        $respuesta = '';
+        $respuesta = $this->testFuncionalidad->testFuncionalidadesGestionFuncionalidad();
 
         if(empty($respuesta)){
             $respuesta = 'TEST_FALLIDOS';

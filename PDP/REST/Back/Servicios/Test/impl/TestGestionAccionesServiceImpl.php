@@ -1,7 +1,7 @@
 <?php
 
-include_once './Test/Atributos/TestNombreAccion.php';
-include_once './Test/Atributos/TestDescripcionAccion.php';
+include_once './Test/Atributos/Accion/TestNombreAccion.php';
+include_once './Test/Atributos/Accion/TestDescripcionAccion.php';
 include_once './Test/Accion/TestGestionAcciones.php';
 include_once './Servicios/Test/TestGestionAccionesService.php';
 

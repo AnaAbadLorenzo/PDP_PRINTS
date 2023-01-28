@@ -98,10 +98,10 @@ class FuncionesComunes {
                         break;
                     }
                 break;
-                case: 'gestParametros':
+                case 'gestParametros':
                     switch($nombreAtributo){
-                        case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORMULA_VACIO'. " - ". PARAMETRO_FORUMLA_VACIO;
+                        case'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORMULA_VACIO'. " - ". PARAMETRO_FORMULA_VACIO;
                         break; 
                         case 'descripcion_parametro':
                             $mensaje = 'DESCRIPCION_PARAMETRO_VACIO'. " - ". DESCRIPCION_PARAMETRO_VACIO;
@@ -234,7 +234,7 @@ class FuncionesComunes {
                         break;
                         case 'fecha_noticia':
                             $mensaje = 'FECHA_NOTICIA_MENOR_QUE_10'. " - ". FECHA_NOTICIA_MENOR_QUE_10;
-                        break:
+                        break;
                     }
                 case 'gestParametros':
                     switch($nombreAtributo){
@@ -316,7 +316,7 @@ class FuncionesComunes {
                 case 'gestCategorias':
                     switch($nombreAtributo){
                         case 'nombre_categoria':
-                            $mensaje = 'NOMBRE_CATEGORIA_MAYOR_QUE_48'. " - ". NOMBRE_CATEGORIA_MAYOR_QUE_48;
+                            $mensaje = 'NOMBRE_CATEGORIA_MAYOR_QUE_128'. " - ". NOMBRE_CATEGORIA_MAYOR_QUE_128;
                         break;
                         case 'dni_responsable':
                             $mensaje = 'DNI_RESPONSABLE_MAYOR_QUE_9'. " - ". DNI_RESPONSABLE_MAYOR_QUE_9;
@@ -347,10 +347,10 @@ class FuncionesComunes {
                         break;
                     }
                 break;
-                case: 'gestParametros':
+                case 'gestParametros':
                     switch($nombreAtributo){
-                        case: 'parametro_formula':
-                            $mensaje = 'PARAMETRO_FORMULA_MAYOR_QUE_50'. " - ". PARAMETRO_FORUMLA_MAYOR_QUE_50;
+                        case 'parametro_formula':
+                            $mensaje = 'PARAMETRO_FORMULA_MAYOR_QUE_50'. " - ". PARAMETRO_FORMULA_MAYOR_QUE_50;
                         break; 
                     }
                 break;
@@ -364,7 +364,7 @@ class FuncionesComunes {
             case 'gestProcesosusuario':
                 switch($nombreAtributo){
                     case 'fecha_proceso_usuario':
-                        $mensaje = 'FECHA_PROCESO_USUARIO_MAYOR_10'. " - ". FECHA_PROCESO_USUARIO_MAYOR_10;
+                        $mensaje = 'FECHA_PROCESO_USUARIO_MAYOR_10'. " - ". FECHA_PROCESO_USUARIO_MAYOR_QUE_10;
                     break;
                     case 'calculo_huella_carbono':
                         $mensaje = 'CALCULO_HUELLA_CARBONO_MAYOR_QUE_80'. " - ". CALCULO_HUELLA_CARBONO_MAYOR_QUE_80;
@@ -421,13 +421,13 @@ class FuncionesComunes {
                 case 'gestNoticias' :
                     switch($nombreAtributo){
                         case 'fecha_noticia':
-                            $mensaje = 'FECHA_NOTICIA_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
                         break;
                     }
                 break;
-                case: 'gestParametros':
+                case 'gestParametros':
                     switch($nombreAtributo){
-                        case: 'parametro_formula':
+                        case 'parametro_formula':
                             $mensaje = 'PARAMETRO_FORMULA_INCORRECTO'. " - ". PARAMETRO_FORMULA_INCORRECTO;
                         break; 
 
@@ -461,7 +461,6 @@ class FuncionesComunes {
         $mensaje = '';
         $patronAcentos = '/[áéíóúÁÉÍÓÚ]/';
         preg_match($patronAcentos, $atributo, $matches, PREG_UNMATCHED_AS_NULL);
-
         if(!empty($matches)){
             switch($funcionalidad){
                 case 'login' :
@@ -499,13 +498,13 @@ class FuncionesComunes {
                 case 'gestNoticias' :
                     switch($nombreAtributo){
                         case 'fecha_noticia':
-                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
                         break;
                         }
                 break;
-                case: 'gestParametros':
+                case 'gestParametros':
                     switch($nombreAtributo){
-                        case: 'parametro_formula':
+                        case 'parametro_formula':
                             $mensaje = 'PARAMETRO_FORMULA_INCORRECTO'. " - ". PARAMETRO_FORMULA_INCORRECTO;
                         break; 
 
@@ -612,20 +611,17 @@ class FuncionesComunes {
                 case 'gestNoticias':
                     switch($nombreAtributo){
                         case 'titulo_noticia':
-                            $mensaje = 'TITULO_NOTICIA_ALFABETICO_INCORRECTO'. " - ". NOMBRE_ROL_ALFABETICO_INCORRECTO;
-                        break;
-                        case 'descripcion_rol':
-                            $mensaje = 'DESCRIPCION_ROL_ALFABETICO_INCORRECTO'. " - ". DESCRIPCION_ROL_ALFABETICO_INCORRECTO;
+                            $mensaje = 'TITULO_NOTICIA_ALFABETICO_INCORRECTO'. " - ". TITULO_NOTICIA_ALFABETICO_INCORRECTO;
                         break;
                         case 'fecha_noticia':
-                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                            $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
                         break;
                     }
 
                 break;
-                case: 'gestParametros':
+                case 'gestParametros':
                     switch($nombreAtributo){
-                        case: 'parametro_formula':
+                        case 'parametro_formula':
                             $mensaje = 'PARAMETRO_FORMULA_INCORRECTO'. " - ". PARAMETRO_FORMULA_INCORRECTO;
                         break; 
                         case 'descripcion_parametro':
@@ -656,11 +652,10 @@ class FuncionesComunes {
             }
  
             }
-        }
-    }
 
-        return $mensaje;
-    }
+            return $mensaje;
+        }
+
     function comprobarAtributoEspacios($atributo, $funcionalidad, $nombreAtributo) {
         $mensaje = '';
         $patronEspacios = '/\s/';
@@ -720,13 +715,12 @@ class FuncionesComunes {
                             break;
                         }
                     break;
-                    case: 'gestNoticias':
+                    case 'gestNoticias':
                         switch($nombreAtributo){
                             case 'fecha_noticia':
-                                $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_ALFANUMERICO_INCORRECTO;
+                                $mensaje = 'FECHA_NOTICIA_ALFANUMERICO_INCORRECTO'. " - ". FECHA_NOTICIA_INCORRECTO;
                             break;
                             }
-                        }
                     break;
                     case 'gestProcesos':
                         switch($nombreAtributo){
@@ -735,7 +729,6 @@ class FuncionesComunes {
                             break;
                         }
                     break;
-                }
                 case 'gestProcesosusuario':
                     switch($nombreAtributo){
                         case 'fecha_proceso_usuario':
@@ -749,8 +742,10 @@ class FuncionesComunes {
         }
       
 
-        return $mensaje;
     }
+    return $mensaje;
+
+}
 
     function comprobarAtributoCorrectoAlfanumerico($atributo){
         $mensaje = '';

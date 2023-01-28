@@ -30,7 +30,7 @@ class EditAccionAccion extends ValidacionesBase{
 			if(!sizeof($resultado) == 0) {
 				return true;
 			}else{
-				$this->respuesta = 'ID_ACCION_NO_EXISTE';
+				$this->respuesta = 'ACCION_NO_EXISTE';
 			}
 	}
 }

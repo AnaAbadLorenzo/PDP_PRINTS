@@ -2,7 +2,6 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Test/impl/TestRegistroServiceImpl.php';
-include_once './Test/Atributos/TestDNIPersona.php';
 
 class RegistroTestController extends ControllerBase{
 

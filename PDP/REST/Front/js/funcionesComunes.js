@@ -700,50 +700,6 @@ function construyeFilaProcedimientoEjecutado(entidad, fila, numeroProcesosTotal,
 
 }
 
-/** Funcion que construye cada línea de la tabla procesos ejecutados **/
-function construyeFilaProcesosEjecutado(entidad, fila, datosProceso){
-
-	document.getElementById('cabecera').style.display = "block";
-
-	let atributosFunciones="";
-	var filaTabla = "";
-	var listProcedimientos=[];
-	var listObjetivos = [];
-	var listRespuestasPosibles=[];
-	var listNiveles=[];
-	var listOrdenProcesos = [];
-
-	switch(entidad){
-        case 'PROCESOSEJECUTADOS':
-        var fechaProcesoEjecutado = new Date(fila.fechaProcedimientoUsuarioProceso);
-
-		atributosFunciones = ["'" + datosProceso.procedimiento.nombreProcedimiento + "'", "'" + datosProceso.usuario.usuario + "'", "'" + fila.proceso.nombreProceso + "'", "'" + convertirFecha(fechaProcesoEjecutado.toString()) + "'", "'" + fila.respuestaPosible.textoRespuesta + "'",  "'" + fila.evidencia.nombreFichero + "'", "'" + fila.idProcedimientoUsuarioProceso + "'"];
-			filaTabla = '<tr class="impar"> <td>' + datosProceso.procedimiento.nombreProcedimiento + 
-                '</td> <td>' + datosProceso.usuario.usuario +
-                '</td> <td>' + fila.proceso.nombreProceso +
-                '</td> <td>' + convertirFecha(fechaProcesoEjecutado.toString());
-  
-        break;
-	};
-
-
-	var celdaAccionesDetalle = '<div class="tooltip6"><img class="detalle detallePermiso" src="images/detail.png" data-toggle="" data-target="" onclick="showDetalle(' + atributosFunciones + 
-                               ')" alt="Detalle"/><span class="tooltiptext iconDetailUser ICONO_DETALLE">Detalle</span></div>';
-
-
-   
-    var celdaAcciones = celdaAccionesDetalle;
-
-    	filaTabla = filaTabla + 
-                '</td> <td class="acciones">' + celdaAcciones +  
-                '</td> </tr>';
-    
-	setLang(getCookie('lang'));
-
-    return filaTabla;
-
-}
-
 
 /**Función que construye cada línea de los elementos eliminados con los que se va a rellenar en la tabla*/
 function construyeFilaEliminados(entidad, fila) {
@@ -1011,15 +967,17 @@ function cargarHref(dato){
 		break;
 
 		case 'Gestión de procesos ejecutados' :
-			if (rol == 'Administrador' && rol == 'Gestor'){
-				href = "GestionDeProcesosEjecutados.html";
-			} else {
+			if (rol == 'Usuario'){
 				href = "MisProcesos.html";
 			}
 		break;
 
 		case 'Gestión de procesos' :
 			href = "GestionDeProcesos.html";
+		break;
+
+		case 'Test' : 
+			href = 'test.hmtl';
 		break;
 	}
 
@@ -1045,18 +1003,18 @@ function cargarClass(dato, rol){
 		break;
 
 		case 'Gestión de usuarios':
-			if (rol !== 'Administrador'){
-				clase = "GESTION_USUARIOS_NO_ADMIN";
-			} else {
+			if (rol == 'Administrador'){
 				clase="GESTION_USUARIOS";
+			} else {
+				clase = "GESTION_USUARIOS_NO_ADMIN";
 			}
 		break;
 
 		case 'Gestión de personas':
-			if (rol !== 'Administrador'){
-				clase = "GESTION_PERSONAS_NO_ADMIN";
-			} else {
+			if (rol == 'Administrador' || rol == 'Gestor'){
 				clase="GESTION_PERSONAS";
+			} else {
+				clase = "GESTION_PERSONAS_NO_ADMIN";
 			}
 		break; 
 
@@ -1077,18 +1035,16 @@ function cargarClass(dato, rol){
 		break;
 
 		case 'Gestión de categorias':
-			if (rol !== 'Administrador'){
+			if (rol == 'Usuario'){
 				clase = "CONSULTA_CATEGORIAS";
 			} else {
-				clase="GESTION_CATEGORIAS";
+				clase= "GESTION_CATEGORIAS";
 			}
 		break;
 
 		case 'Gestión de procesos ejecutados':
-			if (rol == 'Administrador' || rol == 'Gestor'){
-				clase = "GESTION_PROCESOS_EJECUTADOS";
-			} else {
-				clase="MIS_PROCESOS";
+			if (rol == 'Usuario'){
+				clase = "MIS_PROCESOS";
 			}
 		break;
 	}
@@ -1126,7 +1082,7 @@ function cambiarTituloGestion(funcionalidad){
 			}
 		break;
 		case 'proceso':
-			if (rol !== 'Administrador'){
+			if (rol == 'Usuario'){
 				$("#gestion").addClass("GESTION_PROCESOS_NO_ADMIN");
 			} else {
 				$("#gestion").addClass("GESTION_PROCESOS");
@@ -1176,11 +1132,11 @@ function cambiarFormulario(tituloForm, action, onsubmit) {
 /**Función para cambiar valores del formulario*/
 function cambiarFormularioProcesoUsuario(action, onsubmit) {
 
-    if (action != '') {
+    if (action != null) {
         $("#formularioModalMostrarProcesoUsuario").attr('action', action);
     }
 
-    if (onsubmit != '') {
+    if (onsubmit != null) {
         $("#formularioModalMostrarProcesoUsuario").attr('onsubmit', onsubmit);
     } 
 }

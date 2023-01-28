@@ -1,8 +1,8 @@
 <?php
 
-include_once './Test/Atributos/TestNombreRol.php';
-include_once './Test/Atributos/TestDescripcionRol.php';
-include_once './Test/Accion/TestLogin.php';
+include_once './Test/Atributos/Rol/TestNombreRol.php';
+include_once './Test/Atributos/Rol/TestDescripcionRol.php';
+include_once './Test/Accion/TestGestionRoles.php';
 include_once './Servicios/Test/TestGestionRolesService.php';
 
 class TestGestionRolesServiceImpl implements TestGestionRolesService {
@@ -15,6 +15,7 @@ class TestGestionRolesServiceImpl implements TestGestionRolesService {
     {
         $this->testNombreRol = new TestNombreRol();
         $this->testDescripcionRol = new TestDescripcionRol();
+        $this->testRol = new TestGestionRoles();
     }
     function testAtributoNombreRol() {
         $respuesta = '';
@@ -29,6 +30,16 @@ class TestGestionRolesServiceImpl implements TestGestionRolesService {
     function testAtributoDescripcionRol(){
         $respuesta = '';
         $respuesta = $this->testDescripcionRol->testAtributoDescripcionRol();
+
+        if(empty($respuesta)){
+            $respuesta = 'TEST_FALLIDOS';
+        }
+        return $respuesta;
+    }
+
+    function testAccionGestionRoles(){
+        $respuesta = '';
+        $respuesta = $this->testRol->testRolesGestionRoles();
 
         if(empty($respuesta)){
             $respuesta = 'TEST_FALLIDOS';

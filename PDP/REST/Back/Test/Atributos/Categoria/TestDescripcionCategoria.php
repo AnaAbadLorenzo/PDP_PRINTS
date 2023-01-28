@@ -23,12 +23,12 @@ class TestDescripcionCategoria extends Test{
 
         //DESCRIPCION_CATEGORIA_CARACTERES_ESPECIALES
         $_POST['descripcion_categoria'] = '###Ananita';
-        $resultadoTest = $this->hacerPruebaNombreDescripcionCaracteresEspeciales($_POST);
+        $resultadoTest = $this->hacerPruebaDescripcionCategoriaCaracteresEspeciales($_POST);
         array_push($pruebas, $resultadoTest);
 
         //DESCRIPCION_CATEGORIA_CORRECTO
         $_POST['descripcion_categoria'] = 'Categoria';
-        $resultadoTest = $this->hacerPruebaDescripcionCorrecto($_POST);
+        $resultadoTest = $this->hacerPruebaDescripcionCategoriaCorrecto($_POST);
         array_push($pruebas, $resultadoTest);
 
         return $pruebas;

@@ -32,7 +32,7 @@ function existeIdFuncionalidad($datosEditFuncionalidad){
 		if(!sizeof($resultado) == 0) {
 			return true;
 		}else{
-			$this->respuesta = 'ID_FUNCIONALIDAD_NO_EXISTE';
+			$this->respuesta = 'FUNCIONALIDAD_NO_EXISTE';
 			//throw new DNINoExisteException('DNI_NO_EXISTE');
 		}}
 		

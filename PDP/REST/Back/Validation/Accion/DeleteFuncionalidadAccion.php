@@ -21,7 +21,7 @@ class DeleteFuncionalidadAccion extends ValidacionesBase{
 	}
 	function comprobarDeleteFuncionalidad($datosDeleteFuncionalidad){
 		$this->existeIdFuncionalidad($datosDeleteFuncionalidad);
-		$this -> funcionalidadNoEstaEnPermisos($datosDeleteFuncionalidad);
+		$this ->funcionalidadNoEstaEnPermisos($datosDeleteFuncionalidad);
 	}
 
 	function comprobarReactivar($datos) {
@@ -61,8 +61,7 @@ function existeIdFuncionalidad($datosDeleteFuncionalidad){
 		if(!sizeof($resultado) == 0) {
 			return true;
 		}else{
-			$this->respuesta = 'ID_FUNCIONALIDAD_NO_EXISTE';
-			//throw new DNINoExisteException('DNI_NO_EXISTE');
+			$this->respuesta = 'FUNCIONALIDAD_NO_EXISTE';
 		}}
 		
 	

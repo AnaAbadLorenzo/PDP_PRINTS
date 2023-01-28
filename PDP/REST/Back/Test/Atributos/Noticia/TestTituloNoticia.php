@@ -27,7 +27,7 @@ class TestTituloNoticia extends Test{
         array_push($pruebas, $resultadoTest);
         
         //TITULO_NOTICIA_CONTIENE_CARACTERES_ESPECIALES
-        $_POST['titulo_noticia'] = 'Noticia***';
+        $_POST['titulo_noticia'] = '###N';
         $resultadoTest = $this->hacerPruebaTituloNoticiaCaracteresEspeciales($_POST);
         array_push($pruebas, $resultadoTest);
 

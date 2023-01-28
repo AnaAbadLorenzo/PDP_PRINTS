@@ -2,8 +2,6 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Test/impl/TestGestionAccionesServiceImpl.php';
-include_once './Test/Atributos/TestNombreAccion.php';
-include_once './Test/Atributos/TestDescripcionAccion.php';
 
 class GestionAccionesTestController extends ControllerBase{
 

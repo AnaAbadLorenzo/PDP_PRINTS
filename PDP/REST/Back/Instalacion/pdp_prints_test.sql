@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2022 a las 23:10:57
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 7.3.31
+-- Servidor: localhost
+-- Tiempo de generación: 28-01-2023 a las 19:27:20
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -23,11 +23,11 @@ GRANT ALL PRIVILEGES ON *.* TO 'pdpPrints'@'%';
 GRANT ALL PRIVILEGES ON `pdp_prints`.* TO 'pdpPrints'@'%';
 
 --
--- Base de datos: `pdp_prints`
+-- Base de datos: `pdp_prints_test`
 --
-DROP DATABASE IF EXISTS `pdp_prints`;
-CREATE DATABASE IF NOT EXISTS `pdp_prints` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `pdp_prints`;
+DROP DATABASE IF EXISTS `pdp_prints_test`;
+CREATE DATABASE IF NOT EXISTS `pdp_prints_test` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `pdp_prints_test`;
 
 -- --------------------------------------------------------
 
@@ -37,26 +37,21 @@ USE `pdp_prints`;
 
 DROP TABLE IF EXISTS `accion`;
 CREATE TABLE `accion` (
-  `id_accion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_accion` int(11) NOT NULL,
   `nombre_accion` varchar(32) NOT NULL,
   `descripcion_accion` text NOT NULL,
-  `borrado_accion` int(11) NOT NULL,
-  PRIMARY KEY (`id_accion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `borrado_accion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `accion`
+-- Volcado de datos para la tabla `accion`
 --
 
-LOCK TABLES `accion` WRITE;
 INSERT INTO `accion` (`id_accion`, `nombre_accion`, `descripcion_accion`, `borrado_accion`) VALUES
-(1, 'Añadir', 'Permite añadir nuevos datos a la aplicación', 0),
-(2, 'Modificar', 'Permite modificar datos de la aplicación', 0),
-(3, 'Eliminar', 'Permite eliminar datos de la aplicación', 0),
-(4, 'Listar', 'Permite visualizar los datos de la aplicación en forma de listado', 0),
-(5, 'Visualizar', 'Permite ver en detalle los datos de la aplicación', 0),
-(6, 'Reactivar', 'Permite reactivar los datos eliminados de la aplicación', 0);
-UNLOCK TABLES;
+(1, 'Añadir', 'Permite añadir datos a la aplicación', 0),
+(2, 'Modificar', 'Permite modificar datos en la aplicación', 0),
+(3, 'accionModificar', 'Esta es la acción para modificar', 0),
+(4, 'accionPermisos', 'Esta es la acción con permisos asociados', 0);
 
 -- --------------------------------------------------------
 
@@ -66,26 +61,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
-  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
+  `id_categoria` int(11) NOT NULL,
   `nombre_categoria` varchar(128) NOT NULL,
   `descripcion_categoria` text NOT NULL,
   `borrado_categoria` int(11) NOT NULL,
   `dni_responsable` varchar(9) NOT NULL,
-  `id_padre_categoria` int(11) NULL,
-  `dni_usuario` varchar(9) NOT NULL,
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `categoria`
---
-
-INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `descripcion_categoria`, `borrado_categoria`, `dni_responsable`, `id_padre_categoria`, `dni_usuario`) VALUES
-(1, 'Viajes', 'Esta categoría agrupa los procesos sobre la temática de viajes', 0, '45146321N', NULL, '45146321N'),
-(2, 'Reciclaje', 'Esta categoría agrupa los procesos sobre la temática de reciclaje', 0, '45146321N', NULL, '45146321N'),
-(3, 'Tren', 'Esta categoría agrupa los procesos sobre los viajes en tren', 0, '45146319X', 1, '45146321N'),
-(4, 'Coche', 'Esta categoría agrupa los procesos sobre los viajes en coche', 0, '45146321N', 1, '45146321N'),
-(5, 'Avión', 'Esta categoría agrupa los procesos sobre los viajes en avión', 0, '45146321N', 1, '45146321N');
+  `id_padre_categoria` int(11) DEFAULT NULL,
+  `dni_usuario` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -95,28 +78,21 @@ INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `descripcion_catego
 
 DROP TABLE IF EXISTS `funcionalidad`;
 CREATE TABLE `funcionalidad` (
-  `id_funcionalidad` int(11) NOT NULL AUTO_INCREMENT,
+  `id_funcionalidad` int(11) NOT NULL,
   `nombre_funcionalidad` varchar(128) NOT NULL,
   `descripcion_funcionalidad` text NOT NULL,
-  `borrado_funcionalidad` int(11) NOT NULL,
-  PRIMARY KEY (`id_funcionalidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `borrado_funcionalidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-LOCK TABLES `funcionalidad` WRITE;
+--
+-- Volcado de datos para la tabla `funcionalidad`
+--
+
 INSERT INTO `funcionalidad` (`id_funcionalidad`, `nombre_funcionalidad`, `descripcion_funcionalidad`, `borrado_funcionalidad`) VALUES
-(1, 'Gestión de acciones', 'Permite realizar acciones sobre las acciones de la aplicación', 0),
+(1, 'Gestion de acciones', 'Permite realizar acciones sobre las acciones de la aplicación', 0),
 (2, 'Gestión de funcionalidades', 'Permite realizar acciones sobre las funcionalidades de la aplicación', 0),
-(3, 'Gestión de noticias', 'Permite realizar acciones sobre las noticias de la aplicación', 0),
-(4, 'Gestión de personas', 'Permite realizar acciones sobre las personas de la aplicación', 0),
-(5, 'Gestión de procesos', 'Permite realizar acciones sobre los procesos de la aplicación', 0),
-(6, 'Gestión de procesos ejecutados', 'Permite realizar acciones sobre los procesos ejecutados por los usuarios de la aplicación', 0),
-(8, 'Gestión de roles', 'Permite realizar acciones sobre los roles de la aplicación', 0),
-(9, 'Gestión de usuarios', 'Permite realizar acciones sobre los usuarios de la aplicación', 0),
-(10, 'Gestión de categorias', 'Permite realizar acciones sobre las categorías de la aplicación', 0),
-(11, 'Gestión de parametros', 'Permite realizar acciones sobre los parámetros de la aplicación', 0),
-(12, 'Test', 'Permite comprobar las funcionalidades de la aplicación', 0);
-UNLOCK TABLES;
-
+(3, 'funcionalidadModificar', 'Esta es la funcionalidad para modificar', 1),
+(4, 'funcionalidadPermisos', 'Esta funcionalidad tiene permisos asociados', 0);
 
 -- --------------------------------------------------------
 
@@ -126,13 +102,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `log_excepciones`;
 CREATE TABLE `log_excepciones` (
-  `id_logExcepciones` int(11) NOT NULL AUTO_INCREMENT,
+  `id_logExcepciones` int(11) NOT NULL,
   `usuario` varchar(48) NOT NULL,
   `tipo_excepcion` varchar(255) NOT NULL,
   `descripcion_excepcion` text NOT NULL,
-  `fecha` date NOT NULL,
-   PRIMARY KEY (`id_logExcepciones`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -142,17 +117,20 @@ CREATE TABLE `log_excepciones` (
 
 DROP TABLE IF EXISTS `noticia`;
 CREATE TABLE `noticia` (
-  `id_noticia` int(11) NOT NULL AUTO_INCREMENT,
+  `id_noticia` int(11) NOT NULL,
   `titulo_noticia` varchar(255) NOT NULL,
   `contenido_noticia` text NOT NULL,
-  `fecha_noticia` date NOT NULL,
-  PRIMARY KEY (`id_noticia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `fecha_noticia` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-LOCK TABLES `noticia` WRITE;
+--
+-- Volcado de datos para la tabla `noticia`
+--
+
 INSERT INTO `noticia` (`id_noticia`, `titulo_noticia`, `contenido_noticia`, `fecha_noticia`) VALUES
-(1, 'Bienvenidos a Carboon Footprint', 'Bienevidos a esta nueva aplicación para calcular la huella de carbono de tus actividades', '2022-12-26');
-UNLOCK TABLES;
+(1, 'Noticia', 'Esta es una noticia', '2023-01-28'),
+(2, 'noticiaModificar', 'Esto es una descripcion modificada para pruebas', '2023-01-28');
+
 -- --------------------------------------------------------
 
 --
@@ -161,22 +139,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `parametro`;
 CREATE TABLE `parametro` (
-  `id_parametro` int(11) NOT NULL AUTO_INCREMENT,
+  `id_parametro` int(11) NOT NULL,
   `parametro_formula` varchar(56) NOT NULL,
   `descripcion_parametro` text NOT NULL,
-  `id_proceso` int(11) NOT NULL,
-  PRIMARY KEY (`id_parametro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `parametro`
---
-
-LOCK TABLES `parametro` WRITE;
-INSERT INTO `parametro` (`id_parametro`, `parametro_formula`, `descripcion_parametro`, `id_proceso`) VALUES
-(1, 'capacidad', 'litros', 1),
-(2, 'distancia', 'metros', 1);
-UNLOCK TABLES;
+  `id_proceso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -194,18 +161,17 @@ CREATE TABLE `persona` (
   `email_persona` varchar(128) NOT NULL,
   `telefono_persona` varchar(9) NOT NULL,
   `borrado_persona` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
-LOCK TABLES `persona` WRITE;
 INSERT INTO `persona` (`dni_persona`, `nombre_persona`, `apellidos_persona`, `fecha_nac_persona`, `direccion_persona`, `email_persona`, `telefono_persona`, `borrado_persona`) VALUES
-('39514532A', 'Miguel', 'Veiro Romero', '2023-01-01', 'Calle calle N14', 'miguelveiro@gmail.com', '888666555', 0),
-('45146319X', 'Fátima', 'Abad Lorenzo', '1997-10-12', 'Avenida de calle', 'fatima@gmail.com', '988776655', 0),
-('45146321N', 'Ana', 'Abad Lorenzo', '2000-12-13', 'Avenida de Portugal', 'anaa1312@gmail.com', '988745241', 0);
-UNLOCK TABLES;
+('11111111A', 'Persona', 'Para Borrar', '2023-01-28', 'Calle calle N14', 'personaborrar@persona.com', '999666555', 1),
+('32720371L', 'Administrador', 'Cambio Pass', '2000-12-13', 'Avenida de la Avenida N23', 'anaa@pruebas.com', '988748598', 0),
+('45146321N', 'Ana', 'Abad Lorenzo', '2000-12-13', 'Avenida de Portugal Nº34 2ºB', 'anaa1312@gmail.com', '666555444', 0),
+('99999999R', 'Persona de prueba', 'Prueba prueba', '2023-01-28', 'Calle calle N13', 'persona@gmail.com', '666555333', 0);
 
 -- --------------------------------------------------------
 
@@ -215,7 +181,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `proceso`;
 CREATE TABLE `proceso` (
-  `id_proceso` int(11) NOT NULL AUTO_INCREMENT,
+  `id_proceso` int(11) NOT NULL,
   `nombre_proceso` varchar(255) NOT NULL,
   `descripcion_proceso` text NOT NULL,
   `fecha_proceso` date NOT NULL,
@@ -224,16 +190,8 @@ CREATE TABLE `proceso` (
   `check_aprobacion` int(11) NOT NULL,
   `formula_proceso` varchar(255) NOT NULL,
   `id_categoria` int(11) NOT NULL,
-  `dni_usuario` varchar(9) NOT NULL,
-  PRIMARY KEY (`id_proceso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `proceso`
---
-
-INSERT INTO `proceso` (`id_proceso`, `nombre_proceso`, `descripcion_proceso`, `fecha_proceso`, `borrado_proceso`, `version_proceso`, `check_aprobacion`, `formula_proceso`, `id_categoria`, `dni_usuario`) VALUES
-(1, 'Primer proceso', 'Mi proceso', '2023-01-27', 0, 12, 1, '#capacidad|litros#*#distancia|metros#', 2, '45146321N');
+  `dni_usuario` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -243,14 +201,13 @@ INSERT INTO `proceso` (`id_proceso`, `nombre_proceso`, `descripcion_proceso`, `f
 
 DROP TABLE IF EXISTS `proceso_usuario`;
 CREATE TABLE `proceso_usuario` (
-  `id_proceso_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `id_proceso_usuario` int(11) NOT NULL,
   `fecha_proceso_usuario` date NOT NULL,
   `calculo_huella_carbono` int(11) NOT NULL,
   `borrado_proceso_usuario` int(11) NOT NULL,
   `dni_usuario` varchar(9) NOT NULL,
-  `id_proceso` int(11) NOT NULL,
-  PRIMARY KEY (`id_proceso_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_proceso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -263,7 +220,7 @@ CREATE TABLE `proceso_usuario_parametro` (
   `id_proceso_usuario` int(11) NOT NULL,
   `id_parametro` int(11) NOT NULL,
   `valor_parametro` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -273,23 +230,21 @@ CREATE TABLE `proceso_usuario_parametro` (
 
 DROP TABLE IF EXISTS `rol`;
 CREATE TABLE `rol` (
-  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
+  `id_rol` int(11) NOT NULL,
   `nombre_rol` varchar(32) NOT NULL,
   `descripcion_rol` text NOT NULL,
-  `borrado_rol` int(11) NOT NULL,
-  PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `borrado_rol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
-LOCK TABLES `rol` WRITE;
 INSERT INTO `rol` (`id_rol`, `nombre_rol`, `descripcion_rol`, `borrado_rol`) VALUES
-(1, 'Administrador', 'Contendrá a todos los responsables de administrar la aplicación', 0),
-(2, 'Usuario', 'Contendrá a todas las personas registradas en la aplicación', 0),
-(3, 'Gestor', 'Contendrá a todos los usuarios que sean responsables de una categoría', 0);
-UNLOCK TABLES;
+(1, 'Administrador', 'Existe', 0),
+(2, 'Usuario', 'Grupo de usuarios que usan la aplicación', 0),
+(3, 'rolModificar', 'Descripcion del rol modificada', 0),
+(4, 'rolPermisos', 'Este rol tiene permisos asociados', 0);
 
 -- --------------------------------------------------------
 
@@ -302,108 +257,14 @@ CREATE TABLE `rol_accion_funcionalidad` (
   `id_rol` int(11) NOT NULL,
   `id_accion` int(11) NOT NULL,
   `id_funcionalidad` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-LOCK TABLES `rol_accion_funcionalidad` WRITE;
+--
+-- Volcado de datos para la tabla `rol_accion_funcionalidad`
+--
+
 INSERT INTO `rol_accion_funcionalidad` (`id_rol`, `id_accion`, `id_funcionalidad`) VALUES
-(1, 1, 1),
-(1, 1, 2),
-(1, 1, 3),
-(1, 1, 4),
-(1, 1, 5),
-(1, 1, 6),
-(1, 1, 8),
-(1, 1, 9),
-(1, 1, 10),
-(1, 1, 11),
-(1, 1, 12),
-(1, 2, 1),
-(1, 2, 2),
-(1, 2, 3),
-(1, 2, 4),
-(1, 2, 5),
-(1, 2, 6),
-(1, 2, 8),
-(1, 2, 9),
-(1, 2, 10),
-(1, 2, 11),
-(1, 2, 12),
-(1, 3, 1),
-(1, 3, 2),
-(1, 3, 3),
-(1, 3, 4),
-(1, 3, 5),
-(1, 3, 6),
-(1, 3, 8),
-(1, 3, 9),
-(1, 3, 10),
-(1, 3, 11),
-(1, 3, 12),
-(1, 4, 1),
-(1, 4, 2),
-(1, 4, 3),
-(1, 4, 4),
-(1, 4, 5),
-(1, 4, 6),
-(1, 4, 8),
-(1, 4, 9),
-(1, 4, 10),
-(1, 4, 11),
-(1, 4, 12),
-(1, 5, 1),
-(1, 5, 2),
-(1, 5, 3),
-(1, 5, 4),
-(1, 5, 5),
-(1, 5, 6),
-(1, 5, 8),
-(1, 5, 9),
-(1, 5, 10),
-(1, 5, 11),
-(1, 5, 12),
-(1, 6, 1),
-(1, 6, 2),
-(1, 6, 5),
-(1, 6, 6),
-(1, 6, 8),
-(1, 6, 9),
-(1, 6, 10),
-(1, 6, 11),
-(2, 1, 5),
-(2, 1, 6),
-(2, 1, 10),
-(2, 2, 4),
-(2, 2, 5),
-(2, 2, 6),
-(2, 2, 10),
-(2, 3, 5),
-(2, 3, 6),
-(2, 3, 10),
-(2, 4, 4),
-(2, 4, 5),
-(2, 4, 6),
-(2, 4, 9),
-(2, 4, 10),
-(2, 5, 4),
-(2, 5, 5),
-(2, 5, 6),
-(2, 5, 9),
-(2, 5, 10),
-(2, 6, 5),
-(2, 6, 6),
-(2, 6, 10),
-(3, 1, 5),
-(3, 1, 10),
-(3, 2, 5),
-(3, 2, 10),
-(3, 3, 5),
-(3, 3, 10),
-(3, 4, 5),
-(3, 4, 10),
-(3, 5, 5),
-(3, 5, 10),
-(3, 6, 5);
-UNLOCK TABLES;
+(4, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -418,18 +279,16 @@ CREATE TABLE `usuario` (
   `passwd_usuario` varchar(32) NOT NULL,
   `borrado_usuario` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-LOCK TABLES `usuario` WRITE;
 INSERT INTO `usuario` (`dni_usuario`, `usuario`, `passwd_usuario`, `borrado_usuario`, `id_rol`) VALUES
-('39514532A', 'miguel', '9eb0c9605dc81a68731f61b3e0838937', 0, 3),
-('45146319X', 'fatima', 'b5d5f67b30809413156655abdda382a3', 0, 2),
-('45146321N', 'anita1312', '83349cbdac695f3943635a4fd1aaa7d0', 0, 1);
-UNLOCK TABLES;
+('32720371L', 'usuarioCambioPass', 'nuevaPass', 0, 1),
+('45146321N', 'anita1312', '98cd48d44fffa390eb2302b4953d1953', 0, 1),
+('99999999R', 'usuarioPruebas', 'usuarioPruebas', 0, 2);
 
 --
 -- Índices para tablas volcadas
@@ -439,12 +298,14 @@ UNLOCK TABLES;
 -- Indices de la tabla `accion`
 --
 ALTER TABLE `accion`
+  ADD PRIMARY KEY (`id_accion`),
   ADD UNIQUE KEY `nombre_accion` (`nombre_accion`);
 
 --
 -- Indices de la tabla `categoria`
 --
 ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`id_categoria`),
   ADD UNIQUE KEY `nombre_categoria` (`nombre_categoria`),
   ADD KEY `dni_responsable_fk` (`dni_responsable`),
   ADD KEY `id_padre_categoria_fk` (`id_padre_categoria`);
@@ -453,12 +314,26 @@ ALTER TABLE `categoria`
 -- Indices de la tabla `funcionalidad`
 --
 ALTER TABLE `funcionalidad`
+  ADD PRIMARY KEY (`id_funcionalidad`),
   ADD UNIQUE KEY `nombre_funcionalidad` (`nombre_funcionalidad`);
+
+--
+-- Indices de la tabla `log_excepciones`
+--
+ALTER TABLE `log_excepciones`
+  ADD PRIMARY KEY (`id_logExcepciones`);
+
+--
+-- Indices de la tabla `noticia`
+--
+ALTER TABLE `noticia`
+  ADD PRIMARY KEY (`id_noticia`);
 
 --
 -- Indices de la tabla `parametro`
 --
 ALTER TABLE `parametro`
+  ADD PRIMARY KEY (`id_parametro`),
   ADD KEY `id_proceso_fk` (`id_proceso`);
 
 --
@@ -471,6 +346,7 @@ ALTER TABLE `persona`
 -- Indices de la tabla `proceso`
 --
 ALTER TABLE `proceso`
+  ADD PRIMARY KEY (`id_proceso`),
   ADD UNIQUE KEY `nombre_proceso` (`nombre_proceso`),
   ADD KEY `id_categoria_fk` (`id_categoria`),
   ADD KEY `dni_usuario_fk_proceso` (`dni_usuario`);
@@ -479,6 +355,7 @@ ALTER TABLE `proceso`
 -- Indices de la tabla `proceso_usuario`
 --
 ALTER TABLE `proceso_usuario`
+  ADD PRIMARY KEY (`id_proceso_usuario`),
   ADD KEY `dni_usuario_fk_procesousuario` (`dni_usuario`),
   ADD KEY `id_proceso_fk_procesousuario` (`id_proceso`);
 
@@ -493,6 +370,7 @@ ALTER TABLE `proceso_usuario_parametro`
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id_rol`),
   ADD UNIQUE KEY `nombre_rol` (`nombre_rol`);
 
 --
@@ -516,6 +394,24 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `accion`
+--
+ALTER TABLE `accion`
+  MODIFY `id_accion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `funcionalidad`
+--
+ALTER TABLE `funcionalidad`
+  MODIFY `id_funcionalidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
 -- AUTO_INCREMENT de la tabla `log_excepciones`
 --
 ALTER TABLE `log_excepciones`
@@ -525,13 +421,31 @@ ALTER TABLE `log_excepciones`
 -- AUTO_INCREMENT de la tabla `noticia`
 --
 ALTER TABLE `noticia`
-  MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `parametro`
+--
+ALTER TABLE `parametro`
+  MODIFY `id_parametro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de la tabla `proceso`
+--
+ALTER TABLE `proceso`
+  MODIFY `id_proceso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `proceso_usuario`
+--
+ALTER TABLE `proceso_usuario`
+  MODIFY `id_proceso_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas

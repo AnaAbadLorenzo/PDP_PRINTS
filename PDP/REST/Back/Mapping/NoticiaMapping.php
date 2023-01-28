@@ -41,7 +41,7 @@ class NoticiaMapping extends MappingBase {
     }
 
     function searchAllWithoutPagination() {
-        $this->query = "SELECT * FROM `noticia` ";
+        $this->query = "SELECT * FROM `noticia` ORDER BY `fecha_noticia` DESC";
         $this->stmt = $this->conexion->prepare($this->query);
         $this->get_results_from_query();
     }

@@ -340,7 +340,7 @@ function construyeSelect(){
       $("#form-modal").modal('toggle');
       respuestaAjaxOK("PARAMETRO_GUARDADO_OK", res.code);
   
-      let idElementoList = ["parametro_formula", "descripcion_parametro"];
+      let idElementoList = ["parametroFormula", "descripcionParametro"];
       resetearFormulario("formularioGenerico", idElementoList);
       setLang(getCookie('lang'));
       document.getElementById("modal").style.display = "block";
@@ -594,6 +594,7 @@ function construyeSelect(){
     ocultarObligatorios(obligatorios);
     habilitaCampos(campos);
     setLang(getCookie('lang'));
+    limpiarTextArea('descripcionParametro');
   
   }
   

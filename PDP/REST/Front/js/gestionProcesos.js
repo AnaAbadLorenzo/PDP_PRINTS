@@ -674,7 +674,6 @@ function editarProcesoAjaxPromesa(){
 async function editProceso(){
     await editarProcesoAjaxPromesa()
     .then((res) => {
-      cargarParametrosProceso();
       $("#form-modal").modal('toggle');
   
       respuestaAjaxOK("PROCESO_EDITADO_OK", res.code);
@@ -696,7 +695,6 @@ async function editProceso(){
       $('#formulaProceso').val(getCookie('formula_proceso'));
       buscarProceso(getCookie('numeroPagina'), tamanhoPaginaProceso, 'buscarPaginacion', 'PaginadorCreado');
       setLang(getCookie('lang'));
-  
     }).catch((res) => {
         $("#form-modal").modal('toggle');
   
@@ -995,7 +993,6 @@ async function detalleProceso(){
   }
 async function buscarProceso(numeroPagina, tamanhoPagina, accion, paginadorCreado){
     try {
-        cargarPermisosFuncProceso();
         const res = await buscarProcesoAjaxPromesa(numeroPagina, tamanhoPagina,accion);
         if($('#form-modal').is(':visible')) {
            $("#form-modal").modal('toggle');
@@ -1064,6 +1061,7 @@ async function buscarProceso(numeroPagina, tamanhoPagina, accion, paginadorCread
 
         setCookie('numeroPagina', numPagCookie);
         setLang(getCookie('lang'));
+        cargarPermisosFuncProceso();
     } catch (res) {
         respuestaAjaxKO(res.code);
         document.getElementById("modal").style.display = "block";
@@ -1272,6 +1270,7 @@ function showEditar(nombreProceso, descripcionProceso, fechaProceso,versionProce
     $('#labelNombreProceso').attr('hidden', true);
     $('#labelDescripcionProceso').attr('hidden', true);
     $('#labelFechaProceso').attr('hidden', true);
+    $('#fechaProceso').attr('hidden', true);
     $('#labelIdCategoria').attr('hidden', false);
     $('#labelCheckProceso').attr('hidden',false);
     $('#labelFormulaProceso').attr('hidden', false);
@@ -1344,7 +1343,6 @@ function showBuscarProceso() {
     }
 
     setLang(getCookie('lang'));
-  
 }
 
 /** Funcion para visualizar un proceso **/

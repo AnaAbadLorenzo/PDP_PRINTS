@@ -78,13 +78,45 @@ class TestDNIResponsable extends Test{
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, LONGITUD_MAXIMA_ERRONEA, ERROR, $atributo['dni_responsable'], 'dni_responsable');
         
     }
+
+    function hacerPruebaDNIResponsableAcentos($atributo){
+        $funcionesComunes = new FuncionesComunes();
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoAcentos($atributo['dni_responsable'], 'gestCategorias', 'dni_responsable');
+        $resultadoEsperado = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'." - ".DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
+        
+        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, ACENTOS, ERROR, $atributo['dni_responsable'], 'dni_responsable');
+    }
+        
+    function hacerPruebaDNIResponsableCaracteresEspeciales($atributo){
+        $funcionesComunes = new FuncionesComunes();
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoCaracteresEspeciales($atributo['dni_responsable'], 'gestCategorias', 'dni_responsable');
+        $resultadoEsperado = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'." - ".DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
+        
+        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, CARACTERES_ESPECIALES, ERROR, $atributo['dni_responsable'], 'dni_responsable');
+    }
+        
+    function hacerPruebaDNIResponsableEspacios($atributo){
+        $funcionesComunes = new FuncionesComunes();
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoEspacios($atributo['dni_responsable'], 'gestCategorias', 'dni_responsable');
+        $resultadoEsperado = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'." - ".DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
+        
+        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, ESPACIOS, ERROR,  $atributo['dni_responsable'], 'dni_responsable');
+    }
         
     function hacerPruebaDNIResponsableEnhe($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoEnhe($atributo['dni_responsable'], 'gestCategorias', 'dni_responsable');
         $resultadoEsperado = 'DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO'." - ".DNI_RESPONSABLE_ALFANUMERICO_INCORRECTO;
         
-        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, DNI_RESPONSABLE_OK, ÉXITO,  $atributo['dni_responsable'], 'dni_responsable'
+        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, DNI_RESPONSABLE_OK, ÉXITO,  $atributo['dni_responsable'], 'dni_responsable');
+    }
+
+    function hacerPruebaDNIResponsableCorrecto($atributo){
+        $funcionesComunes = new FuncionesComunes();
+        $resultadoObtenido = $funcionesComunes->comprobarAtributoCorrectoAlfanumerico($atributo['dni_responsable']);
+        $resultadoEsperado = 'AVANZAR_SIGUIENTE_CAMPO'." - ".AVANZAR_SIGUIENTE_CAMPO;
+        
+        return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, DNI_PERSONA_OK, ÉXITO,  $atributo['dni_responsable'], 'dni_responsable');
     }
 
         

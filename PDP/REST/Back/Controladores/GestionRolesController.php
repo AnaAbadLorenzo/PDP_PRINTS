@@ -68,7 +68,6 @@ class GestionRolesController extends ControllerBase {
 	}
     
     function delete() {
-
 		$this -> rol_validation -> validarDelete();
 		if (!empty($this -> rol_validation -> respuesta_formato)) {
 			$this -> rellenarRespuesta($this -> rol_validation -> respuesta_formato, true, '');

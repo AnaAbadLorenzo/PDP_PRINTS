@@ -2,8 +2,6 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Test/impl/TestGestionFuncionalidadesServiceImpl.php';
-include_once './Test/Atributos/TestNombreFuncionalidad.php';
-include_once './Test/Atributos/TestDescripcionFuncionalidad.php';
 
 class GestionFuncionalidadesTestController extends ControllerBase{
 
@@ -31,6 +29,17 @@ class GestionFuncionalidadesTestController extends ControllerBase{
 
 		array_push($respuesta, $resultado);
 		$this->rellenarRespuesta('TEST_ATRIBUTOS_GESTION_FUNCIONALIDADES_OK', false, $respuesta);
+		$this->getRespuesta($respuesta);
+	}
+
+	function testAccionesGestionFuncionalidades() {
+		
+		$respuesta = $this->testGestionFuncionalidadesService->testAccionGestionFuncionalidades();
+		if($respuesta == 'TEST_FALLIDOS'){
+			$this->rellenarRespuesta($respuesta, true, '');
+		}
+
+		$this->rellenarRespuesta('TEST_ACCIONES_GESTION_FUNCIONALIDADES_OK', false, $respuesta);
 		$this->getRespuesta($respuesta);
 	}
 }

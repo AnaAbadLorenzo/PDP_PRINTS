@@ -1,13 +1,19 @@
 /**Función para recuperar los test con ajax y promesas*/
-function test(urlPeticionAjax, code){
+function test(code, controlador, accion, tipoTest){
   return new Promise(function(resolve, reject) {
     var token = getCookie('tokenUsuario');
     
+    var data = {
+      controlador : controlador,
+      action: accion, 
+      tipoTest: tipoTest
+    }
+
     $.ajax({
-      method: "GET",
-      url: urlPeticionAjax,
-      contentType : "application/json",
-      dataType : 'json',
+      method: "POST",
+      url: urlTest,
+      contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+      data: data,
       headers: {'Authorization': token},
       }).done(res => {
         if (res.code != code) {
@@ -22,28 +28,34 @@ function test(urlPeticionAjax, code){
 /*Función que obtiene los test de de Login */
 async function testLogin(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      url = urlPeticionAjaxTestLoginAtributos;
+      controlador = 'Test';
+      accion =  'Login';
+      tipo = 'Atributos',
       code = 'TEST_ATRIBUTOS_LOGIN_OK';
     break;
     case 'Acciones':
-      url = urlPeticionAjaxTestLoginAcciones;
+      controlador = 'Test';
+      accion =  'Login';
+      tipo = 'Acciones',
       code = 'TEST_ACCIONES_LOGIN_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
     let idElementoList = ["iconoTestLogin", "iconoTestLogin" + tipoTest, "iconoTestLogin" + tipoTest + "Login"];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["usuario", "passwdUsuario"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesLogin", "cuerpoAccionesLogin", atributosValor, "Login", idElementoList, "acciones");
+      let atributosValor = ["usuario", "passwd_usuario"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesLogin", "cuerpoAccionesLogin", atributosValor, "Login", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosLogin", "cuerpoAtributosLogin", "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosLogin", "cuerpoAtributosLogin", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -53,28 +65,34 @@ async function testLogin(tipoTest){
 /*Función que obtiene los test de Recuperar Pass */
 async function testRecuperarPass(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      url = urlPeticionAjaxTestRecuperarPassAtributos;
-      code = 'TEST_ATRIBUTOS_RECUPERARPASS_OK';
+      controlador = 'Test';
+      accion =  'RecuperarPass';
+      tipo = 'Atributos',
+      code = 'TEST_ATRIBUTOS_RECUPERAR_PASS_OK';
     break;
     case 'Acciones':
-      url = urlPeticionAjaxTestRecuperarPassAcciones;
-      code = 'TEST_ACCIONES_RECUPERARPASS_OK';
+      controlador = 'Test';
+      accion =  'RecuperarPass';
+      tipo = 'Acciones',
+      code = 'TEST_ACCIONES_RECUPERAR_PASS_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
     let idElementoList = ["iconoTestLogin", "iconoTestLogin" + tipoTest, "iconoTestLogin" + tipoTest + "RecuperarPass"];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["emailP", "usuario"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesRecuperarPass", "cuerpoAccionesRecuperarPass", atributosValor, "RecuperarPass", idElementoList, "acciones");
+      let atributosValor = ["email_persona", "usuario"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesRecuperarPass", "cuerpoAccionesRecuperarPass", atributosValor, "RecuperarPass", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosRecuperarPass", "cuerpoAtributosRecuperarPass", "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosRecuperarPass", "cuerpoAtributosRecuperarPass", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -84,28 +102,34 @@ async function testRecuperarPass(tipoTest){
 /*Función que obtiene los test de Registrar */
 async function testRegistrar(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      url = urlPeticionAjaxTestRegistrarAtributos;
+      controlador = 'Test';
+      accion =  'Registro';
+      tipo = 'Atributos',
       code = 'TEST_ATRIBUTOS_REGISTRO_OK';
     break;
     case 'Acciones':
-      url = urlPeticionAjaxTestRegistrarAcciones;
+      controlador = 'Test';
+      accion =  'Registro';
+      tipo = 'Acciones',
       code = 'TEST_ACCIONES_REGISTRO_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
     let idElementoList = ["iconoTestRegistrar", "iconoTestRegistrar" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["nombreP", "apellidosP", "fechaNacP", "telefonoEmpresa", "nombreEmpresa", "direccionP", "emailP", "cifEmpresa", "direccionEmpresa", "seleccionarEmpresa", "telefonoP", "usuario", "dniP", "passwdUsuario"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesRegistrar", "cuerpoAccionesRegistrar", atributosValor, "Registrar", idElementoList, "acciones");
+      let atributosValor = ["nombre_persona", "apellidos_persona", "fecha_nac_persona", "direccion_persona", "email_persona", "telefono_persona", "usuario", "dni_persona", "passwd_usuario"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesRegistrar", "cuerpoAccionesRegistrar", atributosValor, "Registrar", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosRegistrar", "cuerpoAtributosRegistrar", "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosRegistrar", "cuerpoAtributosRegistrar", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -113,56 +137,36 @@ async function testRegistrar(tipoTest){
 }
 
 /*Función que obtiene los test de rol */
-async function testRol(accion, tipoTest){
+async function testRol(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTO_ROL_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestRolAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestRolAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestRolAtributosAccionModificar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionRoles';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_ROLES_OK';
     break;
-     case 'Acciones':
-      code = 'TEST_ACCIONES_ROL_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestRolAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestRolAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestRolAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestRolAccionEliminar;
-        break;
-        case 'Reactivar':
-          url = urlPeticionAjaxTestRolAccionReactivar;
-        break;
-      }
+    case 'Acciones':
+      controlador = 'Test';
+      accion = 'GestionRoles';
+      tipo = 'Acciones';
+      code = 'TEST_ACCIONES_GESTION_ROLES_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestRol", "iconoTestRol" + tipoTest, "iconoTestRol" + tipoTest + accion ];
+    let idElementoList = ["iconoTestRol", "iconoTestRol" + tipoTest, "iconoTestRol" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["rolDescription", "rolName"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesRol" + accion, "cuerpoAccionesRol" + accion, atributosValor, "Rol", idElementoList, "acciones");
+      let atributosValor = ["descripcion_rol", "nombre_rol"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesRol", "cuerpoAccionesRol", atributosValor, "Rol", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosRol" + accion, "cuerpoAtributosRol" + accion, "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosRol", "cuerpoAtributosRol", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -170,56 +174,35 @@ async function testRol(accion, tipoTest){
 }
 
 /*Función que obtiene los test de funcionalidad */
-async function testFuncionalidad(accion, tipoTest){
-
-  var url = "";
+async function testFuncionalidad(tipoTest){
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTOS_FUNCIONALIDAD_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestFuncionalidadAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestFuncionalidadAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestFuncionalidadAtributosAccionModificar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionFuncionalidades';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_FUNCIONALIDADES_OK';
     break;
     case 'Acciones':
-      code = 'TEST_ACCIONES_FUNCIONALIDAD_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestFuncionalidadAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestFuncionalidadAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestFuncionalidadAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestFuncionalidadAccionEliminar;
-        break;
-        case 'Reactivar':
-          url = urlPeticionAjaxTestFuncionalidadAccionReactivar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionFuncionalidades';
+      tipo = 'Acciones';
+      code = 'TEST_ACCIONES_GESTION_FUNCIONALIDADES_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestFuncionalidad", "iconoTestFuncionalidad" + tipoTest, "iconoTestFuncionalidad" + tipoTest + accion];
+    let idElementoList = ["iconoTestFuncionalidad", "iconoTestFuncionalidad" + tipoTest, "iconoTestFuncionalidad" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["descripFuncionalidad", "nombreFuncionalidad"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesFuncionalidad" + accion, "cuerpoAccionesFuncionalidad" + accion, atributosValor, "Funcionalidad", idElementoList, "acciones");
+      let atributosValor = ["descripcion_funcionalidad", "nombre_funcionalidad"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesFuncionalidad", "cuerpoAccionesFuncionalidad", atributosValor, "Funcionalidad", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosFuncionalidad" + accion, "cuerpoAtributosFuncionalidad" + accion, "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosFuncionalidad", "cuerpoAtributosFuncionalidad", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -227,62 +210,35 @@ async function testFuncionalidad(accion, tipoTest){
 }
 
 /*Función que obtiene los test de acción */
-async function testAccion(accion, tipoTest){
-
-  var url = "";
+async function testAccion(tipoTest){
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTOS_ACCION_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestAccionAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestAccionAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestAccionAtributosAccionModificar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionAcciones';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_ACCIONES_OK';
     break;
     case 'Acciones':
-      code = 'TEST_ACCION_ACCION_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestAccionAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestAccionAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestAccionAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestAccionAccionEliminar;
-        break;
-        case 'Reactivar':
-          url = urlPeticionAjaxTestAccionAccionReactivar;
-        break;
-        case 'Asignar':
-          url = urlPeticionAjaxTestAccionAccionAsignar;
-        break;
-        case 'Revocar':
-          url = urlPeticionAjaxTestAccionAccionRevocar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionAcciones';
+      tipo = 'Acciones';
+      code = 'TEST_ACCIONES_GESTION_ACCIONES_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestAccion", "iconoTestAccion" + tipoTest, "iconoTestAccion" + tipoTest + accion];
+    let idElementoList = ["iconoTestAccion", "iconoTestAccion" + tipoTest, "iconoTestAccion" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["descripAccion", "nombreAccion"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesAccion" + accion, "cuerpoAccionesAccion" + accion, atributosValor, "Accion", idElementoList, "acciones");
+      let atributosValor = ["descripcion_accion", "nombre_accion"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesAccion", "cuerpoAccionesAccion", atributosValor, "Accion", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosAccion" + accion, "cuerpoAtributosAccion" + accion, "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosAccion", "cuerpoAtributosAccion", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -290,53 +246,36 @@ async function testAccion(accion, tipoTest){
 }
 
 /*Función que obtiene los test de usuario */
-async function testUsuario(accion, tipoTest){
+async function testUsuario(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTOS_USUARIO_OK';
-      switch(accion){
-        case 'ModificarRolUsuario':
-          url = urlPeticionAjaxTestUsuarioAtributosAccionModificarRolUsuario;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestUsuarioAtributosAccionBuscar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionUsuarios';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_USUARIOS_OK';
     break;
     case 'Acciones':
-      code = 'TEST_ACCIONES_USUARIO_OK';
-      switch(accion){
-        case 'Buscar':
-          url = urlPeticionAjaxTestUsuarioAccionBuscar;
-        break;
-        case 'ModificarRolUsuario':
-          url = urlPeticionAjaxTestUsuarioAccionModificarRolUsuario;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestUsuarioAccionEliminar;
-        break;
-        case 'Reactivar':
-          url = urlPeticionAjaxTestUsuarioAccionReactivar;
-        break;
-        case 'ModificarPasswdUsuario':
-          url = urlPeticionAjaxTestUsuarioAccionModificarPasswdUsuario;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionUsuarios';
+      tipo = 'Acciones';
+      code = 'TEST_ACCIONES_GESTION_USUARIOS_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestUsuario", "iconoTestUsuario" + tipoTest, "iconoTestUsuario" + tipoTest + accion];
+    let idElementoList = ["iconoTestUsuario", "iconoTestUsuario" + tipoTest, "iconoTestUsuario" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["dniUsuario", "usuario", "passwdUsuario"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesUsuario" + accion, "cuerpoAccionesUsuario" + accion, atributosValor, "Usuario", idElementoList, "acciones");
+      let atributosValor = ["dni_usuario", "usuario", "passwd_usuario"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesUsuario", "cuerpoAccionesUsuario", atributosValor, "Usuario", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosUsuario" + accion, "cuerpoAtributosUsuario" + accion, "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosUsuario", "cuerpoAtributosUsuario", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -344,53 +283,36 @@ async function testUsuario(accion, tipoTest){
 }
 
 /*Función que obtiene los test noticia */
-async function testNoticia(accion, tipoTest){
+async function testNoticia(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTOS_NOTICIA_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestNoticiaAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestNoticiaAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestNoticiaAtributosAccionModificar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionNoticias';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_NOTICIAS_OK';
     break;
     case 'Acciones':
-      code = 'TEST_ACCIONES_NOTICIA_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestNoticiaAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestNoticiaAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestNoticiaAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestNoticiaAccionEliminar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionNoticias';
+      tipo = 'Acciones';
+      code = 'TEST_ACCIONES_GESTION_NOTICIAS_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestNoticia", "iconoTestNoticia" + tipoTest, "iconoTestNoticia" + tipoTest + accion];
+    let idElementoList = ["iconoTestNoticia", "iconoTestNoticia" + tipoTest, "iconoTestNoticia" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["tituloNoticia", "textoNoticia", "fechaNoticia"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesNoticia" + accion, "cuerpoAccionesNoticia" + accion, atributosValor, "Noticia", idElementoList, "acciones");
+      let atributosValor = ["titulo_noticia", "contenido_noticia", "fecha_noticia"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesNoticia", "cuerpoAccionesNoticia", atributosValor, "Noticia", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosNoticia" + accion, "cuerpoAtributosNoticia" + accion, "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosNoticia", "cuerpoAtributoNoticia", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -398,110 +320,36 @@ async function testNoticia(accion, tipoTest){
 }
 
 /*Función que obtiene los test de persona */
-async function testPersona(accion, tipoTest){
+async function testPersona(tipoTest){
 
-  var url = "";
+  var controlador = "";
   var code = "";
+  var accion = "";
+  var tipo = "";
 
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTOS_PERSONA_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestPersonaAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestPersonaAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestPersonaAtributosAccionModificar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionPersonas';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_PERSONAS_OK';
     break;
     case 'Acciones':
-      code = 'TEST_ACCIONES_PERSONA_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestPersonaAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestPersonaAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestPersonaAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestPersonaAccionEliminar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionPersonas';
+      tipo = 'Acciones';
+      code = 'TEST_ACCIONES_GESTION_PERSONAS_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestPersona", "iconoTestPersona" + tipoTest, "iconoTestPersona" + tipoTest + accion];
+    let idElementoList = ["iconoTestPersona", "iconoTestPersona" + tipoTest, "iconoTestPersona" + tipoTest];
     if (tipoTest === 'Acciones') {
-      let atributosValor = ["dniP", "nombreP", "apellidosP", "fechaNacP", "direccionP", "emailP", "telefonoP", "borradoPersona"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesPersona" + accion, "cuerpoAccionesPersona" + accion, atributosValor, "Persona", idElementoList, "acciones");
+      let atributosValor = ["dni_persona", "nombre_persona", "apellidos_persona", "fecha_nac_persona", "direccion_persona", "email_persona", "telefono_persona", "borrado_persona"];
+      cargarRespuestaOkTest(res.resource, "cabeceraAccionesPersona", "cuerpoAccionesPersona", atributosValor, "Persona", idElementoList, "acciones");
     } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosPersona" + accion, "cuerpoAtributosPersona" + accion, "", "", idElementoList, "atributos");
-    }
-    }).catch((res) => {
-      cargarModalErroresTest(res.code);
-  });
-}
-
-/*Función que obtiene los test empresa */
-async function testEmpresa(accion, tipoTest){
-  
-  var url = "";
-  var code = "";
-
-  switch(tipoTest){
-    case 'Atributos':
-      code = 'TEST_ATRIBUTOS_EMPRESA_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestEmpresaAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestEmpresaAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestEmpresaAtributosAccionModificar;
-        break;
-      }
-    break;
-    case 'Acciones':
-      code = 'TEST_ACCIONES_EMPRESA_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestEmpresaAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestEmpresaAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestEmpresaAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestEmpresaAccionEliminar;
-        break;
-        case 'Reactivar':
-          url = urlPeticionAjaxTestEmpresaAccionReactivar;
-        break;
-      }
-    break;
-  }
-
-  await test(url, code)
-  .then((res) => {
-    let idElementoList = ["iconoTestEmpresa", "iconoTestEmpresa" + tipoTest, "iconoTestEmpresa" + tipoTest + accion];
-    if (tipoTest === 'Acciones') {
-      let atributosValor = ["cifEmpresa", "nombreEmpresa", "direccionEmpresa", "telefonoEmpresa"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesEmpresa" + accion, "cuerpoAccionesEmpresa" + accion, atributosValor, "Empresa", idElementoList, "acciones");
-    } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosEmpresa" + accion, "cuerpoAtributosEmpresa" + accion, "", "", idElementoList, "atributos");
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosPersona", "cuerpoAtributosPersona", "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);
@@ -509,56 +357,30 @@ async function testEmpresa(accion, tipoTest){
 }
 
 /*Función que obtiene los test objetivo */
-async function testObjetivo(accion, tipoTest){
+async function testCategoria(tipoTest){
   
   var url = "";
   var code = "";
 
+  var controlador = "";
+  var code = "";
+  var accion = "";
+  var tipo = "";
+
   switch(tipoTest){
     case 'Atributos':
-      code = 'TEST_ATRIBUTOS_OBJETIVO_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestObjetivoAtributosAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestObjetivoAtributosAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestObjetivoAtributosAccionModificar;
-        break;
-      }
-    break;
-    case 'Acciones':
-      code = 'TEST_ACCIONES_OBJETIVO_OK';
-      switch(accion){
-        case 'Guardar':
-          url = urlPeticionAjaxTestObjetivoAccionGuardar;
-        break;
-        case 'Buscar':
-          url = urlPeticionAjaxTestObjetivoAccionBuscar;
-        break;
-        case 'Modificar':
-          url = urlPeticionAjaxTestObjetivoAccionModificar;
-        break;
-        case 'Eliminar':
-          url = urlPeticionAjaxTestObjetivoAccionEliminar;
-        break;
-        case 'Reactivar':
-          url = urlPeticionAjaxTestObjetivoAccionReactivar;
-        break;
-      }
+      controlador = 'Test';
+      accion = 'GestionCategorias';
+      tipo = 'Atributos';
+      code = 'TEST_ATRIBUTOS_GESTION_CATEGORIAS_OK';
     break;
   }
 
-  await test(url, code)
+  await test(code, controlador, accion, tipo)
   .then((res) => {
-    let idElementoList = ["iconoTestObjetivo", "iconoTestObjetivo" + tipoTest, "iconoTestObjetivo" + tipoTest + accion];
-    if (tipoTest === 'Acciones') {
-      let atributosValor = ["nombreObjetivo", "descripObjetivo"];
-      cargarRespuestaOkTest(res.data.datosPruebaAcciones, "cabeceraAccionesObjetivo" + accion, "cuerpoAccionesObjetivo" + accion, atributosValor, "Objetivo", idElementoList, "acciones");
-    } else if (tipoTest === 'Atributos'){
-      cargarRespuestaOkTest(res.data.datosPruebaAtributos, "cabeceraAtributosObjetivo" + accion, "cuerpoAtributosObjetivo" + accion, "", "", idElementoList, "atributos");
+    let idElementoList = ["iconoTestCategoria", "iconoTestCategoria" + tipoTest, "iconoTestCategoria" + tipoTest];
+   if (tipoTest === 'Atributos'){
+      cargarRespuestaOkTest(res.resource, "cabeceraAtributosCategoria", "cuerpoAtributosCategoria" + accion, "", "", idElementoList, "atributos");
     }
     }).catch((res) => {
       cargarModalErroresTest(res.code);

@@ -21,9 +21,10 @@ class TestGestionAcciones{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['nombre_accion'] = 'accion';
+        $_POST['nombre_accion'] = 'Accion';
         $_POST['descripcion_accion'] = 'Esta es la descripción de la acción';
         $_POST['borrado_accion'] = 0;
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaAñadirAccionOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -33,6 +34,7 @@ class TestGestionAcciones{
         $_POST['action'] = $action;
         $_POST['nombre_accion'] = 'Accion';
         $_POST['descripcion_accion'] = 'Esta es la descripción de la acción';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaAñadirAccionYaExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -41,9 +43,10 @@ class TestGestionAcciones{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 2;
-        $_POST['nombre_accion'] = 'Añadir';
-        $_POST['descripcion_accion'] = 'Esta es la acción que permite insertar datos en la aplicación';
+        $_POST['id_accion'] = 3;
+        $_POST['nombre_accion'] = 'accionModificar';
+        $_POST['descripcion_accion'] = 'Esta es la acción que permite modificar datos en la aplicación';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaModificarAccionOK($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -51,9 +54,10 @@ class TestGestionAcciones{
         $_POST = NULL;
         $_POST['controlador'] = $controlador;
         $_POST['action'] = $action;
-        $_POST['id_accion'] = 1;
+        $_POST['id_accion'] = 99999999;
         $_POST['nombre_accion'] = 'Modificar';
         $_POST['descripcion_accion'] = 'Esta es la acción que permite cambiar datos en la aplicación';
+        $_POST['test'] = 'testing';
         $resultadoTest = $this->hacerPruebaModificarAccionNoExiste($_POST);
         array_push($pruebas, $resultadoTest);
 
@@ -62,57 +66,38 @@ class TestGestionAcciones{
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 2;
-         $_POST['nombre_accion'] = 'Añadir';
-         $_POST['descripcion_accion'] = 'Esta es la acción que permite insertar datos en la aplicación';
+         $_POST['id_accion'] = 3;
+         $_POST['nombre_accion'] = 'accionModificar';
+         $_POST['descripcion_accion'] = 'Esta es la acción que permite modificar datos en la aplicación';
+         $_POST['test'] = 'testing';
          $resultadoTest = $this->hacerPruebaDeleteAccionOK($_POST);
          array_push($pruebas, $resultadoTest);
 
-         //DELETE_ACCION_NO_EXISTE
+         //DELETE_ACCION_PERMISOS_ASOCIADOS
          $action = 'delete';
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 1;
-         $_POST['nombre_accion'] = 'Modificar';
-         $_POST['descripcion_accion'] = 'Esta es la acción que permite cambiar datos en la aplicación';
-         $resultadoTest = $this->hacerPruebaDeleteAccionNoExiste($_POST);
+         $_POST['id_accion'] = 4;
+         $_POST['nombre_accion'] = 'accionPermisos';
+         $_POST['descripcion_accion'] = 'Esta es la acción que tiene permisos asociados';
+         $_POST['test'] = 'testing';
+         $resultadoTest = $this->hacerPruebaDeleteAccionPermisosAsociados($_POST);
          array_push($pruebas, $resultadoTest);
 
-         //DELETE_ACCION_ASOCIADA_USUARIO_FUNCIONALIDAD
-         $action = 'delete';
-         $_POST = NULL;
-         $_POST['controlador'] = $controlador;
-         $_POST['action'] = $action;
-         $_POST['id_accion'] = 2;
-         $_POST['nombre_accion'] = 'Añadir';
-         $_POST['descripcion_accion'] = 'Esta es la acción que permite insertar datos en la aplicación';
-         $resultadoTest = $this->hacerPruebaDeleteAccionAsociadaUsuarioFuncionalidad($_POST);
-         array_push($pruebas, $resultadoTest);
 
         //REACTIVAR_ACCION_OK
          $action = 'reactivar';
          $_POST = NULL;
          $_POST['controlador'] = $controlador;
          $_POST['action'] = $action;
-         $_POST['id_accion'] = 2;
-         $_POST['nombre_accion'] = 'Añadir';
-         $_POST['descripcion_accion'] = 'Esta es la acción que permite insertar datos en la aplicación';
+         $_POST['id_accion'] = 3;
+         $_POST['nombre_accion'] = 'accionModificar';
+         $_POST['descripcion_accion'] = 'Esta es la acción que permite modificar datos en la aplicación';
+         $_POST['test'] = 'testing';
          $resultadoTest = $this->hacerPruebaReactivarAccionOK($_POST);
          array_push($pruebas, $resultadoTest);
 
-         //REACTIVAR_ACCION_NO_EXISTE
-         $action = 'reactivar';
-         $_POST = NULL;
-         $_POST['controlador'] = $controlador;
-         $_POST['action'] = $action;
-         $_POST['id_accion'] = 1;
-         $_POST['nombre_accion'] = 'Modificar';
-         $_POST['descripcion_accion'] = 'Esta es la acción que permite cambiar datos en la aplicación';
-         $resultadoTest = $this->hacerPruebaReactivarAccionNoExiste($_POST);
-         array_push($pruebas, $resultadoTest);
- 
-        
         $this->deleteData('nombre_accion', 'Accion');
         return $pruebas;
 
@@ -188,21 +173,21 @@ class TestGestionAcciones{
             'nombre_accion' => $atributo['nombre_accion'],
             'descripcion_accion' => $atributo['descripcion_accion']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_ACCION_COMPLETO , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, DELETE_ACCION_COMPLETO , ÉXITO, $datosValores);
     }
 
-    function hacerPruebaDeleteAccionNoExiste($atributo){
+    function hacerPruebaDeleteAccionPermisosAsociados($atributo){
         $resultado = $this->conexionesBDTest->pruebaTesting('accion', $atributo);
-        $resultadoEsperado = 'ACCION_NO_EXISTE'." - ". ACCION_NO_EXISTE;
+        $resultadoEsperado = 'ACCION_TIENE_PERMISOS_ASOCIADOS'." - ". ACCION_TIENE_PERMISOS_ASOCIADOS;
         $resultadoObtenido = '';
-        if(!empty($resultado) && $resultado['code'] == 'ACCION_NO_EXISTE'){
-            $resultadoObtenido = 'ACCION_NO_EXISTE'." - ". ACCION_NO_EXISTE;
+        if(!empty($resultado) && $resultado['code'] == 'ACCION_TIENE_PERMISOS_ASOCIADOS'){
+            $resultadoObtenido = 'ACCION_TIENE_PERMISOS_ASOCIADOS'." - ". ACCION_TIENE_PERMISOS_ASOCIADOS;
         }
         $datosValores = array(
             'nombre_accion' => $atributo['nombre_accion'],
             'descripcion_accion' => $atributo['descripcion_accion']
         );
-        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ACCION_NO_EXISTE , ERROR, $datosValores);
+        return $this->test->createDatosPruebaAcciones($resultadoObtenido, $resultadoEsperado, ACCION_TIENE_PERMISOS_ASOCIADOS , ERROR, $datosValores);
     }
 
     function hacerPruebaDeleteAccionAsociadaUsuarioFuncionalidad($atributo){
@@ -252,6 +237,7 @@ class TestGestionAcciones{
         $_POST['tabla'] = 'accion';
         $_POST['clave'] = $clave;
         $_POST['valor'] = $valor;
+        $_POST['test'] = 'testing';
         
         $this->conexionesBDTest->pruebaTesting('delete', $_POST);
     }

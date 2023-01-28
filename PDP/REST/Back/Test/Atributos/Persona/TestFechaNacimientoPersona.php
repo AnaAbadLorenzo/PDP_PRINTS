@@ -7,7 +7,7 @@ include_once './Test/TiposPruebas.php';
 $funcionesComunes = new FuncionesComunes();
 
 class TestFechaNacimientoPersona extends Test{
-    function testAtributoFechaNacPersona() {
+    function testAtributoFechaNacimientoPersona() {
         $pruebas = array();
         
         //FECHA_NAC_PERSONA_VACIO

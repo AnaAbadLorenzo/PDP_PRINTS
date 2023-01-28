@@ -2,7 +2,7 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Test/impl/TestLoginServiceImpl.php';
-include_once './Test/Atributos/TestUsuario.php';
+include_once './Test/Atributos/Usuario/TestUsuario.php';
 
 class LoginTestController extends ControllerBase{
 

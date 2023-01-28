@@ -23,7 +23,7 @@ class TestNombreCategoria extends Test{
 
         //NOMBRE_CATEGORIA_MAYOR_QUE_48
         $_POST['nombre_categoria'] = 'Categoriaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-        $resultadoTest = $this->hacerPruebaNombreCategoriaMayor48($_POST);
+        $resultadoTest = $this->hacerPruebaNombreCategoriaMayor128($_POST);
         array_push($pruebas, $resultadoTest);
 
         //NOMBRE_CATEGORIA_INICIA_CARACTERES_ESPECIALES
@@ -33,7 +33,7 @@ class TestNombreCategoria extends Test{
 
         //NOMBRE_CATEGORIA_CORRECTO
         $_POST['nombre_categoria'] = 'Categoria';
-        $resultadoTest = $this->hacerPruebaNombreCorrecto($_POST);
+        $resultadoTest = $this->hacerPruebaNombreCategoriaCorrecto($_POST);
         array_push($pruebas, $resultadoTest);
 
         return $pruebas;
@@ -56,10 +56,10 @@ class TestNombreCategoria extends Test{
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, LONGITUD_MINIMA_ERRONEA, ERROR, $atributo['nombre_categoria'], 'nombre_categoria');
     }
 
-    function hacerPruebaNombreCategoriaMayor48($atributo){
+    function hacerPruebaNombreCategoriaMayor128($atributo){
         $funcionesComunes = new FuncionesComunes();
-        $resultadoObtenido = $funcionesComunes->comprobarAtributosLongitudMayor($atributo['nombre_categoria'], 'gestCategorias', 'nombre_categoria', 48);
-        $resultadoEsperado = 'NOMBRE_CATEGORIA_MAYOR_QUE_48'." - ".NOMBRE_CATEGORIA_MAYOR_QUE_48;
+        $resultadoObtenido = $funcionesComunes->comprobarAtributosLongitudMayor($atributo['nombre_categoria'], 'gestCategorias', 'nombre_categoria', 128);
+        $resultadoEsperado = 'NOMBRE_CATEGORIA_MAYOR_QUE_128'." - ".NOMBRE_CATEGORIA_MAYOR_QUE_128;
 
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, LONGITUD_MAXIMA_ERRONEA, ERROR, $atributo['nombre_categoria'], 'nombre_categoria');
 

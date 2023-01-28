@@ -2,20 +2,20 @@
 
 include_once './Test/Atributos/Usuario/TestUsuario.php';
 include_once './Test/Atributos/Usuario/TestPasswdUsuario.php';
-include_once './Test/Accion/TestLogin.php';
-include_once './Servicios/Test/TestLoginService.php';
+include_once './Test/Accion/TestGestionUsuarios.php';
+include_once './Servicios/Test/TestGestionUsuariosService.php';
 
-class TestLoginServiceImpl implements TestLoginService {
+class TestGestionUsuariosServiceImpl implements TestGestionUsuariosService {
 
     private $testUsuario;
     private $testPasswdUsuario;
-    private $testLogin;
+    private $testUsuarioAccion;
 
     function __construct()
     {
         $this->testUsuario = new TestUsuario();
         $this->testPasswdUsuario = new TestPasswdUsuario();
-        $this->testLogin = new TestLogin();
+        $this->testUsuarioAccion = new TestGestionusuarios();
     }
     function testAtributoUsuario() {
         $respuesta = '';
@@ -37,15 +37,14 @@ class TestLoginServiceImpl implements TestLoginService {
         return $respuesta;
     }
 
-    function testAccionLogin() {
+    function testAccionGestionUsuarios(){
         $respuesta = '';
-        $respuesta = $this->testLogin->testAccionesLogin();
+        $respuesta = $this->testUsuarioAccion->testUsuariosGestionUsuarios();
 
         if(empty($respuesta)){
-           $respuesta = 'TEST_FALLIDOS';
+            $respuesta = 'TEST_FALLIDOS';
         }
         return $respuesta;
     }
-
 }
 ?>

@@ -605,7 +605,9 @@ arrayES={
 	'USUARIO_TIENE_PROCESO' : 'El usuario no puede eliminarse porque tiene procesos asociados',
 	'USUARIO_TIENE_PROCESO_USUARIO' : 'El usuario no puede eliminarse porque tiene procesos asociados',
 	'ADD_PROCESO_COMPLETO' : 'El proceso se ha guardado correctamente',
-	'EDIT_PROCESO_COMPLETO' : 'El proceso se ha editado correctamente'
+	'EDIT_PROCESO_COMPLETO' : 'El proceso se ha editado correctamente',
+	'TEST' : 'Test',
+	'PROCESO_ESTA_ASOCIADO_A_USUARIO' : 'El proceso no puede eliminarse porque tiene un usuario ejecutándolo'
 
 
 

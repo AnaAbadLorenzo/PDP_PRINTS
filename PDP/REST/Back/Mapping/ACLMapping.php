@@ -84,13 +84,11 @@ class ACLMapping extends MappingBase {
     }
 
     function searchByRol($datos_search) {
-        
         $this -> query = 
             "SELECT * FROM `rol_accion_funcionalidad`
             WHERE
                 `id_rol`='" . $datos_search['id_rol'] . "';"
         ;
-
         $this->stmt = $this->conexion->prepare($this->query);
         $this -> get_results_from_query();
 

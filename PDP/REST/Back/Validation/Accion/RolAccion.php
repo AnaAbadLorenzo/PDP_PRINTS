@@ -114,7 +114,6 @@ class RolAccion extends ValidacionesBase {
 		$resultado = array();
 		$this -> acl -> searchByRol($rol_datos);
 		$resultado = $this -> acl -> resource;
-
 		if (sizeof($resultado) == 0) {
 			return true;
 		} else {

@@ -599,7 +599,8 @@ arrayEN={
 	'USUARIO_TIENE_PROCESO' : 'The user can not be deleted because it has associated process',
 	'USUARIO_TIENE_PROCESO_USUARIO' : 'The user can not be deleted because it has associated process',
 	'ADD_PROCESO_COMPLETO' : 'The process has been saved correctly',
-	'EDIT_PROCESO_COMPLETO' : 'The process has been modified correctly'
+	'EDIT_PROCESO_COMPLETO' : 'The process has been modified correctly',
+	'TEST' : 'Test'
 
 
 }

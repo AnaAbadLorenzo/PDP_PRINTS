@@ -78,7 +78,7 @@ async function continuarProceso(idProceso, idProcesoUsuario){
         for(var i = 0; i<parametrosValor.length; i++){
           if(parametros[j]['parametro']['id_parametro'] == parametrosValor[i]['id_parametro']){
             arrayPintados.push(parametros[j]['parametro']['id_parametro']);
-            var tr = construyeProcesoUsuarioContinuar(parametrosValor[i]['valor_parametro'], parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'],'No');
+            var tr = construyeProcesoUsuarioContinuar(parametrosValor[i]['valor_parametro'], parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['descripcion_parametro'], parametros[j]['parametro']['id_parametro'],'No');
             $('#formularioModalMostrarProcesoUsuario').append(tr);
           }
         }
@@ -90,7 +90,7 @@ async function continuarProceso(idProceso, idProcesoUsuario){
             }
           }
           if(pintar){
-            var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'], 'No');
+            var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['descripcion_parametro'], parametros[j]['parametro']['id_parametro'], 'No');
             $('#formularioModalMostrarProcesoUsuario').append(tr);
           }
       }
@@ -199,13 +199,13 @@ async function verProceso(idProceso, idProcesoUsuario){
               }
             }
             if(pintar){
-              var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'], 'Si');
+              var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['descripcion_parametro'],parametros[j]['parametro']['id_parametro'], 'Si');
               $('#formularioModalMostrarProcesoUsuario').append(tr);
             }
         }
       }else{
         for(var j = 0; j<parametros.length; j++){
-          var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'], parametros[j]['parametro']['id_parametro'], 'Si');
+          var tr = construyeProcesoUsuarioContinuar('', parametros[j]['parametro']['parametro_formula'],parametros[j]['parametro']['descripcion_parametro'], parametros[j]['parametro']['id_parametro'], 'Si');
                 $('#formularioModalMostrarProcesoUsuario').append(tr);
         }
       }
@@ -276,7 +276,7 @@ function calcularHuellaCarbono(idProcesoUsuario){
       data: data,  
       headers: {'Authorization': token},
       }).done(res => {
-        if (res.code != 'PROCESO_USUARIO_PARAMETRO_EDITADO') {
+        if (res.code != 'CALCULO_PROCESO_USUARIO_CORRECTO') {
           reject(res);
         }
         resolve(res);
@@ -304,10 +304,10 @@ function construyeProcesoUsuarioInicio(idProcesoUsuario){
   $('#formularioModalMostrarProcesoUsuario').append(formularioFin);              
 }
 
-function construyeProcesoUsuarioContinuar(valor, nombre, id, visualizar){
+function construyeProcesoUsuarioContinuar(valor, nombre, descripcion, id, visualizar){
 if(valor != ''){
   if(visualizar == 'Si'){
-    parametro = '<label class="labelForm" id="label'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
+    parametro = '<label class="labelForm" id="label'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+' (' + descripcion + ')</label>' +
     '<input type="number" max="9999999999999999999999999999" name="' + nombre+'" id="' + id +'" class="" value="'+valor+'" onblur="" disabled>';
   }else{
     parametro = '<label class="labelForm" id="label'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
@@ -316,7 +316,7 @@ if(valor != ''){
  
 }else{
   if(visualizar == 'Si'){
-    parametro = '<label class="labelForm" id="'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
+    parametro = '<label class="labelForm" id="'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+' (' + descripcion + ')</label>' +
     '<input type="number" max="9999999999999999999999999999" name="' + nombre+'" id="' + id +'" class="" onblur="" disabled>';
   }else{
     parametro = '<label class="labelForm" id="'+nombre+'">' +(nombre).charAt(0).toUpperCase() + (nombre).slice(1)+'</label>' +
@@ -348,7 +348,7 @@ async function refrescarTabla(numeroPagina, tamanhoPagina, paginadorCreado){
           $('#paginacion').html('');
           var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
           $('#paginacion').append(textPaginacion);
-
+          document.getElementById('filasTabla').style.display='block';
           $('#procesos').html('');
           for (var i = 0; i < res.resource.listaBusquedas.length; i++){
             try{
@@ -402,6 +402,7 @@ async function cargarProcesosUsuarioEjecutados(numeroPagina, tamanhoPagina, pagi
           $('#paginacion').html('');
           var textPaginacion = inicio + " - " + (parseInt(res.resource.inicio)+parseInt(numResults))  + " total " + totalResults;
           $('#paginacion').append(textPaginacion);
+          document.getElementById('filasTabla').style.display='block';
 
           $('#procesos').html('');
           for (var i = 0; i < res.resource.listaBusquedas.length; i++){
@@ -622,7 +623,7 @@ async function cargarMisProcesosUsuario(procesosUsuario, parametrosProcesosUsuar
 										'<div class="card-title">' + procesosUsuario.proceso.nombre_proceso + '</div>' + 
 										'<div class="card-text">' + procesosUsuario.proceso.descripcion_proceso + '</div>' +
 										'<div class="parametros">' + numeroParametrosCubiertos + '/' + numeroParametros + '</div>' + 
-										'<div class="puntuacion">Huella carbono: ' + procesosUsuario.procesoUsuario.calculo_huella_carbono +'%</div>' +
+										'<div class="puntuacion">Huella carbono: ' + procesosUsuario.procesoUsuario.calculo_huella_carbono +'</div>' +
 										'<div class="fecha">' + fecha + '</div>';
 
                     if(numeroParametrosCubiertos == 0){
@@ -688,7 +689,7 @@ async function cargarMisProcesosUsuario(procesosUsuario, parametrosProcesosUsuar
                                           '<span class="tooltiptext ICON_CONTINUAR_PROCESO"></span>' + 
                                     '</div>' +
                                     '<div id="finalizadoProceso" class="tooltip12 finalizadoIcon" style="cursor: default;">' + 
-                                          '<img id="iconoFinalizarProceso" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado.png" alt="Procedimiento finalizado" onclick="" style="cursor: default;"/>' + 
+                                          '<img id="iconoFinalizarProceso" class="iconoFinalizado iconFinalizado" src="images/procedimientoFinalizado.png" alt="Procedimiento finalizado" onclick="finalizarProceso('+ procesosUsuario.procesoUsuario.id_proceso_usuario +');" style="cursor: default;"/>' + 
                                           '<span class="tooltiptext ICON_PROCESO_FINALIZADO"></span>' + 
                                     '</div>' + 
                                     '<div id="eliminarProceso" class="tooltip14 procedimientoIcon" style="cursor: not-allowed;">' + 

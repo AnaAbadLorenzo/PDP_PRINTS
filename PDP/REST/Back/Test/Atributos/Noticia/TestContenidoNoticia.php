@@ -13,7 +13,7 @@ class TestContenidoNoticia extends Test{
         //CONTENIDO_NOTICIA_VACIO
         $_POST = NULL;
         $_POST['contenido_noticia'] = '';
-        $resultadoTest = $this->hacerPruebaTituloNoticiaVacio($_POST);
+        $resultadoTest = $this->hacerPruebaContenidoNoticiaVacio($_POST);
         array_push($pruebas, $resultadoTest);
         
         //CONTENIDO_NOTICIA_MENOR_QUE_3
@@ -21,13 +21,17 @@ class TestContenidoNoticia extends Test{
         $resultadoTest = $this->hacerPruebaContenidoNoticiaMenor3($_POST);
         array_push($pruebas, $resultadoTest);
 
+        //CONTENIDO_NOTICIA_MENOR_QUE_3
+        $_POST['contenido_noticia'] = 'Este es el contenido de la noticia';
+        $resultadoTest = $this->hacerPruebaContenidoNoticiaCorrecto($_POST);
+        array_push($pruebas, $resultadoTest);
+
+
         return $pruebas;
 
          
     }
        
-
-
     function hacerPruebaContenidoNoticiaVacio($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributoBlank($atributo['contenido_noticia'], 'gestNoticias', 'contenido_noticia');
@@ -39,7 +43,7 @@ class TestContenidoNoticia extends Test{
     function hacerPruebaContenidoNoticiaMenor3($atributo){
         $funcionesComunes = new FuncionesComunes();
         $resultadoObtenido = $funcionesComunes->comprobarAtributosLongitudMenor($atributo['contenido_noticia'], 'gestNoticias', 'contenido_noticia', 3);
-        $resultadoEsperado = 'CONTENIDO_NOTICIA_MENOR_QUE_3'. " - ".TITULO_NOTICIA_MENOR_QUE_3;
+        $resultadoEsperado = 'CONTENIDO_NOTICIA_MENOR_QUE_3'. " - ".CONTENIDO_NOTICIA_MENOR_QUE_3;
             
           
         return $this->createDatosPruebaAtributos($resultadoObtenido, $resultadoEsperado, LONGITUD_MINIMA_ERRONEA, ERROR, $atributo['contenido_noticia'], 'contenido_noticia');

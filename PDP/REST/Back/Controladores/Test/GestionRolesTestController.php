@@ -2,8 +2,6 @@
 
 include_once './Controladores/ControllerBase.php';
 include_once './Servicios/Test/impl/TestGestionRolesServiceImpl.php';
-include_once './Test/Atributos/TestNombreRol.php';
-include_once './Test/Atributos/TestDescripcionRol.php';
 
 class GestionRolesTestController extends ControllerBase{
 
@@ -31,6 +29,17 @@ class GestionRolesTestController extends ControllerBase{
 
 		array_push($respuesta, $resultado);
 		$this->rellenarRespuesta('TEST_ATRIBUTOS_GESTION_ROLES_OK', false, $respuesta);
+		$this->getRespuesta($respuesta);
+	}
+
+	function testAccionesGestionRoles() {
+		
+		$respuesta = $this->testGestionRolesService->testAccionGestionRoles();
+		if($respuesta == 'TEST_FALLIDOS'){
+			$this->rellenarRespuesta($respuesta, true, '');
+		}
+
+		$this->rellenarRespuesta('TEST_ACCIONES_GESTION_ROLES_OK', false, $respuesta);
 		$this->getRespuesta($respuesta);
 	}
 }
