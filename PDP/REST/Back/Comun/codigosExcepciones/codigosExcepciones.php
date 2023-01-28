@@ -78,12 +78,8 @@ define('TELEFONO_PERSONA_NUMERICO_INCORRECTO', 'El teléfono de la persona solo 
 define('USUARIO_NO_ENCONTRADO', 'El usuario no existe');
 define('PASSWD_USUARIO_NO_COINCIDE', 'La contraseña introducida no coincide con la del usuario');
 
-define('ADD_USUARIO_COMPLETO', 'El usuario se ha insertado correctamente');
 define('EDIT_PASS_USUARIO_COMPLETO', 'La contraseña del usuario se ha editado correctamente');
-define('EDIT_USUARIO_COMPLETO', 'El rol del usuario se ha editado correctamente');
-define('USUARIO_NO_EXISTE', 'El usuario no existe');
 define('USUARIO_YA_EXISTE', 'El usuario ya existe');
-define('DELETE_USUARIO_COMPLETO', 'El usuario ha sido eliminado correctamente');
 define('PERSONA_YA_EXISTE', 'La persona ya existe');
 define('DNI_NO_EXISTE', 'El DNI no existe');
 define('REACTIVAR_USUARIO_CORRECTO', 'El usuario se ha reactivado correctamente');
@@ -96,15 +92,6 @@ define('NOMBRE_ACCION_ALFABETICO_INCORRECTO', 'El nombre de la acción sólo pue
 define('DESCRIPCION_ACCION_VACIO', 'La descripción  de la acción no puede ser vacía');
 define('DESCRIPCION_ACCION_MENOR_QUE_3', 'La descripción de la acción no puede tener menos de 3 caracteres');
 define('DESCRIPCION_ACCION_ALFABETICO_INCORRECTO', 'La descripción de la acción sólo puede contener letras, acentos y espacios');
-
-define('NOMBRE_FUNCIONALIDAD_VACIO', 'El nombre de la funcionalidad no puede ser vacío');
-define('NOMBRE_FUNCIONALIDAD_MENOR_QUE_3', 'El nombre de la funcionalidad no puede tener menos de 3 caracteres');
-define('NOMBRE_FUNCIONALIDAD_MAYOR_QUE_128', 'El nombre de la funcionalidad no puede tener más de 128 caracteres');
-define('NOMBRE_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'El nombre de la funcionalidad sólo puede contener letras');
-
-define('DESCRIPCION_FUNCIONALIDAD_VACIO', 'La descripción  de la funcionalidad no puede ser vacía');
-define('DESCRIPCION_FUNCIONALIDAD_MENOR_QUE_3', 'La descripción de la funcionalidad no puede tener menos de 3 caracteres');
-define('DESCRIPCION_FUNCIONALIDAD_ALFABETICO_INCORRECTO', 'La descripción de la funcionalidad sólo puede contener letras, acentos y espacios');
 
 define('NOMBRE_ROL_VACIO', 'El nombre del rol no puede ser vacío');
 define('NOMBRE_ROL_MENOR_QUE_3', 'El nombre del rol no puede tener menos de 3 caracteres');
