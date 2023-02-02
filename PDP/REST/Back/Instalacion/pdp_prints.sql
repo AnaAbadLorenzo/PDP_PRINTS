@@ -151,7 +151,7 @@ CREATE TABLE `noticia` (
 
 LOCK TABLES `noticia` WRITE;
 INSERT INTO `noticia` (`id_noticia`, `titulo_noticia`, `contenido_noticia`, `fecha_noticia`) VALUES
-(1, 'Bienvenidos a Carboon Footprint', 'Bienevidos a esta nueva aplicación para calcular la huella de carbono de tus actividades', '2022-12-26');
+(1, 'Bienvenidos a Carbon Footprint', 'Bienevidos a esta nueva aplicación para calcular la huella de carbono de tus actividades', '2022-12-26');
 UNLOCK TABLES;
 -- --------------------------------------------------------
 

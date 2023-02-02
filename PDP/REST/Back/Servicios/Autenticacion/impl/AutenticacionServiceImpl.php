@@ -220,17 +220,17 @@ class AutenticacionServiceImpl extends ServiceBase implements AutenticacionServi
             case 'ES':
                 $cuerpo = TABULACION_FECHA. 'Ourense, '.$fechaEmail. SALTO_LINEA. SALUDO_ES. SALTO_LINEA. 
                             CUERPO_ES_I. SALTO_LINEA. CUERPO_ES_II. SALTO_LINEA. SALTO_LINEA. $pass. SALTO_LINEA. SALTO_LINEA.
-                            CUERPO_ES_III. SALTO_LINEA. SALTO_LINEA. FIRMA_ES. SALTO_LINEA. 'El equipo de Carboon Footprint';
+                            CUERPO_ES_III. SALTO_LINEA. SALTO_LINEA. FIRMA_ES. SALTO_LINEA. 'El equipo de Carbon Footprint';
             break;
             case 'EN':
                 $cuerpo = TABULACION_FECHA. 'Ourense, '.$fechaEmail. SALTO_LINEA. SALUDO_EN. SALTO_LINEA. 
                             CUERPO_EN_I. SALTO_LINEA. CUERPO_EN_II. SALTO_LINEA. SALTO_LINEA. $pass. SALTO_LINEA. SALTO_LINEA. 
-                            CUERPO_EN_III. SALTO_LINEA. SALTO_LINEA.FIRMA_EN. SALTO_LINEA. 'Carboon Footprint Team';
+                            CUERPO_EN_III. SALTO_LINEA. SALTO_LINEA.FIRMA_EN. SALTO_LINEA. 'Carbon Footprint Team';
             break;
             case 'GA':
                 $cuerpo = TABULACION_FECHA. 'Ourense, '.$fechaEmail. SALTO_LINEA. SALUDO_EN. SALTO_LINEA. 
                             CUERPO_GA_I. SALTO_LINEA. CUERPO_GA_II. SALTO_LINEA. SALTO_LINEA. $pass. SALTO_LINEA. SALTO_LINEA. 
-                            CUERPO_GA_III. SALTO_LINEA. SALTO_LINEA.FIRMA_GA. SALTO_LINEA. 'Carboon Footprint Team';
+                            CUERPO_GA_III. SALTO_LINEA. SALTO_LINEA.FIRMA_GA. SALTO_LINEA. 'Carbon Footprint Team';
             break;
         }
 

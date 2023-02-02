@@ -19,7 +19,7 @@ function includeFooter() {
 
 	var footer = '<footer class="fixed-bottom page-footer font-small footer">' +
 				'<div class="footer-copyright text-center py-3">©Copyright:' +
-				'<a href="#"> Carboon Footprint</a>' +
+				'<a href="#"> Carbon Footprint</a>' +
 				'</div>' +
 				'</footer>' ;
 
