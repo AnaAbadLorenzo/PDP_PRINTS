@@ -21,13 +21,13 @@ then
     echo "---------- Descarga completada."
     exit 0
 else
-    if [ ! -z "$(ls -A /var/www/PDP_PRINTS)" ]
+    if [ ! -z "$(ls -A /var/www/html/PDP_PRINTS)" ]
     then
         echo "Limpiando directorio..."
-        rm -r /var/www/PDP_PRINTS
+        rm -r /var/www/html/PDP_PRINTS
         echo ""
     fi
-    git clone https://github.com/AnaAbadLorenzo/PDP_PRINTS.git /var/www/PDP_PRINTS
+    git clone https://github.com/AnaAbadLorenzo/PDP_PRINTS.git /var/www/html/PDP_PRINTS
     echo ""
 fi
 
@@ -37,8 +37,8 @@ echo ""
 echo "--------- Configurando Apache... ---------"
 echo ""
 
-cp /var/www/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints.conf /etc/apache2/sites-available/pdp_prints.conf
-sudo a2ensite pdp_prints.conf
+cp /var/www/html/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints.conf /etc/apache2/sites-available/pdp_prints.conf
+a2ensite pdp_prints.conf
 
 echo "Hecho."
 echo ""
@@ -46,7 +46,7 @@ echo ""
 echo "--------- Reiniciando Apache... ---------"
 echo ""
 
-sudo systemctl restart apache2
+systemctl restart apache2
 
 echo "Hecho."
 echo ""
@@ -56,7 +56,7 @@ echo ""
 
 read -p "Introduce tu usuario MySQL: " usuario
 echo "A continuación se te pedirá la contraseña del usuario especificado."
-sudo mysql -u $usuario -p < /var/www/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints.sql
+mysql -u $usuario -p < /var/www/html/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints.sql
 echo ""
 
 echo "Hecho."
@@ -67,7 +67,7 @@ echo ""
 
 read -p "Introduce tu usuario MySQL: " usuario
 echo "A continuación se te pedirá la contraseña del usuario especificado."
-sudo mysql -u $usuario -p < /var/www/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints_test.sql
+mysql -u $usuario -p < /var/www/html/PDP_PRINTS/PDP/REST/Back/Instalacion/pdp_prints_test.sql
 echo ""
 
 echo "Hecho."
