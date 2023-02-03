@@ -4,12 +4,11 @@ echo "- Apache2"
 echo "- MySQL Server"
 echo "- PHP7.4 con las extensiones correspondientes de MySQL"
 echo ""
-echo "El script instalará el proyecto en /var/www/ y configurará Apache."
+echo "El script instalará el proyecto en /var/www/html/ y configurará Apache."
 echo "También creará una nueva base de datos con su usuario correspondiente. Para esto necesita conectarse a MySQL con una cuenta de usuario y contraseña que ya existan."
 echo ""
-echo "Si deseas descargar sólo el proyecto sin configurar nada, especifica aquí una ruta de descarga."
-echo "Para una instalación normal, déjalo vacío."
-read -p "¿Ruta de descarga?: " ruta
+echo "Si estás listo para instalar, pulsa Intro. Si no, escribe algo y pulsa Intro para salir del instalador."
+read -p "¿Listo?: " ruta
 echo ""
 
 echo "--------- Clonando repositorio del proyecto... ---------"
@@ -17,8 +16,6 @@ echo ""
 
 if [ ! -z "$ruta" ]
 then
-    git clone https://github.com/AnaAbadLorenzo/PDP_PRINTS.git $ruta
-    echo "---------- Descarga completada."
     exit 0
 else
     if [ ! -z "$(ls -A /var/www/html/PDP_PRINTS)" ]
@@ -30,6 +27,18 @@ else
     git clone https://github.com/AnaAbadLorenzo/PDP_PRINTS.git /var/www/html/PDP_PRINTS
     echo ""
 fi
+
+echo "Hecho."
+echo ""
+
+echo "--------- Asignando IP a las URLs... ---------"
+echo ""
+
+$ip = "$(hostname -I)"
+echo "La IP que se utilizará para recibir las peticiones será "
+echo $ip
+echo ""
+
 
 echo "Hecho."
 echo ""
