@@ -11,13 +11,12 @@ echo "Si estás listo para instalar, pulsa Intro. Si no, escribe algo y pulsa In
 read -p "¿Listo?: " ruta
 echo ""
 
-echo "--------- Clonando repositorio del proyecto... ---------"
-echo ""
-
 if [ ! -z "$ruta" ]
 then
     exit 0
 else
+    echo "--------- Clonando repositorio del proyecto... ---------"
+    echo ""
     if [ ! -z "$(ls -A /var/www/html/PDP_PRINTS)" ]
     then
         echo "Limpiando directorio..."
@@ -35,7 +34,7 @@ echo "--------- Asignando IP a las URLs... ---------"
 echo ""
 
 $ip = "$(hostname -I)"
-echo "La IP que se utilizará para recibir las peticiones será "
+echo "La IP que se utilizará para recibir las peticiones será:"
 echo $ip
 echo ""
 
@@ -84,5 +83,5 @@ echo ""
 
 echo "--------- Instalación completada."
 echo "Se puede acceder a la página principal introduciendo en el navegador la siguiente URL:"
-echo "http://localhost/PDP_PRINTS/PDP/REST/Front/index.html"
+echo "http://"$ip"/PDP_PRINTS/PDP/REST/Front/index.html"
 echo ""

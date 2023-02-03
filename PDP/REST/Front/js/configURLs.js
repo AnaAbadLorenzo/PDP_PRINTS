@@ -1,5 +1,5 @@
 /** Url común a todas*/
-var urlComun = "http://192.168.6.91/PDP_PRINTS/PDP/REST/Back/index.php";
+var urlComun = "http://localhost/PDP_PRINTS/PDP/REST/Back/index.php";
 
 
 /** Urls Login*/
