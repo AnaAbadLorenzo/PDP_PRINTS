@@ -30,14 +30,23 @@ fi
 echo "Hecho."
 echo ""
 
-echo "--------- Asignando IP a las URLs... ---------"
+echo "--------- Obteniendo dirección IP... ---------"
 echo ""
 
-$ip = "$(hostname -I)"
+ip="$(hostname -I)"
+ip=`echo $ip | sed -e 's/^[[:space:]]*//'`
 echo "La IP que se utilizará para recibir las peticiones será:"
 echo $ip
 echo ""
 
+echo "Hecho."
+echo ""
+
+echo "--------- Asignando IP a las URLs... ---------"
+echo ""
+
+sed -i "s/localhost/$ip/g" /var/www/html/PDP_PRINTS/PDP/REST/Front/js/configURLs.js
+sed -i "s/localhost\//$ip\//g" /var/www/html/PDP_PRINTS/PDP/REST/Back/Comun/config.php
 
 echo "Hecho."
 echo ""
